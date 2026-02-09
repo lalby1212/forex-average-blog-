@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Average - Analyses Forex & Crypto Professionnelles</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FFD700;
+            --primary-dark: #FFC107;
+            --secondary: #1a1a1a;
+            --dark: #000000;
+            --light: #0a0a0a;
+            --gray: #999999;
+            --accent: #FFD700;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #000000;
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #FFD700;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-style: italic;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            transition: color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu a:hover {
+            color: #FFD700;
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000000 !important;
+            padding: 0.6rem 1.8rem;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 700;
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .youtube-btn {
+            background: #FF0000;
+            color: #ffffff !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .youtube-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4);
+        }
+
+        .tradingview-btn {
+            background: #ffffff;
+            color: #131722 !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 2px solid #ffffff;
+        }
+
+        .tradingview-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
+            background: #f0f0f0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000000;
+            padding: 1.2rem 3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .cta-button.youtube {
+            background: #FF0000;
+            color: #ffffff;
+        }
+
+        .cta-button.youtube:hover {
+            box-shadow: 0 10px 30px rgba(255, 0, 0, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: #1a1a1a;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #2a2a2a;
+            transition: transform 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #FFD700, #FFC107);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: #FFD700;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #cccccc;
+        }
+
+        /* Articles Grid */
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .article-card {
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #2a2a2a;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            border-color: #FFD700;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .article-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000000;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        .article-content {
+            padding: 1.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #999999;
+        }
+
+        .tag {
+            background: #2a2a2a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tag.bullish {
+            background: #1a4d1a;
+            color: #4ade80;
+            border: 1px solid #4ade80;
+        }
+
+        .tag.bearish {
+            background: #4d1a1a;
+            color: #f87171;
+            border: 1px solid #f87171;
+        }
+
+        .article-card h3 {
+            margin-bottom: 0.5rem;
+            color: #FFD700;
+        }
+
+        .article-card p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: #FFC107;
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .section-header p {
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        /* Telegram Section */
+        .telegram-section {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px solid #FFD700;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telegram-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+        }
+
+        .telegram-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .telegram-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .telegram-option {
+            background: #000000;
+            border: 2px solid #FFD700;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .telegram-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        .telegram-option h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .telegram-option .price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: #FFD700;
+        }
+
+        .telegram-option ul {
+            list-style: none;
+            margin: 1rem 0;
+            text-align: left;
+        }
+
+        .telegram-option li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #2a2a2a;
+            color: #cccccc;
+        }
+
+        .telegram-option li:before {
+            content: "✓ ";
+            color: #FFD700;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            border-top: 2px solid #FFD700;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: #cccccc;
+        }
+
+        /* Page Specific */
+        .page-hidden {
+            display: none;
+        }
+
+        .breadcrumb {
+            color: #999999;
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #1a1a1a;
+            border-left: 4px solid #FFD700;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+            color: #cccccc;
+        }
+
+        .disclaimer strong {
+            color: #FFD700;
+        }
+
+        /* YouTube Section */
+        .youtube-section {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px solid #FF0000;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin: 3rem 0;
+        }
+
+        .youtube-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .youtube-section p {
+            color: #cccccc;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* TradingView Section */
+        .tradingview-section {
+            background: linear-gradient(135deg, #131722, #1E222D);
+            border: 2px solid #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tradingview-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+        }
+
+        .tradingview-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Analysis Template Styles */
+        .analysis-header {
+            background: #1a1a1a;
+            border: 2px solid #FFD700;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .analysis-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+        }
+
+        .analysis-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            color: #999999;
+        }
+
+        .chart-placeholder {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999999;
+        }
+
+        .analysis-section {
+            background: #1a1a1a;
+            border: 2px solid #2a2a2a;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .analysis-section h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">FOREX AVERAGE</div>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('home')">Accueil</a></li>
+                <li><a href="#" onclick="showPage('forex')">Forex</a></li>
+                <li><a href="#" onclick="showPage('crypto')">Crypto</a></li>
+                <li><a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" class="youtube-btn">📺 YouTube</a></li>
+                <li><a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" class="tradingview-btn">📊 TradingView</a></li>
+                <li><a href="#" onclick="showPage('telegram')" class="telegram-btn">Telegram</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>FOREX AVERAGE</h1>
+                <p>Analyses Professionnelles Forex & Crypto - Stratégies Techniques et Fondamentales</p>
+                <div class="cta-buttons">
+                    <a href="#" onclick="showPage('telegram')" class="cta-button">Rejoindre Telegram 🚀</a>
+                    <a href="https://youtube.com/@forexaverage?si=Ec4YIfVQZ6DbVag-" target="_blank" class="cta-button youtube">📺 YouTube</a>
+                    <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" class="cta-button" style="background: #ffffff; color: #131722;">📊 TradingView</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- YouTube Section -->
+        <div class="container">
+            <div class="youtube-section">
+                <h2>📺 Suivez-moi sur YouTube</h2>
+                <p>Analyses vidéo quotidiennes, tutoriels complets et sessions de trading en direct</p>
+                <a href="https://youtube.com/@forexaverage?si=Ec4YIfVQZ6DbVag-" target="_blank" class="cta-button youtube">S'abonner à la chaîne</a>
+            </div>
+        </div>
+
+        <!-- TradingView Section -->
+        <div class="container">
+            <div class="tradingview-section">
+                <h2>📊 Mes Analyses sur TradingView</h2>
+                <p style="font-size: 1.1rem; color: #cccccc; margin-bottom: 2rem; position: relative; z-index: 1;">
+                    Retrouvez toutes mes idées de trading, graphiques annotés et analyses techniques en temps réel
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; position: relative; z-index: 1;">
+                    <!-- Feature 1 -->
+                    <div style="background: #131722; border: 2px solid #FFD700; padding: 2rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 215, 0, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
+                        <h3 style="color: #FFD700; margin-bottom: 1rem;">Idées de Trading</h3>
+                        <p style="color: #b2b5be;">Setups détaillés avec niveaux d'entrée, SL et TP clairement définis</p>
+                    </div>
+                    
+                    <!-- Feature 2 -->
+                    <div style="background: #131722; border: 2px solid #FFD700; padding: 2rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 215, 0, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                        <h3 style="color: #FFD700; margin-bottom: 1rem;">Analyses Techniques</h3>
+                        <p style="color: #b2b5be;">Graphiques professionnels avec indicateurs et patterns identifiés</p>
+                    </div>
+                    
+                    <!-- Feature 3 -->
+                    <div style="background: #131722; border: 2px solid #FFD700; padding: 2rem; border-radius: 15px; text-align: center; transition: transform 0.3s, box-shadow 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 215, 0, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
+                        <h3 style="color: #FFD700; margin-bottom: 1rem;">Mises à Jour Live</h3>
+                        <p style="color: #b2b5be;">Suivi en temps réel de mes positions et mises à jour des analyses</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; position: relative; z-index: 1;">
+                    <a href="https://fr.tradingview.com/u/VotrePseudo/" target="_blank" class="cta-button" style="background: #ffffff; color: #131722;">
+                        📊 Voir mon Profil TradingView
+                    </a>
+                    <a href="https://fr.tradingview.com/u/VotrePseudo/#published-charts" target="_blank" class="cta-button" style="background: transparent; border: 2px solid #ffffff; color: #ffffff;">
+                        📈 Toutes mes Idées
+                    </a>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-left: 4px solid #ffffff; border-radius: 10px; position: relative; z-index: 1;">
+                    <p style="color: #b2b5be; font-size: 0.95rem;">
+                        💡 <strong style="color: #ffffff;">Suivez-moi sur TradingView</strong> pour recevoir des notifications à chaque nouvelle idée publiée !
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="container">
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Analyses Forex Quotidiennes</h3>
+                    <p>Setups détaillés avec raisons techniques et fondamentales pour les principales paires de devises</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">₿</div>
+                    <h3>Opportunités Crypto</h3>
+                    <p>Analyses approfondies des cryptomonnaies avec points d'entrée et de sortie précis</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Communauté Telegram</h3>
+                    <p>Signaux en temps réel et accompagnement personnalisé pour tous les membres</p>
+                </div>
+            </div>
+
+            <!-- Recent Articles Preview -->
+            <div class="section-header">
+                <h2>Analyses Récentes</h2>
+                <p>Les dernières opportunités identifiées sur les marchés</p>
+            </div>
+
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image">EUR/USD</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>08 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>EUR/USD : Opportunité haussière sur support clé</h3>
+                        <p>Confluence technique sur 1.0850 avec divergence RSI et contexte fondamental favorable...</p>
+                        <a href="#" class="read-more">Lire l'analyse →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">BTC</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>08 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Bitcoin : Cassure imminente des 50 000$</h3>
+                        <p>Structure technique en triangle ascendant avec volume croissant. Setup pour viser 55K...</p>
+                        <a href="#" class="read-more">Lire l'analyse →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">GBP/JPY</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>07 Fév 2026</span>
+                            <span class="tag bearish">VENTE</span>
+                        </div>
+                        <h3>GBP/JPY : Rejet sur résistance majeure</h3>
+                        <p>Formation en double top confirmée avec signal de divergence baissière...</p>
+                        <a href="#" class="read-more">Lire l'analyse →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Telegram CTA -->
+        <div class="container">
+            <div class="telegram-section">
+                <h2>Ne ratez plus aucune opportunité</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #cccccc;">Recevez les analyses et signaux en temps réel sur Telegram</p>
+                <a href="#" onclick="showPage('telegram')" class="cta-button">Découvrir nos offres</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOREX PAGE -->
+    <div id="forex" class="page page-hidden">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a> / Forex
+            </div>
+
+            <div class="section-header">
+                <h2>Analyses Forex</h2>
+                <p>Setups quotidiens avec analyse technique et fondamentale</p>
+            </div>
+
+            <div class="articles-grid">
+                <!-- Example Forex Analysis Article -->
+                <div class="article-card">
+                    <div class="article-image">EUR/USD</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 08 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>EUR/USD : Setup haussier sur support 1.0850</h3>
+                        <p><strong>Point d'entrée :</strong> 1.0850-1.0870<br>
+                        <strong>Stop Loss :</strong> 1.0810<br>
+                        <strong>Take Profit :</strong> 1.0950 / 1.1020</p>
+                        <p>Confluence technique majeure avec retracement Fibonacci 61.8% et divergence haussière RSI...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">GBP/USD</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 08 Fév 2026</span>
+                            <span class="tag bearish">VENTE</span>
+                        </div>
+                        <h3>GBP/USD : Rejet sur résistance 1.2750</h3>
+                        <p><strong>Point d'entrée :</strong> 1.2730-1.2750<br>
+                        <strong>Stop Loss :</strong> 1.2790<br>
+                        <strong>Take Profit :</strong> 1.2650 / 1.2580</p>
+                        <p>Zone de résistance forte avec pattern de rejet et contexte fondamental défavorable...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">USD/JPY</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 07 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>USD/JPY : Cassure haussière confirmée</h3>
+                        <p><strong>Point d'entrée :</strong> 148.50-148.80<br>
+                        <strong>Stop Loss :</strong> 147.90<br>
+                        <strong>Take Profit :</strong> 150.00 / 151.20</p>
+                        <p>Breakout validé avec volume significatif. Politique monétaire divergente favorable...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">AUD/USD</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 07 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>AUD/USD : Rebond sur support clé 0.6450</h3>
+                        <p><strong>Point d'entrée :</strong> 0.6450-0.6480<br>
+                        <strong>Stop Loss :</strong> 0.6410<br>
+                        <strong>Take Profit :</strong> 0.6580 / 0.6650</p>
+                        <p>Support majeur testé 3 fois. Données économiques australiennes solides à venir...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">EUR/GBP</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 06 Fév 2026</span>
+                            <span class="tag bearish">VENTE</span>
+                        </div>
+                        <h3>EUR/GBP : Double top en formation</h3>
+                        <p><strong>Point d'entrée :</strong> 0.8550-0.8570<br>
+                        <strong>Stop Loss :</strong> 0.8600<br>
+                        <strong>Take Profit :</strong> 0.8480 / 0.8420</p>
+                        <p>Pattern de retournement classique avec divergence baissière MACD...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">NZD/USD</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 06 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>NZD/USD : Opportunité sur retracement</h3>
+                        <p><strong>Point d'entrée :</strong> 0.6150-0.6180<br>
+                        <strong>Stop Loss :</strong> 0.6110<br>
+                        <strong>Take Profit :</strong> 0.6280 / 0.6350</p>
+                        <p>Retracement sain sur tendance haussière avec confluence EMA 50...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>⚠️ Avertissement :</strong> Le trading sur le Forex comporte des risques importants de perte en capital. Les analyses présentées sont à titre informatif et ne constituent pas des conseils en investissement. Tradez uniquement avec des fonds que vous pouvez vous permettre de perdre.
+            </div>
+        </div>
+    </div>
+
+    <!-- CRYPTO PAGE -->
+    <div id="crypto" class="page page-hidden">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a> / Crypto
+            </div>
+
+            <div class="section-header">
+                <h2>Analyses Crypto</h2>
+                <p>Opportunités sur les cryptomonnaies majeures</p>
+            </div>
+
+            <div class="articles-grid">
+                <div class="article-card">
+                    <div class="article-image">₿</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 08 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Bitcoin (BTC) : Cassure des 50K imminente</h3>
+                        <p><strong>Point d'entrée :</strong> 48,500$ - 49,200$<br>
+                        <strong>Stop Loss :</strong> 47,000$<br>
+                        <strong>Take Profit :</strong> 52,000$ / 55,000$</p>
+                        <p>Triangle ascendant en compression avec volume croissant. On-chain metrics haussiers...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">ETH</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 08 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Ethereum (ETH) : Support sur 2,800$</h3>
+                        <p><strong>Point d'entrée :</strong> 2,750$ - 2,850$<br>
+                        <strong>Stop Loss :</strong> 2,650$<br>
+                        <strong>Take Profit :</strong> 3,100$ / 3,300$</p>
+                        <p>Zone de support majeure avec accumulation institutionnelle détectée...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">SOL</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 07 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Solana (SOL) : Breakout validé</h3>
+                        <p><strong>Point d'entrée :</strong> 118$ - 122$<br>
+                        <strong>Stop Loss :</strong> 112$<br>
+                        <strong>Take Profit :</strong> 135$ / 145$</p>
+                        <p>Cassure confirmée de la résistance avec forte activité on-chain...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">BNB</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 07 Fév 2026</span>
+                            <span class="tag bearish">VENTE</span>
+                        </div>
+                        <h3>Binance Coin (BNB) : Rejet sur 420$</h3>
+                        <p><strong>Point d'entrée :</strong> 415$ - 420$<br>
+                        <strong>Stop Loss :</strong> 430$<br>
+                        <strong>Take Profit :</strong> 395$ / 380$</p>
+                        <p>Résistance forte avec pattern de rejet. Volume vendeur en augmentation...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">XRP</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 06 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Ripple (XRP) : Accumulation sur 0.52$</h3>
+                        <p><strong>Point d'entrée :</strong> 0.51$ - 0.53$<br>
+                        <strong>Stop Loss :</strong> 0.49$<br>
+                        <strong>Take Profit :</strong> 0.58$ / 0.62$</p>
+                        <p>Zone d'accumulation avec catalyseurs fondamentaux positifs à venir...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+
+                <div class="article-card">
+                    <div class="article-image">ADA</div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>📅 06 Fév 2026</span>
+                            <span class="tag bullish">ACHAT</span>
+                        </div>
+                        <h3>Cardano (ADA) : Setup swing trading</h3>
+                        <p><strong>Point d'entrée :</strong> 0.48$ - 0.50$<br>
+                        <strong>Stop Loss :</strong> 0.45$<br>
+                        <strong>Take Profit :</strong> 0.56$ / 0.62$</p>
+                        <p>Formation en cup and handle avec momentum haussier croissant...</p>
+                        <a href="#" class="read-more">Voir l'analyse complète →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>⚠️ Avertissement :</strong> Les cryptomonnaies sont extrêmement volatiles et comportent des risques élevés. Ne investissez que ce que vous pouvez vous permettre de perdre. Ces analyses sont à titre éducatif uniquement et ne constituent pas des conseils financiers.
+            </div>
+        </div>
+    </div>
+
+    <!-- TELEGRAM PAGE -->
+    <div id="telegram" class="page page-hidden">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="#" onclick="showPage('home')">Accueil</a> / Canal Telegram
+            </div>
+
+            <div class="telegram-section">
+                <h2>Rejoignez Notre Communauté Telegram</h2>
+                <p style="font-size: 1.2rem; color: #cccccc;">Recevez les analyses et signaux en temps réel directement sur votre téléphone</p>
+
+                <div class="telegram-options">
+                    <div class="telegram-option">
+                        <h3>🆓 Canal Gratuit</h3>
+                        <div class="price">Gratuit</div>
+                        <ul>
+                            <li>Analyses hebdomadaires</li>
+                            <li>Setups majeurs</li>
+                            <li>Idées de trading</li>
+                            <li>Conseils éducatifs</li>
+                            <li>Actualités marchés</li>
+                        </ul>
+                        <a href="https://t.me/forexaverageanalyse" class="cta-button" style="margin-top: 1rem; display: block;">Rejoindre gratuitement</a>
+                    </div>
+
+                    <div class="telegram-option">
+                        <h3>💎 Canal Premium</h3>
+                        <div class="price">
+                            <div style="background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 0.5rem 1rem; border-radius: 10px; margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+                                🎁 7 JOURS GRATUITS
+                            </div>
+                            <span style="font-size: 1.2rem; color: #cccccc;">Puis</span>
+                            <br>
+                            50$<span style="font-size: 1rem;">/mois</span>
+                            <div style="margin-top: 0.5rem; font-size: 0.85rem; color: #999999;">
+                                Sans engagement • Annulable à tout moment
+                            </div>
+                        </div>
+                        <ul>
+                            <li>✓ Tous les avantages gratuits</li>
+                            <li>Signaux quotidiens Forex</li>
+                            <li>Signaux Crypto</li>
+                            <li>Alertes en temps réel</li>
+                            <li>Analyses complètes</li>
+                            <li>Support prioritaire</li>
+                            <li>Webinaires mensuels</li>
+                            <li>Accès groupe privé</li>
+                        </ul>
+                        <a href="https://t.me/+8Q2zPHrvFghlMzI8" class="cta-button" style="margin-top: 1rem; display: block;">Essayer 7 jours GRATUIT</a>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; background: rgba(0,0,0,0.5); padding: 2rem; border-radius: 15px; border: 1px solid #2a2a2a;">
+                    <h3 style="margin-bottom: 1rem; color: #FFD700;">📱 Comment rejoindre ?</h3>
+                    <p style="font-size: 1.1rem; color: #cccccc;">1. Cliquez sur le bouton de votre choix ci-dessus<br>
+                    2. Vous serez redirigé vers Telegram<br>
+                    3. Cliquez sur "Rejoindre" dans l'application<br>
+                    4. Pour le Premium : Suivez les instructions de paiement</p>
+                </div>
+            </div>
+
+            <div style="background: #1a1a1a; border: 2px solid #2a2a2a; padding: 3rem; border-radius: 15px; margin: 3rem 0;">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: #FFD700;">Ce qui est inclus</h2>
+                <div class="features">
+                    <div class="feature-card" style="border: 2px solid #2a2a2a;">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Signaux en Temps Réel</h3>
+                        <p>Recevez les opportunités dès qu'elles se présentent sur les marchés</p>
+                    </div>
+                    <div class="feature-card" style="border: 2px solid #2a2a2a;">
+                        <div class="feature-icon">📚</div>
+                        <h3>Formation Continue</h3>
+                        <p>Apprenez avec nos analyses détaillées et webinaires éducatifs</p>
+                    </div>
+                    <div class="feature-card" style="border: 2px solid #2a2a2a;">
+                        <div class="feature-icon">👥</div>
+                        <h3>Communauté Active</h3>
+                        <p>Échangez avec d'autres traders et progressez ensemble</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>💡 Satisfaction garantie :</strong> Testez le canal Premium pendant 7 jours. Si vous n'êtes pas satisfait, nous vous remboursons intégralement, sans question posée.
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p style="color: #FFD700; font-weight: 700; font-size: 1.2rem; margin-bottom: 0.5rem;">FOREX AVERAGE</p>
+            <p>&copy; 2026 Forex Average. Tous droits réservés.</p>
+            <p style="margin-top: 1rem;">Les performances passées ne garantissent pas les résultats futurs. Trading à risque.</p>
+            <div style="margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="https://youtube.com/@forexaverage?si=Ec4YIfVQZ6DbVag-" target="_blank" style="color: #FF0000; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📺 YouTube</a>
+                
+                <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📊 TradingView</a>
+                
+                <a href="https://t.me/forexavganalysis" target="_blank" style="color: #0088cc; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">👤 Contact</a>
+                
+                <a href="https://t.me/forexaverageanalyse" target="_blank" style="color: #FFD700; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">📱 Canal Gratuit</a>
+                
+                <a href="https://t.me/+8Q2zPHrvFghlMzI8" target="_blank" style="color: #FFD700; text-decoration: none; font-weight: 600; transition: opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">💎 Canal Premium</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.add('page-hidden');
+            });
+
+            // Show selected page
+            const selectedPage = document.getElementById(pageName);
+            if (selectedPage) {
+                selectedPage.classList.remove('page-hidden');
+            }
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Show home page by default
+        document.addEventListener('DOMContentLoaded', function() {
+            showPage('home');
+        });
+    </script>
+</body>
+</html>
