@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
-  <!-- Page principale -->
   <url>
     <loc>https://forexaverage.com/</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  <!-- Section Calculateur -->
   <url>
-    <loc>https://forexaverage.com/#calculateur</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://forexaverage.com/analyses/ma-strategie.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  
-  <!-- Section Track Record -->
+
   <url>
-    <loc>https://forexaverage.com/#track-record</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>daily</changefreq>
+    <loc>https://forexaverage.com/article/Crypto/bitcoin.html</loc>
+    <lastmod>2026-02-08</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+        
+<url>
+    <loc>https://forexaverage.com/article/forex/eurgbp.html</loc>
+    <lastmod>2026-03-15</lastmod>
+    <changefreq>never</changefreq>
     <priority>0.8</priority>
-  </url>
-  
-  <!-- Section Telegram -->
-  <url>
-    <loc>https://forexaverage.com/#telegram</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Section TradingView -->
-  <url>
-    <loc>https://forexaverage.com/#tradingview</loc>
-    <lastmod>2026-03-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
 
 </urlset>
