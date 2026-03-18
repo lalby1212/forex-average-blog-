@@ -8,7 +8,7 @@
 
   /* ── CONFIG ── */
   const CONFIG = {
-    API_KEY: "VOTRE_CLE_ICI", // ← Remplace par ta nouvelle clé
+    API_KEY: "AIzaSyBayAxN1H06KIJI9M0Jcju1VgSa89Aqih4", // ← Remplace par ta nouvelle clé
     MODEL:   "gemini-2.0-flash",
     API_URL: "https://generativelanguage.googleapis.com/v1beta/models/",
 
