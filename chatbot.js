@@ -8,7 +8,7 @@
 
   /* ── CONFIG — mets ta clé OpenAI ligne 11 ── */
   const CONFIG = {
-    API_KEY: "COLLE_TA_CLE_OPENAI_ICI", // sk-proj-...
+    API_KEY: "sk-...xbwA", // sk-proj-...
     MODEL:   "gpt-4o-mini",
     API_URL: "https://api.openai.com/v1/chat/completions",
 
