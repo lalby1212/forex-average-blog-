@@ -8,7 +8,7 @@
 
   /* ── CONFIG ── */
   const CONFIG = {
-    API_KEY: "AIzaSyBmlRkBim4CpbrgmB1s4IZIty_RsUP5RGQ", 
+    API_KEY: "AIzaSyAVIS1Gee64d1GDQUhoNIkqFbD5ZSaOanY", 
     MODEL:   "gemini-2.0-flash",
     API_URL: "https://generativelanguage.googleapis.com/v1beta/models/",
 
@@ -749,8 +749,8 @@ Réponds UNIQUEMENT en français. Sois direct, professionnel et pédagogue.
     initEvents();
 
     // Test rapide de la clé API au démarrage
-    if (CONFIG.API_KEY === "AIzaSyBmlRkBim4CpbrgmB1s4IZIty_RsUP5RGQ" || CONFIG.API_KEY.length < 20) {
-      console.error("[FA Chatbot] ❌ Clé API manquante ou invalide. Remplace VOTRE_CLE_ICI dans chatbot.js");
+    if (CONFIG.API_KEY === "AIzaSyAVIS1Gee64d1GDQUhoNIkqFbD5ZSaOanY" || CONFIG.API_KEY.length < 20) {
+      console.error("[FA Chatbot] ❌ Clé API manquante ou invalide. AIzaSyAVIS1Gee64d1GDQUhoNIkqFbD5ZSaOanY");
     } else {
       // Ping silencieux pour valider la clé
       const testUrl = `${CONFIG.API_URL}gemini-1.5-flash:generateContent?key=${CONFIG.API_KEY}`;
