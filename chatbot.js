@@ -554,11 +554,11 @@ Réponds UNIQUEMENT en français. Sois direct, professionnel et pédagogue.
   }
 
   /* ── CALL GEMINI API ── */
+ /* ── CALL GEMINI API (CORRIGÉ) ── */
   async function callGemini(userMessage) {
     conversationHistory.push({ role: "user", parts: [{ text: userMessage }] });
 
-    // On essaie d'abord gemini-1.5-flash (disponible partout),
-    // puis gemini-2.0-flash en fallback
+    // Ordre recommandé pour la stabilité et les quotas
     const MODELS_TO_TRY = [
       "gemini-1.5-flash",
       "gemini-2.0-flash",
@@ -569,11 +569,14 @@ Réponds UNIQUEMENT en français. Sois direct, professionnel et pédagogue.
     for (const model of MODELS_TO_TRY) {
       try {
         const body = {
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          // Correction majeure : structure sans crochets pour parts
+          system_instruction: { 
+            parts: { text: SYSTEM_PROMPT } 
+          },
           contents: conversationHistory,
           generationConfig: {
             temperature:     0.7,
-            maxOutputTokens: 600,
+            maxOutputTokens: 800,
             topP:            0.9,
           },
         };
@@ -586,38 +589,41 @@ Réponds UNIQUEMENT en français. Sois direct, professionnel et pédagogue.
           body: JSON.stringify(body),
         });
 
-        // Si erreur HTTP, on lit le corps pour avoir le détail
         if (!response.ok) {
           const errBody = await response.json().catch(() => ({}));
           const errMsg  = errBody?.error?.message || `HTTP ${response.status}`;
-          console.warn(`[FA Chatbot] Modèle ${model} échoué : ${errMsg}`);
+          
+          // Si le quota est atteint (429), on prévient dans la console
+          if (response.status === 429) {
+            console.warn(`[FA Chatbot] Quota épuisé pour ${model}.`);
+          } else {
+            console.warn(`[FA Chatbot] Modèle ${model} échoué : ${errMsg}`);
+          }
+          
           lastError = errMsg;
-          continue; // essaie le modèle suivant
+          continue; 
         }
 
         const data = await response.json();
         const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
         if (!text) {
-          console.warn(`[FA Chatbot] Réponse vide pour ${model}`);
-          lastError = "Réponse vide";
+          lastError = "Réponse vide du serveur";
           continue;
         }
 
-        // Succès — on enregistre quel modèle a fonctionné dans la console
-        console.info(`[FA Chatbot] Réponse obtenue via ${model}`);
+        console.info(`[FA Chatbot] Succès avec ${model}`);
         conversationHistory.push({ role: "model", parts: [{ text }] });
         return text;
 
       } catch (err) {
-        console.warn(`[FA Chatbot] Erreur réseau pour ${model} :`, err.message);
+        console.warn(`[FA Chatbot] Erreur réseau (${model}) :`, err.message);
         lastError = err.message;
         continue;
       }
     }
 
-    // Tous les modèles ont échoué
-    throw new Error(`Tous les modèles ont échoué. Dernière erreur : ${lastError}`);
+    throw new Error(lastError);
   }
 
   /* ── SEND MESSAGE ── */
