@@ -749,7 +749,7 @@ Réponds UNIQUEMENT en français. Sois direct, professionnel et pédagogue.
     initEvents();
 
     // Test rapide de la clé API au démarrage
-    if (CONFIG.API_KEY === "VOTRE_CLE_ICI" || CONFIG.API_KEY.length < 20) {
+    if (CONFIG.API_KEY === "AIzaSyBmlRkBim4CpbrgmB1s4IZIty_RsUP5RGQ" || CONFIG.API_KEY.length < 20) {
       console.error("[FA Chatbot] ❌ Clé API manquante ou invalide. Remplace VOTRE_CLE_ICI dans chatbot.js");
     } else {
       // Ping silencieux pour valider la clé
