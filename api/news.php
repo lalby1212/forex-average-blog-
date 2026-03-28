@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Clé API GNews - À remplacer par votre vraie clé
-$GNEWS_API_KEY = 'd6f31ca87931b8649a7f4b3b16992be2'; // ⚠️ À remplacer !
+$GNEWS_API_KEY = '5b523e05a500c7e4f37a9b4860b93a8e'; //
 
 // Récupérer les paramètres
 $query = isset($_GET['q']) ? sanitize($_GET['q']) : '';
