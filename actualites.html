@@ -380,7 +380,49 @@
             font-weight: 600;
         }
 
-        footer a:hover { text-decoration: underline; }
+        /* ─── FOOTER ─── */
+        footer {
+            background: rgba(5,5,5,0.98);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            font-weight: 900;
+            font-size: 1.3rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+        
+        .footer-tagline { font-size: 0.78rem; color: var(--text-faint); letter-spacing: 1px; margin-bottom: 2rem; }
+        
+        .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        
+        .footer-links a { color: var(--text-faint); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; font-weight: 500; }
+        
+        .footer-links a:hover { color: var(--gold); }
+        
+        .footer-copy { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 1rem; }
+        
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.28);
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .footer-legal a { color: rgba(255,255,255,0.22); font-size: 0.78rem; text-decoration: none; transition: color 0.2s; }
+        
+        .footer-legal a:hover { color: var(--gold); }
 
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -440,15 +482,28 @@
 
 <!-- FOOTER -->
 <footer role="contentinfo">
-    <div style="margin-bottom: 1rem;">
-        <a href="/">Accueil</a> • 
-        <a href="/analyses/">Analyses</a> • 
-        <a href="calculateur.html">Calculateurs</a> • 
-        <a href="partenaires.html">Partenaires</a>
+    <div class="footer-logo">FOREX AVERAGE</div>
+    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+
+    <div class="footer-links">
+        <a href="/">📊 Accueil</a>
+        <a href="/analyses/">📈 Analyses</a>
+        <a href="calculateur.html">🧮 Calculateurs</a>
+        <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
+        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" rel="noopener noreferrer">📈 TradingView</a>
+        <a href="https://t.me/forexavganalysis" target="_blank" rel="noopener noreferrer">👤 Contact</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer">📱 Canal Gratuit</a>
+        <a href="https://t.me/+8Q2zPHrvFghlMzI8" target="_blank" rel="noopener noreferrer">💎 Premium</a>
     </div>
-    <div>&copy; 2026 Forex Average. Tous droits réservés.</div>
-    <div style="margin-top: 1rem; font-size: 0.85rem;">
-        <a href="mentions-legales.html">⚖️ Mentions Légales</a>
+
+    <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+
+    <div class="footer-disclaimer">
+        ⚠️ Le contenu de ce site est fourni à titre informatif et éducatif uniquement. Il ne constitue pas un conseil en investissement. Le trading Forex, Crypto et Matières Premières comporte des risques significatifs de perte en capital. Les performances passées ne garantissent pas les résultats futurs.
+    </div>
+
+    <div class="footer-legal">
+        <a href="mentions-legales.html">⚖️ Mentions Légales & Disclaimer</a>
     </div>
 </footer>
 
