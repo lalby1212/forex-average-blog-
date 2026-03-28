@@ -1665,114 +1665,94 @@ window.addEventListener('load', async () => {
 </script>
 <script src="chatbot.js"></script>
 <script src="newsletter.js"></script>
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPT GNEWS API CORRIGÉ - SANS ERREUR 400
+     ═══════════════════════════════════════════════════════════ -->
+
 <script>
 (function() {
-    // ⚙️ CONFIGURATION
-    const GNEWS_API_KEY = 'bd5292c2fa2674782133be11a4e1ebcbI'; // 👈 À OBTENIR sur gnews.io
+    // ⚙️ CONFIGURATION - IMPORTANT : REMPLACER PAR VOTRE CLÉ
+    const GNEWS_API_KEY = 'bd5292c2fa2674782133be11a4e1ebcb'; // 👈 À remplacer par votre vraie clé
     
-    // 📰 Catégories d'actualités à suivre
+    // ❌ VÉRIFIER SI LA CLÉ EST BIEN REMPLACÉE
+    if (GNEWS_API_KEY === 'bd5292c2fa2674782133be11a4e1ebcb') {
+        console.error('❌ ERREUR : Remplacez "bd5292c2fa2674782133be11a4e1ebcb" par votre vraie clé API GNews');
+        document.getElementById('gnews-container').innerHTML = `
+            <div style="
+                grid-column: 1 / -1;
+                padding: 3rem 2rem;
+                background: rgba(239, 68, 68, 0.1);
+                border: 1px solid rgba(239, 68, 68, 0.3);
+                border-radius: 12px;
+                color: var(--red);
+                text-align: center;
+            ">
+                <strong>⚠️ Clé API manquante</strong><br>
+                <small>Veuillez remplacer "bd5292c2fa2674782133be11a4e1ebcb" par votre clé depuis https://gnews.io/dashboard</small>
+            </div>
+        `;
+        return;
+    }
+
+    // 📰 Requêtes SIMPLIFIÉES pour éviter les erreurs 400
     const NEWS_QUERIES = [
-        { 
-            query: 'macroeconomic inflation interest rates Federal Reserve Fed', 
-            lang: 'en', 
-            topic: '📊 Macroéconomie',
-            priority: 1
-        },
-        { 
-            query: 'geopolitical risks tensions conflict markets', 
-            lang: 'en', 
-            topic: '⚠️ Géopolitique',
-            priority: 1
-        },
-        { 
-            query: 'central bank monetary policy decisions BOJ ECB', 
-            lang: 'en', 
-            topic: '🏛️ Banques Centrales',
-            priority: 2
-        },
-        { 
-            query: 'economic data releases employment GDP inflation report', 
-            lang: 'en', 
-            topic: '📈 Données Économiques',
-            priority: 2
-        },
-        { 
-            query: 'oil price energy OPEC commodities trading', 
-            lang: 'en', 
-            topic: '⛽ Matières Premières',
-            priority: 2
-        },
-        { 
-            query: 'bitcoin ethereum cryptocurrency blockchain regulation SEC', 
-            lang: 'en', 
-            topic: '₿ Crypto & Finance',
-            priority: 3
-        }
+        { query: 'macroeconomic', topic: '📊 Macroéconomie' },
+        { query: 'geopolitical', topic: '⚠️ Géopolitique' },
+        { query: 'central bank', topic: '🏛️ Banques Centrales' },
+        { query: 'economic data', topic: '📈 Données Économiques' },
+        { query: 'oil price', topic: '⛽ Matières Premières' },
+        { query: 'bitcoin ethereum', topic: '₿ Crypto' }
     ];
 
-    // 🚀 Fonction principale de récupération des actualités
+    // 🚀 Fonction de récupération
     async function fetchForexNews() {
         const container = document.getElementById('gnews-container');
-        const lastUpdate = document.getElementById('last-update');
+        if (!container) return;
         
         try {
-            // Réinitialiser le conteneur
-            container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">⏳ Chargement des actualités...</div>';
+            container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">⏳ Chargement...</div>';
             
             let allArticles = [];
+            let successCount = 0;
             
-            // 📡 Boucler sur chaque catégorie
+            // 🔄 Boucler sur chaque requête
             for (const category of NEWS_QUERIES) {
-                const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(category.query)}&lang=${category.lang}&max=3&apikey=${GNEWS_API_KEY}`;
-                
                 try {
+                    // ✅ Format correct de l'URL GNews
+                    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(category.query)}&lang=en&max=3&apikey=${GNEWS_API_KEY}`;
+                    
                     const response = await fetch(url);
                     
-                    // Vérifier les erreurs HTTP
+                    if (response.status === 400) {
+                        console.warn(`❌ Erreur 400 pour "${category.query}" - Clé API invalide ou requête malformée`);
+                        continue;
+                    }
+                    
+                    if (response.status === 401) {
+                        console.error('❌ Erreur 401 - Clé API invalide. Vérifiez sur https://gnews.io/dashboard');
+                        continue;
+                    }
+                    
                     if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
+                        console.warn(`Erreur ${response.status} pour "${category.query}"`);
+                        continue;
                     }
                     
                     const data = await response.json();
                     
-                    // Vérifier les erreurs API
-                    if (data.errors) {
-                        console.warn(`Erreur API pour ${category.topic}:`, data.errors);
-                        continue;
-                    }
-                    
-                    if (data.articles && Array.isArray(data.articles)) {
-                        // Ajouter la catégorie à chaque article
+                    if (data.articles && Array.isArray(data.articles) && data.articles.length > 0) {
                         data.articles.forEach(article => {
                             article.category = category.topic;
-                            article.categoryPriority = category.priority;
                         });
                         allArticles.push(...data.articles);
+                        successCount++;
                     }
                 } catch (error) {
-                    console.error(`Erreur pour ${category.topic}:`, error);
+                    console.warn(`Erreur réseau pour "${category.query}":`, error.message);
                 }
             }
             
-            // 🔄 Supprimer les doublons par URL
-            const uniqueArticles = Array.from(
-                new Map(allArticles.map(item => [item.url, item])).values()
-            );
-            
-            // 📅 Trier par date (plus récent en premier)
-            uniqueArticles.sort((a, b) => {
-                // Trier d'abord par priorité, puis par date
-                if (a.categoryPriority !== b.categoryPriority) {
-                    return a.categoryPriority - b.categoryPriority;
-                }
-                return new Date(b.publishedAt) - new Date(a.publishedAt);
-            });
-            
-            // ✂️ Limiter à 12 articles
-            const topArticles = uniqueArticles.slice(0, 12);
-            
-            // ❌ Gestion des erreurs
-            if (topArticles.length === 0) {
+            if (successCount === 0) {
                 container.innerHTML = `
                     <div style="
                         grid-column: 1 / -1;
@@ -1782,23 +1762,37 @@ window.addEventListener('load', async () => {
                         border-radius: 12px;
                         text-align: center;
                         color: var(--red);
-                        font-weight: 600;
                     ">
-                        ⚠️ Impossible de charger les actualités. 
-                        <br><small style="color: var(--text-faint);">Vérifiez votre clé API GNews.io ou vérifiez votre quota (100 req/jour max)</small>
+                        <strong>❌ Impossible de charger les actualités</strong><br>
+                        <small>Vérifiez :<br>
+                        • Votre clé API sur https://gnews.io/dashboard<br>
+                        • Votre quota (100 requêtes/jour max)<br>
+                        • Que votre clé est correctement copiée dans le code
+                        </small>
                     </div>
                 `;
                 return;
             }
             
-            // 🎨 Générer le HTML des articles
+            // 🔄 Supprimer les doublons
+            const uniqueArticles = Array.from(
+                new Map(allArticles.map(item => [item.url, item])).values()
+            );
+            
+            // 📅 Trier par date
+            uniqueArticles.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+            
+            // ✂️ Limiter
+            const topArticles = uniqueArticles.slice(0, 12);
+            
+            // 🎨 Afficher
             container.innerHTML = topArticles.map((article, index) => `
                 <article style="
                     background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
                     border: 1px solid var(--border);
                     border-radius: 12px;
                     overflow: hidden;
-                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    transition: all 0.3s;
                     display: flex;
                     flex-direction: column;
                     height: 100%;
@@ -1815,161 +1809,66 @@ window.addEventListener('load', async () => {
                     this.style.boxShadow='none';
                 ">
                     
-                    <!-- IMAGE -->
                     ${article.image ? `
-                        <div style="
-                            width: 100%;
-                            height: 200px;
-                            overflow: hidden;
-                            background: linear-gradient(135deg, var(--dark3) 0%, var(--dark2) 100%);
-                            position: relative;
-                        ">
-                            <img src="${article.image}" alt="${article.title}" style="
-                                width: 100%;
-                                height: 100%;
-                                object-fit: cover;
-                                transition: transform 0.3s ease;
-                            " onmouseover="this.style.transform='scale(1.08)';" onmouseout="this.style.transform='scale(1)';" onerror="this.parentElement.style.display='none';">
+                        <div style="width:100%;height:200px;overflow:hidden;background:var(--dark3);">
+                            <img src="${article.image}" alt="${article.title}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.08)';" onmouseout="this.style.transform='scale(1)';" onerror="this.parentElement.style.display='none';">
                         </div>
                     ` : ''}
                     
-                    <!-- CONTENU -->
-                    <div style="
-                        padding: 1.5rem;
-                        display: flex;
-                        flex-direction: column;
-                        flex-grow: 1;
-                    ">
-                        <!-- BADGE CATÉGORIE -->
+                    <div style="padding:1.5rem;display:flex;flex-direction:column;flex-grow:1;">
                         <span style="
-                            display: inline-block;
-                            background: rgba(255,215,0,0.15);
-                            color: var(--gold);
-                            padding: 0.4rem 0.8rem;
-                            border-radius: 6px;
-                            font-size: 0.78rem;
-                            font-weight: 600;
-                            margin-bottom: 0.85rem;
-                            width: fit-content;
-                            border: 1px solid rgba(255,215,0,0.2);
-                        ">
-                            ${article.category}
-                        </span>
+                            display:inline-block;
+                            background:rgba(255,215,0,0.15);
+                            color:var(--gold);
+                            padding:0.4rem 0.8rem;
+                            border-radius:6px;
+                            font-size:0.78rem;
+                            font-weight:600;
+                            margin-bottom:0.85rem;
+                            width:fit-content;
+                        ">${article.category}</span>
                         
-                        <!-- TITRE -->
-                        <h3 style="
-                            margin: 0 0 0.85rem 0;
-                            font-size: 1.1rem;
-                            font-weight: 700;
-                            color: var(--text);
-                            line-height: 1.4;
-                            flex-grow: 1;
-                        ">
+                        <h3 style="margin:0 0 0.85rem 0;font-size:1.1rem;font-weight:700;color:var(--text);line-height:1.4;flex-grow:1;">
                             ${article.title}
                         </h3>
                         
-                        <!-- DESCRIPTION -->
-                        <p style="
-                            color: var(--text-muted);
-                            font-size: 0.95rem;
-                            margin: 0 0 1rem 0;
-                            line-height: 1.5;
-                            flex-grow: 1;
-                        ">
-                            ${article.description ? article.description.substring(0, 120) + '...' : 'Lire l\'article complet pour plus de détails.'}
+                        <p style="color:var(--text-muted);font-size:0.95rem;margin:0 0 1rem 0;line-height:1.5;flex-grow:1;">
+                            ${article.description ? article.description.substring(0, 120) + '...' : 'Lire l\'article complet'}
                         </p>
                         
-                        <!-- SOURCE & DATE -->
-                        <div style="
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                            color: var(--text-faint);
-                            font-size: 0.85rem;
-                            margin-bottom: 1rem;
-                            padding-bottom: 1rem;
-                            border-bottom: 1px solid var(--border);
-                        ">
-                            <span style="font-weight: 600;">${article.source.name}</span>
-                            <span title="${article.publishedAt}">
-                                ${new Date(article.publishedAt).toLocaleDateString('fr-FR', { 
-                                    month: 'short', 
-                                    day: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit'
-                                })}
-                            </span>
+                        <div style="display:flex;justify-content:space-between;color:var(--text-faint);font-size:0.85rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border);">
+                            <span style="font-weight:600;">${article.source.name}</span>
+                            <span>${new Date(article.publishedAt).toLocaleDateString('fr-FR')}</span>
                         </div>
                         
-                        <!-- CTA BUTTON -->
                         <a href="${article.url}" target="_blank" rel="noopener noreferrer" style="
-                            display: inline-block;
-                            padding: 0.8rem 1.5rem;
-                            background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,193,7,0.1) 100%);
-                            border: 1.5px solid var(--border);
-                            color: var(--gold);
-                            text-decoration: none;
-                            border-radius: 8px;
-                            font-weight: 600;
-                            text-align: center;
-                            transition: all 0.3s ease;
-                            cursor: pointer;
-                        " onmouseover="
-                            this.style.background='rgba(255,215,0,0.3)';
-                            this.style.borderColor='var(--gold)';
-                            this.style.transform='translateX(4px)';
-                        " onmouseout="
-                            this.style.background='rgba(255,215,0,0.2)';
-                            this.style.borderColor='var(--border)';
-                            this.style.transform='none';
-                        ">
-                            📰 Lire l'article →
+                            display:inline-block;
+                            padding:0.8rem 1.5rem;
+                            background:rgba(255,215,0,0.2);
+                            border:1.5px solid var(--border);
+                            color:var(--gold);
+                            text-decoration:none;
+                            border-radius:8px;
+                            font-weight:600;
+                            text-align:center;
+                            transition:all 0.3s;
+                        " onmouseover="this.style.background='rgba(255,215,0,0.3)';this.style.borderColor='var(--gold)';" onmouseout="this.style.background='rgba(255,215,0,0.2)';this.style.borderColor='var(--border)';">
+                            📰 Lire →
                         </a>
                     </div>
                 </article>
             `).join('');
             
-            // ⏰ Afficher la dernière mise à jour
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('fr-FR', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit'
-            });
-            lastUpdate.textContent = `✅ Dernière mise à jour: ${timeStr}`;
+            // ⏰ Timestamp
+            document.getElementById('last-update').textContent = `✅ Actualisé: ${new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})}`;
             
-            // ✨ Ajouter l'animation
+            // Animation
             const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `;
+            style.textContent = `@keyframes slideUp {from {opacity:0;transform:translateY(20px);} to {opacity:1;transform:translateY(0);}}`;
             document.head.appendChild(style);
             
         } catch (error) {
-            console.error('❌ Erreur GNews API:', error);
-            container.innerHTML = `
-                <div style="
-                    grid-column: 1 / -1;
-                    padding: 3rem 2rem;
-                    background: rgba(239, 68, 68, 0.1);
-                    border: 1px solid rgba(239, 68, 68, 0.3);
-                    border-radius: 12px;
-                    text-align: center;
-                    color: var(--red);
-                ">
-                    ⚠️ Erreur de connexion à l'API GNews<br>
-                    <small style="color: var(--text-faint);">Détails: ${error.message}</small>
-                </div>
-            `;
+            console.error('Erreur:', error);
         }
     }
 
@@ -1980,9 +1879,7 @@ window.addEventListener('load', async () => {
             const originalText = this.textContent;
             this.textContent = '⏳ Chargement...';
             this.disabled = true;
-            
             fetchForexNews();
-            
             setTimeout(() => {
                 this.textContent = originalText;
                 this.disabled = false;
@@ -1992,9 +1889,9 @@ window.addEventListener('load', async () => {
 
     // ⏱️ Auto-refresh
     window.addEventListener('load', fetchForexNews);
-    setInterval(fetchForexNews, 30 * 60 * 1000); // Toutes les 30 minutes
+    setInterval(fetchForexNews, 30 * 60 * 1000);
 
-    console.log('✅ GNews API Intégré - Actualités Macroéconomiques & Géopolitique en Temps Réel');
+    console.log('✅ GNews API Intégré');
 })();
 </script>
 </body>
