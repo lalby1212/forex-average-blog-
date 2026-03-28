@@ -1474,7 +1474,112 @@
         </div>
     </div>
 </section>
+section id="news-feed" style="
+    position: relative;
+    z-index: 1;
+    padding: 4rem 2.5rem;
+    background: linear-gradient(135deg, rgba(18,18,18,0.5) 0%, rgba(22,22,22,0.3) 100%);
+    border-bottom: 1px solid var(--border);
+    margin-top: 2rem;
+">
+    <div style="max-width: 1400px; margin: 0 auto;">
+        
+        <!-- HEADER SECTION -->
+        <div style="margin-bottom: 3rem; text-align: center;">
+            <span style="
+                display: inline-block;
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 1rem;
+            ">📰 Actualités en Temps Réel</span>
+            
+            <h2 style="
+                font-size: clamp(2rem, 5vw, 3.5rem);
+                font-weight: 700;
+                margin-bottom: 1rem;
+                background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            ">Macroéconomie & Géopolitique</h2>
+            
+            <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto;">
+                Suivez les actualités économiques et géopolitiques qui impactent directement les marchés Forex, Crypto & Matières Premières
+            </p>
+        </div>
 
+        <!-- NEWS GRID CONTAINER -->
+        <div id="gnews-container" style="
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        ">
+            <!-- Loading state -->
+            <div style="
+                grid-column: 1 / -1;
+                padding: 3rem 2rem;
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                text-align: center;
+                color: var(--text-muted);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            ">
+                <span style="display: inline-block; animation: spin 1s linear infinite; font-size: 1.5rem;">⏳</span>
+                <span>Chargement des actualités en temps réel...</span>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        ">
+            <button id="refresh-news" style="
+                padding: 0.75rem 2.5rem;
+                background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+                color: var(--dark);
+                border: none;
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-size: 1rem;
+                letter-spacing: 0.05em;
+            " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 40px rgba(255,215,0,0.3)';"
+              onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+                🔄 Actualiser les News
+            </button>
+            
+            <span style="
+                color: var(--text-faint);
+                font-size: 0.9rem;
+                min-width: 220px;
+            " id="last-update">
+                Chargement...
+            </span>
+        </div>
+
+    </div>
+</section>
+
+<!-- ANIMATION CSS -->
+<style>
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+</style>
 </main>
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
@@ -1560,5 +1665,337 @@ window.addEventListener('load', async () => {
 </script>
 <script src="chatbot.js"></script>
 <script src="newsletter.js"></script>
+<script>
+(function() {
+    // ⚙️ CONFIGURATION
+    const GNEWS_API_KEY = 'bd5292c2fa2674782133be11a4e1ebcbI'; // 👈 À OBTENIR sur gnews.io
+    
+    // 📰 Catégories d'actualités à suivre
+    const NEWS_QUERIES = [
+        { 
+            query: 'macroeconomic inflation interest rates Federal Reserve Fed', 
+            lang: 'en', 
+            topic: '📊 Macroéconomie',
+            priority: 1
+        },
+        { 
+            query: 'geopolitical risks tensions conflict markets', 
+            lang: 'en', 
+            topic: '⚠️ Géopolitique',
+            priority: 1
+        },
+        { 
+            query: 'central bank monetary policy decisions BOJ ECB', 
+            lang: 'en', 
+            topic: '🏛️ Banques Centrales',
+            priority: 2
+        },
+        { 
+            query: 'economic data releases employment GDP inflation report', 
+            lang: 'en', 
+            topic: '📈 Données Économiques',
+            priority: 2
+        },
+        { 
+            query: 'oil price energy OPEC commodities trading', 
+            lang: 'en', 
+            topic: '⛽ Matières Premières',
+            priority: 2
+        },
+        { 
+            query: 'bitcoin ethereum cryptocurrency blockchain regulation SEC', 
+            lang: 'en', 
+            topic: '₿ Crypto & Finance',
+            priority: 3
+        }
+    ];
+
+    // 🚀 Fonction principale de récupération des actualités
+    async function fetchForexNews() {
+        const container = document.getElementById('gnews-container');
+        const lastUpdate = document.getElementById('last-update');
+        
+        try {
+            // Réinitialiser le conteneur
+            container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:2rem;">⏳ Chargement des actualités...</div>';
+            
+            let allArticles = [];
+            
+            // 📡 Boucler sur chaque catégorie
+            for (const category of NEWS_QUERIES) {
+                const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(category.query)}&lang=${category.lang}&max=3&apikey=${GNEWS_API_KEY}`;
+                
+                try {
+                    const response = await fetch(url);
+                    
+                    // Vérifier les erreurs HTTP
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    // Vérifier les erreurs API
+                    if (data.errors) {
+                        console.warn(`Erreur API pour ${category.topic}:`, data.errors);
+                        continue;
+                    }
+                    
+                    if (data.articles && Array.isArray(data.articles)) {
+                        // Ajouter la catégorie à chaque article
+                        data.articles.forEach(article => {
+                            article.category = category.topic;
+                            article.categoryPriority = category.priority;
+                        });
+                        allArticles.push(...data.articles);
+                    }
+                } catch (error) {
+                    console.error(`Erreur pour ${category.topic}:`, error);
+                }
+            }
+            
+            // 🔄 Supprimer les doublons par URL
+            const uniqueArticles = Array.from(
+                new Map(allArticles.map(item => [item.url, item])).values()
+            );
+            
+            // 📅 Trier par date (plus récent en premier)
+            uniqueArticles.sort((a, b) => {
+                // Trier d'abord par priorité, puis par date
+                if (a.categoryPriority !== b.categoryPriority) {
+                    return a.categoryPriority - b.categoryPriority;
+                }
+                return new Date(b.publishedAt) - new Date(a.publishedAt);
+            });
+            
+            // ✂️ Limiter à 12 articles
+            const topArticles = uniqueArticles.slice(0, 12);
+            
+            // ❌ Gestion des erreurs
+            if (topArticles.length === 0) {
+                container.innerHTML = `
+                    <div style="
+                        grid-column: 1 / -1;
+                        padding: 3rem 2rem;
+                        background: rgba(239, 68, 68, 0.1);
+                        border: 1px solid rgba(239, 68, 68, 0.3);
+                        border-radius: 12px;
+                        text-align: center;
+                        color: var(--red);
+                        font-weight: 600;
+                    ">
+                        ⚠️ Impossible de charger les actualités. 
+                        <br><small style="color: var(--text-faint);">Vérifiez votre clé API GNews.io ou vérifiez votre quota (100 req/jour max)</small>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 🎨 Générer le HTML des articles
+            container.innerHTML = topArticles.map((article, index) => `
+                <article style="
+                    background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+                    border: 1px solid var(--border);
+                    border-radius: 12px;
+                    overflow: hidden;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    animation: slideUp 0.5s ease forwards;
+                    animation-delay: ${index * 50}ms;
+                    opacity: 0;
+                " onmouseover="
+                    this.style.transform='translateY(-8px)';
+                    this.style.borderColor='var(--gold)';
+                    this.style.boxShadow='0 20px 50px rgba(255,215,0,0.15)';
+                " onmouseout="
+                    this.style.transform='none';
+                    this.style.borderColor='var(--border)';
+                    this.style.boxShadow='none';
+                ">
+                    
+                    <!-- IMAGE -->
+                    ${article.image ? `
+                        <div style="
+                            width: 100%;
+                            height: 200px;
+                            overflow: hidden;
+                            background: linear-gradient(135deg, var(--dark3) 0%, var(--dark2) 100%);
+                            position: relative;
+                        ">
+                            <img src="${article.image}" alt="${article.title}" style="
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                transition: transform 0.3s ease;
+                            " onmouseover="this.style.transform='scale(1.08)';" onmouseout="this.style.transform='scale(1)';" onerror="this.parentElement.style.display='none';">
+                        </div>
+                    ` : ''}
+                    
+                    <!-- CONTENU -->
+                    <div style="
+                        padding: 1.5rem;
+                        display: flex;
+                        flex-direction: column;
+                        flex-grow: 1;
+                    ">
+                        <!-- BADGE CATÉGORIE -->
+                        <span style="
+                            display: inline-block;
+                            background: rgba(255,215,0,0.15);
+                            color: var(--gold);
+                            padding: 0.4rem 0.8rem;
+                            border-radius: 6px;
+                            font-size: 0.78rem;
+                            font-weight: 600;
+                            margin-bottom: 0.85rem;
+                            width: fit-content;
+                            border: 1px solid rgba(255,215,0,0.2);
+                        ">
+                            ${article.category}
+                        </span>
+                        
+                        <!-- TITRE -->
+                        <h3 style="
+                            margin: 0 0 0.85rem 0;
+                            font-size: 1.1rem;
+                            font-weight: 700;
+                            color: var(--text);
+                            line-height: 1.4;
+                            flex-grow: 1;
+                        ">
+                            ${article.title}
+                        </h3>
+                        
+                        <!-- DESCRIPTION -->
+                        <p style="
+                            color: var(--text-muted);
+                            font-size: 0.95rem;
+                            margin: 0 0 1rem 0;
+                            line-height: 1.5;
+                            flex-grow: 1;
+                        ">
+                            ${article.description ? article.description.substring(0, 120) + '...' : 'Lire l\'article complet pour plus de détails.'}
+                        </p>
+                        
+                        <!-- SOURCE & DATE -->
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            color: var(--text-faint);
+                            font-size: 0.85rem;
+                            margin-bottom: 1rem;
+                            padding-bottom: 1rem;
+                            border-bottom: 1px solid var(--border);
+                        ">
+                            <span style="font-weight: 600;">${article.source.name}</span>
+                            <span title="${article.publishedAt}">
+                                ${new Date(article.publishedAt).toLocaleDateString('fr-FR', { 
+                                    month: 'short', 
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </span>
+                        </div>
+                        
+                        <!-- CTA BUTTON -->
+                        <a href="${article.url}" target="_blank" rel="noopener noreferrer" style="
+                            display: inline-block;
+                            padding: 0.8rem 1.5rem;
+                            background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,193,7,0.1) 100%);
+                            border: 1.5px solid var(--border);
+                            color: var(--gold);
+                            text-decoration: none;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            text-align: center;
+                            transition: all 0.3s ease;
+                            cursor: pointer;
+                        " onmouseover="
+                            this.style.background='rgba(255,215,0,0.3)';
+                            this.style.borderColor='var(--gold)';
+                            this.style.transform='translateX(4px)';
+                        " onmouseout="
+                            this.style.background='rgba(255,215,0,0.2)';
+                            this.style.borderColor='var(--border)';
+                            this.style.transform='none';
+                        ">
+                            📰 Lire l'article →
+                        </a>
+                    </div>
+                </article>
+            `).join('');
+            
+            // ⏰ Afficher la dernière mise à jour
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('fr-FR', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit'
+            });
+            lastUpdate.textContent = `✅ Dernière mise à jour: ${timeStr}`;
+            
+            // ✨ Ajouter l'animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideUp {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+        } catch (error) {
+            console.error('❌ Erreur GNews API:', error);
+            container.innerHTML = `
+                <div style="
+                    grid-column: 1 / -1;
+                    padding: 3rem 2rem;
+                    background: rgba(239, 68, 68, 0.1);
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    border-radius: 12px;
+                    text-align: center;
+                    color: var(--red);
+                ">
+                    ⚠️ Erreur de connexion à l'API GNews<br>
+                    <small style="color: var(--text-faint);">Détails: ${error.message}</small>
+                </div>
+            `;
+        }
+    }
+
+    // 🔘 Event Listeners
+    const refreshBtn = document.getElementById('refresh-news');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', function() {
+            const originalText = this.textContent;
+            this.textContent = '⏳ Chargement...';
+            this.disabled = true;
+            
+            fetchForexNews();
+            
+            setTimeout(() => {
+                this.textContent = originalText;
+                this.disabled = false;
+            }, 1500);
+        });
+    }
+
+    // ⏱️ Auto-refresh
+    window.addEventListener('load', fetchForexNews);
+    setInterval(fetchForexNews, 30 * 60 * 1000); // Toutes les 30 minutes
+
+    console.log('✅ GNews API Intégré - Actualités Macroéconomiques & Géopolitique en Temps Réel');
+})();
+</script>
 </body>
 </html>
