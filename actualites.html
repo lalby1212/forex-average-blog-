@@ -512,8 +512,9 @@
 (function() {
     'use strict';
 
-    // 🔑 Configuration API - REMPLACER PAR VOTRE CLÉ
-    const GNEWS_API_KEY = 'd6f31ca87931b8649a7f4b3b16992be2'; // À remplacer
+    // 🔑 IMPORTANT : La clé API GNews n'est PLUS ici (sécurité)
+    // Elle est maintenant dans /api/news.php côté serveur
+    // Les appels à l'API passent par le proxy PHP qui contourne CORS
 
     // 📰 Catégories d'actualités
     const NEWS_CATEGORIES = [
@@ -542,7 +543,8 @@
             // Récupérer les articles de chaque catégorie
             for (const category of NEWS_CATEGORIES) {
                 try {
-                    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(category.query)}&lang=en&max=5&apikey=${GNEWS_API_KEY}`;
+                    // 🔧 UTILISER LE PROXY PHP AU LIEU D'APPELER GNEWS DIRECTEMENT
+                    const url = `/api/news.php?q=${encodeURIComponent(category.query)}&lang=en&max=5`;
                     const response = await fetch(url);
 
                     if (!response.ok) {
