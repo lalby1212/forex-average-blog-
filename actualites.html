@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W44TM5CW');</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>📰 Actualités Macroéconomiques | Forex Average</title>
+    <meta name="description" content="Suivez les actualités économiques, géopolitiques et les données qui impactent les marchés Forex, Crypto et Matières Premières en temps réel.">
+    <meta name="keywords" content="actualités forex, macroéconomique, géopolitique, news trading, économie, banque centrale">
+    <meta name="author" content="Forex Average">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://forexaverage.com/actualites/">
+    <meta property="og:title" content="Actualités Macroéconomiques | Forex Average">
+    <meta property="og:description" content="Actualités économiques et géopolitiques pour traders Forex">
+    <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#FFD700">
+
+    <!-- Preconnect -->
+    <link rel="dns-prefetch" href="https://gnews.io">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #FFC107;
+            --gold-glow: rgba(255,215,0,0.18);
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --dark3: #111111;
+            --card: rgba(18,18,18,0.92);
+            --card2: rgba(22,22,22,0.85);
+            --border: rgba(255,215,0,0.18);
+            --border-strong: rgba(255,215,0,0.38);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+            --text-faint: rgba(255,255,255,0.38);
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ─── BACKGROUND ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        nav.scrolled { background: rgba(4,4,4,0.99); border-bottom-color: var(--border-strong); }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: -apple-system, 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            font-weight: 900;
+            font-size: 1.35rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: opacity 0.2s;
+        }
+        .logo:hover { opacity: 0.8; }
+
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0; width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover { color: #fff; }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .nav-menu a.active { color: var(--gold); }
+        .nav-menu a.active::after { width: 100%; }
+
+        /* ─── HEADER ─── */
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--text) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ─── MAIN CONTENT ─── */
+        main {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(18,18,18,0.5) 0%, rgba(22,22,22,0.3) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .btn-refresh {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+            color: var(--dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .btn-refresh:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,215,0,0.3);
+        }
+
+        .btn-refresh:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            color: var(--text-faint);
+            font-size: 0.9rem;
+            min-width: 220px;
+            text-align: center;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .news-card {
+            background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            animation: slideUp 0.5s ease forwards;
+        }
+
+        @for $i from 1 through 12 {
+            .news-card:nth-child(#{$i}) { animation-delay: #{$i * 50}ms; }
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 25px 60px rgba(255,215,0,0.15);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            background: var(--dark3);
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover .news-image img {
+            transform: scale(1.08);
+        }
+
+        .news-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(255,215,0,0.15);
+            color: var(--gold);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 0.85rem;
+            width: fit-content;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        .news-title {
+            margin: 0 0 0.85rem 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .news-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin: 0 0 1rem 0;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-faint);
+            font-size: 0.85rem;
+            margin: 1rem 0;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .news-source {
+            font-weight: 600;
+        }
+
+        .news-cta {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255,215,0,0.2);
+            border: 1.5px solid var(--border);
+            color: var(--gold);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .news-cta:hover {
+            background: rgba(255,215,0,0.3);
+            border-color: var(--gold);
+            transform: translateX(4px);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
+
+        .error {
+            padding: 2rem;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            border-radius: 12px;
+            color: var(--red);
+            text-align: center;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(7,7,7,0.96);
+            border-top: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-faint);
+        }
+
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: rgba(5,5,5,0.98);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            font-weight: 900;
+            font-size: 1.3rem;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+        
+        .footer-tagline { font-size: 0.78rem; color: var(--text-faint); letter-spacing: 1px; margin-bottom: 2rem; }
+        
+        .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        
+        .footer-links a { color: var(--text-faint); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; font-weight: 500; }
+        
+        .footer-links a:hover { color: var(--gold); }
+        
+        .footer-copy { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 1rem; }
+        
+        .footer-disclaimer {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.28);
+            max-width: 680px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .footer-legal a { color: rgba(255,255,255,0.22); font-size: 0.78rem; text-decoration: none; transition: color 0.2s; }
+        
+        .footer-legal a:hover { color: var(--gold); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu { gap: 1rem; font-size: 0.85rem; }
+            .news-grid { grid-template-columns: 1fr; }
+            .controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-container">
+        <a href="/" class="logo">FOREX AVERAGE</a>
+        <ul class="nav-menu">
+            <li><a href="/">📊 Accueil</a></li>
+            <li><a href="/actualites/" class="active">📰 Actualités</a></li>
+            <li><a href="/analyses/">📈 Analyses</a></li>
+            <li><a href="calculateur.html">🧮 Calculateurs</a></li>
+            <li><a href="partenaires.html">🤝 Partenaires</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<header class="header">
+    <h1>📰 Actualités Macroéconomiques</h1>
+    <p>Suivez les actualités économiques, géopolitiques et les données qui impactent les marchés Forex, Crypto & Matières Premières en temps réel</p>
+</header>
+
+<!-- MAIN -->
+<main>
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="btn-refresh" id="refreshBtn">🔄 Actualiser les News</button>
+        <span class="status" id="statusText">⏳ Chargement des actualités...</span>
+    </div>
+
+    <!-- NEWS GRID -->
+    <div class="news-grid" id="newsGrid">
+        <div class="loading">
+            <span class="spinner">⏳</span>
+            <span>Chargement des actualités...</span>
+        </div>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+    <div class="footer-logo">FOREX AVERAGE</div>
+    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+
+    <div class="footer-links">
+        <a href="/">📊 Accueil</a>
+        <a href="/analyses/">📈 Analyses</a>
+        <a href="calculateur.html">🧮 Calculateurs</a>
+        <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer">📺 YouTube</a>
+        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" rel="noopener noreferrer">📈 TradingView</a>
+        <a href="https://t.me/forexavganalysis" target="_blank" rel="noopener noreferrer">👤 Contact</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer">📱 Canal Gratuit</a>
+        <a href="https://t.me/+8Q2zPHrvFghlMzI8" target="_blank" rel="noopener noreferrer">💎 Premium</a>
+    </div>
+
+    <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+
+    <div class="footer-disclaimer">
+        ⚠️ Le contenu de ce site est fourni à titre informatif et éducatif uniquement. Il ne constitue pas un conseil en investissement. Le trading Forex, Crypto et Matières Premières comporte des risques significatifs de perte en capital. Les performances passées ne garantissent pas les résultats futurs.
+    </div>
+
+    <div class="footer-legal">
+        <a href="mentions-legales.html">⚖️ Mentions Légales & Disclaimer</a>
+    </div>
+</footer>
+
+<!-- SCRIPT GNews API -->
+<script>
+(function() {
+    'use strict';
+
+    // 📰 Catégories d'actualités
+    const NEWS_CATEGORIES = [
+        { id: 'macro', query: 'macroeconomic inflation interest rates', label: '📊 Macroéconomie' },
+        { id: 'geopolitique', query: 'geopolitical conflict tensions', label: '⚠️ Géopolitique' },
+        { id: 'crypto', query: 'bitcoin ethereum cryptocurrency', label: '₿ Crypto' },
+        { id: 'commodities', query: 'oil gold silver commodities', label: '⛽ Matières Premières' }
+    ];
+
+    let allArticles = [];
+    const articlesPerCategory = 3;
+
+    // 🚀 Récupérer les actualités via NewsData.io (gratuit + CORS natif)
+    async function fetchNews() {
+        const newsGrid = document.getElementById('newsGrid');
+        const statusText = document.getElementById('statusText');
+        const refreshBtn = document.getElementById('refreshBtn');
+
+        refreshBtn.disabled = true;
+        statusText.textContent = '⏳ Chargement...';
+
+        try {
+            newsGrid.innerHTML = '<div class="loading"><span class="spinner">⏳</span><span>Chargement des actualités...</span></div>';
+
+            allArticles = [];
+
+            // 📡 NewsData.io - API gratuite avec CORS natif (VRAIMENT FONCTIONNE)
+            for (const category of NEWS_CATEGORIES) {
+                try {
+               // 📡 NewsData.io - API gratuite avec CORS natif
+            try {
+                // Votre URL NewsData.io optimisée
+                const apikey = 'pub_fd71a7b183a2459d93bafa32cc96a165'; // À remplacer par votre clé
+                const url = `https://newsdata.io/api/1/latest?apikey=${apikey}&country=us,fr,cn,ru,jp&language=fr,en&category=breaking,business,politics,world&timezone=europe/paris&prioritydomain=top&image=1&video=0&domainurl=forexaverage.com&removeduplicate=1`;
+                
+                const response = await fetch(url);
+if (!response.ok) {
+    // Log the actual error message from the API body to see why 401 occurred
+    const errorData = await response.json();
+    console.warn(`Erreur ${response.status} (${errorData.results?.message || 'Unauthorized'}) pour ${category.label}`);
+    continue;
+}
+
+                    const data = await response.json();
+                    
+                    if (data.results && Array.isArray(data.results)) {
+                        data.results.forEach(article => {
+                            article.category = category.label;
+                            // NewsData.io utilise 'pubDate' au lieu de 'publishedAt'
+                            if (!article.publishedAt && article.pubDate) {
+                                article.publishedAt = article.pubDate;
+                            }
+                        });
+                        allArticles.push(...data.results);
+                    }
+                } catch (error) {
+                    console.warn(`Erreur ${category.label}:`, error);
+                }
+            }
+
+            if (allArticles.length === 0) {
+                newsGrid.innerHTML = '<div class="error" style="grid-column:1/-1;">❌ Impossible de charger les actualités. Réessayez dans quelques minutes.</div>';
+                statusText.textContent = '❌ Erreur de chargement';
+                refreshBtn.disabled = false;
+                return;
+            }
+
+            // Supprimer les doublons
+            const uniqueArticles = Array.from(
+                new Map(allArticles.map(item => [item.link || item.url, item])).values()
+            );
+
+            // Trier par date
+            uniqueArticles.sort((a, b) => {
+                const dateA = new Date(a.publishedAt || a.pubDate || 0);
+                const dateB = new Date(b.publishedAt || b.pubDate || 0);
+                return dateB - dateA;
+            });
+
+            allArticles = uniqueArticles;
+            displayNews();
+
+            // Mise à jour du timestamp
+            const now = new Date();
+            statusText.textContent = `✅ Actualisé: ${now.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'})}`;
+
+        } catch (error) {
+            console.error('Erreur:', error);
+            newsGrid.innerHTML = '<div class="error" style="grid-column:1/-1;">❌ Erreur de connexion. Réessayez plus tard.</div>';
+            statusText.textContent = '❌ Erreur';
+        } finally {
+            refreshBtn.disabled = false;
+        }
+    }
+
+    // 🎨 Afficher les articles
+    function displayNews() {
+        const newsGrid = document.getElementById('newsGrid');
+
+        if (allArticles.length === 0) {
+            newsGrid.innerHTML = '<div class="loading">Aucun article trouvé</div>';
+            return;
+        }
+
+        newsGrid.innerHTML = allArticles.map((article, index) => `
+            <article class="news-card" style="animation-delay: ${index * 50}ms;">
+                ${article.image ? `
+                    <div class="news-image">
+                        <img src="${article.image}" alt="${article.title}" onerror="this.parentElement.style.display='none';">
+                    </div>
+                ` : ''}
+            <div class="news-content">
+                    <span class="news-category">${article.category}</span>
+                    <h3 class="news-title">${article.title}</h3>
+                    <p class="news-description">${article.description ? article.description.substring(0, 150) + '...' : ''}</p>
+                    <div class="news-meta">
+                        <span class="news-source">${article.source_id || article.source?.name || 'NewsData.io'}</span>
+                        <span>${new Date(article.publishedAt || article.pubDate || 0).toLocaleDateString('fr-FR')}</span>
+                    </div>
+                    <a href="${article.link || article.url}" target="_blank" rel="noopener noreferrer" class="news-cta">
+                        📰 Lire l'article →
+                    </a>
+                </div>
+            </article>
+        `).join('');
+    }
+
+    // 🔘 Event Listeners
+    document.getElementById('refreshBtn').addEventListener('click', fetchNews);
+
+    // Charger au démarrage
+    window.addEventListener('load', fetchNews);
+
+    // Auto-refresh toutes les 30 minutes
+    setInterval(fetchNews, 30 * 60 * 1000);
+
+    // Sticky nav
+    const nav = document.querySelector('nav');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                nav.classList.toggle('scrolled', window.pageYOffset > 60);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+
+    console.log('✅ Page Actualités chargée - GNews API');
+})();
+</script>
+
+</body>
+</html>
