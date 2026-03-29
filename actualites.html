@@ -540,20 +540,13 @@
             // 📡 NewsData.io - API gratuite avec CORS natif (VRAIMENT FONCTIONNE)
             for (const category of NEWS_CATEGORIES) {
                 try {
-                    // API NewsData.io - Gratuit, pas de proxy needed, CORS OK
-                  https://newsdata.io/api/1/latest? 
-  apikey=pub_fd71a7b183a2459d93bafa32cc96a165
-  &country=us,fr,cn,ru,jp
-  &language=fr,en
-  &category=breaking,business,politics,world
-  &timezone=europe/paris
-  &prioritydomain=top
-  &image=1
-  &video=0
-  &domainurl=forexaverage.com
-  &removeduplicate=1
-const response = await fetch(url);
-
+               // 📡 NewsData.io - API gratuite avec CORS natif
+            try {
+                // Votre URL NewsData.io optimisée
+                const apikey = 'pub_fd71a7b183a2459d93bafa32cc96a165'; // À remplacer par votre clé
+                const url = `https://newsdata.io/api/1/latest?apikey=${apikey}&country=us,fr,cn,ru,jp&language=fr,en&category=breaking,business,politics,world&timezone=europe/paris&prioritydomain=top&image=1&video=0&domainurl=forexaverage.com&removeduplicate=1`;
+                
+                const response = await fetch(url);
 if (!response.ok) {
     // Log the actual error message from the API body to see why 401 occurred
     const errorData = await response.json();
