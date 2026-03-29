@@ -541,7 +541,7 @@
             for (const category of NEWS_CATEGORIES) {
                 try {
                     // API NewsData.io - Gratuit, pas de proxy needed, CORS OK
-                    const url = `https://newsdata.io/api/1/news?q=${encodeURIComponent(category.query)}&country=fr,us,gb&language=en&sortby=publishedAt&pagesize=${articlesPerCategory}&apikey=pub_25919a5e2d13e3896098c9f3d19e7a39dce6e`;
+                    const url = `https://newsdata.io/api/1/news?q=${encodeURIComponent(category.query)}&country=fr,us,gb&language=publishedAt&size=${articlesPerCategory}&apikey=pub_25919a5e2d13e3896098c9f3d19e7a39dce6e`;
                     
                     const response = await fetch(url);
 
