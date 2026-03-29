@@ -622,13 +622,13 @@ if (!response.ok) {
                         <img src="${article.image}" alt="${article.title}" onerror="this.parentElement.style.display='none';">
                     </div>
                 ` : ''}
-                <div class="news-content">
+            <div class="news-content">
                     <span class="news-category">${article.category}</span>
                     <h3 class="news-title">${article.title}</h3>
                     <p class="news-description">${article.description ? article.description.substring(0, 150) + '...' : ''}</p>
                     <div class="news-meta">
-                        <span class="news-source">${article.source.name}</span>
-                        <span>${new Date(article.publishedAt).toLocaleDateString('fr-FR')}</span>
+                        <span class="news-source">${article.source_id || article.source?.name || 'NewsData.io'}</span>
+                        <span>${new Date(article.publishedAt || article.pubDate || 0).toLocaleDateString('fr-FR')}</span>
                     </div>
                     <a href="${article.link || article.url}" target="_blank" rel="noopener noreferrer" class="news-cta">
                         📰 Lire l'article →
