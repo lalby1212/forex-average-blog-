@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier Économique | NFP, CPI, Fed, BCE | Forex Average</title>
+    <meta name="description" content="Calendrier économique complet en temps réel : NFP, CPI, décisions Fed & BCE, PIB, inflation. Horloge des sessions de trading Tokyo, Londres, New York.">
+    <meta name="theme-color" content="#FFD700">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #FFD700;
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --card: rgba(18,18,18,0.92);
+            --border: rgba(255,215,0,0.18);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        nav.scrolled { background: rgba(4,4,4,0.99); border-bottom-color: rgba(255,215,0,0.38); }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.35rem;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .logo:hover { opacity: 0.8; }
+        .logo-sub {
+            font-size: 0.6rem;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.38);
+            display: block;
+            margin-top: -4px;
+            -webkit-text-fill-color: rgba(255,255,255,0.38);
+        }
+
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            transition: color 0.2s;
+            position: relative;
+        }
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0; width: 0; height: 1px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        .nav-menu a:hover { color: #fff; }
+        .nav-menu a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: var(--gold);
+            color: #000 !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700 !important;
+            font-size: 0.82rem !important;
+            letter-spacing: 0.5px;
+            transition: all 0.2s !important;
+        }
+        .nav-cta:hover { background: #fff !important; }
+        .nav-cta::after { display: none !important; }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            padding: 6px;
+            background: rgba(255,215,0,0.08);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .hamburger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s; display: block; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ═══════════ MEGA MENU ═══════════ */
+        .nav-item-drop { position: relative; }
+        .nav-item-drop > a { display: flex !important; align-items: center; gap: 0.35rem; }
+        .nav-chevron {
+            width: 12px; height: 12px;
+            transition: transform 0.22s ease;
+            flex-shrink: 0;
+            opacity: 0.55;
+        }
+        .nav-item-drop:hover > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
+        .nav-item-drop::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 20px; }
+        .drop-panel {
+            position: absolute;
+            top: calc(100% + 16px);
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: rgba(8,8,8,0.97);
+            border: 1px solid rgba(255,215,0,0.18);
+            border-radius: 14px;
+            padding: 0.6rem;
+            min-width: 230px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 28px 72px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,215,0,0.06);
+            z-index: 9999;
+        }
+        .drop-panel::before {
+            content: '';
+            position: absolute;
+            top: -6px; left: 50%;
+            width: 10px; height: 10px;
+            background: rgba(8,8,8,0.97);
+            border-left: 1px solid rgba(255,215,0,0.18);
+            border-top: 1px solid rgba(255,215,0,0.18);
+            transform: translateX(-50%) rotate(45deg);
+        }
+        .nav-item-drop:hover .drop-panel {
+            opacity: 1; visibility: visible; pointer-events: all;
+            transform: translateX(-50%) translateY(0);
+        }
+        .drop-link {
+            display: flex !important;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.65rem 0.85rem !important;
+            border-radius: 10px;
+            color: rgba(255,255,255,0.72) !important;
+            text-decoration: none;
+            font-size: 0.875rem !important;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            width: 100%;
+        }
+        .drop-link::after { display: none !important; }
+        .drop-link:hover { background: rgba(255,215,0,0.07) !important; color: #FFD700 !important; }
+        .drop-link:hover .drop-icon { background: rgba(255,215,0,0.14); color: #FFD700; }
+        .drop-icon {
+            width: 34px; height: 34px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,215,0,0.65);
+            flex-shrink: 0;
+            transition: all 0.15s;
+        }
+        .drop-label { font-weight: 600; font-size: 0.875rem; line-height: 1.3; display: block; }
+        .drop-desc { font-size: 0.72rem; color: rgba(255,255,255,0.38); margin-top: 1px; display: block; }
+        .drop-sep { height: 1px; background: rgba(255,215,0,0.08); margin: 0.35rem 0.85rem; }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--text) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* MAIN */
+        main {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .resource-section {
+            background: linear-gradient(135deg, var(--card) 0%, rgba(22,22,22,0.85) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .resource-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .resource-section p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .resource-widget {
+            width: 100%;
+            min-height: 600px;
+            background: rgba(18,18,18,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* SESSIONS CLOCK */
+        .sessions-section {
+            background: linear-gradient(135deg, rgba(255,215,0,0.08) 0%, rgba(22,163,74,0.05) 100%);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .sessions-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .session-card {
+            background: rgba(18,18,18,0.6);
+            border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .session-card:hover {
+            border-color: var(--gold);
+            background: rgba(18,18,18,0.8);
+            transform: translateY(-5px);
+        }
+
+        .session-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            color: var(--gold);
+        }
+
+        .session-opening {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+
+        .session-opening strong {
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .session-status {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid;
+        }
+
+        .session-open {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+            border-color: #22c55e;
+        }
+
+        .session-closed {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .session-current-time {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 0.05em;
+        }
+
+        .session-next {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,215,0,0.15);
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(5,5,5,0.98);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-weight: 900;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--gold), #FFC107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.38);
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.38);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.38);
+        }
+
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: fixed;
+                top: 68px; left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(5,5,5,0.99);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border);
+                padding: 2rem;
+                gap: 1.2rem;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            .nav-menu.active { left: 0; }
+            .nav-menu li { width: 100%; }
+            .nav-menu a { font-size: 1rem; padding: 0.5rem 0; display: block; }
+            .nav-cta { display: inline-block; text-align: center; }
+            .nav-item-drop > a { justify-content: space-between; }
+            .drop-panel {
+                position: static;
+                transform: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                pointer-events: all !important;
+                box-shadow: none;
+                border: none;
+                border-left: 2px solid rgba(255,215,0,0.15);
+                border-radius: 0;
+                margin: 0.2rem 0 0.2rem 0.5rem;
+                padding: 0.2rem 0;
+                background: transparent;
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                display: none;
+                min-width: unset;
+            }
+            .drop-panel::before { display: none; }
+            .nav-item-drop.open .drop-panel { display: block; }
+            .nav-item-drop.open > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
+            .drop-link { white-space: normal; padding: 0.4rem 0.7rem !important; gap: 0.5rem; }
+            .drop-icon { display: none; }
+            .drop-desc { display: none; }
+            .drop-sep { margin: 0.2rem 0.7rem; }
+            .sessions-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 2rem; }
+            .resource-widget { min-height: 400px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Navigation principale">
+    <div class="nav-container">
+        <a href="/" class="logo" aria-label="Retour à l'accueil – Forex Average">
+            FOREX AVERAGE
+            <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+        </a>
+
+        <button class="hamburger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+
+        <ul class="nav-menu">
+            <li><a href="/">Accueil</a></li>
+
+            <!-- ── Marché ── -->
+            <li class="nav-item-drop">
+                <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="analyses.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
+                        <span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto & Matières Premières</span></span>
+                    </a>
+                    <a href="actualites.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+                        <span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span>
+                    </a>
+                    <a href="calendrier-economique.html" class="drop-link" style="color:#FFD700 !important; background:rgba(255,215,0,0.05);">
+                        <span class="drop-icon" style="background:rgba(255,215,0,0.12); color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+                        <span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements & indicateurs clés</span></span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- ── Outils ── -->
+            <li class="nav-item-drop">
+                <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="graphique.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
+                        <span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span>
+                    </a>
+                    <a href="calculateur.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line></svg></span>
+                        <span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span>
+                    </a>
+                    <a href="screener.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+                        <span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- ── Partenaires ── -->
+            <li class="nav-item-drop">
+                <a href="#" style="color:var(--gold); font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="partenaires.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                        <span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span>
+                    </a>
+                    <div class="drop-sep"></div>
+                    <a href="brokers.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+                        <span><span class="drop-label">Brokers</span><span class="drop-desc">Brokers recommandés</span></span>
+                    </a>
+                </div>
+            </li>
+
+            <!-- ── Communauté ── -->
+            <li class="nav-item-drop">
+                <a href="#">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
+                        <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
+                    </a>
+                    <div class="drop-sep"></div>
+                    <a href="#telegram" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+                        <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
+                    </a>
+                </div>
+            </li>
+
+            <li><a href="#telegram" class="nav-cta">Telegram</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HEADER -->
+<header class="header">
+    <h1>📅 Calendrier Économique</h1>
+    <p>Événements macro en temps réel : NFP, CPI, Fed, BCE, PIB, inflation — et horloge des sessions de trading</p>
+</header>
+
+<!-- MAIN -->
+<main>
+
+    <!-- HORLOGE DES SESSIONS -->
+    <section class="sessions-section">
+        <h2>🕐 Horloge des Sessions de Trading</h2>
+        <div class="sessions-grid">
+            <!-- Tokyo -->
+            <div class="session-card">
+                <h3>🇯🇵 Tokyo</h3>
+                <div class="session-opening">
+                    <strong>09:00 - 18:00 JST</strong><br>
+                    <span style="font-size: 0.85rem;">Session Asiatique</span>
+                </div>
+                <div class="session-status session-closed" id="tokyo-status">Fermée</div>
+                <div class="session-current-time" id="tokyo-time">00:00</div>
+                <div class="session-next" id="tokyo-next">Ouverture dans...</div>
+            </div>
+
+            <!-- Londres -->
+            <div class="session-card">
+                <h3>🇬🇧 Londres</h3>
+                <div class="session-opening">
+                    <strong>08:00 - 17:00 GMT</strong><br>
+                    <span style="font-size: 0.85rem;">Session Européenne</span>
+                </div>
+                <div class="session-status session-open" id="london-status">Ouverte</div>
+                <div class="session-current-time" id="london-time">00:00</div>
+                <div class="session-next" id="london-next">Fermeture dans...</div>
+            </div>
+
+            <!-- New York -->
+            <div class="session-card">
+                <h3>🗽 New York</h3>
+                <div class="session-opening">
+                    <strong>13:30 - 22:00 EST</strong><br>
+                    <span style="font-size: 0.85rem;">Session Américaine</span>
+                </div>
+                <div class="session-status session-closed" id="newyork-status">Fermée</div>
+                <div class="session-current-time" id="newyork-time">00:00</div>
+                <div class="session-next" id="newyork-next">Ouverture dans...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALENDRIER ÉCONOMIQUE -->
+    <section class="resource-section">
+        <h2>📅 Calendrier Économique Complet</h2>
+        <p>Tous les événements macro majeurs : NFP, CPI, décisions Fed/BCE, PIB, inflation... Filtrables par pays et importance.</p>
+        <div class="resource-widget">
+            <div class="tradingview-widget-container">
+                <div class="tradingview-widget-container__widget"></div>
+                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                {
+                    "colorTheme": "dark",
+                    "isTransparent": false,
+                    "locale": "fr",
+                    "width": "100%",
+                    "height": "600"
+                }
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACTUALITÉS & GÉOPOLITIQUE -->
+    <section class="resource-section">
+        <h2>📰 Actualités & Géopolitique</h2>
+        <p>Toutes les actualités économiques et géopolitiques impactant les marchés. En français, temps réel.</p>
+        <div style="text-align: center; padding: 3rem 2rem; background: rgba(18,18,18,0.5); border-radius: 8px;">
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.95rem;">Consultez notre page actualités dédiée avec un flux complet filtrés et actualisés.</p>
+            <a href="actualites.html" style="display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, var(--gold), #FFC107); color: #000; text-decoration: none; border-radius: 10px; font-weight: 700; transition: all 0.3s; font-size: 1rem;">
+                📰 Voir toutes les Actualités →
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">FOREX AVERAGE</div>
+    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+
+    <div class="footer-links">
+        <a href="/">📊 Analyses</a>
+        <a href="calculateur.html">🧮 Calculateurs</a>
+        <a href="https://youtube.com/@forexaverage" target="_blank">📺 YouTube</a>
+        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank">📈 TradingView</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank">💬 Contact</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank">📱 Telegram</a>
+    </div>
+
+    <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+</footer>
+
+<!-- NAV SCRIPT -->
+<script>
+// Hamburger
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+        hamburger.setAttribute('aria-expanded', !expanded);
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+    document.addEventListener('click', e => {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            hamburger.setAttribute('aria-expanded','false');
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+}
+// Dropdown mobile toggle
+document.querySelectorAll('.nav-item-drop > a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 900) {
+            e.preventDefault();
+            const parent = this.parentElement;
+            const wasOpen = parent.classList.contains('open');
+            document.querySelectorAll('.nav-item-drop').forEach(el => el.classList.remove('open'));
+            if (!wasOpen) parent.classList.add('open');
+        }
+    });
+});
+// Sticky nav
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+});
+</script>
+
+<!-- HORLOGE SESSIONS SCRIPT -->
+<script>
+function updateSessions() {
+    const now = new Date();
+    
+    // Tokyo (JST = UTC+9)
+    const tokyoTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Tokyo' }));
+    const tokyoHour = tokyoTime.getHours();
+    const tokyoMin = tokyoTime.getMinutes();
+    
+    // Londres (GMT = UTC+0)
+    const londonTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+    const londonHour = londonTime.getHours();
+    const londonMin = londonTime.getMinutes();
+    
+    // New York (EST = UTC-5)
+    const nyTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    const nyHour = nyTime.getHours();
+    const nyMin = nyTime.getMinutes();
+    
+    // Mise à jour Tokyo (9-18)
+    const tokyoOpen = tokyoHour >= 9 && tokyoHour < 18;
+    updateSessionStatus('tokyo', tokyoOpen, tokyoTime, { open: 9, close: 18 });
+    
+    // Mise à jour Londres (8-17)
+    const londonOpen = londonHour >= 8 && londonHour < 17;
+    updateSessionStatus('london', londonOpen, londonTime, { open: 8, close: 17 });
+    
+    // Mise à jour New York (13:30-22:00)
+    const nyOpen = (nyHour > 13 || (nyHour === 13 && nyMin >= 30)) && nyHour < 22;
+    updateSessionStatus('newyork', nyOpen, nyTime, { open: 13, close: 22, minute: 30 });
+}
+
+function updateSessionStatus(city, isOpen, timeObj, hours) {
+    const statusEl = document.getElementById(city + '-status');
+    const timeEl = document.getElementById(city + '-time');
+    const nextEl = document.getElementById(city + '-next');
+    
+    const timeStr = timeObj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    timeEl.textContent = timeStr;
+    
+    statusEl.textContent = isOpen ? 'Ouverte' : 'Fermée';
+    statusEl.className = 'session-status ' + (isOpen ? 'session-open' : 'session-closed');
+    
+    // Calculer temps jusqu'à changement
+    const currentHour = timeObj.getHours();
+    const currentMin = timeObj.getMinutes();
+    
+    let minutesLeft;
+    if (isOpen) {
+        minutesLeft = (hours.close - currentHour) * 60 - currentMin;
+        nextEl.textContent = `Fermeture dans ${Math.floor(minutesLeft / 60)}h ${minutesLeft % 60}min`;
+    } else {
+        let openHour = hours.open;
+        if (currentHour >= hours.close) {
+            openHour = hours.open + 24;
+        }
+        minutesLeft = (openHour - currentHour) * 60 - currentMin;
+        if (minutesLeft < 0) minutesLeft += 24 * 60;
+        nextEl.textContent = `Ouverture dans ${Math.floor(minutesLeft / 60)}h ${minutesLeft % 60}min`;
+    }
+}
+
+// Mettre à jour au chargement et chaque minute
+updateSessions();
+setInterval(updateSessions, 60000);
+</script>
+<script src="/chatbot.js"></script>
+</body>
+</html>
