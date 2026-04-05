@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Screener | Forex, Crypto, Commodities | Forex Average</title>
+    <meta name="description" content="Screeners temps réel avec heatmaps : Forex, Crypto, Commodities. Analysez les devises, cryptos et matières premières en direct.">
+    <meta name="theme-color" content="#FFD700">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #FFD700;
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --card: rgba(18,18,18,0.92);
+            --border: rgba(255,215,0,0.18);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ─── NAV ─── */
+        nav { position:sticky;top:0;z-index:1000;background:rgba(7,7,7,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);transition:background 0.3s; }
+        nav.scrolled { background:rgba(5,5,5,0.99); }
+        .nav-container { max-width:1400px;margin:0 auto;padding:0 2.5rem;height:68px;display:flex;justify-content:space-between;align-items:center; }
+        .logo { font-weight:900;font-size:1.35rem;background:linear-gradient(135deg,#FFD700,#FFC107);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;transition:opacity 0.2s; }
+        .logo:hover { opacity:0.8; }
+        .logo-sub { font-size:0.6rem;letter-spacing:1.5px;display:block;margin-top:-4px;color:rgba(255,255,255,0.3);-webkit-text-fill-color:rgba(255,255,255,0.3); }
+        .nav-menu { display:flex;list-style:none;gap:2rem;align-items:center; }
+        .nav-menu a { text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;letter-spacing:0.3px;transition:color 0.2s;position:relative; }
+        .nav-menu a::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s; }
+        .nav-menu a:hover { color:#fff; }
+        .nav-menu a:hover::after { width:100%; }
+        .nav-cta { background:var(--gold)!important;color:#000!important;padding:0.5rem 1.2rem;border-radius:6px;font-weight:700!important;font-size:0.82rem!important;letter-spacing:0.5px;transition:all 0.2s!important; }
+        .nav-cta:hover { background:#fff!important; }
+        .nav-cta::after { display:none!important; }
+        /* Mega menu */
+        .nav-item-drop { position:relative; }
+        .nav-item-drop>a { display:flex!important;align-items:center;gap:0.35rem; }
+        .nav-chevron { width:12px;height:12px;transition:transform 0.22s ease;flex-shrink:0;opacity:0.55; }
+        .nav-item-drop:hover>a .nav-chevron { transform:rotate(180deg);opacity:1; }
+        .nav-item-drop::after { content:'';position:absolute;top:100%;left:0;right:0;height:20px; }
+        .drop-panel { position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(6px);background:rgba(8,8,8,0.97);border:1px solid rgba(255,215,0,0.18);border-radius:14px;padding:0.6rem;min-width:230px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.22s ease,transform 0.22s ease;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 28px 72px rgba(0,0,0,0.65);z-index:9999; }
+        .drop-panel::before { content:'';position:absolute;top:-6px;left:50%;width:10px;height:10px;background:rgba(8,8,8,0.97);border-left:1px solid rgba(255,215,0,0.18);border-top:1px solid rgba(255,215,0,0.18);transform:translateX(-50%) rotate(45deg); }
+        .nav-item-drop:hover .drop-panel { opacity:1;visibility:visible;pointer-events:all;transform:translateX(-50%) translateY(0); }
+        .drop-link { display:flex!important;align-items:center;gap:0.85rem;padding:0.65rem 0.85rem!important;border-radius:10px;transition:background 0.15s;color:var(--text-muted)!important;white-space:nowrap;width:100%;text-decoration:none; }
+        .drop-link::after { display:none!important; }
+        .drop-link:hover { background:rgba(255,215,0,0.07)!important;color:#FFD700!important; }
+        .drop-link:hover .drop-icon { background:rgba(255,215,0,0.14);color:#FFD700; }
+        .drop-icon { width:34px;height:34px;background:rgba(255,255,255,0.04);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.55);flex-shrink:0;transition:all 0.15s; }
+        .drop-label { font-weight:600;font-size:0.875rem;line-height:1.3;display:block; }
+        .drop-desc { font-size:0.72rem;color:rgba(255,255,255,0.38);margin-top:1px;display:block; }
+        .drop-sep { height:1px;background:rgba(255,215,0,0.08);margin:0.35rem 0.85rem; }
+        .hamburger { display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:1px solid var(--border);border-radius:6px;padding:0.4rem; }
+        .hamburger span { width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all 0.3s;display:block; }
+        .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+        .hamburger.active span:nth-child(2) { opacity:0; }
+        .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+        @media(max-width:900px) {
+            .hamburger { display:flex; }
+            .nav-menu { position:fixed;top:68px;left:-100%;width:100%;flex-direction:column;background:rgba(5,5,5,0.99);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:2rem;gap:1.2rem;transition:left 0.3s ease;z-index:999; }
+            .nav-menu.active { left:0; }
+            .nav-menu li { width:100%; }
+            .nav-menu a { font-size:1rem;padding:0.5rem 0;display:block; }
+            .nav-cta { display:inline-block;text-align:center; }
+            .nav-item-drop>a { justify-content:space-between; }
+            .drop-panel { position:static;transform:none!important;opacity:1!important;visibility:visible!important;pointer-events:all!important;box-shadow:none;border:none;border-left:2px solid rgba(255,215,0,0.15);border-radius:0;margin:0.2rem 0 0.2rem 0.5rem;padding:0.2rem 0;background:transparent;backdrop-filter:none;display:none;min-width:unset; }
+            .drop-panel::before { display:none; }
+            .nav-item-drop.open .drop-panel { display:block; }
+      .nav-item-drop:hover .drop-panel { display:none; } /* annule hover desktop sur touch */
+            .nav-item-drop.open>a .nav-chevron { transform:rotate(180deg);opacity:1; }
+            .drop-link { white-space:normal;padding:0.4rem 0.7rem!important;gap:0.5rem; }
+            .drop-icon,.drop-desc { display:none; }
+            .drop-sep { margin:0.2rem 0.7rem; }
+        }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2.5rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 7vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--text) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* MAIN */
+        main {
+            position: relative;
+            z-index: 1;
+            padding: 3rem 2.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .screeners-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .screener-section {
+            background: linear-gradient(135deg, var(--card) 0%, rgba(22,22,22,0.85) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2.5rem;
+            overflow: hidden;
+        }
+
+        .screener-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .screener-section p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .screener-widget {
+            width: 100%;
+            min-height: 600px;
+            background: rgba(18,18,18,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255,215,0,0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* FOOTER */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(5,5,5,0.98);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-weight: 900;
+            font-size: 1.3rem;
+            background: linear-gradient(135deg, var(--gold), #FFC107);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.4rem;
+        }
+
+        .footer-tagline {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.38);
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.38);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-copy {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.38);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { gap: 0.8rem; font-size: 0.75rem; }
+            .header h1 { font-size: 2rem; }
+            .screener-widget { min-height: 400px; }
+            nav { padding: 0.8rem 1.5rem; }
+            .screener-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav role="navigation" aria-label="Navigation principale">
+  <div class="nav-container">
+    <a href="index.html" class="logo">FOREX AVERAGE<span class="logo-sub">Forex · Crypto · Commodities</span></a>
+
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav-menu">
+      <li><a href="index.html">Accueil</a></li>
+
+      <!-- ── Marché ── -->
+      <li class="nav-item-drop">
+        <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="index-Analyse.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
+            <span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto & Matières Premières</span></span>
+          </a>
+          <a href="actualites.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span>
+          </a>
+          <a href="calendrier-economique.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
+            <span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements & indicateurs clés</span></span>
+          </a>
+        </div>
+      </li>
+
+      <!-- ── Outils ── -->
+      <li class="nav-item-drop">
+        <a href="#" style="color:var(--gold); font-weight:700;">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="graphique.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
+            <span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span>
+          </a>
+          <a href="calculateurs-trading.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line></svg></span>
+            <span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span>
+          </a>
+          <a href="screener.html" class="drop-link" style="background:rgba(255,215,0,0.05);">
+            <span class="drop-icon" style="background:rgba(255,215,0,0.12);color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            <span><span class="drop-label" style="color:#FFD700;">Screener</span><span class="drop-desc">Scanner les marchés</span></span>
+          </a>
+        </div>
+      </li>
+
+      <!-- ── Partenaires ── -->
+      <li class="nav-item-drop">
+        <a href="#">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="partenaires.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+            <span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span>
+          </a>
+          <a href="brokers.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"></rect><polyline points="3 9 12 13 21 9"></polyline></svg></span>
+            <span><span class="drop-label">Brokers</span><span class="drop-desc">Courtiers recommandés</span></span>
+          </a>
+        </div>
+      </li>
+
+      <!-- ── Communauté ── -->
+      <li class="nav-item-drop">
+        <a href="#">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
+            <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="#telegram" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
+          </a>
+        </div>
+      </li>
+
+      <li><a href="#telegram" class="nav-cta">Telegram</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header class="header">
+    <h1>📊 Screener Temps Réel</h1>
+    <p>Heatmaps en direct : Forex, Crypto et Commodities. Analysez les marchés en un coup d'œil.</p>
+</header>
+
+<!-- MAIN -->
+<main>
+
+    <!-- SCREENERS -->
+    <div class="screeners-grid">
+
+        <!-- SCREENER FOREX HEATMAP -->
+        <section class="screener-section">
+            <h2>💱 Screener Forex - Heatmap</h2>
+            <p>Visualisez la performance des devises majeures en temps réel. EUR, GBP, JPY, CHF, CAD, AUD, NZD et USD. Les couleurs indiquent les gains (vert) et pertes (rouge).</p>
+            <div class="screener-widget">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
+                    {
+                        "currencies": ["EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "NZD", "USD"],
+                        "isTransparent": false,
+                        "colorTheme": "dark",
+                        "locale": "fr",
+                        "width": "100%",
+                        "height": "550"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENER CRYPTO HEATMAP -->
+        <section class="screener-section">
+            <h2>₿ Screener Crypto - Heatmap</h2>
+            <p>Analysez les performances des principales cryptocurrencies en temps réel. Bitcoin, Ethereum, Altcoins majeurs. Tailles et couleurs représentent les mouvements de marché.</p>
+            <div class="screener-widget">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
+                    {
+                        "dataSource": "crypto_coins",
+                        "blockSize": "market_cap_calc",
+                        "blockColor": "change",
+                        "locale": "fr",
+                        "symbolUrl": "",
+                        "colorTheme": "dark",
+                        "autosize": true,
+                        "isTransparent": false,
+                        "width": "100%",
+                        "height": "550"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENER ACTIONS HEATMAP -->
+        <section class="screener-section">
+            <h2>📈 Screener Actions - Heatmap</h2>
+            <p>S&P 500, Nasdaq, actions blue chips mondiales. Couleurs par secteur — identifiez en un coup d'œil les rotations et les leaders du jour.</p>
+            <div class="screener-widget">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+                    {
+                        "exchanges": [],
+                        "dataSource": "SPX500",
+                        "grouping": "sector",
+                        "blockSize": "market_cap_calc",
+                        "blockColor": "change",
+                        "locale": "fr",
+                        "symbolUrl": "",
+                        "colorTheme": "dark",
+                        "hasTopBar": false,
+                        "isDataSetEnabled": false,
+                        "isZoomEnabled": true,
+                        "hasSymbolTooltip": true,
+                        "isMonoSize": false,
+                        "width": "100%",
+                        "height": "600"
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREENER COMMODITIES -->
+        <section class="screener-section">
+            <h2>⛽ Screener Commodities - Vue Marché</h2>
+            <p>Métaux précieux, énergies et matières premières. Naviguez par catégorie et suivez les mouvements en temps réel avec mini-graphiques intégrés.</p>
+            <div class="screener-widget">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    {
+                        "colorTheme": "dark",
+                        "dateRange": "1M",
+                        "showChart": true,
+                        "locale": "fr",
+                        "isTransparent": false,
+                        "showSymbolLogo": true,
+                        "showFloatingTooltip": false,
+                        "width": "100%",
+                        "height": "660",
+                        "tabs": [
+                            {
+                                "title": "Métaux 🥇",
+                                "symbols": [
+                                    { "s": "TVC:GOLD",      "d": "Or (Gold)" },
+                                    { "s": "TVC:SILVER",    "d": "Argent (Silver)" },
+                                    { "s": "TVC:COPPER",    "d": "Cuivre (Copper)" },
+                                    { "s": "TVC:PLATINUM",  "d": "Platine" },
+                                    { "s": "TVC:PALLADIUM", "d": "Palladium" }
+                                ],
+                                "originalTitle": "Metals"
+                            },
+                            {
+                                "title": "Énergie ⛽",
+                                "symbols": [
+                                    { "s": "TVC:USOIL",     "d": "Pétrole WTI" },
+                                    { "s": "TVC:UKOIL",     "d": "Brent" },
+                                    { "s": "TVC:NATGASUSD", "d": "Gaz Naturel" }
+                                ],
+                                "originalTitle": "Energy"
+                            },
+                            {
+                                "title": "Agriculture 🌾",
+                                "symbols": [
+                                    { "s": "TVC:WHEAT",  "d": "Blé (Wheat)" },
+                                    { "s": "TVC:CORN",   "d": "Maïs (Corn)" },
+                                    { "s": "TVC:SOYBN",  "d": "Soja (Soybeans)" },
+                                    { "s": "TVC:COFFEE", "d": "Café (Coffee)" },
+                                    { "s": "TVC:SUGAR",  "d": "Sucre (Sugar)" },
+                                    { "s": "TVC:COCOA",  "d": "Cacao (Cocoa)" }
+                                ],
+                                "originalTitle": "Agriculture"
+                            }
+                        ]
+                    }
+                    </script>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-logo">FOREX AVERAGE</div>
+    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+
+    <div class="footer-links">
+        <a href="/">📊 Analyses</a>
+        <a href="calculateur.html">🧮 Calculateurs</a>
+        <a href="https://youtube.com/@forexaverage" target="_blank">📺 YouTube</a>
+        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank">📈 TradingView</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank">💬 Contact</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank">📱 Telegram</a>
+    </div>
+
+    <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+</footer>
+
+
+<!-- NAV JS -->
+<script>
+const hamburger = document.querySelector('.hamburger');
+const navMenu   = document.querySelector('.nav-menu');
+if (hamburger) {
+  hamburger.addEventListener('click', () => {
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !expanded);
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+  });
+  document.querySelectorAll('.nav-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.setAttribute('aria-expanded','false');
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+      hamburger.setAttribute('aria-expanded','false');
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+    }
+  });
+}
+// Dropdown mobile toggle
+document.querySelectorAll('.nav-item-drop > a').forEach(link => {
+  link.addEventListener('click', function(e) {
+    if (window.innerWidth <= 900) {
+      e.preventDefault();
+      e.stopPropagation();
+      const parent = this.parentElement;
+      const wasOpen = parent.classList.contains('open');
+      document.querySelectorAll('.nav-item-drop').forEach(el => el.classList.remove('open'));
+      if (!wasOpen) parent.classList.add('open');
+    }
+  });
+});
+// Sticky nav
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.pageYOffset > 60);
+}, { passive: true });
+</script>
+
+<script src="/chatbot.js"></script>
+
+</body>
+</html>
