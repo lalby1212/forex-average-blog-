@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FA · Admin Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #FFD700;
+      --bg: #080808;
+      --card: #111;
+      --border: rgba(255,215,0,0.15);
+      --muted: rgba(255,255,255,0.45);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .header-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.3rem;
+    }
+    .header-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      width: min(440px, 100%);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    /* ── FORM ── */
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1.2rem;
+    }
+    input:focus { border-color: rgba(255,215,0,0.45); }
+    input::placeholder { color: rgba(255,255,255,0.25); }
+    input.error { border-color: #ef4444; }
+
+    .admin-key-wrap {
+      position: relative;
+    }
+    .admin-key-wrap input {
+      padding-right: 3rem;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.2rem;
+    }
+    .eye-btn {
+      position: absolute;
+      right: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .eye-btn:hover { color: #fff; }
+
+    .btn-generate {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(255,165,0,0.3);
+    }
+    .btn-generate:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .err-msg {
+      font-size: 0.76rem;
+      color: #ef4444;
+      margin-top: 0.7rem;
+      min-height: 1rem;
+      text-align: center;
+    }
+
+    /* ── RÉSULTAT ── */
+    .result-box {
+      display: none;
+      margin-top: 1.8rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+    .result-box.visible { display: block; }
+
+    .result-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.6rem;
+    }
+
+    .result-email {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 1rem;
+    }
+    .result-email strong { color: #fff; }
+
+    .token-display {
+      background: rgba(255,215,0,0.07);
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 12px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .token-value {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .copy-btn {
+      background: rgba(255,215,0,0.12);
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 8px;
+      color: var(--gold);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { background: rgba(255,215,0,0.2); }
+    .copy-btn.copied { background: rgba(34,197,94,0.15); border-color: rgba(34,197,94,0.3); color: #4ade80; }
+
+    .result-expiry {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .result-expiry span { color: #fff; font-weight: 600; }
+
+    .telegram-hint {
+      margin-top: 1.2rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .telegram-hint strong { color: #fff; }
+
+    /* ── HISTORIQUE ── */
+    .history-section {
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1.2rem;
+    }
+    .history-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .clear-history {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.68rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+    .clear-history:hover { color: #ef4444; }
+
+    .history-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+    }
+    .history-email {
+      font-size: 0.73rem;
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .history-token {
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+    }
+    .history-copy {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .history-copy:hover { color: var(--gold); }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.18);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-logo">FOREX AVERAGE</div>
+    <div class="header-sub">Panneau Admin · Codes Premium</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Générer un code d'accès</div>
+    <div class="card-desc">Entre l'email de ton abonné et ta clé admin pour générer son code mensuel unique.</div>
+
+    <label for="email-input">Email de l'abonné</label>
+    <input type="email" id="email-input" placeholder="client@gmail.com" autocomplete="off" />
+
+    <label for="admin-input">Clé admin</label>
+    <div class="admin-key-wrap">
+      <input type="password" id="admin-input" placeholder="••••••••••••" autocomplete="off" />
+      <button class="eye-btn" id="eye-btn" onclick="togglePassword()" tabindex="-1">
+        <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="btn-generate" id="gen-btn" onclick="generateToken()">Générer le code</button>
+    <div class="err-msg" id="err-msg"></div>
+
+    <!-- Résultat -->
+    <div class="result-box" id="result-box">
+      <div class="result-label">Code généré ✓</div>
+      <div class="result-email">Abonné : <strong id="res-email"></strong></div>
+
+      <div class="token-display">
+        <span class="token-value" id="res-token"></span>
+        <button class="copy-btn" id="copy-btn" onclick="copyToken()">Copier</button>
+      </div>
+
+      <div class="result-expiry">
+        ⏳ Expire le <span id="res-expiry"></span>
+      </div>
+
+      <div class="telegram-hint">
+        💬 Envoie ce code à ton abonné sur <strong>Telegram</strong>.<br>
+        Il devra entrer ce code + son adresse email sur le site pour débloquer l'accès.
+      </div>
+    </div>
+
+    <!-- Historique session -->
+    <div class="history-section" id="history-section" style="display:none">
+      <div class="history-title">
+        Générés cette session
+        <button class="clear-history" onclick="clearHistory()">Effacer</button>
+      </div>
+      <div class="history-list" id="history-list"></div>
+    </div>
+  </div>
+
+  <div class="footer-note">Page admin · Ne partage pas cette URL</div>
+
+  <script>
+    const history_items = [];
+
+    /* ── Générer le token ── */
+    async function generateToken() {
+      const email    = document.getElementById('email-input').value.trim();
+      const adminKey = document.getElementById('admin-input').value.trim();
+      const btn      = document.getElementById('gen-btn');
+      const err      = document.getElementById('err-msg');
+
+      err.textContent = '';
+      document.getElementById('email-input').classList.remove('error');
+      document.getElementById('admin-input').classList.remove('error');
+
+      if (!email || !email.includes('@')) {
+        document.getElementById('email-input').classList.add('error');
+        err.textContent = 'Entre un email valide.';
+        return;
+      }
+      if (!adminKey) {
+        document.getElementById('admin-input').classList.add('error');
+        err.textContent = 'Entre ta clé admin.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Génération…';
+
+      try {
+        const url = `/api/generate-token?email=${encodeURIComponent(email)}&admin_key=${encodeURIComponent(adminKey)}`;
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok || data.error) {
+          err.textContent = data.error || 'Erreur serveur.';
+          if (data.error?.includes('admin')) {
+            document.getElementById('admin-input').classList.add('error');
+          }
+          return;
+        }
+
+        /* Afficher le résultat */
+        document.getElementById('res-email').textContent   = data.email;
+        document.getElementById('res-token').textContent   = data.token;
+        document.getElementById('res-expiry').textContent  =
+          new Date(data.expires).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' });
+
+        document.getElementById('result-box').classList.add('visible');
+
+        /* Reset copier */
+        const copyBtn = document.getElementById('copy-btn');
+        copyBtn.textContent = 'Copier';
+        copyBtn.classList.remove('copied');
+
+        /* Ajouter à l'historique */
+        addToHistory(data.email, data.token);
+
+      } catch(e) {
+        err.textContent = 'Impossible de contacter le serveur. Vérifie ta connexion.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Générer le code';
+      }
+    }
+
+    /* ── Copier le token ── */
+    function copyToken() {
+      const token = document.getElementById('res-token').textContent;
+      navigator.clipboard.writeText(token).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = '✓ Copié';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copier';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    /* ── Afficher/cacher mot de passe ── */
+    function togglePassword() {
+      const input = document.getElementById('admin-input');
+      const icon  = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+      } else {
+        input.type = 'password';
+        icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+      }
+    }
+
+    /* ── Historique session ── */
+    function addToHistory(email, token) {
+      history_items.unshift({ email, token });
+      renderHistory();
+    }
+
+    function renderHistory() {
+      if (history_items.length === 0) {
+        document.getElementById('history-section').style.display = 'none';
+        return;
+      }
+      document.getElementById('history-section').style.display = 'block';
+      const list = document.getElementById('history-list');
+      list.innerHTML = history_items.map((item, i) => `
+        <div class="history-item">
+          <span class="history-email" title="${item.email}">${item.email}</span>
+          <span class="history-token">${item.token}</span>
+          <button class="history-copy" onclick="copyHistoryToken(${i})">copier</button>
+        </div>
+      `).join('');
+    }
+
+    function copyHistoryToken(index) {
+      navigator.clipboard.writeText(history_items[index].token);
+    }
+
+    function clearHistory() {
+      history_items.length = 0;
+      renderHistory();
+    }
+
+    /* ── Enter pour soumettre ── */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') generateToken();
+    });
+  </script>
+</body>
+</html>
