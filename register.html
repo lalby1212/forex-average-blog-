@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un compte | Forex Average</title>
+    <meta name="description" content="Créez votre compte gratuit Forex Average. Accédez au journal de trading, calculateurs et outils professionnels.">
+    <link rel="canonical" href="https://forexaverage.com/register.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="theme-color" content="#FFD700">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #FFC107;
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --card: rgba(18,18,18,0.95);
+            --border: rgba(255,215,0,0.18);
+            --border-strong: rgba(255,215,0,0.38);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+            --text-faint: rgba(255,255,255,0.38);
+            --green: #22c55e;
+            --red: #ef4444;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* ─── NAV MINIMAL ─── */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(7,7,7,0.96); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            height: 68px; display: flex; align-items: center;
+            padding: 0 2rem; justify-content: space-between;
+        }
+        .logo {
+            font-weight: 900; font-size: 1.2rem; letter-spacing: -0.01em;
+            text-transform: uppercase; text-decoration: none;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .logo-sub { font-size: 0.55rem; letter-spacing: 1.5px; color: var(--text-faint); display: block; margin-top: -4px; -webkit-text-fill-color: var(--text-faint); }
+        .nav-right { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; }
+        .nav-right a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .nav-right a:hover { color: #fff; }
+        .nav-right .nav-login { padding: 0.4rem 1rem; border: 1px solid var(--border); border-radius: 6px; transition: all 0.2s; }
+        .nav-right .nav-login:hover { border-color: rgba(255,215,0,0.4); color: #fff; }
+
+        /* ─── MAIN ─── */
+        .auth-wrapper {
+            position: relative; z-index: 1;
+            min-height: calc(100vh - 68px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .auth-card {
+            width: 100%; max-width: 440px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+        }
+        .auth-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-icon {
+            width: 52px; height: 52px; border-radius: 14px;
+            background: rgba(255,215,0,0.1); border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.2rem; font-size: 1.4rem;
+        }
+        .auth-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; }
+        .auth-sub { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ─── FORM ─── */
+        .form-group { margin-bottom: 1.1rem; }
+        .form-label {
+            display: block; font-size: 0.82rem; font-weight: 600;
+            color: var(--text-muted); margin-bottom: 0.4rem; letter-spacing: 0.2px;
+        }
+        .form-input {
+            width: 100%; padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; color: #fff;
+            font-size: 0.92rem; font-family: inherit;
+            transition: border-color 0.2s, background 0.2s;
+            outline: none;
+        }
+        .form-input::placeholder { color: rgba(255,255,255,0.25); }
+        .form-input:focus { border-color: rgba(255,215,0,0.5); background: rgba(255,215,0,0.04); }
+        .form-input.error { border-color: var(--red); }
+        .form-input.success { border-color: var(--green); }
+
+        /* Password wrapper */
+        .input-wrap { position: relative; }
+        .toggle-pw {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer;
+            color: var(--text-faint); transition: color 0.2s; padding: 4px;
+        }
+        .toggle-pw:hover { color: var(--text-muted); }
+
+        /* Password strength */
+        .pw-strength { margin-top: 0.5rem; }
+        .pw-strength-bar {
+            height: 3px; border-radius: 2px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden; margin-bottom: 0.3rem;
+        }
+        .pw-strength-fill {
+            height: 100%; border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+            width: 0%;
+        }
+        .pw-strength-label { font-size: 0.72rem; color: var(--text-faint); }
+
+        /* Error / success messages */
+        .field-error { font-size: 0.75rem; color: var(--red); margin-top: 0.3rem; display: none; }
+        .field-error.show { display: block; }
+
+        /* Pseudo availability */
+        .pseudo-status {
+            font-size: 0.75rem; margin-top: 0.3rem; display: none;
+        }
+        .pseudo-status.checking { display: block; color: var(--text-faint); }
+        .pseudo-status.available { display: block; color: var(--green); }
+        .pseudo-status.taken { display: block; color: var(--red); }
+
+        /* Terms */
+        .terms-row {
+            display: flex; align-items: flex-start; gap: 0.7rem;
+            margin-bottom: 1.5rem;
+        }
+        .terms-check {
+            width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px;
+            accent-color: var(--gold); cursor: pointer;
+        }
+        .terms-text { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+        .terms-text a { color: var(--gold); text-decoration: none; }
+        .terms-text a:hover { text-decoration: underline; }
+
+        /* Submit button */
+        .btn-submit {
+            width: 100%; padding: 0.88rem;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000; font-weight: 800; font-size: 0.95rem;
+            border: none; border-radius: 10px; cursor: pointer;
+            font-family: inherit; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-submit:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,215,0,0.3); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Alert */
+        .alert {
+            padding: 0.85rem 1rem; border-radius: 10px;
+            font-size: 0.85rem; margin-bottom: 1.2rem;
+            display: none; align-items: flex-start; gap: 0.6rem;
+        }
+        .alert.show { display: flex; }
+        .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+        .alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); color: #86efac; }
+
+        /* Divider */
+        .auth-divider {
+            display: flex; align-items: center; gap: 1rem;
+            margin: 1.5rem 0; color: var(--text-faint); font-size: 0.8rem;
+        }
+        .auth-divider::before, .auth-divider::after {
+            content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+        }
+
+        /* Footer link */
+        .auth-footer { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .auth-footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        /* Gratuit badge */
+        .free-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25);
+            color: var(--green); font-size: 0.72rem; font-weight: 700;
+            padding: 0.25rem 0.7rem; border-radius: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        /* Success screen */
+        .success-screen {
+            display: none; text-align: center; padding: 1rem 0;
+        }
+        .success-screen.show { display: block; }
+        .success-icon {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: rgba(34,197,94,0.15); border: 2px solid rgba(34,197,94,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 1.8rem;
+        }
+        .success-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .success-text { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 2rem; }
+        .btn-check-email {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: rgba(255,215,0,0.1); border: 1px solid var(--border);
+            color: var(--gold); padding: 0.7rem 1.5rem;
+            border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.88rem;
+            transition: all 0.2s;
+        }
+        .btn-check-email:hover { background: rgba(255,215,0,0.15); }
+
+        /* Spinner */
+        .spinner {
+            width: 18px; height: 18px; border: 2px solid rgba(0,0,0,0.3);
+            border-top-color: #000; border-radius: 50%;
+            animation: spin 0.7s linear infinite; display: none;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Features list */
+        .features-list { margin-top: 1.5rem; padding: 1.2rem; background: rgba(255,215,0,0.04); border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; }
+        .features-list p { font-size: 0.78rem; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 0.7rem; }
+        .features-list ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+        .features-list li { font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; }
+        .features-list li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+
+        @media (max-width: 480px) {
+            .auth-card { padding: 2rem 1.5rem; }
+            nav { padding: 0 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <a href="index.html" class="logo">
+        FOREX AVERAGE
+        <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+    </a>
+    <div class="nav-right">
+        <span style="color:var(--text-faint);font-size:0.82rem;">Déjà un compte ?</span>
+        <a href="login.html" class="nav-login">Connexion</a>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<div class="auth-wrapper">
+    <div class="auth-card">
+
+        <!-- Form -->
+        <div id="register-form-section">
+            <div class="auth-header">
+                <div class="auth-icon">✦</div>
+                <div class="free-badge">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    100% Gratuit
+                </div>
+                <h1 class="auth-title">Créer un compte</h1>
+                <p class="auth-sub">Accédez gratuitement aux outils de trading professionnels</p>
+            </div>
+
+            <!-- Alert globale -->
+            <div class="alert alert-error" id="alert-error">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="alert-error-text"></span>
+            </div>
+
+            <!-- Pseudo -->
+            <div class="form-group">
+                <label class="form-label" for="pseudo">Pseudo <span style="color:var(--text-faint);font-weight:400;">(visible sur votre profil public)</span></label>
+                <input class="form-input" type="text" id="pseudo" placeholder="Ex: trader_fx" maxlength="30" autocomplete="username" />
+                <div class="field-error" id="err-pseudo">Pseudo requis (3 caractères minimum, lettres/chiffres/_)</div>
+                <div class="pseudo-status" id="pseudo-status"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label class="form-label" for="email">Adresse email</label>
+                <input class="form-input" type="email" id="email" placeholder="vous@exemple.com" autocomplete="email" />
+                <div class="field-error" id="err-email">Email invalide</div>
+            </div>
+
+            <!-- Mot de passe -->
+            <div class="form-group">
+                <label class="form-label" for="password">Mot de passe</label>
+                <div class="input-wrap">
+                    <input class="form-input" type="password" id="password" placeholder="8 caractères minimum" autocomplete="new-password" />
+                    <button class="toggle-pw" type="button" onclick="togglePw('password', this)" tabindex="-1">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+                <div class="pw-strength">
+                    <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-fill"></div></div>
+                    <div class="pw-strength-label" id="pw-label"></div>
+                </div>
+                <div class="field-error" id="err-password">Mot de passe trop court (8 caractères minimum)</div>
+            </div>
+
+            <!-- Confirmer mot de passe -->
+            <div class="form-group">
+                <label class="form-label" for="confirm">Confirmer le mot de passe</label>
+                <div class="input-wrap">
+                    <input class="form-input" type="password" id="confirm" placeholder="Répétez le mot de passe" autocomplete="new-password" />
+                    <button class="toggle-pw" type="button" onclick="togglePw('confirm', this)" tabindex="-1">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    </button>
+                </div>
+                <div class="field-error" id="err-confirm">Les mots de passe ne correspondent pas</div>
+            </div>
+
+            <!-- CGV -->
+            <div class="terms-row">
+                <input class="terms-check" type="checkbox" id="terms" />
+                <label class="terms-text" for="terms">
+                    J'accepte les <a href="cgv.html" target="_blank">Conditions Générales</a> et la <a href="politique-confidentialite.html" target="_blank">Politique de Confidentialité</a> de Forex Average
+                </label>
+            </div>
+            <div class="field-error" id="err-terms" style="margin-top:-0.8rem;margin-bottom:1rem;">Vous devez accepter les conditions</div>
+
+            <button class="btn-submit" id="submit-btn" onclick="register()">
+                <span id="btn-text">Créer mon compte gratuit</span>
+                <div class="spinner" id="spinner"></div>
+            </button>
+
+            <div class="features-list">
+                <p>Inclus gratuitement</p>
+                <ul>
+                    <li>Journal de trading personnel</li>
+                    <li>Calculateurs (position, levier, R/R)</li>
+                    <li>Graphiques Live TradingView</li>
+                    <li>Actualités & Calendrier économique</li>
+                </ul>
+            </div>
+
+            <div class="auth-divider">ou</div>
+
+            <div class="auth-footer">
+                Déjà un compte ? <a href="login.html">Se connecter</a>
+            </div>
+        </div>
+
+        <!-- Success screen -->
+        <div class="success-screen" id="success-screen">
+            <div class="success-icon">✉️</div>
+            <h2 class="success-title">Vérifiez votre email !</h2>
+            <p class="success-text">
+                Un email de confirmation a été envoyé à <strong id="success-email" style="color:#fff;"></strong>.<br><br>
+                Cliquez sur le lien dans l'email pour activer votre compte et accéder à vos outils.
+            </p>
+            <a href="login.html" class="btn-check-email">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                Aller à la connexion
+            </a>
+            <p style="margin-top:1.2rem;font-size:0.78rem;color:var(--text-faint);">Vous ne trouvez pas l'email ? Vérifiez vos spams.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SUPABASE_ANON = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── Redirect si déjà connecté ──
+sb.auth.getSession().then(({ data: { session } }) => {
+    if (session) window.location.href = 'dashboard.html';
+});
+
+// ── Toggle password visibility ──
+function togglePw(id, btn) {
+    var input = document.getElementById(id);
+    var isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    btn.innerHTML = isHidden
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+}
+
+// ── Password strength ──
+document.getElementById('password').addEventListener('input', function() {
+    var pw = this.value;
+    var score = 0;
+    if (pw.length >= 8) score++;
+    if (pw.length >= 12) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+    var fill  = document.getElementById('pw-fill');
+    var label = document.getElementById('pw-label');
+    var pct   = (score / 5) * 100;
+    fill.style.width = pct + '%';
+    if (!pw) { fill.style.width = '0'; label.textContent = ''; return; }
+    if (score <= 1) { fill.style.background = '#ef4444'; label.textContent = 'Faible'; label.style.color = '#ef4444'; }
+    else if (score <= 3) { fill.style.background = '#fbbf24'; label.textContent = 'Moyen'; label.style.color = '#fbbf24'; }
+    else { fill.style.background = '#22c55e'; label.textContent = 'Fort'; label.style.color = '#22c55e'; }
+});
+
+// ── Pseudo uniqueness check (debounced) ──
+var pseudoTimer = null;
+var pseudoAvailable = null; // null = unknown, true = ok, false = taken
+
+document.getElementById('pseudo').addEventListener('input', function() {
+    var val = this.value.trim();
+    var statusEl = document.getElementById('pseudo-status');
+
+    // Reset
+    pseudoAvailable = null;
+    statusEl.className = 'pseudo-status';
+    statusEl.textContent = '';
+    clearTimeout(pseudoTimer);
+
+    if (val.length < 3) return;
+    if (!/^[a-zA-Z0-9_]+$/.test(val)) return;
+
+    // Debounce 600ms
+    statusEl.className = 'pseudo-status checking';
+    statusEl.textContent = 'Vérification…';
+
+    pseudoTimer = setTimeout(async function() {
+        try {
+            var { data, error } = await sb
+                .from('profiles')
+                .select('username')
+                .eq('username', val)
+                .maybeSingle();
+
+            if (error) { statusEl.className = 'pseudo-status'; statusEl.textContent = ''; return; }
+
+            if (data) {
+                pseudoAvailable = false;
+                statusEl.className = 'pseudo-status taken';
+                statusEl.textContent = '✕ Ce pseudo est déjà pris';
+                document.getElementById('pseudo').classList.add('error');
+            } else {
+                pseudoAvailable = true;
+                statusEl.className = 'pseudo-status available';
+                statusEl.textContent = '✓ Pseudo disponible';
+                document.getElementById('pseudo').classList.remove('error');
+                document.getElementById('pseudo').classList.add('success');
+            }
+        } catch(e) {
+            statusEl.className = 'pseudo-status';
+            statusEl.textContent = '';
+        }
+    }, 600);
+});
+
+// ── Validation helpers ──
+function showErr(id, show) {
+    document.getElementById(id).classList.toggle('show', show);
+    var inputId = id.replace('err-', '');
+    var input = document.getElementById(inputId);
+    if (input) input.classList.toggle('error', show);
+}
+function showAlert(msg) {
+    document.getElementById('alert-error-text').innerHTML = msg;
+    document.getElementById('alert-error').classList.add('show');
+}
+function hideAlert() { document.getElementById('alert-error').classList.remove('show'); }
+
+// ── Register ──
+async function register() {
+    hideAlert();
+
+    var pseudo   = document.getElementById('pseudo').value.trim();
+    var email    = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value;
+    var confirm  = document.getElementById('confirm').value;
+    var terms    = document.getElementById('terms').checked;
+    var valid    = true;
+
+    // Validation pseudo : 3+ chars, only letters/digits/underscore
+    var pseudoOk = pseudo.length >= 3 && /^[a-zA-Z0-9_]+$/.test(pseudo);
+    showErr('err-pseudo', !pseudoOk);
+    if (!pseudoOk) { valid = false; }
+
+    // Pseudo pris ?
+    if (pseudoOk && pseudoAvailable === false) {
+        valid = false;
+        showAlert('Ce pseudo est déjà utilisé, veuillez en choisir un autre.');
+    }
+
+    // Si disponibilité pas encore vérifiée (user a tapé trop vite)
+    if (pseudoOk && pseudoAvailable === null) {
+        showAlert('Vérification du pseudo en cours, veuillez patienter quelques secondes…');
+        return;
+    }
+
+    // Email
+    var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    showErr('err-email', !emailOk);
+    if (!emailOk) valid = false;
+
+    // Password length
+    showErr('err-password', password.length < 8);
+    if (password.length < 8) valid = false;
+
+    // Confirmation
+    showErr('err-confirm', password !== confirm);
+    if (password !== confirm) valid = false;
+
+    // Terms
+    showErr('err-terms', !terms);
+    if (!terms) valid = false;
+
+    if (!valid) return;
+
+    var btn     = document.getElementById('submit-btn');
+    var btnText = document.getElementById('btn-text');
+    var spinner = document.getElementById('spinner');
+    btn.disabled = true;
+    btnText.textContent = 'Création en cours…';
+    spinner.style.display = 'block';
+
+    try {
+        // ── Vérification unicité en double (sécurité côté serveur) ──
+        var { data: existing } = await sb
+            .from('profiles')
+            .select('username')
+            .eq('username', pseudo)
+            .maybeSingle();
+
+        if (existing) {
+            throw new Error('Ce pseudo est déjà utilisé. Veuillez en choisir un autre.');
+        }
+
+        // ── Création du compte Supabase Auth ──
+        // IMPORTANT : la clé doit être "username" pour que le trigger SQL
+        // (raw_user_meta_data->>'username') crée correctement le profil.
+        var { data, error } = await sb.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { username: pseudo },
+                emailRedirectTo: 'https://forexaverage.com/dashboard.html'
+            }
+        });
+
+        if (error) throw error;
+
+        // ── Afficher l'écran de succès ──
+        document.getElementById('success-email').textContent = email;
+        document.getElementById('register-form-section').style.display = 'none';
+        document.getElementById('success-screen').classList.add('show');
+
+    } catch (err) {
+        var msg = err.message || 'Une erreur est survenue.';
+        if (msg.includes('already registered') || msg.includes('User already registered')) {
+            showAlert('Cet email est déjà utilisé. <a href="login.html" style="color:var(--gold);">Connectez-vous</a>');
+        } else if (msg.includes('Password should be')) {
+            showAlert('Le mot de passe doit contenir au moins 8 caractères.');
+        } else {
+            showAlert(msg);
+        }
+        btn.disabled = false;
+        btnText.textContent = 'Créer mon compte gratuit';
+        spinner.style.display = 'none';
+    }
+}
+
+// ── Enter key submit ──
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') register();
+});
+
+// ── Clear errors on input ──
+['pseudo','email','password','confirm'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() {
+        if (id !== 'pseudo') { // pseudo errors managed separately
+            document.getElementById('err-' + id)?.classList.remove('show');
+            this.classList.remove('error');
+        }
+        hideAlert();
+    });
+});
+</script>
+</body>
+</html>
