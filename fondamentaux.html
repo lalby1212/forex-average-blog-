@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📊 Analyse Macro | Forex Average</title>
+  <meta name="description" content="Analyse fondamentale des devises G10, indices boursiers, métaux précieux et pétrole. Biais hawkish/dovish en temps réel.">
+  <meta name="theme-color" content="#FFD700">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --gold:#FFD700;--dark:#000;--card:rgba(14,14,14,.97);
+      --border:rgba(255,215,0,.13);--text:#fff;--muted:rgba(255,255,255,.55);
+      --faint:rgba(255,255,255,.26);--green:#22c55e;--red:#ef4444;--yellow:#eab308;
+      --lime:#a3e635;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,'SF Pro Text',BlinkMacSystemFont,sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;line-height:1.6}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+      background:radial-gradient(ellipse 70% 50% at 15% 20%,rgba(255,215,0,.04) 0%,transparent 60%),
+                 radial-gradient(ellipse 60% 40% at 85% 80%,rgba(255,193,7,.025) 0%,transparent 60%)}
+
+    /* ─── NAV ─── */
+    nav{position:sticky;top:0;z-index:1000;background:rgba(7,7,7,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;height:64px;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-weight:900;font-size:1.3rem;background:linear-gradient(135deg,#FFD700,#FFC107);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
+    .nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center}
+    .nav-links a{text-decoration:none;color:var(--muted);font-size:.85rem;font-weight:500;transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--gold)}
+    .nav-dropdown{position:relative}
+    .nav-dropdown:hover .dropdown-menu{opacity:1;pointer-events:all;transform:translateY(0)}
+    .dropdown-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);background:rgba(12,12,12,.97);border:1px solid var(--border);border-radius:10px;padding:.5rem;min-width:180px;opacity:0;pointer-events:none;transition:all .25s;z-index:100;backdrop-filter:blur(20px)}
+    .dropdown-menu li{list-style:none}
+    .dropdown-menu a{display:block;padding:.45rem .85rem;border-radius:6px;font-size:.83rem;white-space:nowrap;transition:background .2s}
+    .dropdown-menu a:hover{background:rgba(255,215,0,.08)}
+    .nav-cta{background:var(--gold)!important;color:#000!important;padding:.45rem 1.1rem;border-radius:6px;font-weight:700!important}
+    @media(max-width:900px){.nav-links{display:none}}
+
+    /* ─── HERO ─── */
+    .hero{position:relative;z-index:1;padding:2.8rem 2rem 0;max-width:1400px;margin:0 auto}
+    .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);color:var(--gold);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:.28rem .85rem;border-radius:20px;margin-bottom:.9rem}
+    .live-dot{width:7px;height:7px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;display:inline-block}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+    .hero h1{font-size:clamp(1.7rem,3.5vw,2.5rem);font-weight:900;background:linear-gradient(135deg,#FFD700 0%,rgba(255,255,255,.85) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.4rem}
+    .hero p{color:var(--muted);font-size:.9rem;max-width:580px;margin-bottom:1.5rem}
+
+    /* ─── TABS ─── */
+    .tabs-wrapper{position:sticky;top:64px;z-index:900;background:rgba(7,7,7,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    .tabs-inner{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:0;overflow-x:auto;scrollbar-width:none}
+    .tabs-inner::-webkit-scrollbar{display:none}
+    .tab-btn{display:flex;align-items:center;gap:.5rem;padding:.9rem 1.3rem;border:none;background:none;color:var(--muted);font-size:.84rem;font-weight:600;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;position:relative;bottom:-1px}
+    .tab-btn:hover{color:var(--text)}
+    .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+    .tab-count{font-size:.65rem;background:rgba(255,215,0,.15);color:var(--gold);border-radius:10px;padding:.1rem .4rem;font-weight:700}
+    .tab-count.loading{background:rgba(255,255,255,.07);color:var(--faint)}
+    .refresh-zone{margin-left:auto;display:flex;align-items:center;gap:.8rem;padding:.5rem 0}
+    .btn-refresh{display:flex;align-items:center;gap:.4rem;padding:.4rem 1rem;background:linear-gradient(135deg,var(--gold),#FFC107);color:#000;border:none;border-radius:7px;font-weight:700;font-size:.78rem;cursor:pointer;transition:all .3s;white-space:nowrap}
+    .btn-refresh:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,.3)}
+    .btn-refresh:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn-refresh svg{transition:transform .6s}
+    .btn-refresh.spinning svg{animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .status-chip{font-size:.72rem;color:var(--faint)}
+
+    /* ─── MAIN ─── */
+    main{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:2rem 2rem 6rem}
+
+    /* ─── TAB PANEL ─── */
+    .tab-panel{display:none}
+    .tab-panel.active{display:block}
+
+    /* ─── ASSET CARDS (fundamental scores) ─── */
+    .assets-grid{display:grid;gap:.85rem;margin-bottom:2.5rem}
+    .assets-grid.cols-5{grid-template-columns:repeat(5,1fr)}
+    .assets-grid.cols-4{grid-template-columns:repeat(4,1fr)}
+    .assets-grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .assets-grid.cols-6{grid-template-columns:repeat(6,1fr)}
+    @media(max-width:1200px){.assets-grid.cols-5,.assets-grid.cols-6{grid-template-columns:repeat(3,1fr)}.assets-grid.cols-4{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:800px) {.assets-grid.cols-5,.assets-grid.cols-6,.assets-grid.cols-4,.assets-grid.cols-3{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:500px) {.assets-grid{grid-template-columns:1fr!important}}
+
+    .asset-card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.1rem 1.15rem;transition:all .3s;position:relative;overflow:hidden}
+    .asset-card:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+    .asset-card.c-hawk {border-color:rgba(34,197,94,.22);background:linear-gradient(135deg,rgba(34,197,94,.04),var(--card))}
+    .asset-card.c-sl-hawk{border-color:rgba(163,230,53,.18)}
+    .asset-card.c-neu  {border-color:var(--border)}
+    .asset-card.c-sl-dove{border-color:rgba(234,179,8,.2)}
+    .asset-card.c-dove {border-color:rgba(239,68,68,.22);background:linear-gradient(135deg,rgba(239,68,68,.04),var(--card))}
+
+    .ac-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.65rem}
+    .ac-icon{font-size:1.4rem;line-height:1}
+    .ac-name{font-weight:800;font-size:.95rem;letter-spacing:.3px}
+    .ac-sub {font-size:.62rem;color:var(--faint);margin-top:1px}
+    .bias-pill{font-size:.58rem;font-weight:700;letter-spacing:.7px;text-transform:uppercase;padding:.2rem .5rem;border-radius:20px;white-space:nowrap;flex-shrink:0}
+    .bp-hawk   {background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.3)}
+    .bp-sl-hawk{background:rgba(163,230,53,.12);color:var(--lime);border:1px solid rgba(163,230,53,.25)}
+    .bp-neu    {background:rgba(255,255,255,.07);color:var(--muted);border:1px solid var(--border)}
+    .bp-sl-dove{background:rgba(234,179,8,.12);color:var(--yellow);border:1px solid rgba(234,179,8,.25)}
+    .bp-dove   {background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3)}
+
+    /* Score bar */
+    .ac-bar-wrap{margin-bottom:.55rem}
+    .ac-bar-bg{height:4px;border-radius:2px;background:linear-gradient(to right,#ef4444,#eab308 50%,#22c55e);position:relative}
+    .ac-marker{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:#fff;border:2px solid #000;box-shadow:0 0 5px rgba(0,0,0,.8)}
+    .ac-score-row{display:flex;justify-content:space-between;align-items:center;font-size:.62rem;color:var(--faint);margin-top:3px}
+    .ac-score-val{font-weight:800;font-size:.88rem}
+
+    .ac-driver{font-size:.68rem;color:var(--muted);line-height:1.45;margin-bottom:.5rem;border-left:2px solid var(--border);padding-left:.55rem}
+    .ac-chips{display:flex;gap:.3rem;flex-wrap:wrap}
+    .ac-chip{font-size:.62rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:4px;padding:.15rem .42rem;color:var(--faint);white-space:nowrap}
+    .ac-chip.up  {color:var(--green)}
+    .ac-chip.down{color:var(--red)}
+
+    /* ─── SECTION LABEL ─── */
+    .section-label{font-size:.78rem;font-weight:700;color:var(--gold);letter-spacing:.8px;text-transform:uppercase;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+    .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+    /* ─── NEWS CARDS (style actualités) ─── */
+    .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+    @media(max-width:1000px){.news-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:640px) {.news-grid{grid-template-columns:1fr}}
+
+    .news-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.6rem;transition:all .25s;text-decoration:none;color:inherit}
+    .news-card:hover{border-color:rgba(255,215,0,.3);background:rgba(255,215,0,.02);transform:translateY(-2px)}
+    .nc-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+    .nc-source{font-size:.65rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;background:var(--gold);color:#000;padding:.18rem .5rem;border-radius:4px}
+    .nc-time{font-size:.7rem;color:var(--faint)}
+    .nc-title{font-size:.9rem;font-weight:700;line-height:1.45;color:var(--text)}
+    .nc-summary{font-size:.78rem;color:var(--muted);line-height:1.5;flex:1}
+    .nc-footer{display:flex;align-items:center;justify-content:space-between;margin-top:.2rem}
+    .nc-read{font-size:.75rem;color:var(--gold);font-weight:700}
+    .nc-tag{font-size:.63rem;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.18);color:var(--gold);padding:.15rem .45rem;border-radius:4px;font-weight:600}
+    .nc-sentiment{font-size:.68rem;font-weight:700}
+    .ns-pos{color:var(--green)}
+    .ns-neg{color:var(--red)}
+    .ns-neu{color:var(--faint)}
+
+    /* Skeleton */
+    @keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+    .skel{background:linear-gradient(90deg,rgba(255,255,255,.04) 25%,rgba(255,255,255,.08) 50%,rgba(255,255,255,.04) 75%);background-size:400px 100%;animation:shimmer 1.5s infinite;border-radius:6px}
+
+    /* Legend bar */
+    .legend{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;font-size:.72rem;color:var(--faint);margin-bottom:1.5rem;padding:.6rem .9rem;background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:8px}
+    .legend strong{color:var(--muted)}
+    .leg-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:.3rem}
+
+    /* Pair analysis */
+    .pair-wrap{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:1.3rem 1.5rem;margin-bottom:2.5rem}
+    .pair-row{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+    .pair-sel{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:.42rem .85rem;font-size:.85rem;font-weight:600;cursor:pointer;outline:none;-webkit-appearance:none}
+    .pair-vs{font-size:1rem;font-weight:700;color:var(--faint)}
+    .btn-analyze{background:linear-gradient(135deg,var(--gold),#FFC107);color:#000;border:none;border-radius:7px;padding:.45rem 1.1rem;font-weight:700;font-size:.82rem;cursor:pointer;transition:all .3s}
+    .btn-analyze:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,215,0,.3)}
+    .pair-result{margin-top:1rem;display:none;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem}
+    .pair-result.show{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap}
+    .pr-side{text-align:center;min-width:80px}
+    .pr-code{font-size:1.3rem;font-weight:900}
+    .pr-num{font-size:2rem;font-weight:900;line-height:1}
+    .pr-bias{font-size:.7rem;margin-top:2px}
+    .pr-arrow{font-size:1.8rem;color:var(--gold)}
+    .pr-verdict{flex:1}
+    .pv-title{font-weight:700;font-size:.92rem;margin-bottom:.25rem}
+    .pv-sub{font-size:.78rem;color:var(--muted);line-height:1.5}
+
+    /* Empty state */
+    .empty-state{text-align:center;padding:3rem;color:var(--muted);grid-column:1/-1}
+    .empty-state h3{margin-bottom:.5rem}
+
+    /* Method note */
+    .method-note{font-size:.75rem;color:var(--faint);background:rgba(255,215,0,.03);border:1px solid rgba(255,215,0,.1);border-radius:8px;padding:.7rem 1rem;margin-bottom:1.5rem;line-height:1.55}
+    .method-note strong{color:var(--gold)}
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-container">
+    <a href="index.html" class="logo">FOREX AVERAGE</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="actualites.html">📰 Actualités</a></li>
+      <li class="nav-dropdown">
+        <a href="#" style="color:var(--gold)">Analyses ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="analyses.html">📈 Analyses Techniques</a></li>
+          <li><a href="fondamentaux.html" class="active">📊 Analyse Macro</a></li>
+        </ul>
+      </li>
+      <li><a href="dashboard.html">Calculateurs</a></li>
+      <li><a href="pricing.html" style="color:var(--gold);font-weight:700;">✦ Tarifs VIP</a></li>
+    </ul>
+    <a href="login.html" class="nav-cta" style="text-decoration:none">Mon espace</a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-badge">
+    <span class="live-dot"></span>&nbsp;ANALYSE MACRO EN TEMPS RÉEL
+  </div>
+  <h1>📊 Analyse Macro</h1>
+  <p>Biais fondamentaux des devises G10, indices boursiers, métaux précieux et pétrole — calibrés chaque semaine sur les décisions des banques centrales et les données macro.</p>
+</div>
+
+<!-- ─── TABS ─── -->
+<div class="tabs-wrapper">
+  <div class="tabs-inner">
+    <button class="tab-btn active" onclick="switchTab('forex',this)">
+      💱 G10 Forex <span class="tab-count" id="cnt-forex">10</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('indices',this)">
+      📈 Indices <span class="tab-count" id="cnt-indices">6</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('metaux',this)">
+      🥇 Métaux <span class="tab-count" id="cnt-metaux">4</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('petrole',this)">
+      🛢️ Pétrole & Énergie <span class="tab-count" id="cnt-petrole">3</span>
+    </button>
+    <div class="refresh-zone">
+      <span class="status-chip" id="status-text">Chargement…</span>
+      <button class="btn-refresh" id="refresh-btn" onclick="refreshNews(true)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+        Actualiser
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+  <!-- ══════════════════ TAB: G10 FOREX ══════════════════ -->
+  <div class="tab-panel active" id="panel-forex">
+
+    <div class="legend">
+      <strong>Score fondamental :</strong>
+      <span><span class="leg-dot" style="background:var(--green)"></span>HAWKISH (> +1.5) — Haussier</span>
+      <span><span class="leg-dot" style="background:var(--lime)"></span>Lég. Hawkish (+0.5 → +1.5)</span>
+      <span><span class="leg-dot" style="background:var(--muted)"></span>NEUTRE (–0.5 → +0.5)</span>
+      <span><span class="leg-dot" style="background:var(--yellow)"></span>Lég. Dovish (–0.5 → –1.5)</span>
+      <span><span class="leg-dot" style="background:var(--red)"></span>DOVISH (< –1.5) — Baissier</span>
+    </div>
+
+    <div class="section-label">Analyse par Devise — Semaine du <span id="week-label">—</span></div>
+    <div class="assets-grid cols-5" id="grid-forex"><!-- JS --></div>
+
+    <!-- Pair analysis -->
+    <div class="section-label">⚖️ Comparateur de Paires</div>
+    <div class="pair-wrap">
+      <div class="pair-row">
+        <select id="sel-base" class="pair-sel">
+          <option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option>
+          <option value="GBP">🇬🇧 GBP</option><option value="JPY">🇯🇵 JPY</option>
+          <option value="CHF">🇨🇭 CHF</option><option value="CAD">🇨🇦 CAD</option>
+          <option value="AUD">🇦🇺 AUD</option><option value="NZD">🇳🇿 NZD</option>
+          <option value="SEK">🇸🇪 SEK</option><option value="NOK">🇳🇴 NOK</option>
+        </select>
+        <span class="pair-vs">/</span>
+        <select id="sel-quote" class="pair-sel">
+          <option value="EUR">🇪🇺 EUR</option><option value="USD">🇺🇸 USD</option>
+          <option value="GBP">🇬🇧 GBP</option><option value="JPY">🇯🇵 JPY</option>
+          <option value="CHF">🇨🇭 CHF</option><option value="CAD">🇨🇦 CAD</option>
+          <option value="AUD">🇦🇺 AUD</option><option value="NZD">🇳🇿 NZD</option>
+          <option value="SEK">🇸🇪 SEK</option><option value="NOK">🇳🇴 NOK</option>
+        </select>
+        <button class="btn-analyze" onclick="renderPair()">Analyser →</button>
+      </div>
+      <div class="pair-result" id="pair-result">
+        <div class="pr-side">
+          <div class="pr-code" id="pr-base-code">—</div>
+          <div class="pr-num"  id="pr-base-score" style="color:var(--muted)">—</div>
+          <div class="pr-bias" id="pr-base-bias">—</div>
+        </div>
+        <div class="pr-arrow" id="pr-arrow">↔</div>
+        <div class="pr-side">
+          <div class="pr-code" id="pr-quote-code">—</div>
+          <div class="pr-num"  id="pr-quote-score" style="color:var(--muted)">—</div>
+          <div class="pr-bias" id="pr-quote-bias">—</div>
+        </div>
+        <div class="pr-verdict">
+          <div class="pv-title" id="pr-title">—</div>
+          <div class="pv-sub"   id="pr-sub">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">📰 Actualités Forex</div>
+    <div class="news-grid" id="news-forex"><!-- JS --></div>
+  </div>
+
+  <!-- ══════════════════ TAB: INDICES ══════════════════ -->
+  <div class="tab-panel" id="panel-indices">
+    <div class="method-note"><strong>📋 Méthodologie Indices :</strong> Les scores reflètent le contexte macroéconomique actuel — politique monétaire, momentum bénéfices, valorisation et risques géopolitiques. Mis à jour manuellement chaque semaine.</div>
+    <div class="section-label">Analyse Fondamentale — Indices Boursiers</div>
+    <div class="assets-grid cols-3" id="grid-indices"><!-- JS --></div>
+    <div class="section-label">📰 Actualités Indices & Marchés</div>
+    <div class="news-grid" id="news-indices"><!-- JS --></div>
+  </div>
+
+  <!-- ══════════════════ TAB: MÉTAUX ══════════════════ -->
+  <div class="tab-panel" id="panel-metaux">
+    <div class="method-note"><strong>📋 Méthodologie Métaux :</strong> Les scores intègrent les taux réels, la force du dollar, la demande des banques centrales, la demande industrielle et le sentiment de marché.</div>
+    <div class="section-label">Analyse Fondamentale — Métaux Précieux & Industriels</div>
+    <div class="assets-grid cols-4" id="grid-metaux"><!-- JS --></div>
+    <div class="section-label">📰 Actualités Métaux</div>
+    <div class="news-grid" id="news-metaux"><!-- JS --></div>
+  </div>
+
+  <!-- ══════════════════ TAB: PÉTROLE ══════════════════ -->
+  <div class="tab-panel" id="panel-petrole">
+    <div class="method-note"><strong>📋 Méthodologie Énergie :</strong> Les scores tiennent compte des décisions OPEC+, des stocks mondiaux, de la demande chinoise, de la croissance US et des tensions géopolitiques dans les régions productrices.</div>
+    <div class="section-label">Analyse Fondamentale — Pétrole & Énergie</div>
+    <div class="assets-grid cols-3" id="grid-petrole"><!-- JS --></div>
+    <div class="section-label">📰 Actualités Énergie</div>
+    <div class="news-grid" id="news-petrole"><!-- JS --></div>
+  </div>
+
+</main>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   ANALYSE MACRO — DATA & LOGIC
+   Mise à jour : 11 Avril 2025
+   ══════════════════════════════════════════════════════════════ */
+
+const CACHE_KEY = 'macro_news_v1';
+const CACHE_TTL = 3 * 60 * 60 * 1000;
+
+/* ─── G10 FOREX DATA ─── */
+const FOREX_DATA = {
+  USD:{ flag:'🇺🇸', name:'Dollar US',      sub:'Federal Reserve', score:2.0,  bias:'sl-hawk',
+        driver:'Fed "higher for longer". NFP solide, CPI sticky à 3%. Risque tarifs Trump.',
+        chips:['🏦 4.25–4.50%','📈 CPI 3.0% ↑','📅 7 Mai'], chips2:['up','',''] },
+  EUR:{ flag:'🇪🇺', name:'Euro',            sub:'BCE',             score:-1.5, bias:'sl-dove',
+        driver:'BCE en cycle de baisses. Economie eurozone faible. PMI manu sous 50.',
+        chips:['🏦 2.65% ↓','📈 CPI 2.4% ↓','📅 Avr.'], chips2:['down','down',''] },
+  GBP:{ flag:'🇬🇧', name:'Livre Sterling',  sub:'Bank of England', score:0.3,  bias:'neu',
+        driver:'BoE baisse prudemment. CPI services toujours élevé (~5%). Croissance stable.',
+        chips:['🏦 4.50% ↓','📈 CPI 2.8%','📅 8 Mai'], chips2:['down','',''] },
+  JPY:{ flag:'🇯🇵', name:'Yen Japonais',    sub:'Bank of Japan',   score:0.8,  bias:'sl-hawk',
+        driver:'BOJ normalise lentement. 3ème hausse confirmée. Ueda dépendant des salaires.',
+        chips:['🏦 0.50% ↑','📈 CPI 3.1% ↑','📅 Avr.'], chips2:['up','up',''] },
+  CHF:{ flag:'🇨🇭', name:'Franc Suisse',    sub:'BNS / SNB',       score:-2.5, bias:'dove',
+        driver:'SNB quasi à 0%. Déflation 0.3%. Taux négatifs possibles si CHF reste fort.',
+        chips:['🏦 0.25% ↓','📈 CPI 0.3% ↓','📅 Juin'], chips2:['down','down',''] },
+  CAD:{ flag:'🇨🇦', name:'Dollar CAD',      sub:'Bank of Canada',  score:-0.8, bias:'sl-dove',
+        driver:'BoC a baissé 5 fois. Tarifs US 25% pèsent. WTI sous pression.',
+        chips:['🏦 2.75% ↓','📈 CPI 2.6%','📅 7 Mai'], chips2:['down','',''] },
+  AUD:{ flag:'🇦🇺', name:'Dollar AUD',      sub:'RBA',             score:-0.3, bias:'neu',
+        driver:'RBA 1ère baisse prudente. Emploi fort mais Chine en ralentissement.',
+        chips:['🏦 4.10% ↓','📈 CPI 2.4% ↓','📅 6 Mai'], chips2:['down','down',''] },
+  NZD:{ flag:'🇳🇿', name:'Dollar NZD',      sub:'RBNZ',            score:-1.8, bias:'dove',
+        driver:'RBNZ cycle agressif, 5 baisses. PIB NZ négatif. Espace pour continuer.',
+        chips:['🏦 3.75% ↓','📈 CPI 2.2% ↓','📅 Mai'], chips2:['down','down',''] },
+  SEK:{ flag:'🇸🇪', name:'Couronne SE',     sub:'Riksbank',        score:-0.5, bias:'neu',
+        driver:'Riksbank en assouplissement. CPI sous la cible. Economie fragile.',
+        chips:['🏦 2.25% ↓','📈 CPI 1.8% ↓','📅 Avr.'], chips2:['down','down',''] },
+  NOK:{ flag:'🇳🇴', name:'Couronne NO',     sub:'Norges Bank',     score:0.2,  bias:'neu',
+        driver:'Norges Bank maintient. Brent sous $80 pèse. PIB scandinave le plus fort.',
+        chips:['🏦 4.25%','📈 CPI 2.9%','📅 Avr.'], chips2:['','',''] }
+};
+
+/* ─── INDICES DATA ─── */
+const INDICES_DATA = [
+  { icon:'🇺🇸', name:'S&P 500',     sub:'Wall Street — US Equities', score:-1.0, bias:'sl-dove',
+    driver:'Tarifs Trump créent de l\'incertitude. Earnings Q1 solides mais guidances prudentes.',
+    chips:['📊 P/E ~21x','⚡ Tariffs risk','📉 VIX élevé'] },
+  { icon:'🇺🇸', name:'Nasdaq 100',  sub:'Tech / Growth US',          score:-1.5, bias:'sl-dove',
+    driver:'Sensible aux taux. Mag7 sous pression tarifaire. Valorisation encore haute.',
+    chips:['📊 P/E ~28x','💻 Tech tariffs','📉 Rate sensitive'] },
+  { icon:'🇩🇪', name:'DAX 40',      sub:'Allemagne — Export focus',  score:-1.2, bias:'sl-dove',
+    driver:'Export auto menacé par tarifs US. ECB qui baisse aide. Allemagne stagnante.',
+    chips:['🏭 Export 40%','⚡ Tariffs -25%','🏦 ECB ↓'] },
+  { icon:'🇯🇵', name:'Nikkei 225',  sub:'Japon — Export + Tech',     score:-0.8, bias:'sl-dove',
+    driver:'Yen plus fort = profits exportateurs réduits. BOJ haussier pèse sur les actions.',
+    chips:['💴 JPY fort','🏦 BOJ hawkish','📊 P/E ~18x'] },
+  { icon:'🇬🇧', name:'FTSE 100',    sub:'UK — Ressources & Finance', score:0.5,  bias:'sl-hawk',
+    driver:'Moins exposé aux tarifs US. Secteurs ressources et finance défensifs. Dividendes élevés.',
+    chips:['🛡️ Défensif','⛽ Pétrole','💰 Div 3.8%'] },
+  { icon:'🇫🇷', name:'CAC 40',      sub:'France — Luxe & Export',    score:-0.9, bias:'sl-dove',
+    driver:'Luxe LVMH/Hermès sous pression Chine + tarifs US. PMI en contraction.',
+    chips:['💎 Luxe 30%','🇨🇳 China risk','📉 PMI <50'] }
+];
+
+/* ─── MÉTAUX DATA ─── */
+const METAUX_DATA = [
+  { icon:'🥇', name:'Or (XAU/USD)', sub:'Safe Haven — $3 200+',    score:3.5,  bias:'hawk',
+    driver:'Demande record banques centrales. De-dollarisation. Taux réels US en baisse. Géopolitique.',
+    chips:['🏦 CB achat record','📊 ATH $3 200+','🛡️ Safe haven'] },
+  { icon:'🥈', name:'Argent (XAG)', sub:'Métal industriel + safe',  score:2.2,  bias:'hawk',
+    driver:'Suit or + demande panneaux solaires explose. Offre minière contrainte.',
+    chips:['☀️ Solar demand','📊 Ratio Or/Ag ↓','🏭 Industriel'] },
+  { icon:'🟤', name:'Cuivre (HG)',  sub:'Baromètre économique',     score:-0.8, bias:'sl-dove',
+    driver:'Ralentissement Chine. Tarifs freinent demande industrielle mondiale. Offre stable.',
+    chips:['🇨🇳 China -15%','🏭 Industriel','⚡ EV long-term'] },
+  { icon:'⚪', name:'Platine (XPT)', sub:'Automobile + Hydrogène',  score:0.6,  bias:'sl-hawk',
+    driver:'Demande auto stable. Potentiel hydrogène long terme. Offre d\'Afrique du Sud.',
+    chips:['🚗 Auto demand','💨 Hydrogène','🇿🇦 SA supply'] }
+];
+
+/* ─── PÉTROLE DATA ─── */
+const PETROLE_DATA = [
+  { icon:'🛢️', name:'WTI Crude',      sub:'US Benchmark — $/bbl',     score:-1.5, bias:'sl-dove',
+    driver:'OPEC+ augmente la production. Craintes récession US. Dollar fort pèse sur pétrole.',
+    chips:['📉 OPEC+ +400kb/j','🇺🇸 Récession risk','💵 USD fort'] },
+  { icon:'🛢️', name:'Brent Crude',    sub:'Global Benchmark — $/bbl', score:-1.3, bias:'sl-dove',
+    driver:'Même pressions que WTI. Demande Europe faible. Géopolitique Moyen-Orient atténuée.',
+    chips:['📉 Demande faible','🌍 Géopolit. ↓','⛽ Raffineries'] },
+  { icon:'🔥', name:'Gaz Naturel',    sub:'Henry Hub — US & EU',      score:-0.3, bias:'neu',
+    driver:'Stockages EU bien remplis. Saison chaude arrive. LNG US export soutient les prix.',
+    chips:['🇪🇺 Stocks 35%','🌡️ Saison chaude','🚢 LNG export'] }
+];
+
+/* ─── KEYWORDS pour filtrer les news ─── */
+const KEYWORDS = {
+  forex: ['usd','eur','gbp','jpy','chf','cad','aud','nzd','sek','nok','dollar','euro','pound','yen','forex','currency','central bank','fed','ecb','boe','boj','rba','rbnz','snb','boc','rate','monetary','inflation','nfp','payroll','cpi','gdp'],
+  indices: ['s&p','sp500','nasdaq','dow jones','dax','nikkei','ftse','cac 40','stock','equity','equities','market','wall street','earnings','index','indices','tech stock','shares','trading'],
+  metaux: ['gold','silver','copper','platinum','palladium','xau','xag','precious metal','metal','bullion','or ','argent','cuivre','platine','commodity','commodities'],
+  petrole: ['oil','crude','wti','brent','opec','petroleum','energy','barrel','natural gas','gasoline','refinery','pipeline','lng','shale','petrole','petrole']
+};
+
+/* ─── SENTIMENT DETECTION ─── */
+const POS_W = ['beats','beat','above','strong','surpasses','better than','hawkish','tightening','rally','rises','gains','high','record','solid','growth'];
+const NEG_W = ['miss','below','weak','recession','slowdown','falls','drops','cut','cuts','easing','dovish','contraction','decline','risk','fears','concern'];
+function sentiment(text) {
+  const l = text.toLowerCase();
+  const pos = POS_W.filter(w => l.includes(w)).length;
+  const neg = NEG_W.filter(w => l.includes(w)).length;
+  if (pos > neg) return 'pos';
+  if (neg > pos) return 'neg';
+  return 'neu';
+}
+
+/* ─── UTILS ─── */
+function scoreColor(s) {
+  if (s > 1.5) return 'var(--green)'; if (s > 0.5) return 'var(--lime)';
+  if (s > -.5) return 'var(--muted)'; if (s > -1.5) return 'var(--yellow)';
+  return 'var(--red)';
+}
+function formatScore(s) { return (s >= 0 ? '+' : '') + Math.min(5, Math.max(-5, s)).toFixed(1); }
+function biasInfo(b) {
+  const m = {
+    'hawk':    { label:'HAWKISH',       pill:'bp-hawk',    card:'c-hawk'    },
+    'sl-hawk': { label:'Lég. Hawkish',  pill:'bp-sl-hawk', card:'c-sl-hawk' },
+    'neu':     { label:'NEUTRE',         pill:'bp-neu',     card:'c-neu'     },
+    'sl-dove': { label:'Lég. Dovish',   pill:'bp-sl-dove', card:'c-sl-dove' },
+    'dove':    { label:'DOVISH',         pill:'bp-dove',    card:'c-dove'    },
+  };
+  return m[b] || m['neu'];
+}
+function timeAgo(d) {
+  if (!d) return '';
+  const diff = (Date.now() - new Date(d).getTime()) / 1000;
+  if (isNaN(diff)) return '';
+  if (diff < 3600) return `Il y a ${Math.floor(diff/60)} min`;
+  if (diff < 86400) return `Il y a ${Math.floor(diff/3600)}h`;
+  return `Il y a ${Math.floor(diff/86400)}j`;
+}
+function getWeekLabel() {
+  const n = new Date(), day = n.getDay();
+  const mon = new Date(n); mon.setDate(n.getDate() + (day===0?-6:1)-day);
+  const fri = new Date(mon); fri.setDate(mon.getDate()+4);
+  const f = d => d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
+  return `${f(mon)} au ${f(fri)}`;
+}
+
+/* ─── RENDER ASSET CARD ─── */
+function renderAssetCard(d) {
+  const bi   = biasInfo(d.bias);
+  const sc   = Math.min(5, Math.max(-5, d.score));
+  const left = ((sc + 5) / 10 * 100).toFixed(1);
+  return `
+    <div class="asset-card ${bi.card}">
+      <div class="ac-top">
+        <div>
+          <div style="display:flex;align-items:center;gap:.4rem">
+            <span class="ac-icon">${d.icon || d.flag || ''}</span>
+            <div><div class="ac-name">${d.name}</div><div class="ac-sub">${d.sub}</div></div>
+          </div>
+        </div>
+        <span class="bias-pill ${bi.pill}">${bi.label}</span>
+      </div>
+      <div class="ac-bar-wrap">
+        <div class="ac-bar-bg"><div class="ac-marker" style="left:${left}%"></div></div>
+        <div class="ac-score-row">
+          <span>–5</span>
+          <span class="ac-score-val" style="color:${scoreColor(sc)}">${formatScore(sc)}</span>
+          <span>+5</span>
+        </div>
+      </div>
+      <div class="ac-driver">${d.driver}</div>
+      <div class="ac-chips">
+        ${(d.chips || []).map((c,i) => `<span class="ac-chip ${(d.chips2||[])[i]||''}">${c}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+/* ─── RENDER FOREX GRID ─── */
+function renderForexGrid() {
+  document.getElementById('grid-forex').innerHTML =
+    Object.entries(FOREX_DATA).map(([code, d]) =>
+      renderAssetCard({ ...d, name: code, sub: d.sub, driver: d.driver })
+    ).join('');
+  document.getElementById('week-label').textContent = getWeekLabel();
+}
+
+/* ─── RENDER STATIC GRIDS ─── */
+function renderStaticGrids() {
+  document.getElementById('grid-indices').innerHTML = INDICES_DATA.map(renderAssetCard).join('');
+  document.getElementById('grid-metaux').innerHTML  = METAUX_DATA.map(renderAssetCard).join('');
+  document.getElementById('grid-petrole').innerHTML = PETROLE_DATA.map(renderAssetCard).join('');
+}
+
+/* ─── RENDER NEWS CARDS ─── */
+function newsCard(item, tag) {
+  const sent = sentiment(`${item.title} ${item.summary||''}`);
+  const sIcon = sent==='pos' ? '▲ Haussier' : sent==='neg' ? '▼ Baissier' : '● Neutre';
+  const sCls  = `ns-${sent}`;
+  const title = (item.title||'').length > 100 ? item.title.slice(0,97)+'…' : (item.title||'');
+  const summary = (item.summary||item.description||'').slice(0,120);
+  return `
+    <a href="${item.link||item.url||'#'}" target="_blank" rel="noopener" class="news-card">
+      <div class="nc-top">
+        <span class="nc-source">${(item.source||'News').toUpperCase().slice(0,14)}</span>
+        <span class="nc-time">${timeAgo(item.pubDate||item.publishedAt)}</span>
+      </div>
+      <div class="nc-title">${title}</div>
+      ${summary ? `<div class="nc-summary">${summary}${summary.length===120?'…':''}</div>` : ''}
+      <div class="nc-footer">
+        <span class="nc-read">Lire l'article →</span>
+        <span class="nc-sentiment ${sCls}">${sIcon}</span>
+      </div>
+    </a>`;
+}
+
+function renderNewsGrid(containerId, articles, keywords) {
+  const el = document.getElementById(containerId);
+  const kws = keywords;
+  const filtered = articles.filter(a => {
+    const text = ` ${(a.title||'') + ' ' + (a.summary||a.description||'')} `.toLowerCase();
+    return kws.some(kw => text.includes(kw));
+  });
+  if (!filtered.length) {
+    el.innerHTML = `<div class="empty-state"><h3>Aucun article disponible</h3><p>Actualisez dans quelques instants.</p></div>`;
+    return;
+  }
+  el.innerHTML = filtered.slice(0, 18).map(a => newsCard(a)).join('');
+}
+
+/* ─── PAIR ANALYSIS ─── */
+function renderPair() {
+  const base  = document.getElementById('sel-base').value;
+  const quote = document.getElementById('sel-quote').value;
+  if (base === quote) { alert('Sélectionne deux devises différentes.'); return; }
+  const sB = FOREX_DATA[base]?.score  || 0;
+  const sQ = FOREX_DATA[quote]?.score || 0;
+  const biB = biasInfo(FOREX_DATA[base]?.bias  || 'neu');
+  const biQ = biasInfo(FOREX_DATA[quote]?.bias || 'neu');
+  const diff = sB - sQ, absD = Math.abs(diff);
+  const icon = absD < 0.5 ? '↔' : diff > 0 ? '↗' : '↘';
+  let title, sub;
+  if (absD < 0.5) { title=`${base}/${quote} — Équilibre fondamental`; sub=`Biais similaires (écart ${absD.toFixed(1)} pt). Pas d'avantage clair — analysez techniquement.`; }
+  else if (diff > 0) { title=`${base}/${quote} — Avantage ${base} (+${absD.toFixed(1)} pts)`; sub=`${base} plus hawkish que ${quote}. Biais haussier sur ${base}/${quote}. Cherchez confirmation technique pour acheter ${base}.`; }
+  else { title=`${base}/${quote} — Avantage ${quote} (+${absD.toFixed(1)} pts)`; sub=`${quote} plus hawkish que ${base}. Biais baissier sur ${base}/${quote}. Cherchez confirmation technique pour vendre ${base}.`; }
+  const f = FOREX_DATA;
+  document.getElementById('pr-base-code').textContent  = `${f[base].flag} ${base}`;
+  document.getElementById('pr-quote-code').textContent = `${f[quote].flag} ${quote}`;
+  document.getElementById('pr-base-score').textContent  = formatScore(sB);  document.getElementById('pr-base-score').style.color  = scoreColor(sB);
+  document.getElementById('pr-quote-score').textContent = formatScore(sQ); document.getElementById('pr-quote-score').style.color = scoreColor(sQ);
+  document.getElementById('pr-base-bias').textContent  = biB.label;
+  document.getElementById('pr-quote-bias').textContent = biQ.label;
+  document.getElementById('pr-arrow').textContent = icon;
+  document.getElementById('pr-title').textContent = title;
+  document.getElementById('pr-sub').textContent   = sub;
+  document.getElementById('pair-result').classList.add('show');
+}
+
+/* ─── FETCH & CACHE ─── */
+let allArticles = [];
+function cacheLoad() {
+  try { const {ts,data}=JSON.parse(localStorage.getItem(CACHE_KEY)||'{}'); if(Date.now()-ts<CACHE_TTL) return data; } catch(e){}
+  return null;
+}
+function cacheSave(d) { try { localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:d})); } catch(e){} }
+
+async function refreshNews(force=false) {
+  const btn = document.getElementById('refresh-btn');
+  const st  = document.getElementById('status-text');
+  btn.disabled = true; btn.classList.add('spinning');
+  st.textContent = '📡 Chargement…';
+  try {
+    let articles = force ? null : cacheLoad();
+    if (!articles) {
+      const cats = ['forex','macro','crypto','petrole'];
+      const results = await Promise.all(cats.map(cat =>
+        fetch(`/api/news?category=${cat}`,{signal:AbortSignal.timeout(12000)})
+          .then(r=>r.ok?r.json():{items:[]}).then(d=>d.items||[]).catch(()=>[])
+      ));
+      const all = results.flat();
+      const seen = new Set();
+      articles = all.filter(a => { const k=(a.title||'').slice(0,60).toLowerCase(); if(seen.has(k))return false; seen.add(k); return true; });
+      if (articles.length) cacheSave(articles);
+    }
+    allArticles = articles;
+    renderAllNewsGrids();
+    const cnt = articles.length;
+    st.textContent = `✅ ${cnt} articles · ${new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})}`;
+    updateTabCounts();
+  } catch(e) {
+    console.error(e); st.textContent = '❌ Erreur réseau';
+  } finally { btn.disabled=false; btn.classList.remove('spinning'); }
+}
+
+function renderAllNewsGrids() {
+  renderNewsGrid('news-forex',   allArticles, KEYWORDS.forex);
+  renderNewsGrid('news-indices', allArticles, KEYWORDS.indices);
+  renderNewsGrid('news-metaux',  allArticles, KEYWORDS.metaux);
+  renderNewsGrid('news-petrole', allArticles, KEYWORDS.petrole);
+}
+
+function updateTabCounts() {
+  const count = kws => allArticles.filter(a => {
+    const t = ` ${(a.title||'')} ${(a.summary||a.description||'')} `.toLowerCase();
+    return kws.some(k => t.includes(k));
+  }).length;
+  document.getElementById('cnt-forex').textContent   = count(KEYWORDS.forex);
+  document.getElementById('cnt-indices').textContent = count(KEYWORDS.indices);
+  document.getElementById('cnt-metaux').textContent  = count(KEYWORDS.metaux);
+  document.getElementById('cnt-petrole').textContent = count(KEYWORDS.petrole);
+}
+
+/* ─── TAB SWITCHING ─── */
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+}
+
+/* ─── INIT ─── */
+renderForexGrid();
+renderStaticGrids();
+refreshNews();
+</script>
+</body>
+</html>
