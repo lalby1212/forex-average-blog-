@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarifs VIP | Forex Average — Signaux, IA & Analyses Premium</title>
+    <meta name="description" content="Abonnez-vous à Forex Average VIP. Signaux de trading en temps réel, graphiques IA, analyses Forex/Crypto/Or. Plans mensuel, trimestriel et annuel. Paiement Stripe & Crypto.">
+    <link rel="canonical" href="https://forexaverage.com/pricing.html">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="theme-color" content="#FFD700">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #FFC107;
+            --gold-glow: rgba(255,215,0,0.18);
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --dark3: #111111;
+            --card: rgba(18,18,18,0.92);
+            --card2: rgba(22,22,22,0.85);
+            --border: rgba(255,215,0,0.18);
+            --border-strong: rgba(255,215,0,0.38);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+            --text-faint: rgba(255,255,255,0.38);
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none; z-index: 0;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(7,7,7,0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        nav.scrolled { background: rgba(4,4,4,0.99); border-bottom-color: var(--border-strong); }
+        .nav-container {
+            max-width: 1400px; margin: 0 auto; padding: 0 2.5rem;
+            height: 68px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo {
+            font-weight: 900; font-size: 1.35rem; letter-spacing: -0.01em;
+            text-transform: uppercase; text-decoration: none;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+            transition: opacity 0.2s;
+        }
+        .logo:hover { opacity: 0.8; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 1.5px; color: var(--text-faint); display: block; margin-top: -4px; -webkit-text-fill-color: var(--text-faint); }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a { text-decoration: none; color: var(--text-muted); font-size: 0.88rem; font-weight: 500; letter-spacing: 0.3px; transition: color 0.2s; position: relative; }
+        .nav-menu a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+        .nav-menu a:hover { color: #fff; }
+        .nav-menu a:hover::after { width: 100%; }
+        .nav-cta { background: linear-gradient(135deg,#FFD700,#FFC107) !important; color: #000 !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700 !important; font-size: 0.82rem !important; letter-spacing: 0.5px; transition: all 0.2s !important; }
+        .nav-cta:hover { background: #fff !important; }
+        .nav-cta::after { display: none !important; }
+        .nav-item-drop { position: relative; }
+        .nav-item-drop > a { display: flex !important; align-items: center; gap: 0.35rem; }
+        .nav-chevron { width: 12px; height: 12px; transition: transform 0.22s ease; flex-shrink: 0; opacity: 0.55; }
+        .nav-item-drop:hover > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
+        .nav-item-drop::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 20px; }
+        .drop-panel { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(8,8,8,0.97); border: 1px solid rgba(255,215,0,0.18); border-radius: 14px; padding: 0.6rem; min-width: 230px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease; backdrop-filter: blur(24px); box-shadow: 0 28px 72px rgba(0,0,0,0.65); z-index: 9999; }
+        .drop-panel::before { content: ''; position: absolute; top: -6px; left: 50%; width: 10px; height: 10px; background: rgba(8,8,8,0.97); border-left: 1px solid rgba(255,215,0,0.18); border-top: 1px solid rgba(255,215,0,0.18); transform: translateX(-50%) rotate(45deg); }
+        .nav-item-drop:hover .drop-panel { opacity: 1; visibility: visible; pointer-events: all; transform: translateX(-50%) translateY(0); }
+        .drop-link { display: flex !important; align-items: center; gap: 0.85rem; padding: 0.65rem 0.85rem !important; border-radius: 10px; color: rgba(255,255,255,0.72) !important; text-decoration: none; font-size: 0.875rem !important; transition: all 0.15s ease; white-space: nowrap; width: 100%; }
+        .drop-link::after { display: none !important; }
+        .drop-link:hover { background: rgba(255,215,0,0.07) !important; color: #FFD700 !important; }
+        .drop-link:hover .drop-icon { background: rgba(255,215,0,0.14); color: #FFD700; }
+        .drop-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,215,0,0.65); flex-shrink: 0; transition: all 0.15s; }
+        .drop-label { font-weight: 600; font-size: 0.875rem; line-height: 1.3; display: block; }
+        .drop-desc { font-size: 0.72rem; color: rgba(255,255,255,0.38); margin-top: 1px; display: block; }
+        .drop-sep { height: 1px; background: rgba(255,215,0,0.08); margin: 0.35rem 0.85rem; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; padding: 6px; background: rgba(255,215,0,0.08); border-radius: 6px; border: 1px solid var(--border); }
+        .hamburger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s; display: block; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ─── HERO ─── */
+        .page-hero {
+            position: relative; z-index: 1;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-eyebrow {
+            display: inline-block; font-size: 0.72rem; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; color: var(--gold);
+            margin-bottom: 1rem;
+        }
+        .page-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 900; line-height: 1.1;
+            letter-spacing: -0.02em; margin-bottom: 1rem;
+        }
+        .page-hero p {
+            font-size: 1.05rem; color: var(--text-muted);
+            max-width: 580px; margin: 0 auto 2rem; line-height: 1.7;
+        }
+
+        /* ─── TOGGLE PÉRIODE ─── */
+        .period-toggle {
+            display: inline-flex; align-items: center; gap: 0;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px; padding: 4px;
+            margin-bottom: 3.5rem;
+        }
+        .period-btn {
+            padding: 0.5rem 1.2rem; border-radius: 7px;
+            font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; border: none;
+            background: none; color: var(--text-muted);
+            font-family: inherit; transition: all 0.2s;
+            position: relative; white-space: nowrap;
+        }
+        .period-btn.active { background: var(--gold); color: #000; }
+        .period-btn .badge-save {
+            position: absolute; top: -8px; right: -8px;
+            background: var(--green); color: #fff;
+            font-size: 0.6rem; font-weight: 700;
+            padding: 2px 5px; border-radius: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        /* ─── PLANS GRID ─── */
+        main { position: relative; z-index: 1; }
+        .plans-section { padding: 3rem 2rem 5rem; max-width: 1200px; margin: 0 auto; }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .plan-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .plan-card:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+
+        /* Plan populaire */
+        .plan-card.popular {
+            border-color: var(--gold);
+            background: linear-gradient(135deg, rgba(255,215,0,0.06), rgba(18,18,18,0.95));
+            transform: scale(1.03);
+        }
+        .plan-card.popular:hover { transform: scale(1.03) translateY(-4px); }
+        .plan-card.popular::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .popular-badge {
+            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: #000; font-size: 0.72rem; font-weight: 800;
+            padding: 0.3rem 1rem; border-radius: 20px;
+            letter-spacing: 1px; text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .plan-name {
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--text-faint);
+            margin-bottom: 0.8rem;
+        }
+        .plan-card.popular .plan-name { color: var(--gold); }
+
+        .plan-price {
+            display: flex; align-items: baseline; gap: 0.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .plan-price-main {
+            font-size: 3rem; font-weight: 900; color: #fff; line-height: 1;
+        }
+        .plan-price-currency { font-size: 1.4rem; color: var(--gold); font-weight: 700; }
+        .plan-price-period { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+
+        .plan-billed { font-size: 0.8rem; color: var(--text-faint); margin-bottom: 0.5rem; }
+        .plan-saving {
+            display: inline-block;
+            background: rgba(34,197,94,0.12); color: var(--green);
+            border: 1px solid rgba(34,197,94,0.25);
+            font-size: 0.72rem; font-weight: 700;
+            padding: 0.2rem 0.6rem; border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+        .plan-divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+        /* Features list */
+        .plan-features { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+        .plan-features li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.88rem; color: var(--text-muted); }
+        .plan-features li .feat-icon { flex-shrink: 0; margin-top: 1px; }
+        .feat-check { color: var(--green); }
+        .feat-gold { color: var(--gold); }
+        .feat-dim { color: rgba(255,255,255,0.2); }
+
+        /* Boutons de paiement */
+        .pay-buttons { display: flex; flex-direction: column; gap: 0.6rem; }
+
+        .btn-stripe {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.85rem 1.2rem; border-radius: 10px;
+            font-size: 0.9rem; font-weight: 700;
+            text-decoration: none; cursor: pointer;
+            border: none; font-family: inherit;
+            transition: all 0.2s;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000;
+        }
+        .btn-stripe:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,215,0,0.3); }
+
+        .btn-crypto {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 0.75rem 1.2rem; border-radius: 10px;
+            font-size: 0.85rem; font-weight: 600;
+            text-decoration: none; cursor: pointer;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-muted);
+            font-family: inherit; transition: all 0.2s;
+        }
+        .btn-crypto:hover { border-color: rgba(255,215,0,0.4); color: #fff; background: rgba(255,215,0,0.05); }
+
+        .pay-secure {
+            text-align: center; font-size: 0.72rem; color: var(--text-faint);
+            margin-top: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem;
+        }
+
+        /* ─── SECTION GRATUIT VS VIP ─── */
+        .compare-section {
+            padding: 4rem 2rem;
+            background: var(--dark2);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .compare-inner { max-width: 900px; margin: 0 auto; }
+        .compare-title { text-align: center; font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; margin-bottom: 0.5rem; }
+        .compare-sub { text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 3rem; }
+
+        .compare-table { width: 100%; border-collapse: collapse; }
+        .compare-table th {
+            padding: 0.8rem 1.2rem; font-size: 0.8rem; font-weight: 700;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .compare-table th:first-child { text-align: left; color: var(--text-faint); }
+        .compare-table th:nth-child(2) { text-align: center; color: var(--text-faint); width: 140px; }
+        .compare-table th:nth-child(3) { text-align: center; color: var(--gold); width: 140px; }
+        .compare-table td { padding: 0.9rem 1.2rem; border-top: 1px solid rgba(255,255,255,0.04); font-size: 0.9rem; }
+        .compare-table td:first-child { color: var(--text-muted); }
+        .compare-table td:nth-child(2), .compare-table td:nth-child(3) { text-align: center; }
+        .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .check-yes { color: var(--green); font-size: 1.1rem; }
+        .check-no { color: rgba(255,255,255,0.18); font-size: 1.1rem; }
+        .check-partial { color: var(--gold); font-size: 0.8rem; font-weight: 600; }
+
+        /* ─── CRYPTO ACCEPTÉES ─── */
+        .crypto-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .crypto-inner { max-width: 700px; margin: 0 auto; }
+        .crypto-grid {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 1rem; margin-top: 2rem;
+        }
+        .crypto-chip {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px; padding: 0.6rem 1.1rem;
+            font-size: 0.85rem; font-weight: 600;
+            transition: all 0.2s;
+        }
+        .crypto-chip:hover { border-color: var(--border-strong); background: rgba(255,215,0,0.05); }
+        .crypto-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+        /* ─── FAQ ─── */
+        .faq-section { padding: 4rem 2rem; background: var(--dark2); border-top: 1px solid var(--border); }
+        .faq-inner { max-width: 750px; margin: 0 auto; }
+        .faq-title { text-align: center; font-size: clamp(1.4rem,3vw,1.8rem); font-weight: 800; margin-bottom: 0.5rem; }
+        .faq-sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
+        .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        details {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 1.2rem 1.4rem;
+            cursor: pointer; transition: all 0.2s;
+        }
+        details:hover { border-color: var(--border-strong); }
+        details[open] { border-color: var(--border-strong); }
+        summary {
+            font-size: 0.95rem; font-weight: 700; color: var(--text);
+            cursor: pointer; list-style: none;
+            display: flex; align-items: center; gap: 0.8rem;
+        }
+        summary::before { content: '▶'; font-size: 0.6rem; color: var(--gold); transition: transform 0.2s; flex-shrink: 0; }
+        details[open] summary::before { transform: rotate(90deg); }
+        details p { color: var(--text-muted); line-height: 1.75; margin-top: 0.8rem; font-size: 0.9rem; padding-left: 1.2rem; }
+
+        /* ─── CTA FINAL ─── */
+        .cta-section {
+            padding: 5rem 2rem; text-align: center;
+            background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(0,0,0,0));
+            border-top: 1px solid var(--border);
+        }
+        .cta-title { font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 900; margin-bottom: 1rem; }
+        .cta-sub { color: var(--text-muted); font-size: 1rem; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .btn-cta-main {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            color: #000; font-weight: 800; font-size: 1rem;
+            padding: 1rem 2.5rem; border-radius: 12px;
+            text-decoration: none; transition: all 0.2s;
+            box-shadow: 0 8px 30px rgba(255,215,0,0.3);
+        }
+        .btn-cta-main:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,215,0,0.4); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: rgba(5,5,5,0.98); border-top: 1px solid var(--border);
+            padding: 3rem 2rem; text-align: center; position: relative; z-index: 1;
+        }
+        .footer-logo { font-weight: 900; font-size: 1.3rem; letter-spacing: -0.01em; background: linear-gradient(135deg, var(--gold), var(--gold-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.4rem; }
+        .footer-tagline { font-size: 0.78rem; color: var(--text-faint); letter-spacing: 1px; margin-bottom: 2rem; }
+        .footer-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+        .footer-links a { color: var(--text-faint); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; font-weight: 500; }
+        .footer-links a:hover { color: var(--gold); }
+        .footer-copy { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 1rem; }
+        .footer-disclaimer { font-size: 0.78rem; color: rgba(255,255,255,0.28); max-width: 680px; margin: 0 auto 1.5rem; line-height: 1.7; }
+        .footer-legal a { color: rgba(255,255,255,0.22); font-size: 0.78rem; text-decoration: none; transition: color 0.2s; }
+        .footer-legal a:hover { color: var(--gold); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: fixed; top: 68px; left: 0; right: 0; display: none; transform: translateX(-100%);
+                width: 100vw; box-sizing: border-box; flex-direction: column;
+                background: rgba(0,0,0,0.99); backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255,215,0,0.15);
+                padding: 2rem; gap: 1.2rem; transition: transform 0.3s ease; z-index: 999;
+            }
+            .nav-menu.active { display: flex; transform: translateX(0); }
+            .nav-menu li { width: 100%; }
+            .nav-menu a { font-size: 1rem; padding: 0.5rem 0; display: block; }
+            .nav-cta { display: block !important; text-align: center; width: 100%; }
+            .nav-item-drop > a { justify-content: space-between; cursor: pointer; }
+            .drop-panel { position: static; transform: none !important; opacity: 1 !important; visibility: visible !important; pointer-events: all !important; box-shadow: none; border: none; border-left: 2px solid rgba(255,215,0,0.15); border-radius: 0; margin: 0.2rem 0 0.2rem 0.5rem; padding: 0.2rem 0; background: transparent; backdrop-filter: none; display: none; min-width: unset; }
+            .drop-panel::before { display: none; }
+            .nav-item-drop.open .drop-panel { display: block !important; }
+            .nav-item-drop:hover .drop-panel { display: none; }
+            .nav-item-drop.open > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
+            .drop-link { white-space: normal; padding: 0.4rem 0.7rem !important; gap: 0.5rem; }
+            .drop-icon { display: none; }
+            .drop-sep { margin: 0.2rem 0.7rem; }
+            .plans-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+            .plan-card.popular { transform: none; }
+            .plan-card.popular:hover { transform: translateY(-4px); }
+            .compare-table th:nth-child(2), .compare-table td:nth-child(2) { display: none; }
+        }
+        @media (max-width: 480px) {
+            .period-toggle { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="Navigation principale">
+    <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="Retour à l'accueil – Forex Average">
+            FOREX AVERAGE
+            <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+        </a>
+        <button class="hamburger" aria-label="Menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li class="nav-item-drop">
+                <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="analyses.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto & Matières Premières</span></span></a>
+                    <a href="actualites.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span></a>
+                    <a href="fondamentaux.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span><span><span class="drop-label">Fondamentaux G10</span><span class="drop-desc">Biais hawkish/dovish en temps réel</span></span></a>
+                    <a href="calendrier-economique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements & indicateurs clés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="graphique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span></a>
+                    <a href="calculateurs-trading.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line></svg></span><span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span></a>
+                    <a href="screener.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span><span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#" style="color:var(--gold);font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="partenaires.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span></a>
+                    <div class="drop-sep"></div>
+                    <a href="brokers.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span><span class="drop-label">Brokers</span><span class="drop-desc">Brokers recommandés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span><span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span></a>
+                    <div class="drop-sep"></div>
+                    <a href="index.html#telegram" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span><span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span></a>
+                </div>
+            </li>
+            <li><a href="login.html" style="text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.color='';this.style.borderColor=''">Connexion</a></li>
+            <li><a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="page-hero">
+    <span class="section-eyebrow">Offre VIP</span>
+    <h1>Tradez avec un<br><span style="background:linear-gradient(135deg,#FFD700,#FFC107);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">avantage réel</span></h1>
+    <p>Signaux en temps réel, IA sur graphiques, analyses premium et accès Telegram privé. Choisissez la durée qui vous convient.</p>
+
+    <!-- Toggle période -->
+    <div class="period-toggle" id="period-toggle">
+        <button class="period-btn active" data-period="monthly" onclick="setPeriod('monthly')">Mensuel</button>
+        <button class="period-btn" data-period="quarterly" onclick="setPeriod('quarterly')">
+            3 Mois
+            <span class="badge-save">-20%</span>
+        </button>
+        <button class="period-btn" data-period="yearly" onclick="setPeriod('yearly')">
+            Annuel
+            <span class="badge-save">-33%</span>
+        </button>
+    </div>
+</div>
+
+<main>
+
+<!-- ── PLANS ── -->
+<section class="plans-section">
+    <div class="plans-grid">
+
+        <!-- PLAN MENSUEL -->
+        <div class="plan-card" id="plan-monthly">
+            <div class="plan-name">Mensuel</div>
+            <div class="plan-price">
+                <span class="plan-price-currency">$</span>
+                <span class="plan-price-main">24</span>
+                <span style="font-size:1.5rem;font-weight:900;color:#fff;">.99</span>
+                <span class="plan-price-period">/mois</span>
+            </div>
+            <div class="plan-billed">Facturé mensuellement · Annulation à tout moment</div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features">
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Signaux Telegram en temps réel</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Graphiques IA annotés (GPT-4o)</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Analyses premium complètes (Forex, Crypto, Or)</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Canal Telegram privé membres VIP</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Webinaire hebdomadaire live</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Support prioritaire direct</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tous les outils gratuits inclus</li>
+            </ul>
+            <div class="pay-buttons">
+                <a href="#stripe-monthly" class="btn-stripe">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Payer par carte — Stripe
+                </a>
+                <div class="pay-secure">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Paiement 100% sécurisé via Stripe
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAN TRIMESTRIEL (populaire) -->
+        <div class="plan-card popular" id="plan-quarterly">
+            <div class="popular-badge">⭐ Le Plus Populaire</div>
+            <div class="plan-name">Trimestriel</div>
+            <div class="plan-price">
+                <span class="plan-price-currency">$</span>
+                <span class="plan-price-main">59</span>
+                <span style="font-size:1.5rem;font-weight:900;color:#fff;">.99</span>
+                <span class="plan-price-period">/3 mois</span>
+            </div>
+            <div class="plan-billed">Soit 19.99$/mois · Paiement unique</div>
+            <div class="plan-saving">💰 Économie de 20% vs mensuel</div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features">
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tout du plan mensuel</li>
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Signaux de trading en temps réel</li>
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Graphiques Live + IA (GPT-4o)</li>
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Accès canal Telegram privé</li>
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Paiement Stripe ou Crypto</li>
+                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 mois d'accès continu garanti</li>
+            </ul>
+            <div class="pay-buttons">
+                <a href="#stripe-quarterly" class="btn-stripe">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Payer par carte — Stripe
+                </a>
+                <a href="#crypto-quarterly" class="btn-crypto">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Payer en Crypto — Coinbase
+                </a>
+                <div class="pay-secure">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Stripe & Coinbase Commerce · SSL
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAN ANNUEL -->
+        <div class="plan-card" id="plan-yearly">
+            <div class="plan-name">Annuel</div>
+            <div class="plan-price">
+                <span class="plan-price-currency">$</span>
+                <span class="plan-price-main">199</span>
+                <span style="font-size:1.5rem;font-weight:900;color:#fff;">.99</span>
+                <span class="plan-price-period">/an</span>
+            </div>
+            <div class="plan-billed">Soit 16.66$/mois · Meilleur tarif</div>
+            <div class="plan-saving">💰 Économie de 33% vs mensuel</div>
+            <div class="plan-divider"></div>
+            <ul class="plan-features">
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tout du plan trimestriel</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 12 mois d'accès complet</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Priorité sur les nouveaux outils</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Support prioritaire direct</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Paiement Stripe ou Crypto</li>
+                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Meilleur rapport qualité/prix</li>
+            </ul>
+            <div class="pay-buttons">
+                <a href="#stripe-yearly" class="btn-stripe">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Payer par carte — Stripe
+                </a>
+                <a href="#crypto-yearly" class="btn-crypto">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Payer en Crypto — Coinbase
+                </a>
+                <div class="pay-secure">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Stripe & Coinbase Commerce · SSL
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ── COMPARATIF GRATUIT VS VIP ── -->
+<section class="compare-section">
+    <div class="compare-inner">
+        <h2 class="compare-title">Gratuit vs VIP</h2>
+        <p class="compare-sub">Tout ce que vous gagnez avec l'accès VIP</p>
+        <table class="compare-table">
+            <thead>
+                <tr>
+                    <th>Fonctionnalité</th>
+                    <th>Gratuit</th>
+                    <th>✦ VIP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Actualités marchés en temps réel</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Calendrier économique</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Calculateurs de trading (position, levier, R/R)</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Graphiques Live TradingView</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Journal de trading personnel (Level 2)</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Track record public</td>
+                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Analyses premium (Forex, Crypto, Or…)</td>
+                    <td><span class="check-partial">Aperçu</span></td>
+                    <td><span class="check-yes">✓ Complet</span></td>
+                </tr>
+                <tr>
+                    <td>Signaux Telegram en temps réel</td>
+                    <td><span class="check-no">✗</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Graphiques IA annotés (GPT-4o)</td>
+                    <td><span class="check-no">✗</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Canal Telegram privé membres VIP</td>
+                    <td><span class="check-no">✗</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Webinaire hebdomadaire live</td>
+                    <td><span class="check-no">✗</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Support prioritaire direct</td>
+                    <td><span class="check-no">✗</span></td>
+                    <td><span class="check-yes">✓</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ── CRYPTOS ACCEPTÉES ── -->
+<section class="crypto-section">
+    <div class="crypto-inner">
+        <span class="section-eyebrow">Paiement Crypto</span>
+        <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:800;margin-bottom:0.5rem;">Cryptomonnaies acceptées</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:0;">Via Coinbase Commerce — sécurisé, instantané, sans intermédiaire.</p>
+        <div class="crypto-grid">
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#F7931A;"></div>
+                Bitcoin (BTC)
+            </div>
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#627EEA;"></div>
+                Ethereum (ETH)
+            </div>
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#26A17B;"></div>
+                USDT (Tether)
+            </div>
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#2775CA;"></div>
+                USDC
+            </div>
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#0033AD;"></div>
+                Litecoin (LTC)
+            </div>
+            <div class="crypto-chip">
+                <div class="crypto-dot" style="background:#E84142;"></div>
+                Avalanche (AVAX)
+            </div>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-faint);margin-top:1.5rem;">⚠️ Le paiement crypto est disponible sur les plans 3 mois et annuel uniquement. Votre accès est activé manuellement sous 24h après confirmation de la transaction.</p>
+    </div>
+</section>
+
+<!-- ── FAQ ── -->
+<section class="faq-section">
+    <div class="faq-inner">
+        <h2 class="faq-title">Questions fréquentes</h2>
+        <p class="faq-sub">Tout ce que vous devez savoir avant de vous abonner</p>
+        <div class="faq-list">
+            <details>
+                <summary>Comment fonctionne l'abonnement mensuel ?</summary>
+                <p>Le plan mensuel est renouvelé automatiquement chaque mois via Stripe. Vous pouvez annuler à tout moment depuis votre espace membre, sans frais ni préavis. L'accès reste actif jusqu'à la fin de la période payée.</p>
+            </details>
+            <details>
+                <summary>Comment est activé mon accès après paiement ?</summary>
+                <p>Après paiement par carte (Stripe), votre accès est activé instantanément. Un email avec votre code d'accès vous est envoyé automatiquement. Pour les paiements crypto, l'activation est manuelle sous 24h après confirmation de la transaction sur la blockchain.</p>
+            </details>
+            <details>
+                <summary>Puis-je annuler à tout moment ?</summary>
+                <p>Oui, pour le plan mensuel vous pouvez annuler à tout moment depuis votre espace Stripe. Pour les plans trimestriel et annuel, le paiement est unique et non remboursable, mais votre accès reste actif jusqu'à la fin de la période.</p>
+            </details>
+            <details>
+                <summary>Quels actifs sont couverts par les signaux ?</summary>
+                <p>Nos signaux couvrent le Forex (paires majeures et mineures G10), les Crypto-actifs (BTC, ETH, SOL et altcoins sélectionnés), l'Or (XAU/USD), le Pétrole (WTI & Brent) et les Indices majeurs (S&P 500, Nasdaq, DAX).</p>
+            </details>
+            <details>
+                <summary>Le paiement crypto est-il disponible sur tous les plans ?</summary>
+                <p>Le paiement en crypto est disponible uniquement sur les plans trimestriel (3 mois) et annuel. Le plan mensuel est exclusivement disponible via Stripe en raison du renouvellement automatique.</p>
+            </details>
+            <details>
+                <summary>Y a-t-il une période d'essai gratuite ?</summary>
+                <p>Nous n'offrons pas d'essai gratuit pour le moment. Cependant, vous pouvez accéder gratuitement à nos outils (calculateurs, graphiques, journal de trading, actualités) en créant un compte gratuit pour tester la qualité de notre plateforme avant de vous abonner.</p>
+            </details>
+            <details>
+                <summary>Mes données de paiement sont-elles sécurisées ?</summary>
+                <p>Absolument. Nous ne stockons aucune donnée bancaire. Les paiements par carte sont gérés entièrement par Stripe, certifié PCI DSS niveau 1 (le plus haut niveau de sécurité). Les paiements crypto sont gérés par Coinbase Commerce.</p>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section class="cta-section">
+    <span class="section-eyebrow">Commencez aujourd'hui</span>
+    <h2 class="cta-title">Prêt à trader<br>avec un avantage ?</h2>
+    <p class="cta-sub">Rejoignez les traders qui utilisent Forex Average pour prendre de meilleures décisions.</p>
+    <a href="#plan-quarterly" class="btn-cta-main" onclick="document.getElementById('plan-quarterly').scrollIntoView({behavior:'smooth'});return false;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Voir les plans VIP
+    </a>
+    <p style="margin-top:1.2rem;font-size:0.82rem;color:var(--text-faint);">Ou <a href="register.html" style="color:var(--gold);text-decoration:none;font-weight:600;">créez un compte gratuit</a> pour accéder aux outils sans abonnement</p>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer role="contentinfo">
+    <div class="footer-logo">FOREX AVERAGE</div>
+    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+    <div class="footer-links">
+        <a href="analyses.html">Analyses</a>
+        <a href="calculateurs-trading.html">Calculateurs</a>
+        <a href="pricing.html" style="color:var(--gold);">Tarifs VIP</a>
+        <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank" rel="noopener noreferrer">TradingView</a>
+        <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer">Canal Gratuit</a>
+        <a href="https://t.me/+8Q2zPHrvFghlMzI8" target="_blank" rel="noopener noreferrer">Premium</a>
+    </div>
+    <div class="footer-copy">&copy; 2026 Forex Average LLC. Tous droits réservés.</div>
+    <div class="footer-disclaimer">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:inline;margin-right:0.5rem;vertical-align:middle;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2v2m0-4h-2V7h2v6z"></path></svg>
+        Le contenu de ce site est fourni à titre informatif uniquement. Il ne constitue pas un conseil en investissement. Le trading comporte des risques significatifs de perte en capital. Les performances passées ne garantissent pas les résultats futurs.
+    </div>
+    <div class="footer-legal">
+        <a href="mentions-legales.html">Mentions Légales & Disclaimer</a>
+        &nbsp;·&nbsp;
+        <a href="cgv.html">CGV</a>
+        &nbsp;·&nbsp;
+        <a href="politique-confidentialite.html">Politique de Confidentialité</a>
+    </div>
+</footer>
+
+<!-- ── JAVASCRIPT ── -->
+<script>
+// ── NAV ──
+(function () {
+    var btn  = document.querySelector('.hamburger');
+    var menu = document.querySelector('.nav-menu');
+    if (!btn || !menu) return;
+    function openMenu() { menu.classList.add('active'); btn.classList.add('active'); btn.setAttribute('aria-expanded','true'); }
+    function closeMenu() { menu.classList.remove('active'); btn.classList.remove('active'); btn.setAttribute('aria-expanded','false'); document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); }); }
+    btn.addEventListener('click', function(e) { e.stopPropagation(); menu.classList.contains('active') ? closeMenu() : openMenu(); });
+    document.querySelectorAll('.nav-item-drop > a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            if (window.innerWidth > 900) return;
+            e.preventDefault(); e.stopPropagation();
+            var parent = this.parentElement;
+            var wasOpen = parent.classList.contains('open');
+            document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); });
+            if (!wasOpen) parent.classList.add('open');
+        });
+    });
+    menu.querySelectorAll('a').forEach(function(link) {
+        if (link.parentElement.classList.contains('nav-item-drop')) return;
+        link.addEventListener('click', function(){ closeMenu(); });
+    });
+    var nav = document.querySelector('nav');
+    if (nav) { window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive: true }); }
+})();
+
+// ── PÉRIODE TOGGLE ──
+function setPeriod(period) {
+    document.querySelectorAll('.period-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.period === period);
+    });
+    // Scroll vers le plan correspondant
+    var target = document.getElementById('plan-' + period);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+<script src="chatbot.js"></script>
+</body>
+</html>
