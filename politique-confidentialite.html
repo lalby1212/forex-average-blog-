@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité — Forex Average</title>
+    <meta name="description" content="Politique de confidentialité et de protection des données personnelles de Forex Average, conforme au RGPD.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://forexaverage.com/politique-confidentialite.html">
+    <link rel="icon" href="/favicon.ico">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --gold: #FFD700; --gold-dim: #FFC107;
+            --bg: #070707; --card: rgba(255,255,255,0.03);
+            --border: rgba(255,215,0,0.18); --border-strong: rgba(255,215,0,0.38);
+            --text: #e8e8e8; --text-muted: rgba(255,255,255,0.55); --text-faint: rgba(255,255,255,0.28);
+        }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system,'SF Pro Text','SF Pro Display',BlinkMacSystemFont,'Helvetica Neue',sans-serif; line-height: 1.7; min-height: 100vh; }
+        nav { position: sticky; top: 0; z-index: 1000; background: rgba(7,7,7,0.96); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); transition: all 0.3s; }
+        nav.scrolled { background: rgba(4,4,4,0.99); border-bottom-color: var(--border-strong); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 2.5rem; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-weight: 900; font-size: 1.35rem; letter-spacing: -0.01em; text-transform: uppercase; text-decoration: none; background: linear-gradient(135deg,#FFD700,#FFC107); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 1.5px; color: var(--text-faint); display: block; margin-top: -4px; -webkit-text-fill-color: var(--text-faint); }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
+        .nav-menu a { text-decoration: none; color: var(--text-muted); font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+        .nav-menu a:hover { color: #fff; }
+        .nav-cta { background: var(--gold); color: #000 !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 700 !important; font-size: 0.82rem !important; }
+        .nav-cta:hover { background: #fff !important; }
+        .nav-item-drop { position: relative; }
+        .nav-item-drop > a { display: flex !important; align-items: center; gap: 0.35rem; }
+        .nav-chevron { width: 12px; height: 12px; transition: transform 0.22s; opacity: 0.55; }
+        .nav-item-drop:hover > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
+        .nav-item-drop::after { content:''; position: absolute; top: 100%; left: 0; right: 0; height: 20px; }
+        .drop-panel { position: absolute; top: calc(100% + 16px); left: 50%; transform: translateX(-50%) translateY(6px); background: rgba(8,8,8,0.97); border: 1px solid rgba(255,215,0,0.18); border-radius: 14px; padding: 0.6rem; min-width: 230px; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.22s, transform 0.22s; backdrop-filter: blur(24px); box-shadow: 0 28px 72px rgba(0,0,0,0.65); z-index: 9999; }
+        .nav-item-drop:hover .drop-panel { opacity: 1; visibility: visible; pointer-events: all; transform: translateX(-50%) translateY(0); }
+        .drop-link { display: flex !important; align-items: center; gap: 0.85rem; padding: 0.65rem 0.85rem !important; border-radius: 10px; color: rgba(255,255,255,0.72) !important; text-decoration: none; font-size: 0.875rem !important; transition: all 0.15s; white-space: nowrap; width: 100%; }
+        .drop-link:hover { background: rgba(255,215,0,0.07) !important; color: #FFD700 !important; }
+        .drop-icon { width: 34px; height: 34px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: rgba(255,215,0,0.65); flex-shrink: 0; }
+        .drop-label { font-weight: 600; font-size: 0.875rem; display: block; }
+        .drop-desc { font-size: 0.72rem; color: rgba(255,255,255,0.38); margin-top: 1px; display: block; }
+        .drop-sep { height: 1px; background: rgba(255,215,0,0.08); margin: 0.35rem 0.85rem; }
+        .nav-profile { position: relative; display: none; list-style: none; }
+        .nav-profile.visible { display: flex; align-items: center; }
+        .nav-avatar-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 0.35rem 0.75rem 0.35rem 0.4rem; cursor: pointer; transition: all 0.2s; color: var(--text); font-size: 0.82rem; font-weight: 600; }
+        .nav-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#FFD700,#FFC107); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000; flex-shrink: 0; }
+        .nav-profile-drop { display: none; position: absolute; top: calc(100% + 2px); right: 0; background: rgba(12,12,12,0.97); backdrop-filter: blur(20px); border: 1px solid var(--border-strong); border-radius: 10px; padding: 0.4rem; min-width: 180px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 999; }
+        .nav-profile::after { content:''; position: absolute; top: 100%; left: -10px; right: -10px; height: 12px; }
+        .nav-profile:hover .nav-profile-drop { display: block; }
+        .nav-profile-drop a, .nav-profile-drop button { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.55rem 0.8rem; border-radius: 7px; text-decoration: none; color: var(--text-muted); font-size: 0.83rem; font-weight: 500; background: none; border: none; cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s; text-align: left; }
+        .nav-profile-drop a:hover, .nav-profile-drop button:hover { background: rgba(255,215,0,0.07); color: #fff; }
+        .nav-profile-drop .drop-sep-sm { height: 1px; background: rgba(255,215,0,0.08); margin: 0.3rem 0.8rem; }
+        .nav-profile-drop .logout-btn { color: #ef4444; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; padding: 6px; background: rgba(255,215,0,0.08); border-radius: 6px; border: 1px solid var(--border); }
+        .hamburger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s; display: block; }
+        @media (max-width: 900px) {
+            .hamburger { display: flex; }
+            .nav-menu { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; background: rgba(7,7,7,0.99); padding: 1.5rem; gap: 0.3rem; overflow-y: auto; z-index: 999; }
+            .nav-menu.active { display: flex; }
+            .drop-panel { position: static; transform: none; opacity: 1; visibility: visible; pointer-events: all; box-shadow: none; border: none; background: transparent; padding: 0 0 0 1rem; display: none; min-width: 0; }
+            .nav-item-drop.open .drop-panel { display: block; }
+        }
+        .page-hero { padding: 4rem 2rem 2rem; text-align: center; border-bottom: 1px solid var(--border); background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,215,0,0.05) 0%, transparent 70%); }
+        .page-hero .eyebrow { font-size: 0.72rem; letter-spacing: 2px; color: var(--gold); font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
+        .page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
+        .page-hero p { color: var(--text-muted); font-size: 0.95rem; max-width: 550px; margin: 0 auto; }
+        .legal-body { max-width: 800px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+        .legal-body h2 { font-size: 1.1rem; font-weight: 700; color: var(--gold); margin: 2.5rem 0 0.75rem; letter-spacing: -0.01em; }
+        .legal-body h3 { font-size: 0.92rem; font-weight: 600; color: var(--text); margin: 1.5rem 0 0.5rem; }
+        .legal-body p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.85rem; line-height: 1.75; }
+        .legal-body ul { color: var(--text-muted); font-size: 0.9rem; margin: 0.5rem 0 0.85rem 1.5rem; line-height: 1.75; }
+        .legal-body li { margin-bottom: 0.3rem; }
+        .legal-body a { color: var(--gold); text-decoration: none; }
+        .legal-body a:hover { text-decoration: underline; }
+        .legal-sep { height: 1px; background: var(--border); margin: 2.5rem 0; }
+        .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+        .data-table th { text-align: left; padding: 0.65rem 1rem; background: rgba(255,215,0,0.06); color: var(--gold); font-weight: 700; border-bottom: 1px solid var(--border); }
+        .data-table td { padding: 0.65rem 1rem; border-bottom: 1px solid rgba(255,215,0,0.06); color: var(--text-muted); vertical-align: top; }
+        .data-table tr:last-child td { border-bottom: none; }
+        .rgpd-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); border-radius: 6px; padding: 0.3rem 0.8rem; font-size: 0.78rem; color: #86efac; font-weight: 600; margin-bottom: 1rem; }
+        .site-footer { background: rgba(5,5,5,0.98); border-top: 1px solid var(--border); padding: 2.5rem 2rem; text-align: center; }
+        .site-footer .f-logo { font-weight: 900; font-size: 1.1rem; background: linear-gradient(135deg,#FFD700,#FFC107); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.5rem; }
+        .site-footer .f-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1rem 0; }
+        .site-footer .f-links a { color: rgba(255,255,255,0.3); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+        .site-footer .f-links a:hover { color: var(--gold); }
+        .site-footer .f-copy { font-size: 0.78rem; color: rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body>
+
+<nav role="navigation" aria-label="Navigation principale">
+    <div class="nav-container">
+        <a href="index.html" class="logo">FOREX AVERAGE<span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span></a>
+        <button class="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <ul class="nav-menu">
+            <li><a href="index.html">Accueil</a></li>
+            <li class="nav-item-drop">
+                <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="analyses.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto &amp; Matières Premières</span></span></a>
+                    <a href="actualites.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span></a>
+                    <a href="fondamentaux.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span><span><span class="drop-label">Analyse Macro</span><span class="drop-desc">Forex, Indices, Métaux &amp; Pétrole</span></span></a>
+                    <a href="calendrier-economique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements &amp; indicateurs clés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="graphique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span></a>
+                    <a href="calculateurs-trading.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line></svg></span><span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span></a>
+                    <a href="screener.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span><span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#" style="color:var(--gold);font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="partenaires.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span></a>
+                    <div class="drop-sep"></div>
+                    <a href="brokers.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span><span><span class="drop-label">Brokers</span><span class="drop-desc">Brokers recommandés</span></span></a>
+                </div>
+            </li>
+            <li class="nav-item-drop">
+                <a href="#">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                <div class="drop-panel">
+                    <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span><span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span></a>
+                    <div class="drop-sep"></div>
+                    <a href="index.html#telegram" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span><span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span></a>
+                </div>
+            </li>
+            <li class="nav-auth-guest"><a href="login.html" style="text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.color='';this.style.borderColor=''">Connexion</a></li>
+            <li class="nav-auth-guest"><a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a></li>
+            <li id="nav-user-profile" class="nav-profile">
+                <div class="nav-avatar-btn"><div class="nav-avatar" id="nav-avatar-initials">?</div><span id="nav-username-display">Mon compte</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                <div class="nav-profile-drop">
+                    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
+                    <a href="journal.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Mon journal</a>
+                    <div class="drop-sep-sm"></div>
+                    <button class="logout-btn" onclick="navSignOut()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Se déconnecter</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="page-hero">
+    <span class="eyebrow">Légal</span>
+    <h1>Politique de Confidentialité</h1>
+    <p>Protection de vos données personnelles — conforme au RGPD (UE 2016/679).</p>
+</div>
+
+<main class="legal-body">
+
+    <div class="rgpd-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Conforme RGPD — UE 2016/679
+    </div>
+
+    <h2>1. Responsable du traitement</h2>
+    <p><strong>Forex Average</strong> — <a href="mailto:contact@forexaverage.com">contact@forexaverage.com</a></p>
+    <p>En tant que responsable du traitement, Forex Average s'engage à protéger la vie privée de ses utilisateurs et à traiter les données personnelles conformément au RGPD et à la loi Informatique et Libertés.</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>2. Données collectées et finalités</h2>
+    <table class="data-table">
+        <thead>
+            <tr><th>Données</th><th>Finalité</th><th>Base légale</th><th>Durée</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Adresse e-mail, nom d'utilisateur</td>
+                <td>Création et gestion de compte</td>
+                <td>Exécution du contrat</td>
+                <td>Durée du compte + 3 ans</td>
+            </tr>
+            <tr>
+                <td>Données de trading (journal, trades)</td>
+                <td>Fonctionnalité journal de trading</td>
+                <td>Exécution du contrat</td>
+                <td>Durée du compte</td>
+            </tr>
+            <tr>
+                <td>Données de paiement</td>
+                <td>Traitement des abonnements VIP</td>
+                <td>Exécution du contrat</td>
+                <td>Traitées par Stripe (non stockées chez nous)</td>
+            </tr>
+            <tr>
+                <td>Logs de connexion, adresse IP</td>
+                <td>Sécurité, prévention fraude</td>
+                <td>Intérêt légitime</td>
+                <td>90 jours</td>
+            </tr>
+            <tr>
+                <td>Données de navigation (cookies techniques)</td>
+                <td>Authentification, session</td>
+                <td>Intérêt légitime</td>
+                <td>Durée de la session + 7 jours</td>
+            </tr>
+        </tbody>
+    </table>
+    <p>Forex Average ne collecte <strong>aucune donnée sensible</strong> (santé, opinions politiques, religion, origine ethnique).</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>3. Sous-traitants et transferts de données</h2>
+    <h3>Supabase (authentification & base de données)</h3>
+    <p>Supabase Inc. héberge la base de données dans la région EU (Frankfurt, Allemagne). Les données sont soumises au RGPD. DPA disponible sur <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
+
+    <h3>Stripe (paiements)</h3>
+    <p>Stripe Inc. est certifié PCI-DSS niveau 1. Forex Average ne stocke jamais vos coordonnées bancaires. Politique de confidentialité Stripe : <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener">stripe.com/fr/privacy</a>.</p>
+
+    <h3>Vercel (hébergement)</h3>
+    <p>Le site est hébergé sur Vercel. Les fichiers statiques sont distribués via CDN mondial. Politique Vercel : <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">vercel.com/legal/privacy-policy</a>.</p>
+
+    <h3>TradingView (widgets graphiques)</h3>
+    <p>Les pages intégrant des widgets TradingView sont soumises à la politique de TradingView concernant les cookies tiers. Consultez <a href="https://www.tradingview.com/policies/" target="_blank" rel="noopener">tradingview.com/policies</a>.</p>
+
+    <p>Aucun transfert de données hors de l'Union Européenne n'est effectué, sauf dans le cadre des services Stripe et Vercel (États-Unis) avec garanties adéquates (clauses contractuelles types de la Commission Européenne).</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>4. Cookies et traceurs</h2>
+    <h3>Cookies strictement nécessaires (pas de consentement requis)</h3>
+    <ul>
+        <li><strong>sb-access-token</strong> / <strong>sb-refresh-token</strong> — session d'authentification Supabase. Expiration : 7 jours (refresh token) / 1 heure (access token).</li>
+    </ul>
+    <h3>Cookies tiers (TradingView)</h3>
+    <p>Les widgets TradingView peuvent déposer des cookies de fonctionnement nécessaires à l'affichage des graphiques. Ces cookies sont gérés par TradingView Inc. et soumis à leur propre politique.</p>
+    <p>Forex Average n'utilise pas de cookies publicitaires, de tracking ou d'analyse comportementale (Google Analytics, Facebook Pixel, etc.).</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>5. Vos droits RGPD</h2>
+    <p>Conformément aux articles 15 à 22 du RGPD, vous disposez des droits suivants :</p>
+    <ul>
+        <li><strong>Droit d'accès (art. 15)</strong> — obtenir une copie de toutes les données vous concernant ;</li>
+        <li><strong>Droit de rectification (art. 16)</strong> — corriger des données inexactes ou incomplètes ;</li>
+        <li><strong>Droit à l'effacement (art. 17)</strong> — supprimer votre compte et toutes vos données ;</li>
+        <li><strong>Droit à la limitation (art. 18)</strong> — suspendre le traitement de vos données dans certains cas ;</li>
+        <li><strong>Droit à la portabilité (art. 20)</strong> — exporter vos données dans un format structuré ;</li>
+        <li><strong>Droit d'opposition (art. 21)</strong> — s'opposer au traitement basé sur l'intérêt légitime ;</li>
+        <li><strong>Droit de retrait du consentement</strong> — retirer votre consentement à tout moment.</li>
+    </ul>
+    <p>Pour exercer ces droits, contactez-nous à : <a href="mailto:contact@forexaverage.com">contact@forexaverage.com</a></p>
+    <p>Vous disposez également du droit d'introduire une réclamation auprès de la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr" target="_blank" rel="noopener">www.cnil.fr</a> — Tél : 01 53 73 22 22.</p>
+    <p>Nous nous engageons à répondre à toute demande dans un délai maximum de <strong>30 jours</strong>.</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>6. Sécurité des données</h2>
+    <p>Nous mettons en œuvre les mesures techniques et organisationnelles suivantes pour protéger vos données :</p>
+    <ul>
+        <li>Chiffrement des mots de passe (bcrypt via Supabase Auth) ;</li>
+        <li>Communication chiffrée HTTPS/TLS 1.3 ;</li>
+        <li>Row Level Security (RLS) en base de données — chaque utilisateur n'accède qu'à ses propres données ;</li>
+        <li>Authentification sécurisée par JWT avec rotation des tokens ;</li>
+        <li>Aucun stockage de données de paiement sur nos serveurs.</li>
+    </ul>
+    <p>En cas de violation de données susceptible d'engendrer un risque pour vos droits et libertés, nous notifierons la CNIL dans les 72 heures et vous informerons sans délai.</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>7. Suppression de compte</h2>
+    <p>Vous pouvez demander la suppression complète de votre compte et de toutes les données associées (profil, trades, journal) à tout moment en envoyant un e-mail à <a href="mailto:contact@forexaverage.com">contact@forexaverage.com</a> avec l'objet "Suppression de compte".</p>
+    <p>La suppression sera effective dans un délai de <strong>7 jours ouvrés</strong>. Certaines données pourront être conservées si une obligation légale l'exige (ex : données de facturation — 10 ans en France).</p>
+
+    <div class="legal-sep"></div>
+
+    <h2>8. Modifications de cette politique</h2>
+    <p>Forex Average se réserve le droit de modifier cette politique de confidentialité à tout moment. Les utilisateurs seront informés par e-mail de toute modification substantielle. La date de dernière mise à jour est indiquée ci-dessous.</p>
+    <p>Dernière mise à jour : <strong>Avril 2026</strong></p>
+
+    <div class="legal-sep"></div>
+    <p style="text-align:center;font-size:0.82rem;color:var(--text-faint);">
+        <a href="mentions-legales.html">Mentions légales</a> &nbsp;·&nbsp;
+        <a href="cgv.html">CGU / CGV</a> &nbsp;·&nbsp;
+        <a href="index.html">Retour à l'accueil</a>
+    </p>
+
+</main>
+
+<footer class="site-footer" role="contentinfo">
+    <div class="f-logo">FOREX AVERAGE</div>
+    <div class="f-links">
+        <a href="index.html">Accueil</a>
+        <a href="analyses.html">Analyses</a>
+        <a href="pricing.html">VIP</a>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="cgv.html">CGU / CGV</a>
+        <a href="politique-confidentialite.html">Confidentialité</a>
+    </div>
+    <div class="f-copy">© 2026 Forex Average — Tous droits réservés.</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var btn = document.querySelector('.hamburger'), menu = document.querySelector('.nav-menu');
+  if (!btn || !menu) return;
+  function openMenu()  { menu.classList.add('active'); btn.classList.add('active'); btn.setAttribute('aria-expanded','true'); }
+  function closeMenu() { menu.classList.remove('active'); btn.classList.remove('active'); btn.setAttribute('aria-expanded','false'); document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); }); }
+  btn.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.contains('active') ? closeMenu() : openMenu(); });
+  document.querySelectorAll('.nav-item-drop > a').forEach(function(link){ link.addEventListener('click', function(e){ if (window.innerWidth > 900) return; e.preventDefault(); e.stopPropagation(); var p = this.parentElement, w = p.classList.contains('open'); document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); }); if (!w) p.classList.add('open'); }); });
+  var nav = document.querySelector('nav'); if (nav){ window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive:true }); }
+})();
+(function(){
+  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+  if (!window.supabase) return;
+  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  function updateNavAuth(user){
+    var g = document.querySelectorAll('.nav-auth-guest'), p = document.getElementById('nav-user-profile');
+    if (!p) return;
+    if (user){ g.forEach(function(el){ el.style.display='none'; }); p.classList.add('visible'); var u=(user.user_metadata&&user.user_metadata.username)||(user.email?user.email.split('@')[0]:'?'); document.getElementById('nav-username-display').textContent=u; document.getElementById('nav-avatar-initials').textContent=u.charAt(0).toUpperCase(); }
+    else { g.forEach(function(el){ el.style.display=''; }); p.classList.remove('visible'); }
+  }
+  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
+  sb.auth.getSession().then(function(r){ if (r.data&&r.data.session) updateNavAuth(r.data.session.user); });
+  sb.auth.onAuthStateChange(function(_e,session){ updateNavAuth(session?session.user:null); });
+})();
+</script>
+</body>
+</html>
