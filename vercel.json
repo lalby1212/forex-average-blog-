@@ -1,18 +1,6 @@
 {
   "version": 2,
   "outputDirectory": ".",
-  "buildCommand": "",
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  "buildCommand": "echo ok",
+  "framework": null
 }
