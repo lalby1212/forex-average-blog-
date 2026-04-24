@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Pages privées — non indexées
+Disallow: /login.html
+Disallow: /register.html
+Disallow: /reset-password.html
+Disallow: /dashboard.html
+Disallow: /journal.html
+Disallow: /admin-premium.html
+
+# Sitemap
+Sitemap: https://forexaverage.com/sitemap.xml
