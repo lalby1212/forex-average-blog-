@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📊 Screener | Forex, Crypto, Commodities | Forex Average</title>
-    <meta name="description" content="Screeners temps réel avec heatmaps : Forex, Crypto, Commodities. Analysez les devises, cryptos et matières premières en direct.">
+    <title>🏦 Brokers Recommandés | Deriv, Exness, Vantage | Forex Average</title>
+    <meta name="description" content="Brokers trading recommandés. Deriv, Exness, Vantage. Comparatif, avantages, affiliations. Choix du trader pro.">
     <meta name="theme-color" content="#FFD700">
     
     <style>
@@ -13,11 +13,13 @@
         :root {
             --gold: #FFD700;
             --dark: #000000;
-            --dark2: #0b0b0b;
             --card: rgba(18,18,18,0.92);
             --border: rgba(255,215,0,0.18);
             --text: #ffffff;
             --text-muted: rgba(255,255,255,0.65);
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
         }
 
         html { scroll-behavior: smooth; }
@@ -152,54 +154,242 @@
             position: relative;
             z-index: 1;
             padding: 3rem 2.5rem;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .screeners-grid {
+        /* GRID BROKERS */
+        .brokers-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .screener-section {
+        /* BROKER CARD */
+        .broker-card {
             background: linear-gradient(135deg, var(--card) 0%, rgba(22,22,22,0.85) 100%);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 2.5rem;
+            position: relative;
             overflow: hidden;
+            transition: all 0.3s;
         }
 
-        .screener-section h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+        .broker-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255,215,0,0.1);
+        }
+
+        .broker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), transparent);
+        }
+
+        .broker-logo {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .broker-card h2 {
             color: var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
         }
 
-        .screener-section p {
+        .broker-tagline {
             color: var(--text-muted);
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        /* FEATURES */
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            padding: 0.8rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-muted);
             font-size: 0.95rem;
         }
 
-        .screener-widget {
-            width: 100%;
-            min-height: 600px;
-            background: rgba(18,18,18,0.5);
-            border-radius: 8px;
-            overflow: hidden;
-            border: 1px solid rgba(255,215,0,0.1);
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--green);
+            font-weight: bold;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
+        /* SPECS */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,215,0,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,215,0,0.15);
+        }
+
+        .spec {
+            text-align: center;
+        }
+
+        .spec-label {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 0.3rem;
+        }
+
+        .spec-value {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* BUTTONS */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
             border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), #FFC107);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,215,0,0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(59,130,246,0.15);
+            color: var(--blue);
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59,130,246,0.25);
+        }
+
+        /* COMPARISON TABLE */
+        .comparison-section {
+            margin-top: 4rem;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, var(--card) 0%, rgba(22,22,22,0.85) 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .comparison-section h2 {
+            color: var(--gold);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+
+        .comparison-table th {
+            background: rgba(255,215,0,0.08);
+            color: var(--gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .comparison-table td {
+            color: var(--text-muted);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(255,215,0,0.05);
+        }
+
+        .checkmark {
+            color: var(--green);
+            font-weight: bold;
+        }
+
+        .cross {
+            color: var(--red);
+        }
+
+        /* INFO BOX */
+        .info-box {
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .info-box h3 {
+            color: var(--blue);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box p {
+            margin-bottom: 0.8rem;
+        }
+
+        .warning-box {
+            background: rgba(239,68,68,0.08);
+            border: 1px solid rgba(239,68,68,0.25);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+        }
+
+        .warning-box h3 {
+            color: var(--red);
+            margin-bottom: 0.8rem;
         }
 
         /* FOOTER */
@@ -210,6 +400,7 @@
             border-top: 1px solid var(--border);
             padding: 3rem 2rem;
             text-align: center;
+            margin-top: 5rem;
         }
 
         .footer-logo {
@@ -221,43 +412,16 @@
             margin-bottom: 0.4rem;
         }
 
-        .footer-tagline {
-            font-size: 0.78rem;
-            color: rgba(255,255,255,0.38);
-            letter-spacing: 1px;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: rgba(255,255,255,0.38);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover {
-            color: var(--gold);
-        }
-
         .footer-copy {
             font-size: 0.82rem;
             color: rgba(255,255,255,0.38);
         }
 
         @media (max-width: 768px) {
-            .nav-links { gap: 0.8rem; font-size: 0.75rem; }
-            .header h1 { font-size: 2rem; }
-            .screener-widget { min-height: 400px; }
-            nav { padding: 0.8rem 1.5rem; }
-            .screener-section { padding: 1.5rem; }
+            .brokers-grid { grid-template-columns: 1fr; }
+            .specs-grid { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 0.85rem; }
+            main { padding: 1.5rem; }
         }
     
         /* ─── MOBILE NAV — Standard ─── */
@@ -407,7 +571,7 @@
 
       <!-- ── Outils ── -->
       <li class="nav-item-drop">
-        <a href="#" style="color:var(--gold); font-weight:700;">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         <div class="drop-panel">
           <a href="graphique.html" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
@@ -417,24 +581,24 @@
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line></svg></span>
             <span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span>
           </a>
-          <a href="screener.html" class="drop-link" style="background:rgba(255,215,0,0.05);">
-            <span class="drop-icon" style="background:rgba(255,215,0,0.12);color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
-            <span><span class="drop-label" style="color:#FFD700;">Screener</span><span class="drop-desc">Scanner les marchés</span></span>
+          <a href="screener.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
+            <span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span>
           </a>
         </div>
       </li>
 
       <!-- ── Partenaires ── -->
       <li class="nav-item-drop">
-        <a href="#">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <a href="#" style="color:var(--gold); font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
         <div class="drop-panel">
           <a href="partenaires.html" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
             <span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span>
           </a>
-          <a href="brokers.html" class="drop-link">
-            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"></rect><polyline points="3 9 12 13 21 9"></polyline></svg></span>
-            <span><span class="drop-label">Brokers</span><span class="drop-desc">Courtiers recommandés</span></span>
+          <a href="brokers.html" class="drop-link" style="background:rgba(255,215,0,0.05);">
+            <span class="drop-icon" style="background:rgba(255,215,0,0.12);color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"></rect><polyline points="3 9 12 13 21 9"></polyline></svg></span>
+            <span><span class="drop-label" style="color:#FFD700;">Brokers</span><span class="drop-desc">Courtiers recommandés</span></span>
           </a>
         </div>
       </li>
@@ -480,150 +644,250 @@
 
 <!-- HEADER -->
 <header class="header">
-    <h1>📊 Screener Temps Réel</h1>
-    <p>Heatmaps en direct : Forex, Crypto et Commodities. Analysez les marchés en un coup d'œil.</p>
+    <h1>🏦 Brokers Recommandés</h1>
+    <p>Sélection des meilleurs brokers pour Forex, Crypto et Commodities. Comparatif, avantages, affiliations.</p>
 </header>
 
 <!-- MAIN -->
 <main>
 
-    <!-- SCREENERS -->
-    <div class="screeners-grid" data-gate="vip">
+    <!-- BROKERS GRID -->
+    <div class="brokers-grid">
 
-        <!-- SCREENER FOREX HEATMAP -->
-        <section class="screener-section">
-            <h2>💱 Screener Forex - Heatmap</h2>
-            <p>Visualisez la performance des devises majeures en temps réel. EUR, GBP, JPY, CHF, CAD, AUD, NZD et USD. Les couleurs indiquent les gains (vert) et pertes (rouge).</p>
-            <div class="screener-widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
-                    {
-                        "currencies": ["EUR", "GBP", "JPY", "CHF", "CAD", "AUD", "NZD", "USD"],
-                        "isTransparent": false,
-                        "colorTheme": "dark",
-                        "locale": "fr",
-                        "width": "100%",
-                        "height": "550"
-                    }
-                    </script>
+        <!-- DERIV -->
+        <div class="broker-card">
+            <div class="broker-logo">🎯</div>
+            <h2>Deriv</h2>
+            <p class="broker-tagline">Plateforme intuitive avec dérivés synthétiques</p>
+
+            <ul class="features-list">
+                <li>Dérivés synthétiques 24/7</li>
+                <li>Spreads très serrés</li>
+                <li>Pas de slippage</li>
+                <li>Levier jusqu'à 1000x</li>
+                <li>VIX et crypto inclus</li>
+                <li>Plateforme mobile excellente</li>
+                <li>Support français 24/7</li>
+            </ul>
+
+            <div class="specs-grid">
+                <div class="spec">
+                    <div class="spec-label">Dépôt Min</div>
+                    <div class="spec-value">$1</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Levier Max</div>
+                    <div class="spec-value">1000x</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Spread</div>
+                    <div class="spec-value">0.1-0.5</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Commission</div>
+                    <div class="spec-value">0%</div>
                 </div>
             </div>
-        </section>
 
-        <!-- SCREENER CRYPTO HEATMAP -->
-        <section class="screener-section">
-            <h2>₿ Screener Crypto - Heatmap</h2>
-            <p>Analysez les performances des principales cryptocurrencies en temps réel. Bitcoin, Ethereum, Altcoins majeurs. Tailles et couleurs représentent les mouvements de marché.</p>
-            <div class="screener-widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
-                    {
-                        "dataSource": "crypto_coins",
-                        "blockSize": "market_cap_calc",
-                        "blockColor": "change",
-                        "locale": "fr",
-                        "symbolUrl": "",
-                        "colorTheme": "dark",
-                        "autosize": true,
-                        "isTransparent": false,
-                        "width": "100%",
-                        "height": "550"
-                    }
-                    </script>
+            <div class="btn-group">
+                <a href="https://track.deriv.com/_HJtviuR1NCPlIy_Y1OLMQWNd7ZgqdRLk/1/" target="_blank" class="btn btn-primary">S'inscrire via Deriv</a>
+                <button class="btn btn-secondary" onclick="toggleDetails('deriv')">Plus d'infos</button>
+            </div>
+
+            <div id="deriv-details" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,215,0,0.15);">
+                <p><strong>Parfait pour :</strong> Dérivés synthétiques, VIX, trading court terme</p>
+                <p style="margin-top: 0.8rem;"><strong>Points forts :</strong> Synthétiques sans slippage, dépôt minimum ultra faible, bonus réguliers</p>
+                <p style="margin-top: 0.8rem;"><strong>À savoir :</strong> Meilleure pour trading rapide et scalping</p>
+            </div>
+        </div>
+
+        <!-- EXNESS -->
+        <div class="broker-card">
+            <div class="broker-logo">⚡</div>
+            <h2>Exness</h2>
+            <p class="broker-tagline">Leader mondial du Forex, régulation stricte</p>
+
+            <ul class="features-list">
+                <li>Régulation FCA, ASIC, CySEC</li>
+                <li>Exécution ultra-rapide</li>
+                <li>Spreads très compétitifs</li>
+                <li>Levier jusqu'à 400x</li>
+                <li>Bonus réguliers</li>
+                <li>Plateforme MT4/MT5</li>
+                <li>Support français réactif</li>
+            </ul>
+
+            <div class="specs-grid">
+                <div class="spec">
+                    <div class="spec-label">Dépôt Min</div>
+                    <div class="spec-value">$1</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Levier Max</div>
+                    <div class="spec-value">400x</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Spread</div>
+                    <div class="spec-value">0.0 Pips</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Commission</div>
+                    <div class="spec-value">0.5 pips</div>
                 </div>
             </div>
-        </section>
 
-        <!-- SCREENER ACTIONS HEATMAP -->
-        <section class="screener-section">
-            <h2>📈 Screener Actions - Heatmap</h2>
-            <p>S&P 500, Nasdaq, actions blue chips mondiales. Couleurs par secteur — identifiez en un coup d'œil les rotations et les leaders du jour.</p>
-            <div class="screener-widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-                    {
-                        "exchanges": [],
-                        "dataSource": "SPX500",
-                        "grouping": "sector",
-                        "blockSize": "market_cap_calc",
-                        "blockColor": "change",
-                        "locale": "fr",
-                        "symbolUrl": "",
-                        "colorTheme": "dark",
-                        "hasTopBar": false,
-                        "isDataSetEnabled": false,
-                        "isZoomEnabled": true,
-                        "hasSymbolTooltip": true,
-                        "isMonoSize": false,
-                        "width": "100%",
-                        "height": "600"
-                    }
-                    </script>
+            <div class="btn-group">
+                <a href="https://one.exnessonelink.com/a/c_t54wlxfd7m" target="_blank" class="btn btn-primary">S'inscrire via Exness</a>
+                <button class="btn btn-secondary" onclick="toggleDetails('exness')">Plus d'infos</button>
+            </div>
+
+            <div id="exness-details" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,215,0,0.15);">
+                <p><strong>Parfait pour :</strong> Forex long terme, trading régulé, sérénité</p>
+                <p style="margin-top: 0.8rem;"><strong>Points forts :</strong> Régulation FCA, spreads nuls, bonus jusqu'à 1000$</p>
+                <p style="margin-top: 0.8rem;"><strong>À savoir :</strong> Meilleure pour traders qui veulent sécurité + performance</p>
+            </div>
+        </div>
+
+        <!-- VANTAGE -->
+        <div class="broker-card">
+            <div class="broker-logo">🌟</div>
+            <h2>Vantage</h2>
+            <p class="broker-tagline">Conditions de trading exceptionnelles</p>
+
+            <ul class="features-list">
+                <li>Spread EURUSD 0.0 pips</li>
+                <li>Pas de commission supplémentaire</li>
+                <li>Levier jusqu'à 500x</li>
+                <li>MT4 et MT5 natifs</li>
+                <li>Crypto inclus (Spot + Futures)</li>
+                <li>Support français 24/7</li>
+                <li>Régulation FSCA très stricte</li>
+            </ul>
+
+            <div class="specs-grid">
+                <div class="spec">
+                    <div class="spec-label">Dépôt Min</div>
+                    <div class="spec-value">$100</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Levier Max</div>
+                    <div class="spec-value">500x</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Spread EURUSD</div>
+                    <div class="spec-value">0.0 Pips</div>
+                </div>
+                <div class="spec">
+                    <div class="spec-label">Dépôt Min</div>
+                    <div class="spec-value">$100</div>
                 </div>
             </div>
-        </section>
 
-        <!-- SCREENER COMMODITIES -->
-        <section class="screener-section">
-            <h2>⛽ Screener Commodities - Vue Marché</h2>
-            <p>Métaux précieux, énergies et matières premières. Naviguez par catégorie et suivez les mouvements en temps réel avec mini-graphiques intégrés.</p>
-            <div class="screener-widget">
-                <div class="tradingview-widget-container">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                    {
-                        "colorTheme": "dark",
-                        "dateRange": "1M",
-                        "showChart": true,
-                        "locale": "fr",
-                        "isTransparent": false,
-                        "showSymbolLogo": true,
-                        "showFloatingTooltip": false,
-                        "width": "100%",
-                        "height": "660",
-                        "tabs": [
-                            {
-                                "title": "Métaux 🥇",
-                                "symbols": [
-                                    { "s": "TVC:GOLD",      "d": "Or (Gold)" },
-                                    { "s": "TVC:SILVER",    "d": "Argent (Silver)" },
-                                    { "s": "TVC:COPPER",    "d": "Cuivre (Copper)" },
-                                    { "s": "TVC:PLATINUM",  "d": "Platine" },
-                                    { "s": "TVC:PALLADIUM", "d": "Palladium" }
-                                ],
-                                "originalTitle": "Metals"
-                            },
-                            {
-                                "title": "Énergie ⛽",
-                                "symbols": [
-                                    { "s": "TVC:USOIL",     "d": "Pétrole WTI" },
-                                    { "s": "TVC:UKOIL",     "d": "Brent" },
-                                    { "s": "TVC:NATGASUSD", "d": "Gaz Naturel" }
-                                ],
-                                "originalTitle": "Energy"
-                            },
-                            {
-                                "title": "Agriculture 🌾",
-                                "symbols": [
-                                    { "s": "TVC:WHEAT",  "d": "Blé (Wheat)" },
-                                    { "s": "TVC:CORN",   "d": "Maïs (Corn)" },
-                                    { "s": "TVC:SOYBN",  "d": "Soja (Soybeans)" },
-                                    { "s": "TVC:COFFEE", "d": "Café (Coffee)" },
-                                    { "s": "TVC:SUGAR",  "d": "Sucre (Sugar)" },
-                                    { "s": "TVC:COCOA",  "d": "Cacao (Cocoa)" }
-                                ],
-                                "originalTitle": "Agriculture"
-                            }
-                        ]
-                    }
-                    </script>
-                </div>
+            <div class="btn-group">
+                <a href="https://www.vantage-partner.com/ib-cpa-register/?url=ib&affid=26465933" target="_blank" class="btn btn-primary">S'inscrire via Vantage</a>
+                <button class="btn btn-secondary" onclick="toggleDetails('vantage')">Plus d'infos</button>
             </div>
-        </section>
 
+            <div id="vantage-details" style="display:none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,215,0,0.15);">
+                <p><strong>Parfait pour :</strong> Scalping, crypto, conditions premium</p>
+                <p style="margin-top: 0.8rem;"><strong>Points forts :</strong> Spreads zéro EURUSD, crypto natif, récupération de marge rapide</p>
+                <p style="margin-top: 0.8rem;"><strong>À savoir :</strong> Excellent pour scalpers pros et traders cryptos</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="comparison-section">
+        <h2>📊 Tableau Comparatif</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Caractéristique</th>
+                    <th>Deriv</th>
+                    <th>Exness</th>
+                    <th>Vantage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Dépôt Minimum</strong></td>
+                    <td>$1</td>
+                    <td>$1</td>
+                    <td>$100</td>
+                </tr>
+                <tr>
+                    <td><strong>Levier Forex</strong></td>
+                    <td>1000x</td>
+                    <td>400x</td>
+                    <td>500x</td>
+                </tr>
+                <tr>
+                    <td><strong>Spread EURUSD</strong></td>
+                    <td>0.1-0.5 pips</td>
+                    <td>0.0 pips</td>
+                    <td>0.0 pips</td>
+                </tr>
+                <tr>
+                    <td><strong>Plateforme</strong></td>
+                    <td>Propriétaire</td>
+                    <td>MT4/MT5</td>
+                    <td>MT4/MT5</td>
+                </tr>
+                <tr>
+                    <td><strong>Dérivés Synthétiques</strong></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Crypto Futures</strong></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Support Français</strong></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Régulation FCA</strong></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="cross">✗</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Bonus Disponible</strong></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                    <td><span class="checkmark">✓</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Meilleur Pour</strong></td>
+                    <td>VIX, Synthétiques</td>
+                    <td>Sérénité, Forex</td>
+                    <td>Scalping, Crypto</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- INFO BOX -->
+    <div class="info-box">
+        <h3>📖 Conseils de Trader</h3>
+        <p><strong>Deriv :</strong> Idéale pour débuter avec $1 et trader les dérivés synthétiques sans risque de slippage. Parfait pour le VIX.</p>
+        <p style="margin-top: 0.8rem;"><strong>Exness :</strong> Le meilleur rapport sécurité/performance. Régulation FCA stricte, spreads nuls, et dépôt à partir de $1. Recommandée pour les traders sérieux.</p>
+        <p style="margin-top: 0.8rem;"><strong>Vantage :</strong> Pour les scalpers et traders crypto. Spreads zéro sur EURUSD, crypto futures natif, et conditions premium.</p>
+        <p style="margin-top: 0.8rem;"><strong>Conseil PRO :</strong> Testez les 3 avec de petits montants. Chaque trader a ses préférences. Les conditions varient selon votre style.</p>
+    </div>
+
+    <!-- WARNING BOX -->
+    <div class="warning-box">
+        <h3>⚠️ Avertissement Important</h3>
+        <p>Le trading sur Forex, Crypto et Commodities comporte des risques significatifs. Les dérivés synthétiques et le levier peuvent entraîner des pertes totales du capital. Utilisez toujours la gestion du risque. Les liens ci-dessus contiennent mes codes d'affiliation. Je recommande ces brokers car j'y trade moi-même. Vous recevrez les mêmes conditions qu'un client normal.</p>
     </div>
 
 </main>
@@ -631,20 +895,21 @@
 <!-- FOOTER -->
 <footer>
     <div class="footer-logo">FOREX AVERAGE</div>
-    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
-
-    <div class="footer-links">
-        <a href="/">📊 Analyses</a>
-        <a href="calculateurs-trading.html">🧮 Calculateurs</a>
-        <a href="https://youtube.com/@forexaverage" target="_blank">📺 YouTube</a>
-        <a href="https://fr.tradingview.com/u/Forexaverage/" target="_blank">📈 TradingView</a>
-        <a href="https://t.me/forexaverageanalyse" target="_blank">💬 Contact</a>
-        <a href="https://t.me/forexaverageanalyse" target="_blank">📱 Telegram</a>
-    </div>
-
+    <div style="font-size: 0.78rem; color: rgba(255,255,255,0.38); letter-spacing: 1px; margin-bottom: 2rem;">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
     <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+    <div style="margin-top: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.38);">💡 Cette page contient des liens d'affiliation. Vous ne payerez rien de plus, mais j'en bénéficierai. Merci de votre soutien !</div>
 </footer>
 
+<script>
+function toggleDetails(broker) {
+    const element = document.getElementById(broker + '-details');
+    if (element.style.display === 'none') {
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
+}
+</script>
 
 <!-- NAV JS -->
 <script>
@@ -701,7 +966,6 @@
 </script>
 
 <script src="/chatbot.js"></script>
-<script src="fa-access.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
