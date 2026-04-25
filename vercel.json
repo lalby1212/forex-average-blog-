@@ -1,6 +1,9 @@
 {
   "version": 2,
   "outputDirectory": ".",
-  "buildCommand": "echo ok",
-  "framework": null
+  "installCommand": "echo skip",
+  "buildCommand": "echo done",
+  "rewrites": [
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
+  ]
 }
