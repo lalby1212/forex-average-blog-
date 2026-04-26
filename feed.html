@@ -53,7 +53,7 @@
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
     .logo:hover { opacity:0.8; }
-    .logo-sub { font-size:0.58rem; letter-spacing:1.5px; color:var(--text-faint); display:block; margin-top:-4px; -webkit-text-fill-color:var(--text-faint); }
+    
     .nav-menu { display:flex; list-style:none; gap:1.8rem; align-items:center; }
     .nav-menu a { text-decoration:none; color:var(--text-muted); font-size:0.87rem; font-weight:500; letter-spacing:0.2px; transition:color 0.2s; position:relative; }
     .nav-menu a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
@@ -125,9 +125,107 @@
       .sidebar-right { display:none; }
     }
     @media(max-width:750px) {
-      .app-shell { grid-template-columns:1fr; padding:0.75rem 0.5rem 5rem; }
+      .app-shell { grid-template-columns:1fr; padding:0.5rem 0.5rem 80px; }
       .sidebar-left { display:none; }
     }
+
+    /* ═══════════════════════════════════
+       MOBILE PROFILE STRIP
+    ═══════════════════════════════════ */
+    .mobile-profile-strip {
+      display:none;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:0.85rem 1rem;
+      margin-bottom:0.75rem; align-items:center; gap:0.75rem;
+    }
+    @media(max-width:750px) {
+      .mobile-profile-strip.visible { display:flex; }
+    }
+    .mps-avatar {
+      width:40px; height:40px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; font-size:1rem; color:#000; cursor:pointer;
+    }
+    .mps-name { font-size:0.88rem; font-weight:700; line-height:1.2; }
+    .mps-stats {
+      font-size:0.72rem; color:var(--text-faint); margin-top:3px;
+      display:flex; gap:0.5rem; flex-wrap:wrap;
+    }
+    .mps-stat-btn {
+      background:none; border:none; cursor:pointer; padding:0;
+      color:var(--text-faint); font-size:0.72rem; font-family:inherit;
+      transition:color 0.15s;
+    }
+    .mps-stat-btn:hover { color:var(--text); }
+    .mps-stat-btn strong { color:var(--text-muted); font-weight:700; }
+    .mps-right { margin-left:auto; display:flex; gap:0.4rem; }
+    .mps-vip-badge {
+      display:inline-flex; align-items:center; background:rgba(255,215,0,0.12);
+      border:1px solid rgba(255,215,0,0.28); border-radius:100px;
+      padding:0.18rem 0.55rem; font-size:0.62rem; font-weight:800;
+      color:var(--gold); letter-spacing:0.6px;
+    }
+
+    /* ═══════════════════════════════════
+       MOBILE POST CARD TWEAKS
+    ═══════════════════════════════════ */
+    @media(max-width:600px) {
+      .post-inner { padding:0.85rem 0.9rem 0; gap:0.6rem; }
+      .post-avatar { width:38px; height:38px; font-size:0.85rem; }
+      .post-body { padding:0.2rem 0.9rem 0 calc(38px + 0.6rem + 0.9rem); }
+      .post-actions { padding:0.35rem 0.7rem 0.6rem calc(38px + 0.6rem + 0.7rem); gap:0; }
+      .act-btn { padding:0.42rem 0.55rem; min-height:44px; }
+      .comments-section { padding:0.6rem 0.9rem 0.6rem calc(38px + 0.6rem + 0.9rem); }
+      .compose-box { border-radius:var(--radius); margin-bottom:0.6rem; }
+      .compose-row { gap:0.65rem; }
+      .compose-avatar { width:36px; height:36px; font-size:0.88rem; }
+      .compose-toolbar { gap:0.35rem; }
+      .compose-tags-input { width:110px; font-size:0.76rem; }
+      .compose-right-actions { gap:0.35rem; }
+      .feed-filters { padding:0 0 4px; gap:0.35rem; }
+      .f-pill { padding:0.38rem 0.8rem; font-size:0.78rem; min-height:36px; }
+      .follow-btn { font-size:0.68rem; padding:0.2rem 0.6rem; }
+      .post-content { font-size:0.91rem; }
+      .add-comment-input { font-size:0.82rem; }
+    }
+
+    /* ═══════════════════════════════════
+       MOBILE BOTTOM NAV
+    ═══════════════════════════════════ */
+    .mobile-bottom-nav {
+      display:none;
+      position:fixed; bottom:0; left:0; right:0; z-index:998;
+      background:rgba(4,4,4,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border-top:1px solid rgba(255,215,0,0.12);
+      height:64px;
+      padding:0 0.25rem;
+      padding-bottom:env(safe-area-inset-bottom,0px);
+      align-items:center; justify-content:space-around;
+    }
+    @media(max-width:750px) { .mobile-bottom-nav { display:flex; } }
+    .mbn-tab {
+      display:flex; flex-direction:column; align-items:center; gap:2px;
+      flex:1; padding:0.45rem 0.25rem; text-decoration:none;
+      color:var(--text-faint); font-size:0.6rem; font-weight:600; letter-spacing:0.3px;
+      background:none; border:none; cursor:pointer; font-family:inherit;
+      transition:color 0.18s; min-height:52px; justify-content:center;
+      border-radius:12px;
+    }
+    .mbn-tab:hover, .mbn-tab.active { color:var(--gold); }
+    .mbn-tab svg { width:22px; height:22px; stroke-width:2; }
+    .mbn-center {
+      flex:0 0 52px; width:52px; height:52px;
+      background:var(--gold); color:#000 !important;
+      border-radius:50%; padding:0;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 18px rgba(255,215,0,0.28);
+      transition:transform 0.15s, box-shadow 0.15s;
+      flex-direction:row;
+    }
+    .mbn-center:hover { transform:scale(1.07); box-shadow:0 6px 24px rgba(255,215,0,0.4); }
+    .mbn-center svg { width:26px; height:26px; stroke-width:2.5; }
+    .mbn-center .mbn-label { display:none; }
 
     /* ═══════════════════════════════════
        LEFT SIDEBAR
@@ -611,10 +709,7 @@
 <!-- ═══════ NAV ═══════ -->
 <nav>
   <div class="nav-container">
-    <a href="feed.html" class="logo" aria-label="Forex Average">
-      <span>FOREX<span style="color:#fff;-webkit-text-fill-color:#fff;">AVERAGE</span></span>
-      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
-    </a>
+    <a href="feed.html" class="logo" aria-label="Forex Average"><img src="/images/logo-forex-average.png" alt="Forex Average" height="38" style="display:block;max-width:200px;"></a>
     <button class="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -763,6 +858,24 @@
   <!-- ── CENTER FEED ── -->
   <main class="feed-center">
 
+    <!-- Mobile profile strip (logged in, ≤750px only) -->
+    <div class="mobile-profile-strip" id="mobile-profile-strip">
+      <a id="mps-avatar-link" href="profile.html" style="text-decoration:none;">
+        <div class="mps-avatar" id="mps-avatar">?</div>
+      </a>
+      <div>
+        <div class="mps-name" id="mps-name">—</div>
+        <div class="mps-stats">
+          <button class="mps-stat-btn"><strong id="mps-posts">0</strong> Posts</button>
+          <button class="mps-stat-btn" onclick="showFollowList('following')"><strong id="mps-following">0</strong> Abonnements</button>
+          <button class="mps-stat-btn" onclick="showFollowList('followers')"><strong id="mps-followers">0</strong> Abonnés</button>
+        </div>
+      </div>
+      <div class="mps-right">
+        <span class="mps-vip-badge" id="mps-vip-badge" style="display:none;">⭐ VIP</span>
+      </div>
+    </div>
+
     <!-- Compose box (logged in) -->
     <div class="compose-box" id="create-post">
       <div class="compose-row">
@@ -904,6 +1017,41 @@
   </aside>
 </div>
 
+<!-- ═══════ MOBILE BOTTOM NAV ═══════ -->
+<nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navigation mobile">
+
+  <!-- Fil -->
+  <a href="feed.html" class="mbn-tab active" aria-label="Fil de trading">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="mbn-label">Fil</span>
+  </a>
+
+  <!-- Abonnements -->
+  <button class="mbn-tab" id="mbn-following-tab" onclick="mobileFollowing()" aria-label="Abonnements">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span class="mbn-label">Abonnements</span>
+  </button>
+
+  <!-- Composer (bouton central) -->
+  <button class="mbn-tab mbn-center" onclick="mobileCompose()" aria-label="Composer un post">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <span class="mbn-label">Publier</span>
+  </button>
+
+  <!-- Recherche -->
+  <button class="mbn-tab" onclick="mobileTrends()" aria-label="Tendances">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <span class="mbn-label">Tags</span>
+  </button>
+
+  <!-- Profil -->
+  <a href="profile.html" class="mbn-tab" id="mbn-profile-link" aria-label="Mon profil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    <span class="mbn-label">Profil</span>
+  </a>
+
+</nav>
+
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <button class="lb-close" onclick="closeLightbox()">✕</button>
@@ -975,6 +1123,12 @@ async function init() {
       document.getElementById('sb-posts-count').textContent = postsCount || 0;
       document.getElementById('sb-following-count').textContent = followingCount || 0;
       document.getElementById('sb-followers-count').textContent = followersCount || 0;
+      // Update mobile strip stats
+      updateMobileStrip(username, currentUserIsVIP, {
+        posts: postsCount || 0,
+        following: followingCount || 0,
+        followers: followersCount || 0
+      });
     }
     document.getElementById('sb-join-card').style.display = 'none';
   } else {
@@ -986,6 +1140,29 @@ async function init() {
   loadPosts(true);
   setupCreatePost();
   loadCommunityStats();
+}
+
+// ── Mobile profile strip update ───────────────────────────────
+function updateMobileStrip(username, isVip, stats) {
+  const strip = document.getElementById('mobile-profile-strip');
+  if (!strip) return;
+  strip.classList.add('visible');
+  document.getElementById('mps-avatar').textContent = username.charAt(0).toUpperCase();
+  document.getElementById('mps-name').textContent = username;
+  if (isVip) document.getElementById('mps-vip-badge').style.display = '';
+  if (stats) {
+    document.getElementById('mps-posts').textContent = stats.posts;
+    document.getElementById('mps-following').textContent = stats.following;
+    document.getElementById('mps-followers').textContent = stats.followers;
+  }
+  // Fix profile links in bottom nav + strip
+  if (currentUser) {
+    const profileHref = 'profile.html?id=' + currentUser.id;
+    const mbnLink = document.getElementById('mbn-profile-link');
+    if (mbnLink) mbnLink.href = profileHref;
+    const mpsLink = document.getElementById('mps-avatar-link');
+    if (mpsLink) mpsLink.href = profileHref;
+  }
 }
 
 // ── Community stats ───────────────────────────────────────────
@@ -1269,8 +1446,10 @@ function filterByTag(tag) {
   currentTag = tag;
   document.querySelectorAll('.f-pill').forEach(btn => btn.classList.toggle('active', btn.dataset.tag === tag));
   loadPosts(true);
+  // Sync bottom nav active state
+  setMbnActive(tag === '__following' ? 'following' : 'feed');
   // Scroll feed to top
-  document.getElementById('feed-posts').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ── Create post ───────────────────────────────────────────────
@@ -1482,6 +1661,48 @@ function showModal(title, bodyHtml) {
     </div>`;
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
   document.body.appendChild(modal);
+}
+
+// ── Mobile nav actions ────────────────────────────────────────
+function mobileCompose() {
+  if (!currentUser) { window.location.href = 'login.html?redirect=feed.html'; return; }
+  const box = document.getElementById('create-post');
+  if (box) {
+    box.scrollIntoView({ behavior:'smooth', block:'start' });
+    setTimeout(() => document.getElementById('cp-textarea')?.focus(), 380);
+  }
+}
+
+function mobileFollowing() {
+  if (!currentUser) { window.location.href = 'login.html?redirect=feed.html'; return; }
+  const tag = currentTag === '__following' ? '' : '__following';
+  filterByTag(tag);
+  setMbnActive(tag === '__following' ? 'following' : 'feed');
+}
+
+function mobileTrends() {
+  // Scroll to right sidebar trending on desktop; on mobile show a simple tag picker
+  const tags = ['EURUSD','GOLD','BTCUSD','NASDAQ','DXY','SP500','GBPUSD','OIL'];
+  const listHtml = tags.map(t =>
+    `<button onclick="filterByTag('${t}');document.getElementById('fa-modal')?.remove();setMbnActive('feed');"
+      style="display:block;width:100%;text-align:left;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.14);
+      border-radius:10px;padding:0.7rem 1rem;color:var(--gold);font-size:0.9rem;font-weight:700;
+      cursor:pointer;font-family:inherit;margin-bottom:0.4rem;transition:background 0.15s;"
+      onmouseover="this.style.background='rgba(255,215,0,0.12)'" onmouseout="this.style.background='rgba(255,215,0,0.06)'">#${t}</button>`
+  ).join('');
+  showModal('Tags populaires', listHtml);
+}
+
+function setMbnActive(which) {
+  // which: 'feed' | 'following'
+  document.querySelectorAll('.mbn-tab').forEach(t => t.classList.remove('active'));
+  if (which === 'following') {
+    const btn = document.getElementById('mbn-following-tab');
+    if (btn) btn.classList.add('active');
+  } else {
+    const a = document.querySelector('.mobile-bottom-nav a[href="feed.html"]');
+    if (a) a.classList.add('active');
+  }
 }
 
 // ── Lightbox ──────────────────────────────────────────────────
