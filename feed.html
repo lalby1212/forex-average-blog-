@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fil de Trading | Forex Average</title>
-  <meta name="description" content="Partagez vos analyses, observations et idées de trading avec la communauté Forex Average.">
+  <title>Fil de Trading — Forex Average</title>
+  <meta name="description" content="Partagez vos analyses, idées et observations de trading avec la communauté Forex Average.">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="theme-color" content="#FFD700">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -12,929 +12,806 @@
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
       --gold:#FFD700; --gold-dim:#FFC107; --gold-glow:rgba(255,215,0,0.18);
-      --dark:#000; --dark2:#0b0b0b; --dark3:#111;
-      --card:rgba(18,18,18,0.95); --card2:rgba(22,22,22,0.9);
-      --border:rgba(255,215,0,0.12); --border-strong:rgba(255,215,0,0.32);
-      --text:#fff; --text-muted:rgba(255,255,255,0.65); --text-faint:rgba(255,255,255,0.38);
-      --green:#22c55e; --red:#ef4444;
-      --nav-h:68px;
+      --dark:#000; --dark2:#0a0a0a; --dark3:#111;
+      --card:rgba(14,14,14,0.97); --card2:rgba(20,20,20,0.9);
+      --border:rgba(255,255,255,0.07); --border-gold:rgba(255,215,0,0.18);
+      --text:#fff; --text-muted:rgba(255,255,255,0.62); --text-faint:rgba(255,255,255,0.35);
+      --green:#22c55e; --red:#f43f5e; --blue:#3b82f6;
+      --nav-h:64px;
+      --radius:16px;
     }
     html { scroll-behavior:smooth; }
-    body { font-family:-apple-system,'SF Pro Text',BlinkMacSystemFont,sans-serif; background:var(--dark); color:var(--text); min-height:100vh; overflow-x:hidden; }
-    body::before { content:''; position:fixed; inset:0; pointer-events:none; z-index:0; background:radial-gradient(ellipse 70% 50% at 10% 0%,rgba(255,215,0,0.04) 0%,transparent 60%); }
-
-    /* ── NAV (copie depuis analyses.html) ── */
-    
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --gold: #FFD700;
-            --gold-dim: #FFC107;
-            --gold-glow: rgba(255,215,0,0.18);
-            --dark: #000000;
-            --dark2: #0b0b0b;
-            --dark3: #111111;
-            --card: rgba(18,18,18,0.92);
-            --card2: rgba(22,22,22,0.85);
-            --border: rgba(255,215,0,0.18);
-            --border-strong: rgba(255,215,0,0.38);
-            --text: #ffffff;
-            --text-muted: rgba(255,255,255,0.65);
-            --text-faint: rgba(255,255,255,0.38);
-            --green: #22c55e;
-            --red: #ef4444;
-            --blue: #3b82f6;
-            --purple: #8b5cf6;
-            --orange: #f97316;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: -apple-system, 'SF Pro Text', 'SF Pro Display', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-            background: var(--dark);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ─── BACKGROUND ─── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
-                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Subtle grid overlay */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* ─── NAV ─── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(7,7,7,0.96);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            transition: all 0.3s;
-        }
-
-        nav.scrolled { background: rgba(4,4,4,0.99); border-bottom-color: var(--border-strong); }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2.5rem;
-            height: 68px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-family: -apple-system, 'SF Pro Display', 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-            font-weight: 900;
-            font-size: 1.35rem;
-            letter-spacing: -0.01em;
-            text-transform: uppercase;
-            text-decoration: none;
-            background: linear-gradient(135deg, #FFD700, #FFC107);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            transition: opacity 0.2s;
-        }
-        .logo:hover { opacity: 0.8; }
-
-        .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            color: var(--text-faint);
-            display: block;
-            margin-top: -4px;
-            -webkit-text-fill-color: var(--text-faint);
-        }
-
-        .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
-
-        .nav-menu a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            transition: color 0.2s;
-            position: relative;
-        }
-
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0; width: 0; height: 1px;
-            background: var(--gold);
-            transition: width 0.3s;
-        }
-
-        .nav-menu a:hover { color: #fff; }
-        .nav-menu a:hover::after { width: 100%; }
-
-        .nav-cta {
-            background: var(--gold);
-            color: #000 !important;
-            padding: 0.5rem 1.2rem;
-            border-radius: 6px;
-            font-weight: 700 !important;
-            font-size: 0.82rem !important;
-            letter-spacing: 0.5px;
-            transition: all 0.2s !important;
-        }
-        .nav-cta:hover { background: #fff !important; transform: none; }
-        .nav-cta::after { display: none !important; }
-
-        /* ═══════════ MEGA MENU ═══════════ */
-        .nav-item-drop { position: relative; }
-        .nav-item-drop > a { display: flex !important; align-items: center; gap: 0.35rem; }
-        .nav-chevron {
-            width: 12px; height: 12px;
-            transition: transform 0.22s ease;
-            flex-shrink: 0;
-            opacity: 0.55;
-        }
-        .nav-item-drop:hover > a .nav-chevron { transform: rotate(180deg); opacity: 1; }
-        .nav-item-drop::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 20px; }
-
-        .drop-panel {
-            position: absolute;
-            top: calc(100% + 16px);
-            left: 50%;
-            transform: translateX(-50%) translateY(6px);
-            background: rgba(8,8,8,0.97);
-            border: 1px solid rgba(255,215,0,0.18);
-            border-radius: 14px;
-            padding: 0.6rem;
-            min-width: 230px;
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.22s ease, transform 0.22s ease;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            box-shadow: 0 28px 72px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,215,0,0.06);
-            z-index: 9999;
-        }
-        .drop-panel::before {
-            content: '';
-            position: absolute;
-            top: -6px; left: 50%;
-            width: 10px; height: 10px;
-            background: rgba(8,8,8,0.97);
-            border-left: 1px solid rgba(255,215,0,0.18);
-            border-top: 1px solid rgba(255,215,0,0.18);
-            transform: translateX(-50%) rotate(45deg);
-        }
-        .nav-item-drop:hover .drop-panel {
-            opacity: 1;
-            visibility: visible;
-            pointer-events: all;
-            transform: translateX(-50%) translateY(0);
-        }
-        .drop-link {
-            display: flex !important;
-            align-items: center;
-            gap: 0.85rem;
-            padding: 0.65rem 0.85rem !important;
-            border-radius: 10px;
-            color: rgba(255,255,255,0.72) !important;
-            text-decoration: none;
-            font-size: 0.875rem !important;
-            transition: all 0.15s ease;
-            white-space: nowrap;
-            width: 100%;
-        }
-        .drop-link::after { display: none !important; }
-        .drop-link:hover { background: rgba(255,215,0,0.07) !important; color: #FFD700 !important; }
-        .drop-link:hover .drop-icon { background: rgba(255,215,0,0.14); color: #FFD700; }
-        .drop-icon {
-            width: 34px; height: 34px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            color: rgba(255,215,0,0.65);
-            flex-shrink: 0;
-            transition: all 0.15s;
-        }
-        .drop-label { font-weight: 600; font-size: 0.875rem; line-height: 1.3; display: block; }
-        .drop-desc { font-size: 0.72rem; color: rgba(255,255,255,0.38); margin-top: 1px; display: block; }
-        .drop-sep { height: 1px; background: rgba(255,215,0,0.08); margin: 0.35rem 0.85rem; }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-            padding: 6px;
-            background: rgba(255,215,0,0.08);
-            border-radius: 6px;
-            border: 1px solid var(--border);
-        }
-        .hamburger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s; display: block; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        /* ─── PROFILE DROPDOWN NAV ─── */
-        .nav-profile { position: relative; display: none; list-style: none; }
-        .nav-profile.visible { display: flex; align-items: center; }
-        .nav-avatar-btn { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 0.35rem 0.75rem 0.35rem 0.4rem; cursor: pointer; transition: all 0.2s; color: var(--text); font-size: 0.82rem; font-weight: 600; }
-        .nav-avatar-btn:hover { background: rgba(255,215,0,0.14); border-color: rgba(255,215,0,0.4); }
-        .nav-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, #FFD700, #FFC107); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; color: #000; flex-shrink: 0; }
-        .nav-profile-drop { display: none; position: absolute; top: calc(100% + 2px); right: 0; background: rgba(12,12,12,0.97); backdrop-filter: blur(20px); border: 1px solid var(--border-strong); border-radius: 10px; padding: 0.4rem; min-width: 180px; box-shadow: 0 20px 60px rgba(0,0,0,0.6); z-index: 999; }
-        .nav-profile::after { content: ''; position: absolute; top: 100%; left: -10px; right: -10px; height: 12px; }
-        .nav-profile:hover .nav-profile-drop { display: block; }
-        .nav-profile-drop a, .nav-profile-drop button { display: flex; align-items: center; gap: 0.6rem; width: 100%; padding: 0.55rem 0.8rem; border-radius: 7px; text-decoration: none; color: var(--text-muted); font-size: 0.83rem; font-weight: 500; background: none; border: none; cursor: pointer; font-family: inherit; transition: background 0.15s, color 0.15s; text-align: left; }
-        .nav-profile-drop a:hover, .nav-profile-drop button:hover { background: rgba(255,215,0,0.07); color: #fff; }
-        .nav-profile-drop .drop-sep-sm { height: 1px; background: rgba(255,215,0,0.08); margin: 0.3rem 0.8rem; }
-        .nav-profile-drop .logout-btn { color: #ef4444; }
-        .nav-profile-drop .logout-btn:hover { background: rgba(239,68,68,0.08) !important; color: #ef4444 !important; }
-
-        /* ─── TICKER ─── */
-        .ticker-widget {
-            background: rgba(0,0,0,0.98);
-            border-bottom: 1px solid rgba(255,215,0,0.1);
-            position: relative;
-            z-index: 1;
-        }
-
-        
-
-    /* ── FEED LAYOUT ── */
-    .feed-wrapper {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: calc(var(--nav-h) + 2rem) 1rem 4rem;
-      display: grid;
-      grid-template-columns: 240px 1fr 260px;
-      gap: 1.5rem;
-      align-items: start;
+    body {
+      font-family:-apple-system,'SF Pro Text',BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+      background:var(--dark); color:var(--text);
+      min-height:100vh; overflow-x:hidden; line-height:1.5;
     }
-    @media(max-width:1024px) {
-      .feed-wrapper { grid-template-columns: 1fr 280px; }
-      .feed-sidebar-left { display:none; }
-    }
-    @media(max-width:700px) {
-      .feed-wrapper { grid-template-columns:1fr; padding-top:calc(var(--nav-h) + 1rem); gap:1rem; }
-      .feed-sidebar-right { display:none; }
+    body::before {
+      content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(ellipse 80% 40% at 10% 0%,rgba(255,215,0,0.04) 0%,transparent 60%),
+        radial-gradient(ellipse 60% 40% at 90% 100%,rgba(255,193,7,0.03) 0%,transparent 60%);
     }
 
-    /* ── SIDEBAR GAUCHE ── */
-    .feed-sidebar-left { position:sticky; top:calc(var(--nav-h) + 1rem); }
-    .sidebar-nav-item {
-      display:flex; align-items:center; gap:0.75rem;
-      padding:0.75rem 1rem; border-radius:10px;
-      color:var(--text-muted); text-decoration:none;
-      font-size:0.9rem; font-weight:500;
-      transition:all 0.15s; margin-bottom:0.2rem;
+    /* ═══════════════════════════════════
+       NAV
+    ═══════════════════════════════════ */
+    nav {
+      position:sticky; top:0; z-index:1000;
+      background:rgba(5,5,5,0.95); backdrop-filter:blur(24px);
+      border-bottom:1px solid var(--border); transition:all 0.3s;
     }
-    .sidebar-nav-item:hover { background:rgba(255,215,0,0.06); color:#fff; }
-    .sidebar-nav-item.active { background:rgba(255,215,0,0.1); color:var(--gold); font-weight:600; }
-    .sidebar-nav-icon { width:20px; height:20px; flex-shrink:0; opacity:0.7; }
+    nav.scrolled { background:rgba(2,2,2,0.99); border-bottom-color:var(--border-gold); }
+    .nav-container {
+      max-width:1400px; margin:0 auto; padding:0 2rem;
+      height:var(--nav-h); display:flex; align-items:center; justify-content:space-between;
+    }
+    .logo {
+      font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase;
+      text-decoration:none;
+      background:linear-gradient(135deg,#FFD700,#FFC107);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    }
+    .logo:hover { opacity:0.8; }
+    .logo-sub { font-size:0.58rem; letter-spacing:1.5px; color:var(--text-faint); display:block; margin-top:-4px; -webkit-text-fill-color:var(--text-faint); }
+    .nav-menu { display:flex; list-style:none; gap:1.8rem; align-items:center; }
+    .nav-menu a { text-decoration:none; color:var(--text-muted); font-size:0.87rem; font-weight:500; letter-spacing:0.2px; transition:color 0.2s; position:relative; }
+    .nav-menu a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+    .nav-menu a:hover { color:#fff; }
+    .nav-menu a:hover::after { width:100%; }
+    .nav-cta { background:var(--gold); color:#000 !important; padding:0.48rem 1.1rem; border-radius:6px; font-weight:700 !important; font-size:0.82rem !important; transition:all 0.2s !important; }
+    .nav-cta:hover { background:#fff !important; }
+    .nav-cta::after { display:none !important; }
+    .nav-item-drop { position:relative; }
+    .nav-item-drop>a { display:flex !important; align-items:center; gap:0.35rem; }
+    .nav-chevron { width:12px; height:12px; transition:transform 0.22s; flex-shrink:0; opacity:0.5; }
+    .nav-item-drop:hover>a .nav-chevron { transform:rotate(180deg); opacity:1; }
+    .nav-item-drop::after { content:''; position:absolute; top:100%; left:0; right:0; height:20px; }
+    .drop-panel {
+      position:absolute; top:calc(100% + 16px); left:50%;
+      transform:translateX(-50%) translateY(6px);
+      background:rgba(8,8,8,0.98); border:1px solid rgba(255,215,0,0.16); border-radius:14px;
+      padding:0.55rem; min-width:230px; opacity:0; visibility:hidden; pointer-events:none;
+      transition:opacity 0.22s,transform 0.22s; backdrop-filter:blur(24px);
+      box-shadow:0 28px 72px rgba(0,0,0,0.7),0 0 0 1px rgba(255,215,0,0.05); z-index:9999;
+    }
+    .drop-panel::before {
+      content:''; position:absolute; top:-6px; left:50%; width:10px; height:10px;
+      background:rgba(8,8,8,0.98); border-left:1px solid rgba(255,215,0,0.16);
+      border-top:1px solid rgba(255,215,0,0.16); transform:translateX(-50%) rotate(45deg);
+    }
+    .nav-item-drop:hover .drop-panel { opacity:1; visibility:visible; pointer-events:all; transform:translateX(-50%) translateY(0); }
+    .drop-link { display:flex !important; align-items:center; gap:0.8rem; padding:0.6rem 0.8rem !important; border-radius:10px; color:rgba(255,255,255,0.7) !important; text-decoration:none; font-size:0.87rem !important; transition:all 0.15s; white-space:nowrap; width:100%; }
+    .drop-link::after { display:none !important; }
+    .drop-link:hover { background:rgba(255,215,0,0.07) !important; color:#FFD700 !important; }
+    .drop-link:hover .drop-icon { background:rgba(255,215,0,0.14); color:#FFD700; }
+    .drop-icon { width:32px; height:32px; background:rgba(255,255,255,0.04); border-radius:8px; display:flex; align-items:center; justify-content:center; color:rgba(255,215,0,0.6); flex-shrink:0; transition:all 0.15s; }
+    .drop-label { font-weight:600; font-size:0.87rem; line-height:1.3; display:block; }
+    .drop-desc { font-size:0.71rem; color:rgba(255,255,255,0.36); margin-top:1px; display:block; }
+    .drop-sep { height:1px; background:rgba(255,215,0,0.07); margin:0.3rem 0.8rem; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; padding:6px; background:rgba(255,215,0,0.07); border-radius:6px; border:1px solid var(--border-gold); }
+    .hamburger span { width:22px; height:2px; background:var(--gold); border-radius:2px; transition:all 0.3s; display:block; }
+    .hamburger.active span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+    .hamburger.active span:nth-child(2) { opacity:0; }
+    .hamburger.active span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+    .nav-profile { position:relative; display:none; list-style:none; }
+    .nav-profile.visible { display:flex; align-items:center; }
+    .nav-avatar-btn { display:flex; align-items:center; gap:0.5rem; background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.2); border-radius:8px; padding:0.32rem 0.7rem 0.32rem 0.35rem; cursor:pointer; transition:all 0.2s; color:var(--text); font-size:0.82rem; font-weight:600; }
+    .nav-avatar-btn:hover { background:rgba(255,215,0,0.13); border-color:rgba(255,215,0,0.4); }
+    .nav-avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFC107); display:flex; align-items:center; justify-content:center; font-size:0.68rem; font-weight:800; color:#000; flex-shrink:0; }
+    .nav-profile-drop { display:none; position:absolute; top:calc(100% + 2px); right:0; background:rgba(10,10,10,0.98); backdrop-filter:blur(20px); border:1px solid var(--border-gold); border-radius:10px; padding:0.4rem; min-width:180px; box-shadow:0 20px 60px rgba(0,0,0,0.7); z-index:999; }
+    .nav-profile::after { content:''; position:absolute; top:100%; left:-10px; right:-10px; height:12px; }
+    .nav-profile:hover .nav-profile-drop { display:block; }
+    .nav-profile-drop a,.nav-profile-drop button { display:flex; align-items:center; gap:0.6rem; width:100%; padding:0.5rem 0.75rem; border-radius:7px; text-decoration:none; color:var(--text-muted); font-size:0.82rem; font-weight:500; background:none; border:none; cursor:pointer; font-family:inherit; transition:background 0.15s,color 0.15s; text-align:left; }
+    .nav-profile-drop a:hover,.nav-profile-drop button:hover { background:rgba(255,215,0,0.07); color:#fff; }
+    .nav-profile-drop .drop-sep-sm { height:1px; background:rgba(255,215,0,0.07); margin:0.25rem 0.75rem; }
+    .nav-profile-drop .logout-btn { color:#ef4444; }
+    .nav-profile-drop .logout-btn:hover { background:rgba(239,68,68,0.08) !important; color:#ef4444 !important; }
 
-    /* ── MAIN FEED ── */
-    .feed-main { min-width:0; }
+    /* ═══════════════════════════════════
+       APP LAYOUT
+    ═══════════════════════════════════ */
+    .app-shell {
+      max-width:1200px; margin:0 auto;
+      padding:1.5rem 1rem 5rem;
+      display:grid;
+      grid-template-columns:260px minmax(0,600px) 280px;
+      gap:1.25rem;
+      align-items:start;
+      position:relative; z-index:1;
+    }
+    @media(max-width:1100px) {
+      .app-shell { grid-template-columns:220px minmax(0,1fr); }
+      .sidebar-right { display:none; }
+    }
+    @media(max-width:750px) {
+      .app-shell { grid-template-columns:1fr; padding:0.75rem 0.5rem 5rem; }
+      .sidebar-left { display:none; }
+    }
 
-    /* ── CREATE POST ── */
-    .create-post {
+    /* ═══════════════════════════════════
+       LEFT SIDEBAR
+    ═══════════════════════════════════ */
+    .sidebar-left {
+      position:sticky; top:calc(var(--nav-h) + 1rem);
+      display:flex; flex-direction:column; gap:0.75rem;
+    }
+
+    /* Profile card */
+    .sb-profile-card {
       background:var(--card); border:1px solid var(--border);
-      border-radius:16px; padding:1.2rem 1.4rem;
-      margin-bottom:1.2rem;
-      display:none; /* masqué par défaut, JS l'affiche si connecté */
+      border-radius:var(--radius); padding:1.25rem;
+      display:none;
     }
-    .create-post.visible { display:block; }
-    .create-post-header {
-      display:flex; align-items:center; gap:0.75rem; margin-bottom:0.8rem;
-    }
-    .cp-avatar {
-      width:38px; height:38px; border-radius:50%;
+    .sb-profile-card.visible { display:block; }
+    .sb-profile-avatar-row { display:flex; align-items:center; gap:0.85rem; margin-bottom:0.9rem; }
+    .sb-avatar {
+      width:46px; height:46px; border-radius:50%;
       background:linear-gradient(135deg,var(--gold),var(--gold-dim));
       display:flex; align-items:center; justify-content:center;
-      font-weight:800; font-size:0.9rem; color:#000; flex-shrink:0;
+      font-weight:900; font-size:1.1rem; color:#000; flex-shrink:0;
     }
-    .cp-textarea {
+    .sb-name { font-weight:700; font-size:0.93rem; line-height:1.2; }
+    .sb-handle { font-size:0.77rem; color:var(--text-faint); margin-top:2px; }
+    .sb-badge-vip {
+      display:inline-flex; align-items:center; gap:0.3rem;
+      background:linear-gradient(135deg,rgba(255,215,0,0.18),rgba(255,193,7,0.1));
+      border:1px solid rgba(255,215,0,0.3); border-radius:100px;
+      padding:0.2rem 0.6rem; font-size:0.65rem; font-weight:800;
+      color:var(--gold); letter-spacing:0.8px; text-transform:uppercase;
+      margin-top:0.4rem; width:fit-content;
+    }
+    .sb-stats { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+    .sb-stat { background:rgba(255,255,255,0.03); border-radius:10px; padding:0.6rem 0.75rem; text-align:center; }
+    .sb-stat-val { font-size:1.1rem; font-weight:800; color:var(--gold); display:block; }
+    .sb-stat-label { font-size:0.68rem; color:var(--text-faint); margin-top:1px; display:block; }
+
+    /* Join card (not logged in) */
+    .sb-join-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:1.25rem; text-align:center;
+    }
+    .sb-join-card h3 { font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; }
+    .sb-join-card p { font-size:0.8rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem; }
+    .sb-btn-gold {
+      display:block; background:var(--gold); color:#000;
+      font-weight:700; font-size:0.85rem; padding:0.55rem 1rem;
+      border-radius:100px; text-decoration:none; transition:all 0.2s;
+      margin-bottom:0.5rem;
+    }
+    .sb-btn-gold:hover { background:#fff; }
+    .sb-btn-ghost {
+      display:block; color:var(--text-muted); font-size:0.82rem;
+      text-decoration:none; transition:color 0.2s;
+    }
+    .sb-btn-ghost:hover { color:#fff; }
+
+    /* Nav links */
+    .sb-nav { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:0.6rem; }
+    .sb-nav-link {
+      display:flex; align-items:center; gap:0.75rem;
+      padding:0.65rem 0.85rem; border-radius:10px;
+      color:var(--text-muted); text-decoration:none;
+      font-size:0.88rem; font-weight:500; transition:all 0.15s;
+    }
+    .sb-nav-link:hover { background:rgba(255,215,0,0.06); color:#fff; }
+    .sb-nav-link.active { background:rgba(255,215,0,0.1); color:var(--gold); font-weight:700; }
+    .sb-nav-link svg { flex-shrink:0; opacity:0.65; }
+    .sb-nav-link.active svg { opacity:1; }
+
+    /* VIP upgrade */
+    .sb-vip-card {
+      background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,193,7,0.04));
+      border:1px solid rgba(255,215,0,0.2); border-radius:var(--radius); padding:1.1rem;
+      display:none;
+    }
+    .sb-vip-card.visible { display:block; }
+    .sb-vip-card h4 { font-size:0.85rem; font-weight:700; color:var(--gold); margin-bottom:0.3rem; }
+    .sb-vip-card p { font-size:0.76rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.75rem; }
+    .sb-btn-vip {
+      display:block; background:var(--gold); color:#000;
+      font-weight:800; font-size:0.8rem; padding:0.5rem 1rem;
+      border-radius:100px; text-decoration:none; text-align:center;
+      transition:all 0.2s;
+    }
+    .sb-btn-vip:hover { background:#fff; }
+
+    /* ═══════════════════════════════════
+       CENTER FEED
+    ═══════════════════════════════════ */
+    .feed-center { min-width:0; }
+
+    /* ─── COMPOSE BOX (Twitter style) ─── */
+    .compose-box {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:1rem 1.25rem;
+      margin-bottom:0.75rem; display:none;
+    }
+    .compose-box.visible { display:block; }
+    .compose-row { display:flex; gap:0.9rem; align-items:flex-start; }
+    .compose-avatar {
+      width:42px; height:42px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+      display:flex; align-items:center; justify-content:center;
+      font-weight:900; font-size:1rem; color:#000; cursor:pointer;
+    }
+    .compose-right { flex:1; min-width:0; }
+    .compose-textarea {
       width:100%; background:transparent; border:none; outline:none;
-      color:var(--text); font-size:0.95rem; line-height:1.6;
-      font-family:inherit; resize:none; min-height:80px;
-      placeholder-color:var(--text-faint);
+      color:var(--text); font-size:1rem; line-height:1.55;
+      font-family:inherit; resize:none; min-height:56px; max-height:320px;
+      overflow-y:auto; cursor:text;
     }
-    .cp-textarea::placeholder { color:var(--text-faint); }
-    .cp-divider { height:1px; background:var(--border); margin:0.8rem 0; }
-    .cp-actions {
-      display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;
+    .compose-textarea::placeholder { color:rgba(255,255,255,0.3); }
+    .compose-toolbar {
+      display:flex; align-items:center; gap:0.5rem;
+      padding-top:0.75rem; margin-top:0.5rem;
+      border-top:1px solid var(--border); flex-wrap:wrap;
     }
-    .cp-btn-icon {
+    .compose-icon-btn {
+      display:flex; align-items:center; gap:0.35rem;
       background:none; border:none; cursor:pointer;
-      color:var(--text-faint); padding:0.4rem 0.6rem; border-radius:8px;
-      transition:all 0.15s; display:flex; align-items:center; gap:0.4rem;
-      font-size:0.8rem; font-family:inherit;
+      color:var(--gold); opacity:0.7; padding:0.35rem 0.5rem;
+      border-radius:8px; font-size:0.78rem; font-family:inherit;
+      transition:all 0.15s; font-weight:600;
     }
-    .cp-btn-icon:hover { background:rgba(255,215,0,0.08); color:var(--gold); }
-    .cp-tag-input {
-      background:rgba(255,215,0,0.06); border:1px solid var(--border);
-      border-radius:8px; padding:0.35rem 0.7rem; color:var(--text-muted);
-      font-size:0.8rem; outline:none; font-family:inherit; width:140px;
+    .compose-icon-btn:hover { opacity:1; background:rgba(255,215,0,0.1); }
+    .compose-tags-input {
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:8px; padding:0.3rem 0.65rem;
+      color:var(--text-muted); font-size:0.78rem; outline:none;
+      font-family:inherit; width:130px; transition:border-color 0.2s;
     }
-    .cp-tag-input::placeholder { color:var(--text-faint); }
-    .cp-tag-input:focus { border-color:rgba(255,215,0,0.35); color:var(--text); }
-    .cp-submit {
-      margin-left:auto;
+    .compose-tags-input::placeholder { color:var(--text-faint); }
+    .compose-tags-input:focus { border-color:rgba(255,215,0,0.3); color:var(--text); }
+    .compose-right-actions { display:flex; align-items:center; gap:0.5rem; margin-left:auto; }
+    .compose-char {
+      font-size:0.72rem; color:var(--text-faint);
+      background:rgba(255,255,255,0.04); border-radius:100px;
+      padding:0.2rem 0.5rem;
+    }
+    .compose-char.warn { color:#f97316; }
+    .compose-char.over { color:var(--red); }
+    .compose-submit {
       background:var(--gold); color:#000; border:none; cursor:pointer;
-      padding:0.5rem 1.2rem; border-radius:100px; font-weight:700;
-      font-size:0.85rem; font-family:inherit; transition:all 0.15s;
+      padding:0.48rem 1.2rem; border-radius:100px; font-weight:800;
+      font-size:0.84rem; font-family:inherit; transition:all 0.18s;
+      letter-spacing:0.3px;
     }
-    .cp-submit:hover { background:#fff; transform:scale(1.02); }
-    .cp-submit:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
-    .cp-image-preview {
-      position:relative; margin-top:0.8rem;
-      border-radius:12px; overflow:hidden; max-height:300px;
+    .compose-submit:hover { background:#fff; transform:scale(1.03); }
+    .compose-submit:disabled { opacity:0.35; cursor:not-allowed; transform:none; }
+    .compose-img-preview {
+      position:relative; margin-top:0.75rem;
+      border-radius:12px; overflow:hidden; display:none;
     }
-    .cp-image-preview img { width:100%; height:auto; display:block; border-radius:12px; }
-    .cp-image-remove {
+    .compose-img-preview img { width:100%; max-height:280px; object-fit:cover; display:block; border-radius:12px; }
+    .compose-img-remove {
       position:absolute; top:8px; right:8px;
-      background:rgba(0,0,0,0.7); border:none; cursor:pointer;
+      background:rgba(0,0,0,0.75); border:none; cursor:pointer;
       color:#fff; border-radius:50%; width:28px; height:28px;
       display:flex; align-items:center; justify-content:center; font-size:1rem;
     }
-    .cp-char-count {
-      font-size:0.72rem; color:var(--text-faint); margin-left:auto;
-    }
-    .cp-char-count.warn { color:#f97316; }
-    .cp-char-count.over { color:var(--red); }
 
-    /* ── LOGIN CTA (si pas connecté) ── */
-    .login-cta {
+    /* Login CTA for non-logged */
+    .feed-login-cta {
       background:var(--card); border:1px solid var(--border);
-      border-radius:16px; padding:1.5rem; margin-bottom:1.2rem;
-      text-align:center; display:none;
+      border-radius:var(--radius); padding:1.5rem; text-align:center;
+      margin-bottom:0.75rem; display:none;
     }
-    .login-cta.visible { display:block; }
-    .login-cta p { color:var(--text-muted); font-size:0.9rem; margin-bottom:0.8rem; }
-    .login-cta a {
+    .feed-login-cta.visible { display:block; }
+    .feed-login-cta p { color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; line-height:1.5; }
+    .feed-login-cta a {
       display:inline-block; background:var(--gold); color:#000;
-      padding:0.5rem 1.5rem; border-radius:100px; font-weight:700;
-      font-size:0.88rem; text-decoration:none; transition:all 0.15s;
+      padding:0.52rem 1.6rem; border-radius:100px; font-weight:800;
+      font-size:0.87rem; text-decoration:none; transition:all 0.18s; margin-right:0.5rem;
     }
-    .login-cta a:hover { background:#fff; }
+    .feed-login-cta a:hover { background:#fff; }
+    .feed-login-cta a.ghost { background:transparent; color:var(--text-muted); border:1px solid var(--border); }
+    .feed-login-cta a.ghost:hover { background:rgba(255,255,255,0.05); color:#fff; }
 
-    /* ── FILTRES TAGS ── */
+    /* ─── FILTER PILLS ─── */
     .feed-filters {
-      display:flex; gap:0.5rem; margin-bottom:1rem;
-      overflow-x:auto; padding-bottom:0.2rem;
-      scrollbar-width:none;
+      display:flex; gap:0.4rem; margin-bottom:0.75rem;
+      overflow-x:auto; padding-bottom:2px; scrollbar-width:none;
     }
     .feed-filters::-webkit-scrollbar { display:none; }
-    .filter-tag {
+    .f-pill {
       background:rgba(255,255,255,0.04); border:1px solid var(--border);
-      border-radius:100px; padding:0.35rem 0.9rem;
+      border-radius:100px; padding:0.33rem 0.85rem;
       font-size:0.78rem; font-weight:600; color:var(--text-muted);
-      cursor:pointer; white-space:nowrap; transition:all 0.15s;
-      flex-shrink:0;
+      cursor:pointer; white-space:nowrap; transition:all 0.15s; flex-shrink:0;
     }
-    .filter-tag:hover { border-color:rgba(255,215,0,0.4); color:var(--gold); }
-    .filter-tag.active { background:rgba(255,215,0,0.12); border-color:rgba(255,215,0,0.4); color:var(--gold); font-weight:700; }
+    .f-pill:hover { border-color:rgba(255,215,0,0.35); color:var(--gold); }
+    .f-pill.active { background:rgba(255,215,0,0.1); border-color:rgba(255,215,0,0.4); color:var(--gold); font-weight:700; }
+    .f-pill.following-pill { border-color:rgba(255,215,0,0.25); color:var(--gold); }
+    .f-pill.following-pill.active { background:rgba(255,215,0,0.14); }
 
-    /* ── POST CARD ── */
+    /* ─── POST CARD (Twitter-style) ─── */
     .post-card {
       background:var(--card); border:1px solid var(--border);
-      border-radius:16px; padding:1.2rem 1.4rem;
-      margin-bottom:0.8rem; transition:border-color 0.2s;
+      border-radius:var(--radius); padding:0;
+      margin-bottom:0.5rem; transition:border-color 0.2s, background 0.2s;
+      overflow:hidden;
     }
-    .post-card:hover { border-color:rgba(255,215,0,0.2); }
-    .post-header {
-      display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:0.75rem;
-    }
+    .post-card:hover { border-color:rgba(255,255,255,0.13); background:rgba(18,18,18,0.99); }
+    .post-inner { display:flex; gap:0.9rem; padding:1.1rem 1.25rem 0; }
+    .post-av-col { flex-shrink:0; }
     .post-avatar {
-      width:40px; height:40px; border-radius:50%;
-      background:linear-gradient(135deg,#333,#555);
+      width:44px; height:44px; border-radius:50%;
+      background:linear-gradient(135deg,#2a2a2a,#3a3a3a);
       display:flex; align-items:center; justify-content:center;
-      font-weight:800; font-size:0.9rem; color:#fff; flex-shrink:0;
-      text-transform:uppercase;
+      font-weight:800; font-size:0.95rem; color:rgba(255,255,255,0.8);
+      text-transform:uppercase; flex-shrink:0;
+      border:2px solid transparent;
     }
-    .post-avatar.vip { background:linear-gradient(135deg,var(--gold),var(--gold-dim)); color:#000; }
-    .post-meta { flex:1; min-width:0; }
-    .post-author {
-      display:flex; align-items:center; gap:0.4rem;
-      font-weight:700; font-size:0.92rem;
+    .post-avatar.vip {
+      background:linear-gradient(135deg,rgba(255,215,0,0.25),rgba(255,193,7,0.15));
+      border-color:rgba(255,215,0,0.35); color:var(--gold);
     }
+    .post-main { flex:1; min-width:0; }
+    .post-top { display:flex; align-items:flex-start; gap:0.5rem; margin-bottom:0.5rem; }
+    .post-author-info { flex:1; min-width:0; }
+    .post-author-name { font-weight:700; font-size:0.92rem; color:#fff; }
+    .post-author-meta { display:flex; align-items:center; gap:0.5rem; margin-top:1px; }
+    .post-time { font-size:0.73rem; color:var(--text-faint); }
     .vip-badge {
       display:inline-flex; align-items:center; gap:0.2rem;
-      background:rgba(255,215,0,0.12); border:1px solid rgba(255,215,0,0.3);
-      border-radius:100px; padding:0.1rem 0.45rem;
-      font-size:0.62rem; font-weight:700; color:var(--gold);
-      letter-spacing:0.3px; text-transform:uppercase;
+      background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.25);
+      border-radius:100px; padding:0.08rem 0.42rem;
+      font-size:0.6rem; font-weight:800; color:var(--gold);
+      letter-spacing:0.5px; text-transform:uppercase;
     }
-    .post-time { font-size:0.75rem; color:var(--text-faint); margin-top:1px; }
     .post-delete {
       background:none; border:none; cursor:pointer; color:var(--text-faint);
-      padding:0.3rem; border-radius:6px; transition:all 0.15s; margin-left:auto;
-      display:flex; align-items:center;
+      padding:0.25rem 0.4rem; border-radius:6px; transition:all 0.15s;
+      display:flex; align-items:center; flex-shrink:0; margin-left:auto;
     }
-    .post-delete:hover { background:rgba(239,68,68,0.1); color:var(--red); }
-
-    /* Contenu post */
+    .post-delete:hover { background:rgba(244,63,94,0.1); color:var(--red); }
+    .post-body { padding:0 1.25rem 0 calc(44px + 0.9rem + 1.25rem); }
     .post-content {
-      font-size:0.93rem; line-height:1.6; color:var(--text);
-      margin-bottom:0.75rem; word-break:break-word;
+      font-size:0.93rem; line-height:1.6; color:rgba(255,255,255,0.88);
+      word-break:break-word; margin-bottom:0.65rem;
     }
-    .post-content .tag-link {
-      color:var(--gold); font-weight:600; text-decoration:none;
-      cursor:pointer;
-    }
-    .post-content .tag-link:hover { text-decoration:underline; }
+    .tag-link { color:var(--gold); font-weight:600; text-decoration:none; cursor:pointer; }
+    .tag-link:hover { text-decoration:underline; }
     .post-image {
-      border-radius:12px; overflow:hidden; margin-bottom:0.75rem;
-      border:1px solid var(--border);
+      border-radius:12px; overflow:hidden; margin-bottom:0.65rem;
+      border:1px solid var(--border); cursor:pointer;
     }
-    .post-image img {
-      width:100%; height:auto; display:block; max-height:500px; object-fit:cover; cursor:pointer;
-    }
-    .post-tags {
-      display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem;
-    }
+    .post-image img { width:100%; max-height:460px; object-fit:cover; display:block; transition:opacity 0.2s; }
+    .post-image:hover img { opacity:0.92; }
+    .post-tags { display:flex; flex-wrap:wrap; gap:0.35rem; margin-bottom:0.65rem; }
     .post-tag {
-      background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.15);
-      border-radius:100px; padding:0.2rem 0.7rem;
-      font-size:0.72rem; font-weight:600; color:var(--gold);
-      cursor:pointer; transition:all 0.15s;
+      background:rgba(255,215,0,0.07); border:1px solid rgba(255,215,0,0.14);
+      border-radius:100px; padding:0.18rem 0.65rem;
+      font-size:0.71rem; font-weight:600; color:var(--gold); cursor:pointer; transition:all 0.15s;
     }
     .post-tag:hover { background:rgba(255,215,0,0.15); }
-
-    /* Actions post */
     .post-actions {
-      display:flex; align-items:center; gap:0.5rem;
-      padding-top:0.5rem; border-top:1px solid var(--border);
+      display:flex; align-items:center; gap:0.25rem;
+      padding:0.5rem 1rem 0.75rem calc(44px + 0.9rem + 1rem);
+      border-top:1px solid var(--border); margin-top:0.5rem;
     }
-    .action-btn {
+    .act-btn {
       display:flex; align-items:center; gap:0.4rem;
-      background:none; border:none; cursor:pointer;
-      color:var(--text-faint); font-size:0.8rem;
-      padding:0.4rem 0.7rem; border-radius:100px;
+      background:none; border:none; cursor:pointer; color:var(--text-faint);
+      font-size:0.8rem; padding:0.4rem 0.65rem; border-radius:100px;
       transition:all 0.2s; font-family:inherit;
     }
-    .action-btn:hover { background:rgba(255,215,0,0.08); color:var(--gold); }
-    .action-btn.liked { color:var(--red); }
-    .action-btn.liked:hover { background:rgba(239,68,68,0.08); }
-    .action-btn svg { width:16px; height:16px; }
+    .act-btn:hover { background:rgba(255,215,0,0.07); color:var(--gold); }
+    .act-btn.liked { color:var(--red); }
+    .act-btn.liked:hover { background:rgba(244,63,94,0.08); color:var(--red); }
+    .act-btn svg { width:15px; height:15px; }
+    .act-btn .act-count { font-size:0.78rem; font-weight:600; }
+    /* Like animation */
+    @keyframes likePopIn { 0%{transform:scale(1)} 40%{transform:scale(1.35)} 70%{transform:scale(0.9)} 100%{transform:scale(1)} }
+    .act-btn.liked svg { animation:likePopIn 0.35s ease; }
 
-    /* ── COMMENTS ── */
+    /* ─── FOLLOW BUTTON ─── */
+    .follow-btn {
+      display:inline-flex; align-items:center; gap:0.35rem;
+      background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25);
+      border-radius:100px; padding:0.22rem 0.75rem;
+      font-size:0.72rem; font-weight:700; color:var(--gold);
+      cursor:pointer; transition:all 0.18s; font-family:inherit;
+      flex-shrink:0; margin-left:auto;
+    }
+    .follow-btn:hover { background:rgba(255,215,0,0.18); border-color:rgba(255,215,0,0.5); }
+    .follow-btn.following {
+      background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.15);
+      color:var(--text-muted);
+    }
+    .follow-btn.following:hover {
+      background:rgba(244,63,94,0.08); border-color:rgba(244,63,94,0.3);
+      color:var(--red);
+    }
+    .follow-btn.following:hover::before { content:''; }
+    @keyframes followPop { 0%{transform:scale(1)} 50%{transform:scale(1.15)} 100%{transform:scale(1)} }
+    .follow-btn.just-followed { animation:followPop 0.3s ease; }
+
+    /* ─── COMMENTS ─── */
     .comments-section {
-      margin-top:0.8rem; padding-top:0.8rem;
-      border-top:1px solid var(--border);
-      display:none;
+      padding:0.75rem 1.25rem 0.75rem calc(44px + 0.9rem + 1.25rem);
+      border-top:1px solid rgba(255,255,255,0.05); display:none;
+      background:rgba(255,255,255,0.015);
     }
     .comments-section.open { display:block; }
-    .comment-item {
-      display:flex; gap:0.6rem; margin-bottom:0.8rem;
-    }
-    .comment-avatar {
-      width:30px; height:30px; border-radius:50%;
-      background:linear-gradient(135deg,#333,#555);
+    .comment-item { display:flex; gap:0.6rem; margin-bottom:0.75rem; }
+    .c-avatar {
+      width:32px; height:32px; border-radius:50%; flex-shrink:0;
+      background:linear-gradient(135deg,#222,#333);
       display:flex; align-items:center; justify-content:center;
-      font-size:0.7rem; font-weight:800; color:#fff;
-      flex-shrink:0; text-transform:uppercase;
+      font-size:0.72rem; font-weight:800; color:rgba(255,255,255,0.7);
+      text-transform:uppercase; border:1px solid var(--border);
     }
-    .comment-avatar.vip { background:linear-gradient(135deg,var(--gold),var(--gold-dim)); color:#000; }
-    .comment-body {
-      flex:1; background:rgba(255,255,255,0.03);
-      border-radius:12px; padding:0.6rem 0.8rem;
+    .c-avatar.vip { background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,193,7,0.1)); color:var(--gold); border-color:rgba(255,215,0,0.25); }
+    .c-body { flex:1; }
+    .c-bubble {
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:12px; padding:0.55rem 0.8rem;
     }
-    .comment-author {
-      display:flex; align-items:center; gap:0.35rem;
-      font-size:0.8rem; font-weight:700; margin-bottom:0.25rem;
+    .c-author { display:flex; align-items:center; gap:0.4rem; margin-bottom:0.25rem; }
+    .c-name { font-size:0.8rem; font-weight:700; }
+    .c-time { font-size:0.68rem; color:var(--text-faint); }
+    .c-text { font-size:0.84rem; color:var(--text-muted); line-height:1.5; }
+    .c-actions { display:flex; align-items:center; gap:0.5rem; margin-top:0.3rem; padding-left:0.4rem; }
+    .c-like-btn {
+      background:none; border:none; cursor:pointer; color:var(--text-faint);
+      font-size:0.72rem; display:flex; align-items:center; gap:0.3rem;
+      padding:0.2rem 0.4rem; border-radius:100px; transition:all 0.15s; font-family:inherit;
     }
-    .comment-text { font-size:0.85rem; color:var(--text-muted); line-height:1.5; }
-    .comment-actions {
-      display:flex; align-items:center; gap:0.5rem; margin-top:0.35rem;
-    }
-    .comment-like-btn {
-      background:none; border:none; cursor:pointer;
-      color:var(--text-faint); font-size:0.72rem;
-      display:flex; align-items:center; gap:0.3rem;
-      padding:0.2rem 0.5rem; border-radius:100px; transition:all 0.15s;
-      font-family:inherit;
-    }
-    .comment-like-btn:hover { color:var(--red); }
-    .comment-like-btn.liked { color:var(--red); }
-    .comment-time { font-size:0.7rem; color:var(--text-faint); }
-    .comment-delete-btn {
-      background:none; border:none; cursor:pointer;
-      color:var(--text-faint); font-size:0.7rem; padding:0.2rem 0.4rem;
-      border-radius:6px; transition:all 0.15s; margin-left:auto; font-family:inherit;
-    }
-    .comment-delete-btn:hover { color:var(--red); }
-
-    /* Add comment */
-    .add-comment {
-      display:flex; gap:0.6rem; margin-top:0.6rem; align-items:flex-start;
-    }
+    .c-like-btn:hover { color:var(--red); background:rgba(244,63,94,0.07); }
+    .c-like-btn.liked { color:var(--red); }
+    .c-del-btn { background:none; border:none; cursor:pointer; color:var(--text-faint); font-size:0.7rem; padding:0.2rem 0.4rem; border-radius:6px; transition:all 0.15s; margin-left:auto; font-family:inherit; }
+    .c-del-btn:hover { color:var(--red); }
+    .add-comment { display:flex; gap:0.55rem; margin-top:0.5rem; align-items:center; }
     .add-comment-input {
-      flex:1; background:rgba(255,255,255,0.04);
-      border:1px solid var(--border); border-radius:100px;
-      padding:0.5rem 1rem; color:var(--text); font-size:0.85rem;
+      flex:1; background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      border-radius:100px; padding:0.48rem 1rem; color:var(--text); font-size:0.84rem;
       outline:none; font-family:inherit; transition:border-color 0.2s;
     }
-    .add-comment-input:focus { border-color:rgba(255,215,0,0.35); }
+    .add-comment-input:focus { border-color:rgba(255,215,0,0.3); }
     .add-comment-input::placeholder { color:var(--text-faint); }
     .add-comment-submit {
       background:var(--gold); color:#000; border:none; cursor:pointer;
-      padding:0.5rem 1rem; border-radius:100px; font-weight:700;
-      font-size:0.82rem; font-family:inherit; flex-shrink:0; transition:all 0.15s;
+      padding:0.48rem 1rem; border-radius:100px; font-weight:800;
+      font-size:0.8rem; font-family:inherit; flex-shrink:0; transition:all 0.15s;
     }
     .add-comment-submit:hover { background:#fff; }
-    .login-to-comment {
-      font-size:0.8rem; color:var(--text-faint); margin-top:0.5rem;
-    }
+    .login-to-comment { font-size:0.8rem; color:var(--text-faint); margin-top:0.5rem; padding:0.3rem 0; }
     .login-to-comment a { color:var(--gold); text-decoration:none; }
+    .login-to-comment a:hover { text-decoration:underline; }
 
-    /* ── SIDEBAR DROITE ── */
-    .feed-sidebar-right { position:sticky; top:calc(var(--nav-h) + 1rem); }
-    .sidebar-card {
-      background:var(--card); border:1px solid var(--border);
-      border-radius:14px; padding:1rem 1.1rem; margin-bottom:1rem;
-    }
-    .sidebar-card-title {
-      font-size:0.75rem; font-weight:700; text-transform:uppercase;
-      letter-spacing:1px; color:var(--text-faint); margin-bottom:0.8rem;
-    }
-    .trending-tag {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0.5rem 0; border-bottom:1px solid rgba(255,215,0,0.06);
-      cursor:pointer; transition:color 0.15s;
-    }
-    .trending-tag:last-child { border-bottom:none; }
-    .trending-tag:hover .tt-name { color:var(--gold); }
-    .tt-name { font-size:0.88rem; font-weight:600; }
-    .tt-count { font-size:0.75rem; color:var(--text-faint); }
-
-    /* ── LOADER / EMPTY ── */
-    .feed-loader {
-      text-align:center; padding:2rem; color:var(--text-faint);
-    }
-    .spinner {
-      width:32px; height:32px; border:2px solid rgba(255,215,0,0.2);
-      border-top-color:var(--gold); border-radius:50%;
-      animation:spin 0.8s linear infinite; margin:0 auto 0.5rem;
-    }
+    /* ─── LOADER / EMPTY ─── */
+    .feed-loader { text-align:center; padding:2.5rem; color:var(--text-faint); font-size:0.88rem; }
+    .spinner { width:30px; height:30px; border:2px solid rgba(255,215,0,0.15); border-top-color:var(--gold); border-radius:50%; animation:spin 0.75s linear infinite; margin:0 auto 0.75rem; }
     @keyframes spin { to { transform:rotate(360deg); } }
-    .empty-feed {
-      text-align:center; padding:3rem 1rem; color:var(--text-faint);
+    .empty-state { text-align:center; padding:3.5rem 1rem; color:var(--text-faint); }
+    .empty-state-icon { font-size:2.8rem; margin-bottom:0.75rem; opacity:0.6; }
+    .empty-state h3 { font-size:1rem; font-weight:700; color:var(--text-muted); margin-bottom:0.4rem; }
+    .empty-state p { font-size:0.85rem; }
+    .load-more-wrap { text-align:center; padding:1rem; }
+    .load-more-btn {
+      background:rgba(255,215,0,0.07); border:1px solid var(--border-gold);
+      color:var(--gold); padding:0.55rem 2rem; border-radius:100px;
+      cursor:pointer; font-weight:700; font-family:inherit; font-size:0.85rem;
+      transition:all 0.18s;
     }
-    .empty-feed-icon { font-size:3rem; margin-bottom:0.5rem; }
+    .load-more-btn:hover { background:rgba(255,215,0,0.15); }
 
-    /* ── IMAGE LIGHTBOX ── */
+    /* ═══════════════════════════════════
+       RIGHT SIDEBAR
+    ═══════════════════════════════════ */
+    .sidebar-right {
+      position:sticky; top:calc(var(--nav-h) + 1rem);
+      display:flex; flex-direction:column; gap:0.75rem;
+    }
+    .sr-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); padding:1rem 1.1rem;
+    }
+    .sr-title {
+      font-size:0.7rem; font-weight:800; text-transform:uppercase;
+      letter-spacing:1.2px; color:var(--text-faint); margin-bottom:0.85rem;
+    }
+
+    /* Market pulse */
+    .market-row {
+      display:flex; align-items:center; gap:0.6rem;
+      padding:0.55rem 0; border-bottom:1px solid rgba(255,255,255,0.04);
+      cursor:pointer; transition:background 0.15s; border-radius:8px;
+      padding:0.45rem 0.6rem; margin:0 -0.6rem;
+    }
+    .market-row:last-child { border-bottom:none; }
+    .market-row:hover { background:rgba(255,215,0,0.04); }
+    .market-icon { width:30px; height:30px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0; }
+    .mi-fx { background:rgba(59,130,246,0.15); color:#3b82f6; }
+    .mi-gold { background:rgba(255,215,0,0.12); color:var(--gold); }
+    .mi-btc { background:rgba(249,115,22,0.12); color:#f97316; }
+    .mi-sp { background:rgba(34,197,94,0.12); color:#22c55e; }
+    .market-info { flex:1; min-width:0; }
+    .market-name { font-size:0.82rem; font-weight:700; }
+    .market-link-cta { font-size:0.68rem; color:var(--text-faint); margin-top:1px; }
+    .market-change { font-size:0.78rem; font-weight:700; }
+    .chg-up { color:var(--green); }
+    .chg-dn { color:var(--red); }
+
+    /* Trending tags */
+    .trend-item {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0.45rem 0; border-bottom:1px solid rgba(255,255,255,0.04);
+      cursor:pointer; transition:all 0.15s;
+    }
+    .trend-item:last-child { border-bottom:none; }
+    .trend-item:hover .trend-tag { color:var(--gold); }
+    .trend-tag { font-size:0.85rem; font-weight:700; color:var(--text-muted); }
+    .trend-posts { font-size:0.7rem; color:var(--text-faint); }
+
+    /* Community stats */
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; }
+    .stat-box { background:rgba(255,255,255,0.03); border-radius:10px; padding:0.6rem 0.75rem; text-align:center; }
+    .stat-num { font-size:1.1rem; font-weight:800; color:var(--gold); display:block; }
+    .stat-lbl { font-size:0.65rem; color:var(--text-faint); margin-top:1px; display:block; text-transform:uppercase; letter-spacing:0.5px; }
+
+    /* ─── LIGHTBOX ─── */
     .lightbox {
-      position:fixed; inset:0; background:rgba(0,0,0,0.92);
-      z-index:9999; display:none; align-items:center; justify-content:center;
-      cursor:zoom-out;
+      position:fixed; inset:0; background:rgba(0,0,0,0.94);
+      z-index:9999; display:none; align-items:center; justify-content:center; cursor:zoom-out;
     }
     .lightbox.open { display:flex; }
-    .lightbox img { max-width:92vw; max-height:92vh; border-radius:8px; }
-    .lightbox-close {
-      position:absolute; top:1rem; right:1rem;
+    .lightbox img { max-width:90vw; max-height:90vh; border-radius:10px; object-fit:contain; }
+    .lb-close {
+      position:absolute; top:1.2rem; right:1.2rem;
       background:rgba(255,255,255,0.1); border:none; cursor:pointer;
-      color:#fff; font-size:1.5rem; width:40px; height:40px;
+      color:#fff; font-size:1.3rem; width:40px; height:40px;
       border-radius:50%; display:flex; align-items:center; justify-content:center;
+      transition:background 0.15s;
     }
+    .lb-close:hover { background:rgba(255,255,255,0.2); }
 
     /* ══ MOBILE NAV FINAL ══ */
-        @media (max-width: 900px) {
-            .hamburger { display: flex !important; }
-
-            .nav-menu {
-                position: fixed !important;
-                top: 68px !important;
-                left: 0 !important;
-                right: 0 !important;
-                width: 100vw !important;
-                box-sizing: border-box !important;
-                flex-direction: column !important;
-                background: rgba(0,0,0,0.98) !important;
-                backdrop-filter: blur(20px) !important;
-                -webkit-backdrop-filter: blur(20px) !important;
-                border-bottom: 1px solid rgba(255,215,0,0.15) !important;
-                padding: 2rem !important;
-                gap: 1.2rem !important;
-                z-index: 9999 !important;
-
-                /* ── La clé : visibility au lieu de display:none ── */
-                display: flex !important;
-                transform: translateX(-105%) !important;
-                visibility: hidden !important;
-                pointer-events: none !important;
-                transition: transform 0.32s cubic-bezier(0.4,0,0.2,1),
-                            visibility 0s linear 0.32s !important;
-            }
-
-            .nav-menu.active {
-                transform: translateX(0) !important;
-                visibility: visible !important;
-                pointer-events: all !important;
-                transition: transform 0.32s cubic-bezier(0.4,0,0.2,1),
-                            visibility 0s linear 0s !important;
-            }
-
-            .nav-menu li { width: 100% !important; }
-            .nav-menu > li > a {
-                font-size: 1rem !important;
-                padding: 0.5rem 0 !important;
-                display: block !important;
-            }
-            .nav-cta {
-                display: block !important;
-                text-align: center !important;
-                width: 100% !important;
-            }
-            .nav-login-btn {
-                display: block !important;
-                text-align: center !important;
-                width: 100% !important;
-                border: 1px solid rgba(255,215,0,0.18) !important;
-                border-radius: 6px !important;
-                padding: 0.5rem !important;
-            }
-            .nav-item-drop > a {
-                justify-content: space-between !important;
-                cursor: pointer !important;
-                display: flex !important;
-                align-items: center !important;
-            }
-            .drop-panel {
-                position: static !important;
-                transform: none !important;
-                opacity: 1 !important;
-                visibility: visible !important;
-                pointer-events: all !important;
-                box-shadow: none !important;
-                border: none !important;
-                border-left: 2px solid rgba(255,215,0,0.15) !important;
-                border-radius: 0 !important;
-                margin: 0.2rem 0 0.2rem 0.5rem !important;
-                padding: 0.2rem 0 !important;
-                background: transparent !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-                display: none !important;
-                min-width: unset !important;
-                transition: none !important;
-            }
-            .drop-panel::before { display: none !important; }
-                        .nav-item-drop:hover .drop-panel { display: none !important; }
-            .nav-item-drop.open > .drop-panel,
-            .nav-item-drop.open .drop-panel { display: block !important; }
-            .nav-item-drop.open > a .nav-chevron {
-                transform: rotate(180deg) !important;
-                opacity: 1 !important;
-            }
-            .drop-link {
-                white-space: normal !important;
-                padding: 0.5rem 0.7rem !important;
-                gap: 0.5rem !important;
-            }
-            .drop-icon { display: none !important; }
-            .drop-desc {
-                display: block !important;
-                font-size: 0.7rem !important;
-                color: rgba(255,255,255,0.35) !important;
-                margin-top: 2px !important;
-            }
-            .drop-sep { margin: 0.2rem 0.7rem !important; }
-
-            /* Profile mobile */
-            .nav-profile.visible {
-                width: 100% !important;
-                flex-direction: column !important;
-                align-items: flex-start !important;
-            }
-            .nav-avatar-btn {
-                width: 100% !important;
-                justify-content: flex-start !important;
-            }
-            .nav-profile-drop {
-                position: static !important;
-                box-shadow: none !important;
-                border: none !important;
-                border-left: 2px solid rgba(255,215,0,0.15) !important;
-                border-radius: 0 !important;
-                margin: 0.2rem 0 0 0.5rem !important;
-                background: transparent !important;
-                backdrop-filter: none !important;
-                display: block !important;
-            }
-        }
-
+    @media (max-width:900px) {
+      .hamburger { display:flex !important; }
+      .nav-menu {
+        position:fixed !important; top:64px !important; left:0 !important; right:0 !important;
+        width:100vw !important; box-sizing:border-box !important;
+        flex-direction:column !important;
+        background:rgba(0,0,0,0.98) !important; backdrop-filter:blur(20px) !important;
+        -webkit-backdrop-filter:blur(20px) !important;
+        border-bottom:1px solid rgba(255,215,0,0.12) !important;
+        padding:2rem !important; gap:1.2rem !important; z-index:9999 !important;
+        display:flex !important;
+        transform:translateX(-105%) !important; visibility:hidden !important;
+        pointer-events:none !important;
+        transition:transform 0.32s cubic-bezier(0.4,0,0.2,1), visibility 0s linear 0.32s !important;
+      }
+      .nav-menu.active { transform:translateX(0) !important; visibility:visible !important; pointer-events:all !important; transition:transform 0.32s cubic-bezier(0.4,0,0.2,1),visibility 0s linear 0s !important; }
+      .nav-menu li { width:100% !important; }
+      .nav-menu>li>a { font-size:1rem !important; padding:0.5rem 0 !important; display:block !important; }
+      .nav-cta { display:block !important; text-align:center !important; width:100% !important; }
+      .nav-login-btn { display:block !important; text-align:center !important; width:100% !important; border:1px solid rgba(255,215,0,0.18) !important; border-radius:6px !important; padding:0.5rem !important; }
+      .nav-item-drop>a { justify-content:space-between !important; cursor:pointer !important; display:flex !important; align-items:center !important; }
+      .drop-panel { position:static !important; transform:none !important; opacity:1 !important; visibility:visible !important; pointer-events:all !important; box-shadow:none !important; border:none !important; border-left:2px solid rgba(255,215,0,0.12) !important; border-radius:0 !important; margin:0.2rem 0 0.2rem 0.5rem !important; padding:0.2rem 0 !important; background:transparent !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; display:none !important; min-width:unset !important; transition:none !important; }
+      .drop-panel::before { display:none !important; }
+      .nav-item-drop:hover .drop-panel { display:none !important; }
+      .nav-item-drop.open>.drop-panel, .nav-item-drop.open .drop-panel { display:block !important; }
+      .nav-item-drop.open>a .nav-chevron { transform:rotate(180deg) !important; opacity:1 !important; }
+      .drop-link { white-space:normal !important; padding:0.5rem 0.7rem !important; gap:0.5rem !important; }
+      .drop-icon { display:none !important; }
+      .drop-desc { display:block !important; font-size:0.7rem !important; color:rgba(255,255,255,0.32) !important; margin-top:2px !important; }
+      .drop-sep { margin:0.2rem 0.7rem !important; }
+      .nav-profile.visible { width:100% !important; flex-direction:column !important; align-items:flex-start !important; }
+      .nav-avatar-btn { width:100% !important; justify-content:flex-start !important; }
+      .nav-profile-drop { position:static !important; box-shadow:none !important; border:none !important; border-left:2px solid rgba(255,215,0,0.12) !important; border-radius:0 !important; margin:0.2rem 0 0 0.5rem !important; background:transparent !important; backdrop-filter:none !important; display:block !important; }
+    }
   </style>
 </head>
 <body>
 
-<nav role="navigation" aria-label="Navigation principale">
-    <div class="nav-container">
-        <a href="/" class="logo" aria-label="Retour à l'accueil – Forex Average">
-            FOREX AVERAGE
-            <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
-        </a>
-        <button class="hamburger" aria-label="Menu" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-        <ul class="nav-menu">
-            <li><a href="/">Accueil</a></li>
-
-            <!-- ── Marché ── -->
-            <li class="nav-item-drop">
-                <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                <div class="drop-panel">
-                    <a href="analyses.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
-                        <span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto & Matières Premières</span></span>
-                    </a>
-                    <a href="actualites.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
-                        <span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span>
-                    </a>
-                    <a href="fondamentaux.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>
-                        <span><span class="drop-label">Analyse Macro</span><span class="drop-desc">Forex, Indices, Métaux & Pétrole</span></span>
-                    </a>
-                    <a href="calendrier-economique.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span>
-                        <span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements & indicateurs clés</span></span>
-                    </a>
-                </div>
-            </li>
-
-            <!-- ── Outils ── -->
-            <li class="nav-item-drop">
-                <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                <div class="drop-panel">
-                    <a href="graphique.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span>
-                        <span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span>
-                    </a>
-                    <a href="calculateurs-trading.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line><line x1="8" y1="14" x2="10" y2="14"></line><line x1="14" y1="14" x2="16" y2="14"></line></svg></span>
-                        <span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span>
-                    </a>
-                    <a href="screener.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span>
-                        <span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span>
-                    </a>
-                </div>
-            </li>
-
-            <!-- ── Partenaires ── -->
-            <li class="nav-item-drop">
-                <a href="#" style="color:var(--gold); font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                <div class="drop-panel">
-                    <a href="partenaires.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
-                        <span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span>
-                    </a>
-                    <div class="drop-sep"></div>
-                    <a href="brokers.html" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
-                        <span><span class="drop-label">Brokers</span><span class="drop-desc">Brokers recommandés</span></span>
-                    </a>
-                </div>
-            </li>
-
-            <!-- ── Communauté ── -->
-            <li class="nav-item-drop">
-                <a href="#">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                <div class="drop-panel">
-                    <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
-                        <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
-                    </a>
-                    <div class="drop-sep"></div>
-                    <a href="/#telegram" class="drop-link">
-                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
-                        <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
-                    </a>
-                </div>
-            </li>
-
-            <!-- Auth-aware : affiché via JS selon l'état de connexion -->
-            <!-- Boutons non connecté -->
-            <li class="nav-auth-guest"><a href="login.html" class="nav-login-btn" style="text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.color='';this.style.borderColor=''">Connexion</a></li>
-            <li class="nav-auth-guest"><a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a></li>
-
-            <!-- Profil connecté -->
-            <li id="nav-user-profile" class="nav-profile">
-                <div class="nav-avatar-btn">
-                    <div class="nav-avatar" id="nav-avatar-initials">?</div>
-                    <span id="nav-username-display">Mon compte</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-                <div class="nav-profile-drop">
-                    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
-                    <a href="journal.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Mon journal</a>
-                    <div class="drop-sep-sm"></div>
-                    <button class="logout-btn" onclick="navSignOut()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Se déconnecter</button>
-                </div>
-            </li>
-        </ul>
-    </div>
+<!-- ═══════ NAV ═══════ -->
+<nav>
+  <div class="nav-container">
+    <a href="feed.html" class="logo" aria-label="Forex Average">
+      <span>FOREX<span style="color:#fff;-webkit-text-fill-color:#fff;">AVERAGE</span></span>
+      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+    </a>
+    <button class="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu">
+      <!-- Marché -->
+      <li class="nav-item-drop">
+        <a href="#">Marché <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="analyses.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Analyses</span><span class="drop-desc">Forex, Crypto & Matières Premières</span></span></a>
+          <a href="actualites.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span><span class="drop-label">Actualités</span><span class="drop-desc">Infos marchés en temps réel</span></span></a>
+          <a href="fondamentaux.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span><span><span class="drop-label">Analyse Macro</span><span class="drop-desc">Forex, Indices, Métaux & Pétrole</span></span></a>
+          <a href="calendrier-economique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><span><span class="drop-label">Calendrier économique</span><span class="drop-desc">Événements & indicateurs clés</span></span></a>
+        </div>
+      </li>
+      <!-- Outils -->
+      <li class="nav-item-drop">
+        <a href="#">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="graphique.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></span><span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span></a>
+          <a href="calculateurs-trading.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line></svg></span><span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span></a>
+          <a href="screener.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></span><span><span class="drop-label">Screener</span><span class="drop-desc">Scanner les marchés</span></span></a>
+        </div>
+      </li>
+      <!-- Partenaires -->
+      <li class="nav-item-drop">
+        <a href="#">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="partenaires.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span><span class="drop-label">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span></a>
+          <div class="drop-sep"></div>
+          <a href="brokers.html" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span><span><span class="drop-label">Comparatif Brokers</span><span class="drop-desc">Choisir le bon broker</span></span></a>
+        </div>
+      </li>
+      <!-- Communauté -->
+      <li class="nav-item-drop">
+        <a href="#" style="color:var(--gold);font-weight:700;">Communauté <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="feed.html" class="drop-link" style="color:#FFD700!important;background:rgba(255,215,0,0.07)!important;"><span class="drop-icon" style="background:rgba(255,215,0,0.14);color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span><span><span class="drop-label">Fil de Trading ✦</span><span class="drop-desc">Analyses & idées de la communauté</span></span></a>
+          <div class="drop-sep"></div>
+          <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span><span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span></a>
+          <div class="drop-sep"></div>
+          <a href="#telegram" class="drop-link"><span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span><span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span></a>
+        </div>
+      </li>
+      <!-- Auth guest -->
+      <li class="nav-auth-guest"><a href="login.html" class="nav-login-btn" style="text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;" onmouseover="this.style.color='#fff';this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.color='';this.style.borderColor=''">Connexion</a></li>
+      <li class="nav-auth-guest"><a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a></li>
+      <!-- Profil connecté -->
+      <li id="nav-user-profile" class="nav-profile">
+        <div class="nav-avatar-btn">
+          <div class="nav-avatar"><span id="nav-avatar-initials">?</span></div>
+          <span id="nav-username-display"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.4;margin-left:2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="nav-profile-drop">
+          <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
+          <a href="journal.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Journal</a>
+          <div class="drop-sep-sm"></div>
+          <button class="logout-btn" onclick="navSignOut()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Déconnexion</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 </nav>
 
-<!-- ════ FEED LAYOUT ════ -->
-<div class="feed-wrapper">
+<!-- ═══════ APP SHELL ═══════ -->
+<div class="app-shell">
 
-  <!-- Sidebar gauche -->
-  <aside class="feed-sidebar-left">
-    <a href="feed.html" class="sidebar-nav-item active">
-      <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      Fil de Trading
-    </a>
-    <a href="analyses.html" class="sidebar-nav-item">
-      <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-      Analyses
-    </a>
-    <a href="actualites.html" class="sidebar-nav-item">
-      <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-      Actualités
-    </a>
-    <a href="screener.html" class="sidebar-nav-item">
-      <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line></svg>
-      Screener
-    </a>
-    <a href="pricing.html" class="sidebar-nav-item" style="color:var(--gold);margin-top:0.5rem;">
-      <svg class="sidebar-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-      Passer VIP
-    </a>
+  <!-- ── LEFT SIDEBAR ── -->
+  <aside class="sidebar-left">
+
+    <!-- Profile card (logged in) -->
+    <div class="sb-profile-card" id="sb-profile-card">
+      <div class="sb-profile-avatar-row">
+        <div class="sb-avatar" id="sb-avatar-letter">?</div>
+        <div>
+          <div class="sb-name" id="sb-username">—</div>
+          <div class="sb-handle" id="sb-handle">@—</div>
+          <div class="sb-badge-vip" id="sb-badge-vip" style="display:none;">⭐ Membre VIP</div>
+        </div>
+      </div>
+      <div class="sb-stats" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="sb-stat">
+          <span class="sb-stat-val" id="sb-posts-count">—</span>
+          <span class="sb-stat-label">Posts</span>
+        </div>
+        <div class="sb-stat" style="cursor:pointer;" onclick="showFollowList('following')" title="Voir les abonnements">
+          <span class="sb-stat-val" id="sb-following-count">—</span>
+          <span class="sb-stat-label">Abonnements</span>
+        </div>
+        <div class="sb-stat" style="cursor:pointer;" onclick="showFollowList('followers')" title="Voir les abonnés">
+          <span class="sb-stat-val" id="sb-followers-count">—</span>
+          <span class="sb-stat-label">Abonnés</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Join card (not logged in) -->
+    <div class="sb-join-card" id="sb-join-card" style="display:none;">
+      <h3>Rejoins la communauté</h3>
+      <p>Partage tes analyses, commente et interagis avec des traders actifs.</p>
+      <a href="register.html" class="sb-btn-gold">Créer un compte</a>
+      <a href="login.html?redirect=feed.html" class="sb-btn-ghost">Se connecter</a>
+    </div>
+
+    <!-- Nav links -->
+    <nav class="sb-nav">
+      <a href="feed.html" class="sb-nav-link active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Fil de Trading
+      </a>
+      <a href="analyses.html" class="sb-nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Analyses
+      </a>
+      <a href="actualites.html" class="sb-nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        Actualités
+      </a>
+      <a href="fondamentaux.html" class="sb-nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        Analyse Macro
+      </a>
+      <a href="graphique.html" class="sb-nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Graphiques
+      </a>
+      <a href="screener.html" class="sb-nav-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        Screener
+      </a>
+      <a href="pricing.html" class="sb-nav-link" style="color:var(--gold);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Devenir VIP
+      </a>
+    </nav>
+
+    <!-- VIP upgrade (only shown for non-vip connected) -->
+    <div class="sb-vip-card" id="sb-vip-cta">
+      <h4>✦ Passe VIP</h4>
+      <p>Accède aux signaux live, analyses exclusives et au canal privé.</p>
+      <a href="pricing.html" class="sb-btn-vip">Voir les offres</a>
+    </div>
+
   </aside>
 
-  <!-- Feed principal -->
-  <main class="feed-main">
+  <!-- ── CENTER FEED ── -->
+  <main class="feed-center">
 
-    <!-- Create post (connecté) -->
-    <div class="create-post" id="create-post">
-      <div class="create-post-header">
-        <div class="cp-avatar" id="cp-avatar">?</div>
-        <textarea class="cp-textarea" id="cp-textarea"
-          placeholder="Partage ton analyse, ton observation, une idée de trade..."
-          maxlength="600"></textarea>
-      </div>
-      <div id="cp-image-preview" class="cp-image-preview" style="display:none;">
-        <img id="cp-preview-img" src="" alt="">
-        <button class="cp-image-remove" id="cp-image-remove" title="Supprimer">✕</button>
-      </div>
-      <div class="cp-divider"></div>
-      <div class="cp-actions">
-        <!-- Image upload -->
-        <label class="cp-btn-icon" title="Ajouter une image">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Image
-          <input type="file" id="cp-image-input" accept="image/*" style="display:none;">
-        </label>
-        <!-- Tags -->
-        <input type="text" class="cp-tag-input" id="cp-tags"
-          placeholder="#EURUSD #GOLD" maxlength="80">
-        <!-- Char count -->
-        <span class="cp-char-count" id="cp-char-count">0/600</span>
-        <!-- Submit -->
-        <button class="cp-submit" id="cp-submit" disabled>Publier</button>
+    <!-- Compose box (logged in) -->
+    <div class="compose-box" id="create-post">
+      <div class="compose-row">
+        <div class="compose-avatar" id="cp-avatar">?</div>
+        <div class="compose-right">
+          <textarea class="compose-textarea" id="cp-textarea"
+            placeholder="Partage ton analyse ou observation du marché..."
+            maxlength="600"></textarea>
+          <div class="compose-img-preview" id="cp-image-preview">
+            <img id="cp-preview-img" src="" alt="">
+            <button class="compose-img-remove" id="cp-image-remove">✕</button>
+          </div>
+          <div class="compose-toolbar">
+            <label class="compose-icon-btn" title="Ajouter une image">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Photo
+              <input type="file" id="cp-image-input" accept="image/*" style="display:none;">
+            </label>
+            <input type="text" class="compose-tags-input" id="cp-tags" placeholder="#EURUSD #GOLD" maxlength="80">
+            <div class="compose-right-actions">
+              <span class="compose-char" id="cp-char-count">0/600</span>
+              <button class="compose-submit" id="cp-submit" disabled>Publier</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Login CTA (non connecté) -->
-    <div class="login-cta" id="login-cta">
-      <p>Connecte-toi pour partager tes analyses avec la communauté.</p>
-      <a href="login.html?redirect=feed.html">Se connecter</a>
+    <!-- Login CTA -->
+    <div class="feed-login-cta" id="login-cta">
+      <p>Rejoins la communauté pour partager tes analyses et interagir avec d'autres traders.</p>
+      <a href="register.html">Créer un compte</a>
+      <a href="login.html?redirect=feed.html" class="ghost">Se connecter</a>
     </div>
 
-    <!-- Filtres tags -->
+    <!-- Filter pills -->
     <div class="feed-filters" id="feed-filters">
-      <button class="filter-tag active" data-tag="">Tout</button>
-      <button class="filter-tag" data-tag="EURUSD">#EURUSD</button>
-      <button class="filter-tag" data-tag="GOLD">#GOLD</button>
-      <button class="filter-tag" data-tag="BTCUSD">#BTCUSD</button>
-      <button class="filter-tag" data-tag="NASDAQ">#NASDAQ</button>
-      <button class="filter-tag" data-tag="DXY">#DXY</button>
-      <button class="filter-tag" data-tag="SP500">#SP500</button>
-      <button class="filter-tag" data-tag="GBPUSD">#GBPUSD</button>
-      <button class="filter-tag" data-tag="OIL">#OIL</button>
+      <button class="f-pill active" data-tag="">Tout</button>
+      <button class="f-pill following-pill" data-tag="__following" id="following-pill" style="display:none;">
+        ✦ Abonnements
+      </button>
+      <button class="f-pill" data-tag="EURUSD">#EURUSD</button>
+      <button class="f-pill" data-tag="GOLD">#GOLD</button>
+      <button class="f-pill" data-tag="BTCUSD">#BTCUSD</button>
+      <button class="f-pill" data-tag="NASDAQ">#NASDAQ</button>
+      <button class="f-pill" data-tag="DXY">#DXY</button>
+      <button class="f-pill" data-tag="SP500">#SP500</button>
+      <button class="f-pill" data-tag="GBPUSD">#GBPUSD</button>
+      <button class="f-pill" data-tag="OIL">#OIL</button>
     </div>
 
     <!-- Posts -->
@@ -943,47 +820,99 @@
     <!-- Loader -->
     <div class="feed-loader" id="feed-loader">
       <div class="spinner"></div>
-      <div>Chargement...</div>
+      Chargement du fil...
     </div>
 
     <!-- Load more -->
-    <div style="text-align:center;padding:1rem;display:none;" id="load-more-btn">
-      <button onclick="loadMore()" style="background:rgba(255,215,0,0.08);border:1px solid var(--border-strong);color:var(--gold);padding:0.6rem 2rem;border-radius:100px;cursor:pointer;font-weight:600;font-family:inherit;font-size:0.88rem;">
-        Voir plus
-      </button>
+    <div class="load-more-wrap" id="load-more-btn" style="display:none;">
+      <button class="load-more-btn" onclick="loadMore()">Voir plus de posts</button>
     </div>
 
   </main>
 
-  <!-- Sidebar droite -->
-  <aside class="feed-sidebar-right">
-    <div class="sidebar-card">
-      <div class="sidebar-card-title">Tags populaires</div>
+  <!-- ── RIGHT SIDEBAR ── -->
+  <aside class="sidebar-right">
+
+    <!-- Market pulse -->
+    <div class="sr-card">
+      <div class="sr-title">Marchés</div>
+      <a href="graphique.html" style="text-decoration:none;">
+        <div class="market-row">
+          <div class="market-icon mi-fx">€/$</div>
+          <div class="market-info">
+            <div class="market-name">EUR/USD</div>
+            <div class="market-link-cta">Voir le graphique →</div>
+          </div>
+        </div>
+      </a>
+      <a href="graphique.html" style="text-decoration:none;">
+        <div class="market-row">
+          <div class="market-icon mi-gold">Au</div>
+          <div class="market-info">
+            <div class="market-name">Gold (XAU/USD)</div>
+            <div class="market-link-cta">Voir le graphique →</div>
+          </div>
+        </div>
+      </a>
+      <a href="graphique.html" style="text-decoration:none;">
+        <div class="market-row">
+          <div class="market-icon mi-btc">₿</div>
+          <div class="market-info">
+            <div class="market-name">Bitcoin</div>
+            <div class="market-link-cta">Voir le graphique →</div>
+          </div>
+        </div>
+      </a>
+      <a href="graphique.html" style="text-decoration:none;">
+        <div class="market-row">
+          <div class="market-icon mi-sp">S&P</div>
+          <div class="market-info">
+            <div class="market-name">S&P 500</div>
+            <div class="market-link-cta">Voir le graphique →</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Trending hashtags -->
+    <div class="sr-card">
+      <div class="sr-title">Tags populaires</div>
       <div id="trending-tags">
-        <div class="trending-tag" onclick="filterByTag('EURUSD')"><span class="tt-name">#EURUSD</span></div>
-        <div class="trending-tag" onclick="filterByTag('GOLD')"><span class="tt-name">#GOLD</span></div>
-        <div class="trending-tag" onclick="filterByTag('BTCUSD')"><span class="tt-name">#BTCUSD</span></div>
-        <div class="trending-tag" onclick="filterByTag('NASDAQ')"><span class="tt-name">#NASDAQ</span></div>
-        <div class="trending-tag" onclick="filterByTag('DXY')"><span class="tt-name">#DXY</span></div>
+        <div class="trend-item" onclick="filterByTag('EURUSD')"><span class="trend-tag">#EURUSD</span><span class="trend-posts">Trending</span></div>
+        <div class="trend-item" onclick="filterByTag('GOLD')"><span class="trend-tag">#GOLD</span><span class="trend-posts">Trending</span></div>
+        <div class="trend-item" onclick="filterByTag('BTCUSD')"><span class="trend-tag">#BTCUSD</span><span class="trend-posts">Trending</span></div>
+        <div class="trend-item" onclick="filterByTag('DXY')"><span class="trend-tag">#DXY</span><span class="trend-posts">Trending</span></div>
+        <div class="trend-item" onclick="filterByTag('NASDAQ')"><span class="trend-tag">#NASDAQ</span><span class="trend-posts">Trending</span></div>
       </div>
     </div>
-    <div class="sidebar-card">
-      <div class="sidebar-card-title">À propos</div>
-      <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;">
-        Partage tes analyses, observe les marchés en temps réel avec la communauté Forex Average.
-        Les membres <span style="color:var(--gold);font-weight:700;">VIP</span> sont identifiés par le badge doré.
-      </p>
+
+    <!-- Community stats -->
+    <div class="sr-card">
+      <div class="sr-title">Communauté</div>
+      <div class="stats-grid">
+        <div class="stat-box"><span class="stat-num" id="stat-posts">—</span><span class="stat-lbl">Posts</span></div>
+        <div class="stat-box"><span class="stat-num" id="stat-members">—</span><span class="stat-lbl">Traders</span></div>
+      </div>
+      <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);">
+        <a href="pricing.html" style="display:block;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,193,7,0.06));border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:0.65rem 0.85rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.borderColor='rgba(255,215,0,0.2)'">
+          <div style="font-size:0.78rem;font-weight:800;color:var(--gold);">✦ Accès VIP</div>
+          <div style="font-size:0.71rem;color:var(--text-muted);margin-top:2px;">Signaux live · Canal privé · Analyses exclusives</div>
+        </a>
+      </div>
     </div>
+
   </aside>
 </div>
 
-<!-- Lightbox image -->
+<!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
   <img id="lightbox-img" src="" alt="">
 </div>
 
-<!-- ════ SUPABASE + SCRIPTS ════ -->
+<!-- ══════════════════════════════════════
+     SUPABASE + LOGIC
+══════════════════════════════════════ -->
 <script>
 const SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
@@ -995,12 +924,14 @@ let currentTag = '';
 let lastPostId = null;
 let isLoading = false;
 const PAGE_SIZE = 15;
+let followingSet = new Set(); // IDs des utilisateurs que je suis
 
 // ── Init ──────────────────────────────────────────────────────
 async function init() {
   const { data } = await sb.auth.getSession();
   if (data && data.session) {
     currentUser = data.session.user;
+
     // Check VIP
     const { data: sub } = await sb.from('subscriptions')
       .select('plan, status')
@@ -1009,18 +940,58 @@ async function init() {
       .maybeSingle();
     currentUserIsVIP = sub && sub.plan === 'vip';
 
-    // Show create post
-    document.getElementById('create-post').classList.add('visible');
     const username = (currentUser.user_metadata && currentUser.user_metadata.username)
       || currentUser.email.split('@')[0];
+
+    // Show compose box
+    document.getElementById('create-post').classList.add('visible');
     document.getElementById('cp-avatar').textContent = username.charAt(0).toUpperCase();
+
+    // Load following list
+    await loadFollowingSet();
+
+    // Show "Abonnements" pill if following anyone
+    if (followingSet.size > 0) {
+      document.getElementById('following-pill').style.display = '';
+    }
+
+    // Left sidebar profile
+    const pc = document.getElementById('sb-profile-card');
+    if (pc) {
+      pc.classList.add('visible');
+      document.getElementById('sb-avatar-letter').textContent = username.charAt(0).toUpperCase();
+      document.getElementById('sb-username').textContent = username;
+      document.getElementById('sb-handle').textContent = '@' + username.toLowerCase();
+      if (currentUserIsVIP) document.getElementById('sb-badge-vip').style.display = '';
+      // Hide non-VIP upgrade card if already VIP
+      if (currentUserIsVIP) { const v = document.getElementById('sb-vip-cta'); if(v) v.style.display='none'; }
+      else { const v = document.getElementById('sb-vip-cta'); if(v) v.classList.add('visible'); }
+      // Fetch user stats
+      const [{ count: postsCount }, { count: followingCount }, { count: followersCount }] = await Promise.all([
+        sb.from('posts').select('*', { count:'exact', head:true }).eq('user_id', currentUser.id),
+        sb.from('follows').select('*', { count:'exact', head:true }).eq('follower_id', currentUser.id),
+        sb.from('follows').select('*', { count:'exact', head:true }).eq('following_id', currentUser.id),
+      ]);
+      document.getElementById('sb-posts-count').textContent = postsCount || 0;
+      document.getElementById('sb-following-count').textContent = followingCount || 0;
+      document.getElementById('sb-followers-count').textContent = followersCount || 0;
+    }
+    document.getElementById('sb-join-card').style.display = 'none';
   } else {
     document.getElementById('login-cta').classList.add('visible');
+    document.getElementById('sb-join-card').style.display = '';
+    document.getElementById('sb-vip-cta').style.display = 'none';
   }
 
-  // Load feed
   loadPosts(true);
   setupCreatePost();
+  loadCommunityStats();
+}
+
+// ── Community stats ───────────────────────────────────────────
+async function loadCommunityStats() {
+  const { count: postsTotal } = await sb.from('posts').select('*', { count:'exact', head:true });
+  if (postsTotal !== null) document.getElementById('stat-posts').textContent = postsTotal;
 }
 
 // ── Load posts ────────────────────────────────────────────────
@@ -1035,14 +1006,26 @@ async function loadPosts(reset = false) {
     document.getElementById('feed-posts').innerHTML = '';
   }
 
-  let query = sb.from('posts')
-    .select('*')
-    .order('created_at', { ascending: false })
-    .limit(PAGE_SIZE);
+  let query = sb.from('posts').select('*').order('created_at', { ascending: false }).limit(PAGE_SIZE);
 
-  if (currentTag) {
+  if (currentTag === '__following') {
+    // Posts des gens suivis uniquement
+    if (followingSet.size === 0) {
+      document.getElementById('feed-loader').style.display = 'none';
+      isLoading = false;
+      document.getElementById('feed-posts').innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">👥</div>
+          <h3>Tu ne suis personne pour l'instant</h3>
+          <p>Clique sur "Suivre" sur les posts qui t'intéressent.</p>
+        </div>`;
+      return;
+    }
+    query = query.in('user_id', [...followingSet]);
+  } else if (currentTag) {
     query = query.contains('tags', [currentTag]);
   }
+
   if (lastPostId) {
     const { data: lastPost } = await sb.from('posts').select('created_at').eq('id', lastPostId).single();
     if (lastPost) query = query.lt('created_at', lastPost.created_at);
@@ -1056,33 +1039,25 @@ async function loadPosts(reset = false) {
 
   if (posts.length === 0 && reset) {
     document.getElementById('feed-posts').innerHTML = `
-      <div class="empty-feed">
-        <div class="empty-feed-icon">📊</div>
-        <p>Aucune publication pour le moment.</p>
-        <p style="font-size:0.85rem;margin-top:0.3rem;">Sois le premier à partager une analyse !</p>
+      <div class="empty-state">
+        <div class="empty-state-icon">📊</div>
+        <h3>Aucune publication pour le moment</h3>
+        <p>Sois le premier à partager ton analyse !</p>
       </div>`;
     return;
   }
 
-  // Get liked posts by current user
   let likedPostIds = new Set();
   if (currentUser) {
-    const { data: likes } = await sb.from('post_likes')
-      .select('post_id')
-      .eq('user_id', currentUser.id)
-      .in('post_id', posts.map(p => p.id));
+    const { data: likes } = await sb.from('post_likes').select('post_id').eq('user_id', currentUser.id).in('post_id', posts.map(p => p.id));
     if (likes) likes.forEach(l => likedPostIds.add(l.post_id));
   }
 
   const container = document.getElementById('feed-posts');
-  posts.forEach(post => {
-    container.insertAdjacentHTML('beforeend', renderPost(post, likedPostIds.has(post.id)));
-  });
+  posts.forEach(post => container.insertAdjacentHTML('beforeend', renderPost(post, likedPostIds.has(post.id))));
 
   if (posts.length > 0) lastPostId = posts[posts.length - 1].id;
-  if (posts.length === PAGE_SIZE) {
-    document.getElementById('load-more-btn').style.display = 'block';
-  }
+  if (posts.length === PAGE_SIZE) document.getElementById('load-more-btn').style.display = 'block';
 }
 
 function loadMore() { loadPosts(false); }
@@ -1091,48 +1066,63 @@ function loadMore() { loadPosts(false); }
 function renderPost(post, liked) {
   const initials = (post.username || 'U').charAt(0).toUpperCase();
   const isOwn = currentUser && currentUser.id === post.user_id;
+  const isFollowing = followingSet.has(post.user_id);
   const timeAgo = formatTime(post.created_at);
   const content = linkifyTags(escapeHTML(post.content));
-  
+
+  const followBtn = currentUser && !isOwn
+    ? `<button class="follow-btn${isFollowing ? ' following' : ''}"
+        onclick="toggleFollow('${post.user_id}', '${escapeHTML(post.username)}', this)"
+        title="${isFollowing ? 'Se désabonner' : 'Suivre'}">
+        ${isFollowing ? 'Suivi ✓' : '+ Suivre'}
+      </button>`
+    : '';
+
   return `
-  <div class="post-card" id="post-${post.id}">
-    <div class="post-header">
-      <div class="post-avatar${post.is_vip ? ' vip' : ''}">${initials}</div>
-      <div class="post-meta">
-        <div class="post-author">
-          <span>${escapeHTML(post.username)}</span>
-          ${post.is_vip ? '<span class="vip-badge">⭐ VIP</span>' : ''}
-        </div>
-        <div class="post-time">${timeAgo}</div>
+  <article class="post-card" id="post-${post.id}">
+    <div class="post-inner">
+      <div class="post-av-col">
+        <div class="post-avatar${post.is_vip ? ' vip' : ''}">${initials}</div>
       </div>
-      ${isOwn ? `<button class="post-delete" onclick="deletePost('${post.id}')" title="Supprimer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
-      </button>` : ''}
+      <div class="post-main">
+        <div class="post-top">
+          <div class="post-author-info">
+            <span class="post-author-name">${escapeHTML(post.username)}</span>
+            <div class="post-author-meta">
+              ${post.is_vip ? '<span class="vip-badge">⭐ VIP</span>' : ''}
+              <span class="post-time">${timeAgo}</span>
+            </div>
+          </div>
+          ${followBtn}
+          ${isOwn ? `<button class="post-delete" onclick="deletePost('${post.id}')" title="Supprimer" style="margin-left:0.4rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path></svg>
+          </button>` : ''}
+        </div>
+      </div>
     </div>
 
-    <div class="post-content">${content}</div>
-
-    ${post.image_url ? `<div class="post-image"><img src="${post.image_url}" alt="" loading="lazy" onclick="openLightbox('${post.image_url}')"></div>` : ''}
-
-    ${post.tags && post.tags.length > 0 ? `<div class="post-tags">${post.tags.map(t => `<span class="post-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}</div>` : ''}
+    <div class="post-body">
+      <div class="post-content">${content}</div>
+      ${post.image_url ? `<div class="post-image" onclick="openLightbox('${post.image_url}')"><img src="${post.image_url}" alt="" loading="lazy"></div>` : ''}
+      ${post.tags && post.tags.length > 0 ? `<div class="post-tags">${post.tags.map(t => `<span class="post-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}</div>` : ''}
+    </div>
 
     <div class="post-actions">
-      <button class="action-btn${liked ? ' liked' : ''}" onclick="toggleLikePost('${post.id}', this)">
+      <button class="act-btn${liked ? ' liked' : ''}" onclick="toggleLikePost('${post.id}', this)">
         <svg viewBox="0 0 24 24" fill="${liked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-        <span class="like-count">${post.likes_count || 0}</span>
+        <span class="act-count">${post.likes_count || 0}</span>
       </button>
-      <button class="action-btn" onclick="toggleComments('${post.id}')">
+      <button class="act-btn" onclick="toggleComments('${post.id}')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-        <span class="comment-count">${post.comments_count || 0}</span>
+        <span class="act-count comment-count">${post.comments_count || 0}</span>
       </button>
     </div>
 
-    <!-- Comments section -->
     <div class="comments-section" id="comments-${post.id}">
       <div class="comments-list" id="comments-list-${post.id}"></div>
       ${currentUser
         ? `<div class="add-comment">
-            <div class="comment-avatar${currentUserIsVIP ? ' vip' : ''}">${(currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username.charAt(0) : currentUser.email.charAt(0)).toUpperCase()}</div>
+            <div class="c-avatar${currentUserIsVIP ? ' vip' : ''}">${(currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username.charAt(0) : currentUser.email.charAt(0)).toUpperCase()}</div>
             <input type="text" class="add-comment-input" placeholder="Ajouter un commentaire..."
               onkeydown="if(event.key==='Enter')submitComment('${post.id}',this)">
             <button class="add-comment-submit" onclick="submitComment('${post.id}',this.previousElementSibling)">→</button>
@@ -1140,7 +1130,7 @@ function renderPost(post, liked) {
         : `<p class="login-to-comment"><a href="login.html?redirect=feed.html">Connecte-toi</a> pour commenter</p>`
       }
     </div>
-  </div>`;
+  </article>`;
 }
 
 // ── Render comment ────────────────────────────────────────────
@@ -1149,19 +1139,21 @@ function renderComment(c, liked) {
   const isOwn = currentUser && currentUser.id === c.user_id;
   return `
   <div class="comment-item" id="comment-${c.id}">
-    <div class="comment-avatar${c.is_vip ? ' vip' : ''}">${initials}</div>
-    <div class="comment-body">
-      <div class="comment-author">
-        <span>${escapeHTML(c.username)}</span>
-        ${c.is_vip ? '<span class="vip-badge" style="font-size:0.55rem;padding:0.05rem 0.35rem;">⭐ VIP</span>' : ''}
-        <span class="comment-time">${formatTime(c.created_at)}</span>
+    <div class="c-avatar${c.is_vip ? ' vip' : ''}">${initials}</div>
+    <div class="c-body">
+      <div class="c-bubble">
+        <div class="c-author">
+          <span class="c-name">${escapeHTML(c.username)}</span>
+          ${c.is_vip ? '<span class="vip-badge" style="font-size:0.55rem;">⭐ VIP</span>' : ''}
+          <span class="c-time">${formatTime(c.created_at)}</span>
+        </div>
+        <div class="c-text">${escapeHTML(c.content)}</div>
       </div>
-      <div class="comment-text">${escapeHTML(c.content)}</div>
-      <div class="comment-actions">
-        <button class="comment-like-btn${liked ? ' liked' : ''}" onclick="toggleLikeComment('${c.id}',this)">
+      <div class="c-actions">
+        <button class="c-like-btn${liked ? ' liked' : ''}" onclick="toggleLikeComment('${c.id}',this)">
           ♥ <span class="clk">${c.likes_count || 0}</span>
         </button>
-        ${isOwn ? `<button class="comment-delete-btn" onclick="deleteComment('${c.id}','${c.post_id}')">Supprimer</button>` : ''}
+        ${isOwn ? `<button class="c-del-btn" onclick="deleteComment('${c.id}','${c.post_id}')">Supprimer</button>` : ''}
       </div>
     </div>
   </div>`;
@@ -1170,31 +1162,24 @@ function renderComment(c, liked) {
 // ── Toggle comments ───────────────────────────────────────────
 async function toggleComments(postId) {
   const section = document.getElementById('comments-' + postId);
-  if (section.classList.contains('open')) {
-    section.classList.remove('open');
-    return;
-  }
+  if (section.classList.contains('open')) { section.classList.remove('open'); return; }
   section.classList.add('open');
   const list = document.getElementById('comments-list-' + postId);
   if (list.dataset.loaded) return;
   list.dataset.loaded = '1';
-  list.innerHTML = '<div style="color:var(--text-faint);font-size:0.8rem;padding:0.5rem 0">Chargement...</div>';
+  list.innerHTML = '<div style="color:var(--text-faint);font-size:0.8rem;padding:0.4rem 0;">Chargement...</div>';
 
-  const { data: comments } = await sb.from('post_comments')
-    .select('*').eq('post_id', postId)
-    .order('created_at', { ascending: true });
+  const { data: comments } = await sb.from('post_comments').select('*').eq('post_id', postId).order('created_at', { ascending: true });
 
   let likedCommentIds = new Set();
   if (currentUser && comments && comments.length > 0) {
-    const { data: likes } = await sb.from('comment_likes')
-      .select('comment_id').eq('user_id', currentUser.id)
-      .in('comment_id', comments.map(c => c.id));
+    const { data: likes } = await sb.from('comment_likes').select('comment_id').eq('user_id', currentUser.id).in('comment_id', comments.map(c => c.id));
     if (likes) likes.forEach(l => likedCommentIds.add(l.comment_id));
   }
 
   list.innerHTML = comments && comments.length > 0
     ? comments.map(c => renderComment(c, likedCommentIds.has(c.id))).join('')
-    : '<div style="color:var(--text-faint);font-size:0.8rem;padding:0.5rem 0">Aucun commentaire.</div>';
+    : '<div style="color:var(--text-faint);font-size:0.8rem;padding:0.4rem 0;">Aucun commentaire.</div>';
 }
 
 // ── Submit comment ────────────────────────────────────────────
@@ -1206,8 +1191,7 @@ async function submitComment(postId, input) {
   const username = (currentUser.user_metadata && currentUser.user_metadata.username) || currentUser.email.split('@')[0];
 
   const { data, error } = await sb.from('post_comments').insert({
-    post_id: postId, user_id: currentUser.id,
-    username, is_vip: currentUserIsVIP, content
+    post_id: postId, user_id: currentUser.id, username, is_vip: currentUserIsVIP, content
   }).select().single();
 
   if (!error && data) {
@@ -1216,7 +1200,7 @@ async function submitComment(postId, input) {
     if (countEl) countEl.textContent = parseInt(countEl.textContent || 0) + 1;
     const list = document.getElementById('comments-list-' + postId);
     if (list) {
-      list.innerHTML = list.innerHTML.replace('<div style="color:var(--text-faint);font-size:0.8rem;padding:0.5rem 0">Aucun commentaire.</div>', '');
+      list.innerHTML = list.innerHTML.replace('<div style="color:var(--text-faint);font-size:0.8rem;padding:0.4rem 0;">Aucun commentaire.</div>', '');
       list.insertAdjacentHTML('beforeend', renderComment(data, false));
     }
   }
@@ -1226,16 +1210,16 @@ async function submitComment(postId, input) {
 async function toggleLikePost(postId, btn) {
   if (!currentUser) { window.location.href = 'login.html?redirect=feed.html'; return; }
   const liked = btn.classList.contains('liked');
-  const countEl = btn.querySelector('.like-count');
+  const countEl = btn.querySelector('.act-count');
   if (liked) {
     btn.classList.remove('liked');
-    btn.querySelector('svg').setAttribute('fill','none');
+    btn.querySelector('svg').setAttribute('fill', 'none');
     countEl.textContent = Math.max(0, parseInt(countEl.textContent) - 1);
     await sb.from('post_likes').delete().eq('post_id', postId).eq('user_id', currentUser.id);
     await sb.rpc('dec_post_likes', { pid: postId });
   } else {
     btn.classList.add('liked');
-    btn.querySelector('svg').setAttribute('fill','currentColor');
+    btn.querySelector('svg').setAttribute('fill', 'currentColor');
     countEl.textContent = parseInt(countEl.textContent) + 1;
     await sb.from('post_likes').insert({ post_id: postId, user_id: currentUser.id });
     await sb.rpc('inc_post_likes', { pid: postId });
@@ -1281,10 +1265,10 @@ async function deleteComment(commentId, postId) {
 // ── Filter by tag ─────────────────────────────────────────────
 function filterByTag(tag) {
   currentTag = tag;
-  document.querySelectorAll('.filter-tag').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.tag === tag);
-  });
+  document.querySelectorAll('.f-pill').forEach(btn => btn.classList.toggle('active', btn.dataset.tag === tag));
   loadPosts(true);
+  // Scroll feed to top
+  document.getElementById('feed-posts').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ── Create post ───────────────────────────────────────────────
@@ -1299,7 +1283,7 @@ function setupCreatePost() {
   textarea.addEventListener('input', () => {
     const len = textarea.value.length;
     charCount.textContent = len + '/600';
-    charCount.className = 'cp-char-count' + (len > 550 ? ' warn' : '') + (len >= 600 ? ' over' : '');
+    charCount.className = 'compose-char' + (len > 550 ? ' warn' : '') + (len >= 600 ? ' over' : '');
     submit.disabled = len === 0 || len > 600;
   });
 
@@ -1307,15 +1291,12 @@ function setupCreatePost() {
     const file = e.target.files[0];
     if (!file) return;
     if (file.size > 5 * 1024 * 1024) { alert('Image trop lourde (max 5 Mo)'); return; }
-    // Preview local
     const reader = new FileReader();
     reader.onload = (ev) => {
       document.getElementById('cp-preview-img').src = ev.target.result;
       document.getElementById('cp-image-preview').style.display = 'block';
     };
     reader.readAsDataURL(file);
-
-    // Upload Supabase Storage
     const ext = file.name.split('.').pop();
     const filename = currentUser.id + '/' + Date.now() + '.' + ext;
     const { data, error } = await sb.storage.from('post-images').upload(filename, file, { upsert: true });
@@ -1323,8 +1304,6 @@ function setupCreatePost() {
       const { data: urlData } = sb.storage.from('post-images').getPublicUrl(filename);
       uploadedImageUrl = urlData.publicUrl;
     } else {
-      console.warn('Upload error:', error.message);
-      // Fallback: use data URL (stocké en base, non recommandé pour prod)
       uploadedImageUrl = document.getElementById('cp-preview-img').src;
     }
   });
@@ -1339,23 +1318,18 @@ function setupCreatePost() {
   document.getElementById('cp-submit').addEventListener('click', async () => {
     const content = textarea.value.trim();
     if (!content || !currentUser) return;
-
     const tagInput = document.getElementById('cp-tags').value;
-    const tags = [...new Set(tagInput.match(/#?([A-Z0-9]+)/gi) || [])].map(t => t.replace('#','').toUpperCase()).slice(0, 5);
+    const tags = [...new Set(tagInput.match(/#?([A-Z0-9]+)/gi) || [])].map(t => t.replace('#', '').toUpperCase()).slice(0, 5);
     const username = (currentUser.user_metadata && currentUser.user_metadata.username) || currentUser.email.split('@')[0];
 
-    submit.disabled = true;
-    submit.textContent = '...';
+    submit.disabled = true; submit.textContent = '...';
 
     const { data, error } = await sb.from('posts').insert({
-      user_id: currentUser.id, username,
-      is_vip: currentUserIsVIP, content,
-      image_url: uploadedImageUrl || null,
-      tags: tags.length > 0 ? tags : []
+      user_id: currentUser.id, username, is_vip: currentUserIsVIP,
+      content, image_url: uploadedImageUrl || null, tags: tags.length > 0 ? tags : []
     }).select().single();
 
-    submit.textContent = 'Publier';
-    submit.disabled = false;
+    submit.textContent = 'Publier'; submit.disabled = false;
 
     if (!error && data) {
       textarea.value = '';
@@ -1364,11 +1338,148 @@ function setupCreatePost() {
       document.getElementById('cp-image-preview').style.display = 'none';
       document.getElementById('cp-preview-img').src = '';
       uploadedImageUrl = null;
-      // Ajouter en tête du fil
       const container = document.getElementById('feed-posts');
       container.insertAdjacentHTML('afterbegin', renderPost(data, false));
+      // Update post count in sidebar
+      const pc = document.getElementById('sb-posts-count');
+      if (pc && pc.textContent !== '—') pc.textContent = parseInt(pc.textContent || 0) + 1;
     }
   });
+}
+
+// ── Follow system ─────────────────────────────────────────────
+async function loadFollowingSet() {
+  if (!currentUser) return;
+  const { data } = await sb.from('follows').select('following_id').eq('follower_id', currentUser.id);
+  if (data) data.forEach(r => followingSet.add(r.following_id));
+}
+
+async function toggleFollow(targetUserId, targetUsername, btn) {
+  if (!currentUser) { window.location.href = 'login.html?redirect=feed.html'; return; }
+  const isFollowing = followingSet.has(targetUserId);
+
+  if (isFollowing) {
+    // Unfollow
+    followingSet.delete(targetUserId);
+    btn.textContent = '+ Suivre';
+    btn.classList.remove('following');
+    await sb.from('follows').delete()
+      .eq('follower_id', currentUser.id)
+      .eq('following_id', targetUserId);
+    // Update all follow buttons for this user
+    updateAllFollowBtns(targetUserId, false);
+    // Update sidebar count
+    updateFollowingCount(-1);
+    // If in following feed, remove their posts
+    if (currentTag === '__following') loadPosts(true);
+    // Hide pill if no one followed
+    if (followingSet.size === 0) {
+      filterByTag('');
+      document.getElementById('following-pill').style.display = 'none';
+    }
+  } else {
+    // Follow
+    followingSet.add(targetUserId);
+    btn.textContent = 'Suivi ✓';
+    btn.classList.add('following');
+    btn.classList.add('just-followed');
+    setTimeout(() => btn.classList.remove('just-followed'), 350);
+    await sb.from('follows').insert({ follower_id: currentUser.id, following_id: targetUserId });
+    updateAllFollowBtns(targetUserId, true);
+    updateFollowingCount(+1);
+    // Show the pill
+    document.getElementById('following-pill').style.display = '';
+  }
+}
+
+function updateAllFollowBtns(targetUserId, nowFollowing) {
+  // Update ALL follow buttons for this user across the feed
+  document.querySelectorAll(`[onclick*="toggleFollow('${targetUserId}'"]`).forEach(btn => {
+    if (nowFollowing) {
+      btn.textContent = 'Suivi ✓';
+      btn.classList.add('following');
+    } else {
+      btn.textContent = '+ Suivre';
+      btn.classList.remove('following');
+    }
+  });
+}
+
+function updateFollowingCount(delta) {
+  const el = document.getElementById('sb-following-count');
+  if (el && el.textContent !== '—') {
+    el.textContent = Math.max(0, parseInt(el.textContent || 0) + delta);
+  }
+}
+
+// ── Show followers / following modal ──────────────────────────
+async function showFollowList(type) {
+  // type = 'following' | 'followers'
+  if (!currentUser) return;
+  const title = type === 'following' ? 'Abonnements' : 'Abonnés';
+
+  // Fetch list
+  let rows;
+  if (type === 'following') {
+    const { data } = await sb.from('follows').select('following_id').eq('follower_id', currentUser.id);
+    rows = data || [];
+  } else {
+    const { data } = await sb.from('follows').select('follower_id').eq('following_id', currentUser.id);
+    rows = data || [];
+  }
+
+  // Get usernames from posts (best effort)
+  const userIds = rows.map(r => type === 'following' ? r.following_id : r.follower_id);
+
+  let names = {};
+  if (userIds.length > 0) {
+    const { data: postsData } = await sb.from('posts').select('user_id, username, is_vip').in('user_id', userIds);
+    if (postsData) postsData.forEach(p => { names[p.user_id] = { username: p.username, is_vip: p.is_vip }; });
+  }
+
+  const listHtml = userIds.length === 0
+    ? `<p style="color:var(--text-faint);text-align:center;padding:1.5rem;">Aucun ${type === 'following' ? 'abonnement' : 'abonné'} pour le moment.</p>`
+    : userIds.map(uid => {
+        const info = names[uid] || { username: uid.slice(0,8)+'...', is_vip: false };
+        const initials = info.username.charAt(0).toUpperCase();
+        const alreadyFollowing = followingSet.has(uid);
+        const isOwn = uid === currentUser.id;
+        return `
+        <div style="display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0;border-bottom:1px solid var(--border);">
+          <div style="width:38px;height:38px;border-radius:50%;background:${info.is_vip ? 'linear-gradient(135deg,rgba(255,215,0,0.25),rgba(255,193,7,0.15))' : 'linear-gradient(135deg,#2a2a2a,#3a3a3a)'};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:${info.is_vip ? 'var(--gold)' : '#fff'};flex-shrink:0;">${initials}</div>
+          <div style="flex:1;">
+            <div style="font-weight:700;font-size:0.88rem;">${escapeHTML(info.username)}</div>
+            ${info.is_vip ? '<span class="vip-badge" style="margin-top:2px;display:inline-flex;">⭐ VIP</span>' : ''}
+          </div>
+          ${!isOwn ? `<button class="follow-btn${alreadyFollowing ? ' following' : ''}"
+            onclick="toggleFollow('${uid}','${escapeHTML(info.username)}',this)"
+            style="font-size:0.72rem;padding:0.2rem 0.7rem;">
+            ${alreadyFollowing ? 'Suivi ✓' : '+ Suivre'}
+          </button>` : ''}
+        </div>`;
+      }).join('');
+
+  // Show modal
+  showModal(title, `<div style="max-height:360px;overflow-y:auto;">${listHtml}</div>`);
+}
+
+// ── Simple modal ──────────────────────────────────────────────
+function showModal(title, bodyHtml) {
+  const existing = document.getElementById('fa-modal');
+  if (existing) existing.remove();
+  const modal = document.createElement('div');
+  modal.id = 'fa-modal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:10000;display:flex;align-items:center;justify-content:center;padding:1rem;';
+  modal.innerHTML = `
+    <div style="background:#0e0e0e;border:1px solid var(--border-gold);border-radius:18px;padding:1.5rem;width:100%;max-width:420px;position:relative;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+        <h3 style="font-size:1rem;font-weight:800;">${title}</h3>
+        <button onclick="document.getElementById('fa-modal').remove()" style="background:none;border:none;cursor:pointer;color:var(--text-faint);font-size:1.3rem;line-height:1;padding:0.2rem 0.5rem;border-radius:6px;transition:color 0.15s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">✕</button>
+      </div>
+      ${bodyHtml}
+    </div>`;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  document.body.appendChild(modal);
 }
 
 // ── Lightbox ──────────────────────────────────────────────────
@@ -1379,28 +1490,28 @@ function openLightbox(src) {
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
 }
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
 // ── Utils ─────────────────────────────────────────────────────
 function escapeHTML(str) {
-  return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 function linkifyTags(str) {
-  return str.replace(/#([A-Z0-9]+)/gi, '<a class="tag-link" onclick="filterByTag('$1')">#$1</a>');
+  return str.replace(/#([A-Z0-9]+)/gi, '<a class="tag-link" onclick="filterByTag(\'$1\')">#$1</a>');
 }
 function formatTime(iso) {
   const d = new Date(iso), now = new Date();
   const diff = Math.floor((now - d) / 1000);
-  if (diff < 60) return 'À l'instant';
-  if (diff < 3600) return Math.floor(diff/60) + 'min';
-  if (diff < 86400) return Math.floor(diff/3600) + 'h';
-  if (diff < 604800) return Math.floor(diff/86400) + 'j';
-  return d.toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+  if (diff < 60) return 'À l\'instant';
+  if (diff < 3600) return Math.floor(diff / 60) + 'min';
+  if (diff < 86400) return Math.floor(diff / 3600) + 'h';
+  if (diff < 604800) return Math.floor(diff / 86400) + 'j';
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
 }
 
 // ── Auth state ────────────────────────────────────────────────
 function updateNavAuth(user) {
-  const guestItems  = document.querySelectorAll('.nav-auth-guest');
+  const guestItems = document.querySelectorAll('.nav-auth-guest');
   const userProfile = document.getElementById('nav-user-profile');
   if (!userProfile) return;
   if (user) {
@@ -1408,17 +1519,16 @@ function updateNavAuth(user) {
     userProfile.classList.add('visible');
     const username = (user.user_metadata && user.user_metadata.username) || (user.email ? user.email.split('@')[0] : '?');
     document.getElementById('nav-username-display').textContent = username;
-    document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
+    document.getElementById('nav-avatar-initials').textContent = username.charAt(0).toUpperCase();
   } else {
     guestItems.forEach(el => el.style.display = '');
     userProfile.classList.remove('visible');
   }
 }
-window.navSignOut = async function() { await sb.auth.signOut(); window.location.href = 'index.html'; };
+window.navSignOut = async function () { await sb.auth.signOut(); window.location.href = 'feed.html'; };
 sb.auth.getSession().then(r => { if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
 sb.auth.onAuthStateChange((_e, session) => updateNavAuth(session ? session.user : null));
 
-// ── Start ─────────────────────────────────────────────────────
 init();
 </script>
 
@@ -1427,64 +1537,31 @@ init();
 if (!window._FA_NAV_INIT) {
   window._FA_NAV_INIT = true;
   (function () {
-    var btn  = document.querySelector('.hamburger');
+    var btn = document.querySelector('.hamburger');
     var menu = document.querySelector('.nav-menu');
     if (!btn || !menu) return;
-
-    function openMenu() {
-      menu.classList.add('active');
-      btn.classList.add('active');
-      btn.setAttribute('aria-expanded', 'true');
-    }
-    function closeMenu() {
-      menu.classList.remove('active');
-      btn.classList.remove('active');
-      btn.setAttribute('aria-expanded', 'false');
-      document.querySelectorAll('.nav-item-drop').forEach(function(el) {
-        el.classList.remove('open');
-      });
-    }
-
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      menu.classList.contains('active') ? closeMenu() : openMenu();
-    });
-
-    document.querySelectorAll('.nav-item-drop > a').forEach(function(link) {
-      link.addEventListener('click', function(e) {
+    function openMenu() { menu.classList.add('active'); btn.classList.add('active'); btn.setAttribute('aria-expanded', 'true'); }
+    function closeMenu() { menu.classList.remove('active'); btn.classList.remove('active'); btn.setAttribute('aria-expanded', 'false'); document.querySelectorAll('.nav-item-drop').forEach(function (el) { el.classList.remove('open'); }); }
+    btn.addEventListener('click', function (e) { e.stopPropagation(); menu.classList.contains('active') ? closeMenu() : openMenu(); });
+    document.querySelectorAll('.nav-item-drop > a').forEach(function (link) {
+      link.addEventListener('click', function (e) {
         if (window.innerWidth > 900) return;
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         var parent = this.parentElement;
         var wasOpen = parent.classList.contains('open');
-        document.querySelectorAll('.nav-item-drop').forEach(function(el) {
-          el.classList.remove('open');
-        });
+        document.querySelectorAll('.nav-item-drop').forEach(function (el) { el.classList.remove('open'); });
         if (!wasOpen) parent.classList.add('open');
       });
     });
-
-    menu.querySelectorAll('a').forEach(function(link) {
+    menu.querySelectorAll('a').forEach(function (link) {
       if (link.parentElement.classList.contains('nav-item-drop')) return;
-      link.addEventListener('click', function() { closeMenu(); });
+      link.addEventListener('click', function () { closeMenu(); });
     });
-
-    // Fermer si on clique en dehors
-    document.addEventListener('click', function(e) {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        closeMenu();
-      }
-    });
-
+    document.addEventListener('click', function (e) { if (!btn.contains(e.target) && !menu.contains(e.target)) closeMenu(); });
     var nav = document.querySelector('nav');
-    if (nav) {
-      window.addEventListener('scroll', function() {
-        nav.classList.toggle('scrolled', window.pageYOffset > 60);
-      }, { passive: true });
-    }
+    if (nav) window.addEventListener('scroll', function () { nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive: true });
   })();
 }
 </script>
-
 </body>
 </html>
