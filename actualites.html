@@ -50,7 +50,7 @@
     .nav-container { max-width:1400px;margin:0 auto;padding:0 2.5rem;height:68px;display:flex;justify-content:space-between;align-items:center; }
     .logo { font-weight:900;font-size:1.35rem;background:linear-gradient(135deg,#FFD700,#FFC107);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;transition:opacity 0.2s; }
     .logo:hover { opacity:0.8; }
-    .logo-sub { font-size:0.6rem;letter-spacing:1.5px;display:block;margin-top:-4px;color:rgba(255,255,255,0.3);-webkit-text-fill-color:rgba(255,255,255,0.3); }
+    
     .nav-menu { display:flex;list-style:none;gap:2rem;align-items:center; }
     .nav-menu a { text-decoration:none;color:var(--muted);font-size:0.88rem;font-weight:500;letter-spacing:0.3px;transition:color 0.2s;position:relative; }
     .nav-menu a::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.3s; }
@@ -345,9 +345,9 @@
                 transition: none !important;
             }
             .drop-panel::before { display: none !important; }
-                        .nav-item-drop:hover .drop-panel { display: none !important; }
             .nav-item-drop.open > .drop-panel,
             .nav-item-drop.open .drop-panel { display: block !important; }
+            .nav-item-drop:hover .drop-panel { display: none !important; }
             .nav-item-drop.open > a .nav-chevron {
                 transform: rotate(180deg) !important;
                 opacity: 1 !important;
@@ -473,6 +473,11 @@
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
             <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
           </a>
+                    <div class="drop-sep"></div>
+                    <a href="feed.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                        <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses & idées de la communauté</span></span>
+                    </a>
         </div>
       </li>
 

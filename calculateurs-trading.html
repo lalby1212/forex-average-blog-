@@ -90,14 +90,7 @@
             transition: opacity 0.2s;
         }
         .logo:hover { opacity: 0.8; }
-        .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.3);
-            display: block;
-            margin-top: -4px;
-            -webkit-text-fill-color: rgba(255,255,255,0.3);
-        }
+        
 
         .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
         .nav-menu a {
@@ -562,31 +555,44 @@
             .btn-group { flex-direction: column; }
             main { padding: 1.5rem; }
         }
-    
-        /* ─── MOBILE NAV — Standard ─── */
+
+        /* ══ MOBILE NAV FINAL ══ */
         @media (max-width: 900px) {
             .hamburger { display: flex !important; }
+
             .nav-menu {
                 position: fixed !important;
-                top: 68px !important; left: 0 !important; right: 0 !important;
-                display: none !important;
-                transform: translateX(-100%) !important;
+                top: 68px !important;
+                left: 0 !important;
+                right: 0 !important;
                 width: 100vw !important;
                 box-sizing: border-box !important;
                 flex-direction: column !important;
-                background: rgba(0,0,0,0.99) !important;
+                background: rgba(0,0,0,0.98) !important;
                 backdrop-filter: blur(20px) !important;
                 -webkit-backdrop-filter: blur(20px) !important;
                 border-bottom: 1px solid rgba(255,215,0,0.15) !important;
                 padding: 2rem !important;
                 gap: 1.2rem !important;
-                transition: transform 0.3s ease !important;
-                z-index: 999 !important;
-            }
-            .nav-menu.active {
+                z-index: 9999 !important;
+
+                /* ── La clé : visibility au lieu de display:none ── */
                 display: flex !important;
-                transform: translateX(0) !important;
+                transform: translateX(-105%) !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+                transition: transform 0.32s cubic-bezier(0.4,0,0.2,1),
+                            visibility 0s linear 0.32s !important;
             }
+
+            .nav-menu.active {
+                transform: translateX(0) !important;
+                visibility: visible !important;
+                pointer-events: all !important;
+                transition: transform 0.32s cubic-bezier(0.4,0,0.2,1),
+                            visibility 0s linear 0s !important;
+            }
+
             .nav-menu li { width: 100% !important; }
             .nav-menu > li > a {
                 font-size: 1rem !important;
@@ -629,6 +635,7 @@
                 -webkit-backdrop-filter: none !important;
                 display: none !important;
                 min-width: unset !important;
+                transition: none !important;
             }
             .drop-panel::before { display: none !important; }
             .nav-item-drop.open > .drop-panel,
@@ -651,6 +658,7 @@
                 margin-top: 2px !important;
             }
             .drop-sep { margin: 0.2rem 0.7rem !important; }
+
             /* Profile mobile */
             .nav-profile.visible {
                 width: 100% !important;
@@ -680,10 +688,7 @@
 <!-- Navigation -->
 <nav role="navigation" aria-label="Navigation principale">
     <div class="nav-container">
-        <a href="index.html" class="logo" aria-label="Retour à l'accueil – Forex Average">
-            FOREX AVERAGE
-            <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
-        </a>
+        <a href="index.html" class="logo" aria-label="Retour à l'accueil – Forex Average">FOREX AVERAGE<span class="logo-sub">Forex · Crypto · Commodities</span></a>
 
         <button class="hamburger" aria-label="Menu" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -753,6 +758,11 @@
                     <a href="#telegram" class="drop-link">
                         <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
                         <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
+                    </a>
+                    <div class="drop-sep"></div>
+                    <a href="feed.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                        <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses & idées de la communauté</span></span>
                     </a>
                 </div>
             </li>
@@ -1132,404 +1142,7 @@
     <div style="margin-top: 1rem; font-size: 0.78rem; color: rgba(255,255,255,0.38);">⚠️ Calculateur éducatif uniquement. Le trading comporte des risques. Utilisez toujours la gestion du risque.</div>
 </footer>
 
-<script>
-// ===== CONFIGURATION PAR ACTIF =====
-// pipValueMode: 'fixed'    → pip value fixe en USD par lot
-//               'usd_base' → USD est la devise de base (USD/JPY, USD/CHF...) → pipVal = pipSize × lotSize / prix
-//               'jpy_cross'→ croisé JPY (EUR/JPY, GBP/JPY...) → approximation identique à usd_base
-//               'crypto'   → crypto/USD → 1 lot = 1 unité, pipVal fixe = pipSize
-const ASSET_CONFIG = {
-    // ── USD en devise cotée → pip value = $10/lot exactement ──
-    EURUSD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 10,   placeholder: '1.0850', step: '0.00001' },
-    GBPUSD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 10,   placeholder: '1.2700', step: '0.00001' },
-    AUDUSD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 10,   placeholder: '0.6600', step: '0.00001' },
-    NZDUSD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 10,   placeholder: '0.6100', step: '0.00001' },
-    // ── USD en devise de base → pip value = (pipSize × lotSize) / prix ──
-    USDJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '149.50', step: '0.001'   },
-    USDCHF: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '0.8950', step: '0.00001' },
-    USDCAD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '1.3500', step: '0.00001' },
-    USDSGD: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '1.3400', step: '0.00001' },
-    USDMXN: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '17.50',  step: '0.00001' },
-    USDZAR: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '18.80',  step: '0.00001' },
-    USDCNH: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'usd_base',  pipValueBase: null, placeholder: '7.2000', step: '0.00001' },
-    // ── Croisés JPY → approximation via prix du croisé ──
-    EURJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'jpy_cross', pipValueBase: null, placeholder: '162.00', step: '0.001'   },
-    GBPJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'jpy_cross', pipValueBase: null, placeholder: '190.00', step: '0.001'   },
-    AUDJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'jpy_cross', pipValueBase: null, placeholder: '98.00',  step: '0.001'   },
-    CADJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'jpy_cross', pipValueBase: null, placeholder: '110.00', step: '0.001'   },
-    NZDJPY: { pipSize: 0.01,   lotSize: 100000, pipValueMode: 'jpy_cross', pipValueBase: null, placeholder: '91.00',  step: '0.001'   },
-    // ── Autres croisés → pip value approximatif fixe ──
-    EURGBP: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 12.7, placeholder: '0.8550', step: '0.00001' },
-    EURCHF: { pipSize: 0.0001, lotSize: 100000, pipValueMode: 'fixed',     pipValueBase: 11.0, placeholder: '0.9600', step: '0.00001' },
-    // ── Métaux ──
-    XAUUSD: { pipSize: 0.1,    lotSize: 100,    pipValueMode: 'fixed',     pipValueBase: 10,   placeholder: '2350.00', step: '0.01'  },
-    XAGUSD: { pipSize: 0.001,  lotSize: 5000,   pipValueMode: 'fixed',     pipValueBase: 5,    placeholder: '28.00',   step: '0.001' },
-    // ── Crypto (1 lot = 1 unité) ──
-    BTCUSDT: { pipSize: 1,      lotSize: 1, pipValueMode: 'crypto', pipValueBase: 1,      placeholder: '65000', step: '1'      },
-    ETHUSDT: { pipSize: 1,      lotSize: 1, pipValueMode: 'crypto', pipValueBase: 1,      placeholder: '3500',  step: '0.01'   },
-    SOLUSDT: { pipSize: 0.01,   lotSize: 1, pipValueMode: 'crypto', pipValueBase: 0.01,   placeholder: '180',   step: '0.01'   },
-    XRPUSDT: { pipSize: 0.0001, lotSize: 1, pipValueMode: 'crypto', pipValueBase: 0.0001, placeholder: '0.60',  step: '0.0001' },
-    BNBUSDT: { pipSize: 0.01,   lotSize: 1, pipValueMode: 'crypto', pipValueBase: 0.01,   placeholder: '550',   step: '0.01'   },
-    // ── Pétrole ──
-    CRUDE:  { pipSize: 0.01, lotSize: 1000, pipValueMode: 'fixed', pipValueBase: 10, placeholder: '80.00', step: '0.01' },
-    BRENT:  { pipSize: 0.01, lotSize: 1000, pipValueMode: 'fixed', pipValueBase: 10, placeholder: '85.00', step: '0.01' },
-};
 
-function getPipValuePerLot(cfg, entry) {
-    switch (cfg.pipValueMode) {
-        case 'usd_base':
-        case 'jpy_cross':
-            return (cfg.pipSize * cfg.lotSize) / entry;
-        default:
-            return cfg.pipValueBase;
-    }
-}
-
-function onAssetChange() {
-    const asset = document.getElementById('pos_asset').value;
-    const cfg = ASSET_CONFIG[asset];
-    if (!cfg) return;
-    ['pos_entry', 'pos_stop', 'pos_tp'].forEach(id => {
-        const el = document.getElementById(id);
-        el.placeholder = cfg.placeholder;
-        el.step = cfg.step;
-        el.value = '';
-    });
-    document.getElementById('pos_stop_pips').textContent = '';
-    document.getElementById('pos_tp_pips').textContent = '';
-    document.getElementById('pos-results').style.display = 'none';
-}
-
-function updatePipsPreview() {
-    const asset = document.getElementById('pos_asset').value;
-    const cfg = ASSET_CONFIG[asset];
-    if (!cfg) return;
-    const entry = parseFloat(document.getElementById('pos_entry').value);
-    const sl    = parseFloat(document.getElementById('pos_stop').value);
-    const tp    = parseFloat(document.getElementById('pos_tp').value);
-    const dir   = document.getElementById('pos_direction').value;
-    const label = cfg.pipValueMode === 'crypto' ? 'pts' : 'pips';
-
-    const slEl = document.getElementById('pos_stop_pips');
-    if (entry > 0 && sl > 0) {
-        const valid = dir === 'long' ? sl < entry : sl > entry;
-        if (valid) {
-            const pips = Math.abs(entry - sl) / cfg.pipSize;
-            slEl.textContent = '≈ ' + pips.toFixed(pips < 10 ? 1 : 0) + ' ' + label + ' de distance';
-            slEl.style.color = '#ef4444';
-        } else {
-            slEl.textContent = dir === 'long'
-                ? "⚠️ SL doit être inférieur au prix d'entrée (Long)"
-                : "⚠️ SL doit être supérieur au prix d'entrée (Short)";
-            slEl.style.color = '#f97316';
-        }
-    } else {
-        slEl.textContent = '';
-    }
-
-    const tpEl = document.getElementById('pos_tp_pips');
-    if (entry > 0 && tp > 0) {
-        const valid = dir === 'long' ? tp > entry : tp < entry;
-        if (valid) {
-            const pips = Math.abs(tp - entry) / cfg.pipSize;
-            tpEl.textContent = '≈ ' + pips.toFixed(pips < 10 ? 1 : 0) + ' ' + label + ' de distance';
-            tpEl.style.color = '#22c55e';
-        } else {
-            tpEl.textContent = dir === 'long'
-                ? "⚠️ TP doit être supérieur au prix d'entrée (Long)"
-                : "⚠️ TP doit être inférieur au prix d'entrée (Short)";
-            tpEl.style.color = '#f97316';
-        }
-    } else {
-        tpEl.textContent = '';
-    }
-}
-
-// ===== CALCUL TAILLE DE POSITION =====
-function calculatePosition() {
-    const account   = parseFloat(document.getElementById('pos_account').value) || 0;
-    const riskPct   = parseFloat(document.getElementById('pos_risk_percent').value) || 0;
-    const asset     = document.getElementById('pos_asset').value;
-    const direction = document.getElementById('pos_direction').value;
-    const entry     = parseFloat(document.getElementById('pos_entry').value) || 0;
-    const slPrice   = parseFloat(document.getElementById('pos_stop').value) || 0;
-    const tpPrice   = parseFloat(document.getElementById('pos_tp').value) || 0;
-
-    if (account <= 0 || riskPct <= 0 || entry <= 0 || slPrice <= 0) {
-        alert('Veuillez remplir : Capital, Risque %, Prix d\'Entrée et Prix Stop Loss.');
-        return;
-    }
-
-    const cfg = ASSET_CONFIG[asset];
-    if (!cfg) return;
-
-    // Validation direction
-    if (direction === 'long' && slPrice >= entry) {
-        alert('❌ LONG : le Stop Loss doit être inférieur au prix d\'entrée.');
-        return;
-    }
-    if (direction === 'short' && slPrice <= entry) {
-        alert('❌ SHORT : le Stop Loss doit être supérieur au prix d\'entrée.');
-        return;
-    }
-
-    // Distances en pips
-    const slDiff = Math.abs(entry - slPrice);
-    const tpDiff = tpPrice > 0 ? Math.abs(tpPrice - entry) : 0;
-    const pipsSL = slDiff / cfg.pipSize;
-    const pipsTP = tpDiff > 0 ? tpDiff / cfg.pipSize : 0;
-
-    // Valeur du pip par lot en USD
-    const pipVal = getPipValuePerLot(cfg, entry);
-
-    // Taille de position
-    const riskAmt = account * riskPct / 100;
-    const lots    = riskAmt / (pipsSL * pipVal);
-
-    // P&L
-    const lossAmt = riskAmt;
-    const profAmt = tpDiff > 0 ? pipsTP * pipVal * lots : 0;
-    const rrRatio = pipsTP > 0 ? pipsTP / pipsSL : 0;
-
-    const label   = cfg.pipValueMode === 'crypto' ? 'pts' : 'pips';
-    const lotUnit = cfg.pipValueMode === 'crypto' ? 'unités' : 'lots';
-
-    const fmt = (n) => n.toFixed(n < 10 ? 1 : 0);
-
-    // Affichage résultats
-    document.getElementById('pos-pips-sl').textContent    = fmt(pipsSL) + ' ' + label;
-    document.getElementById('pos-pips-tp').textContent    = pipsTP > 0 ? fmt(pipsTP) + ' ' + label : '—';
-    document.getElementById('pos-lotsize').textContent    = lots.toFixed(lots < 0.1 ? 4 : 2) + ' ' + lotUnit;
-    document.getElementById('pos-risk').textContent       = '-$' + riskAmt.toFixed(2);
-    document.getElementById('pos-pip-value').textContent  = '$' + pipVal.toFixed(2);
-    document.getElementById('pos-profit').textContent     = pipsTP > 0 ? '+$' + profAmt.toFixed(2) : '—';
-    document.getElementById('pos-loss').textContent       = '-$' + lossAmt.toFixed(2);
-
-    const rrEl = document.getElementById('pos-rr');
-    rrEl.classList.remove('positive', 'negative');
-    if (rrRatio > 0) {
-        rrEl.textContent = '1:' + rrRatio.toFixed(2);
-        if (rrRatio >= 1.5) rrEl.classList.add('positive');
-        else if (rrRatio < 1) rrEl.classList.add('negative');
-    } else {
-        rrEl.textContent = '—';
-    }
-
-    // Résumé
-    const dirLabel = direction === 'long' ? '📈 LONG' : '📉 SHORT';
-    let summary = `${dirLabel} ${asset} — Entrée: ${entry} | SL: ${slPrice} (${fmt(pipsSL)} ${label})`;
-    if (tpDiff > 0) summary += ` | TP: ${tpPrice} (${fmt(pipsTP)} ${label})`;
-    summary += ` → ${lots.toFixed(lots < 0.1 ? 4 : 2)} ${lotUnit} | Risque: $${riskAmt.toFixed(2)}`;
-    if (rrRatio > 0) summary += ` | R:R 1:${rrRatio.toFixed(2)}`;
-    document.getElementById('pos-summary').textContent = summary;
-
-    document.getElementById('pos-results').style.display = 'block';
-}
-
-function resetPosition() {
-    document.getElementById('pos_account').value = '10000';
-    document.getElementById('pos_risk_percent').value = '2';
-    document.getElementById('pos_asset').value = 'EURUSD';
-    document.getElementById('pos_direction').value = 'long';
-    document.getElementById('pos_entry').value = '';
-    document.getElementById('pos_stop').value = '';
-    document.getElementById('pos_tp').value = '';
-    document.getElementById('pos_stop_pips').textContent = '';
-    document.getElementById('pos_tp_pips').textContent = '';
-    document.getElementById('pos-results').style.display = 'none';
-    onAssetChange();
-}
-
-// ===== CALCUL LIQUIDATION =====
-function calculateLiquidation() {
-    const margin = parseFloat(document.getElementById('liq_margin').value) || 0;
-    const entry = parseFloat(document.getElementById('liq_entry').value) || 0;
-    const leverage = parseFloat(document.getElementById('liq_leverage').value) || 1;
-    const direction = document.getElementById('liq_direction').value;
-    const maintenance = parseFloat(document.getElementById('liq_maintenance').value) / 100 || 0.05;
-    const quantity = parseFloat(document.getElementById('liq_quantity').value) || 1;
-
-    if (margin <= 0 || entry <= 0 || leverage <= 0) return;
-
-    const positionTotal = entry * quantity * leverage;
-    const marginRequired = positionTotal / leverage;
-    const liquidationPercent = (1 / leverage) - maintenance;
-    const liquidationPrice = direction === 'long' ? 
-        entry * (1 - liquidationPercent) : 
-        entry * (1 + liquidationPercent);
-    
-    const distance = Math.abs(liquidationPrice - entry) / entry * 100;
-    const marginAvailable = margin - marginRequired;
-    const marginUsage = (marginRequired / margin * 100);
-
-    document.getElementById('liq-position').textContent = '$' + positionTotal.toFixed(2);
-    document.getElementById('liq-required').textContent = '$' + marginRequired.toFixed(2);
-    document.getElementById('liq-price').textContent = '$' + liquidationPrice.toFixed(2);
-    document.getElementById('liq-distance').textContent = '-' + distance.toFixed(1) + '%';
-    document.getElementById('liq-available').textContent = '$' + Math.max(0, marginAvailable).toFixed(2);
-    document.getElementById('liq-usage').textContent = marginUsage.toFixed(1) + '%';
-
-    const summary = `Position totale: $${positionTotal.toFixed(2)} | Marge requise: $${marginRequired.toFixed(2)} | Liquidation à $${liquidationPrice.toFixed(2)} (${distance.toFixed(1)}% d'écart).`;
-    document.getElementById('liq-summary').textContent = summary;
-
-    if (distance < 5) {
-        document.getElementById('liq-warning').style.display = 'block';
-        document.getElementById('liq-warning-text').textContent = `TRÈS DANGEREUX ! Votre liquidation est à seulement ${distance.toFixed(1)}% d'écart. Fermez une partie ou ajoutez marge immédiatement.`;
-    } else {
-        document.getElementById('liq-warning').style.display = 'none';
-    }
-
-    document.getElementById('liq-results').style.display = 'block';
-}
-
-function resetLiquidation() {
-    document.getElementById('liq_margin').value = '5000';
-    document.getElementById('liq_entry').value = '45000';
-    document.getElementById('liq_leverage').value = '10';
-    document.getElementById('liq_direction').value = 'long';
-    document.getElementById('liq_maintenance').value = '5';
-    document.getElementById('liq_quantity').value = '0.5';
-    document.getElementById('liq-results').style.display = 'none';
-}
-
-// ===== GESTION MARGE =====
-function calculateMarge() {
-    const capital = parseFloat(document.getElementById('mar_capital').value) || 0;
-    const pos1 = parseFloat(document.getElementById('mar_position1').value) || 0;
-    const pos2 = parseFloat(document.getElementById('mar_position2').value) || 0;
-    const pos3 = parseFloat(document.getElementById('mar_position3').value) || 0;
-    const lev1 = parseFloat(document.getElementById('mar_leverage1').value) || 1;
-    const lev2 = parseFloat(document.getElementById('mar_leverage2').value) || 1;
-    const lev3 = parseFloat(document.getElementById('mar_leverage3').value) || 1;
-    const maxRisk = parseFloat(document.getElementById('mar_max_risk').value) || 20;
-
-    if (capital <= 0) return;
-
-    const expo1 = pos1 * lev1;
-    const expo2 = pos2 * lev2;
-    const expo3 = pos3 * lev3;
-    const exposureTotal = expo1 + expo2 + expo3;
-    const marginUsed = (pos1 / lev1) + (pos2 / lev2) + (pos3 / lev3);
-    const marginFree = capital - marginUsed;
-    const percentUsage = (marginUsed / capital * 100);
-    const ratio = exposureTotal / capital;
-
-    let health = 'BON';
-    if (percentUsage > 80) health = 'DANGEREUX';
-    else if (percentUsage > 50) health = 'MODÉRÉ';
-
-    document.getElementById('mar-exposure').textContent = '$' + exposureTotal.toFixed(2);
-    document.getElementById('mar-used').textContent = '$' + marginUsed.toFixed(2);
-    document.getElementById('mar-free').textContent = '$' + Math.max(0, marginFree).toFixed(2);
-    document.getElementById('mar-percent').textContent = percentUsage.toFixed(1) + '%';
-    document.getElementById('mar-ratio').textContent = ratio.toFixed(2) + 'x';
-    document.getElementById('mar-health').textContent = health;
-
-    const summary = `Exposition totale: $${exposureTotal.toFixed(2)} | Marge utilisée: ${percentUsage.toFixed(1)}% | Santé: ${health}`;
-    document.getElementById('mar-summary').textContent = summary;
-
-    if (percentUsage > maxRisk) {
-        document.getElementById('mar-warning').style.display = 'block';
-        document.getElementById('mar-warning-text').textContent = `Votre utilisation (${percentUsage.toFixed(1)}%) dépasse votre maximum (${maxRisk}%). Fermez des positions.`;
-    } else {
-        document.getElementById('mar-warning').style.display = 'none';
-    }
-
-    document.getElementById('mar-results').style.display = 'block';
-}
-
-function resetMarge() {
-    document.getElementById('mar_capital').value = '10000';
-    document.getElementById('mar_position1').value = '5000';
-    document.getElementById('mar_position2').value = '2500';
-    document.getElementById('mar_position3').value = '0';
-    document.getElementById('mar_leverage1').value = '5';
-    document.getElementById('mar_leverage2').value = '5';
-    document.getElementById('mar_leverage3').value = '1';
-    document.getElementById('mar_max_risk').value = '20';
-    document.getElementById('mar-results').style.display = 'none';
-}
-
-// ===== TAB SWITCHING =====
-function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    
-    document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
-}
-
-// ===== COPY RESULTS =====
-function copyResults(type) {
-    let text = '';
-    if (type === 'pos') {
-        text = `Pips SL: ${document.getElementById('pos-pips-sl').textContent}\nPips TP: ${document.getElementById('pos-pips-tp').textContent}\nTaille: ${document.getElementById('pos-lotsize').textContent}\nRisque: ${document.getElementById('pos-risk').textContent}\nProfit: ${document.getElementById('pos-profit').textContent}\nPerte: ${document.getElementById('pos-loss').textContent}\nR:R: ${document.getElementById('pos-rr').textContent}`;
-    } else if (type === 'liq') {
-        text = `Position: ${document.getElementById('liq-position').textContent}\nMarge: ${document.getElementById('liq-required').textContent}\nLiquidation: ${document.getElementById('liq-price').textContent}\nDistance: ${document.getElementById('liq-distance').textContent}`;
-    } else if (type === 'mar') {
-        text = `Exposition: ${document.getElementById('mar-exposure').textContent}\nMarge utilisée: ${document.getElementById('mar-used').textContent}\nMarge libre: ${document.getElementById('mar-free').textContent}\nUtilisation: ${document.getElementById('mar-percent').textContent}`;
-    }
-    navigator.clipboard.writeText(text);
-    alert('Résultats copiés !');
-}
-</script>
-
-<!-- ── NAV JS ── -->
-<script>
-// Hamburger
-
-(function () {
-  var btn  = document.querySelector('.hamburger');
-  var menu = document.querySelector('.nav-menu');
-  if (!btn || !menu) return;
-
-  function openMenu() {
-    menu.classList.add('active');
-    btn.classList.add('active');
-    btn.setAttribute('aria-expanded', 'true');
-  }
-  function closeMenu() {
-    menu.classList.remove('active');
-    btn.classList.remove('active');
-    btn.setAttribute('aria-expanded', 'false');
-    document.querySelectorAll('.nav-item-drop').forEach(function(el) { el.classList.remove('open'); });
-  }
-
-  btn.addEventListener('click', function(e) {
-    e.stopPropagation();
-    menu.classList.contains('active') ? closeMenu() : openMenu();
-  });
-
-  document.querySelectorAll('.nav-item-drop > a').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      if (window.innerWidth > 900) return;
-      e.preventDefault();
-      e.stopPropagation();
-      var parent = this.parentElement;
-      var wasOpen = parent.classList.contains('open');
-      document.querySelectorAll('.nav-item-drop').forEach(function(el) { el.classList.remove('open'); });
-      if (!wasOpen) parent.classList.add('open');
-    });
-  });
-
-  menu.querySelectorAll('a').forEach(function(link) {
-    if (link.parentElement.classList.contains('nav-item-drop')) return;
-    link.addEventListener('click', function() { closeMenu(); });
-  });
-
-  var nav = document.querySelector('nav');
-  if (nav) {
-    window.addEventListener('scroll', function() {
-      nav.classList.toggle('scrolled', window.pageYOffset > 60);
-    }, { passive: true });
-  }
-})();
-// Sticky nav
-const nav = document.querySelector('nav');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.pageYOffset > 60);
-}, { passive: true });
-</script>
 
 <script src="/chatbot.js"></script>
 <script src="fa-access.js"></script>
@@ -1537,31 +1150,7 @@ window.addEventListener('scroll', () => {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── NAV HAMBURGER ──
-(function () {
-  var btn  = document.querySelector('.hamburger');
-  var menu = document.querySelector('.nav-menu');
-  if (!btn || !menu) return;
-  function openMenu()  { menu.classList.add('active');    btn.classList.add('active');    btn.setAttribute('aria-expanded','true');  }
-  function closeMenu() { menu.classList.remove('active'); btn.classList.remove('active'); btn.setAttribute('aria-expanded','false'); document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); }); }
-  btn.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.contains('active') ? closeMenu() : openMenu(); });
-  document.querySelectorAll('.nav-item-drop > a').forEach(function(link){
-    link.addEventListener('click', function(e){
-      if (window.innerWidth > 900) return;
-      e.preventDefault(); e.stopPropagation();
-      var parent = this.parentElement;
-      var wasOpen = parent.classList.contains('open');
-      document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); });
-      if (!wasOpen) parent.classList.add('open');
-    });
-  });
-  menu.querySelectorAll('a').forEach(function(link){
-    if (link.parentElement.classList.contains('nav-item-drop')) return;
-    link.addEventListener('click', function(){ closeMenu(); });
-  });
-  var nav = document.querySelector('nav');
-  if (nav){ window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive:true }); }
-})();
+
 
 // ── NAV AUTH ──
 (function(){
@@ -1589,5 +1178,71 @@ window.addEventListener('scroll', () => {
   sb.auth.onAuthStateChange(function(_e, session){ updateNavAuth(session ? session.user : null); });
 })();
 </script>
+
+<script>
+/* ── NAV HAMBURGER — singleton ── */
+if (!window._FA_NAV_INIT) {
+  window._FA_NAV_INIT = true;
+  (function () {
+    var btn  = document.querySelector('.hamburger');
+    var menu = document.querySelector('.nav-menu');
+    if (!btn || !menu) return;
+
+    function openMenu() {
+      menu.classList.add('active');
+      btn.classList.add('active');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+    function closeMenu() {
+      menu.classList.remove('active');
+      btn.classList.remove('active');
+      btn.setAttribute('aria-expanded', 'false');
+      document.querySelectorAll('.nav-item-drop').forEach(function(el) {
+        el.classList.remove('open');
+      });
+    }
+
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      menu.classList.contains('active') ? closeMenu() : openMenu();
+    });
+
+    document.querySelectorAll('.nav-item-drop > a').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        if (window.innerWidth > 900) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.parentElement;
+        var wasOpen = parent.classList.contains('open');
+        document.querySelectorAll('.nav-item-drop').forEach(function(el) {
+          el.classList.remove('open');
+        });
+        if (!wasOpen) parent.classList.add('open');
+      });
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      if (link.parentElement.classList.contains('nav-item-drop')) return;
+      link.addEventListener('click', function() { closeMenu(); });
+    });
+
+    // Fermer si on clique en dehors
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    var nav = document.querySelector('nav');
+    if (nav) {
+      window.addEventListener('scroll', function() {
+        nav.classList.toggle('scrolled', window.pageYOffset > 60);
+      }, { passive: true });
+    }
+  })();
+}
+</script>
+</body>
+</html>
 </body>
 </html>

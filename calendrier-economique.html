@@ -85,14 +85,7 @@
             transition: opacity 0.2s;
         }
         .logo:hover { opacity: 0.8; }
-        .logo-sub {
-            font-size: 0.6rem;
-            letter-spacing: 1.5px;
-            color: rgba(255,255,255,0.38);
-            display: block;
-            margin-top: -4px;
-            -webkit-text-fill-color: rgba(255,255,255,0.38);
-        }
+        
 
         .nav-menu { display: flex; list-style: none; gap: 2rem; align-items: center; }
         .nav-menu a {
@@ -499,7 +492,7 @@
         .tradingview-widget-copyright { display: none !important; }
         .tradingview-widget-container__widget a[href*="tradingview"] { display: none !important; }
         }
-        
+
         /* ══ MOBILE NAV FINAL ══ */
         @media (max-width: 900px) {
             .hamburger { display: flex !important; }
@@ -582,9 +575,9 @@
                 transition: none !important;
             }
             .drop-panel::before { display: none !important; }
-                        .nav-item-drop:hover .drop-panel { display: none !important; }
             .nav-item-drop.open > .drop-panel,
             .nav-item-drop.open .drop-panel { display: block !important; }
+            .nav-item-drop:hover .drop-panel { display: none !important; }
             .nav-item-drop.open > a .nav-chevron {
                 transform: rotate(180deg) !important;
                 opacity: 1 !important;
@@ -632,10 +625,7 @@
 <!-- NAV -->
 <nav role="navigation" aria-label="Navigation principale">
     <div class="nav-container">
-        <a href="/" class="logo" aria-label="Retour à l'accueil – Forex Average">
-            FOREX AVERAGE
-            <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
-        </a>
+        <a href="/" class="logo" aria-label="Retour à l'accueil – Forex Average">FOREX AVERAGE<span class="logo-sub">Forex · Crypto · Commodities</span></a>
 
         <button class="hamburger" aria-label="Menu" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -710,6 +700,11 @@
                     <a href="#telegram" class="drop-link">
                         <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
                         <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes & signaux live</span></span>
+                    </a>
+                    <div class="drop-sep"></div>
+                    <a href="feed.html" class="drop-link">
+                        <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+                        <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses & idées de la communauté</span></span>
                     </a>
                 </div>
             </li>
