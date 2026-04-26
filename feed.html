@@ -1082,12 +1082,14 @@ function renderPost(post, liked) {
   <article class="post-card" id="post-${post.id}">
     <div class="post-inner">
       <div class="post-av-col">
-        <div class="post-avatar${post.is_vip ? ' vip' : ''}">${initials}</div>
+        <a href="profile.html?id=${post.user_id}" style="text-decoration:none;">
+          <div class="post-avatar${post.is_vip ? ' vip' : ''}" style="transition:opacity 0.15s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">${initials}</div>
+        </a>
       </div>
       <div class="post-main">
         <div class="post-top">
           <div class="post-author-info">
-            <span class="post-author-name">${escapeHTML(post.username)}</span>
+            <a href="profile.html?id=${post.user_id}" class="post-author-name" style="color:#fff;text-decoration:none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">${escapeHTML(post.username)}</a>
             <div class="post-author-meta">
               ${post.is_vip ? '<span class="vip-badge">⭐ VIP</span>' : ''}
               <span class="post-time">${timeAgo}</span>
