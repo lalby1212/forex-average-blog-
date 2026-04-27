@@ -54,13 +54,7 @@
         .nav-profile-drop .logout-btn { color: #ef4444; }
         .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; padding: 6px; background: rgba(255,215,0,0.08); border-radius: 6px; border: 1px solid var(--border); }
         .hamburger span { width: 22px; height: 2px; background: var(--gold); border-radius: 2px; transition: all 0.3s; display: block; }
-        @media (max-width: 900px) {
-            .hamburger { display: flex; }
-            .nav-menu { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; bottom: 0; background: rgba(7,7,7,0.99); padding: 1.5rem; gap: 0.3rem; overflow-y: auto; z-index: 999; }
-            .nav-menu.active { display: flex; }
-            .drop-panel { position: static; transform: none; opacity: 1; visibility: visible; pointer-events: all; box-shadow: none; border: none; background: transparent; padding: 0 0 0 1rem; display: none; min-width: 0; }
-            .nav-item-drop.open .drop-panel { display: block; }
-        }
+        /* nav mobile → géré par MOBILE NAV FINAL */
         .page-hero { padding: 4rem 2rem 2rem; text-align: center; border-bottom: 1px solid var(--border); background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,215,0,0.05) 0%, transparent 70%); }
         .page-hero .eyebrow { font-size: 0.72rem; letter-spacing: 2px; color: var(--gold); font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; display: block; }
         .page-hero h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.8rem; }
@@ -142,7 +136,7 @@
                 border-radius: 6px !important;
                 padding: 0.5rem !important;
             }
-            .nav-item-drop > a {
+            .nav-menu li.nav-item-drop > a {
                 justify-content: space-between !important;
                 cursor: pointer !important;
                 display: flex !important;
@@ -170,7 +164,7 @@
             .drop-panel::before { display: none !important; }
             .nav-item-drop.open > .drop-panel,
             .nav-item-drop.open .drop-panel { display: block !important; }
-            .nav-item-drop:hover .drop-panel { display: none !important; }
+            .nav-item-drop:hover .drop-panel { display: none; }
             .nav-item-drop.open > a .nav-chevron {
                 transform: rotate(180deg) !important;
                 opacity: 1 !important;

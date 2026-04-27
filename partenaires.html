@@ -176,37 +176,7 @@
         .nav-profile-drop .logout-btn { color: #ef4444; }
         .nav-profile-drop .logout-btn:hover { background: rgba(239,68,68,0.08) !important; color: #ef4444 !important; }
 
-    @media(max-width:900px) {
-      .hamburger { display:flex; }
-      .nav-menu {
-        position:fixed; top:68px; display: none; transform: translateX(-100%); width:100%;
-        flex-direction:column; background:rgba(0,0,0,0.99);
-        backdrop-filter:blur(20px); border-bottom:1px solid var(--gold-b);
-        padding:2rem; gap:1.2rem; transition: transform 0.3s ease; z-index:999;
-      }
-      .nav-menu.active { display: flex; transform: translateX(0); }
-      .nav-menu li { width:100%; }
-      .nav-menu a { font-size:1rem; padding:0.5rem 0; display:block; }
-      .nav-cta { display:inline-block; text-align:center; }
-      .nav-item-drop > a { justify-content:space-between; }
-      .drop-panel {
-        position:static; transform:none !important; opacity:1 !important;
-        visibility:visible !important; pointer-events:all !important;
-        box-shadow:none; border:none;
-        border-left:2px solid rgba(255,215,0,0.15); border-radius:0;
-        margin:0.2rem 0 0.2rem 0.5rem; padding:0.2rem 0;
-        background:transparent; backdrop-filter:none; -webkit-backdrop-filter:none;
-        display:none; min-width:unset;
-      }
-      .drop-panel::before { display:none; }
-      .nav-item-drop.open .drop-panel { display: block !important; }
-      .nav-item-drop:hover .drop-panel { display:none; } /* annule hover desktop sur touch */
-      .nav-item-drop.open > a .nav-chevron { transform:rotate(180deg); opacity:1; }
-      .drop-link { white-space:normal; padding:0.4rem 0.7rem !important; gap:0.5rem; }
-      .drop-icon { display:none; }
-      .drop-desc { display:none; }
-      .drop-sep { margin:0.2rem 0.7rem; }
-    }
+    /* nav mobile → géré par MOBILE NAV FINAL */
 
     /* ── LAYOUT ── */
     .container { max-width:1200px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
@@ -541,7 +511,7 @@
                 border-radius: 6px !important;
                 padding: 0.5rem !important;
             }
-            .nav-item-drop > a {
+            .nav-menu li.nav-item-drop > a {
                 justify-content: space-between !important;
                 cursor: pointer !important;
                 display: flex !important;
@@ -569,7 +539,7 @@
             .drop-panel::before { display: none !important; }
             .nav-item-drop.open > .drop-panel,
             .nav-item-drop.open .drop-panel { display: block !important; }
-            .nav-item-drop:hover .drop-panel { display: none !important; }
+            .nav-item-drop:hover .drop-panel { display: none; }
             .nav-item-drop.open > a .nav-chevron {
                 transform: rotate(180deg) !important;
                 opacity: 1 !important;
