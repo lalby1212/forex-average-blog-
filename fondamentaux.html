@@ -847,7 +847,7 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
     <p class="page-desc">Biais fondamentaux des devises G10 calibrés sur les décisions des banques centrales, l'inflation, la croissance et le risk sentiment. Score de −5 à +5.</p>
     <div class="page-meta">
       <div class="page-meta-item">🌍 <strong>G10 Forex</strong></div>
-      <div class="page-meta-item">📅 Mise à jour <strong id="update-date">21 Avril 2026</strong></div>
+      <div class="page-meta-item">📅 Mise à jour <strong id="update-date">28 Avril 2026</strong></div>
       <div class="page-meta-item">⚙️ Niveau <strong>Hedge Fund</strong></div>
       <div class="page-meta-item" style="margin-left:auto;">
         <span style="font-size:0.6rem;color:var(--text-faint);">Score :</span>
@@ -1019,13 +1019,13 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
    DATA & RENDERING
 ══════════════════════════════════════ -->
 <script>
-/* ── DATA G10 — Mise à jour 21 Avril 2026 ── */
+/* ── DATA G10 — Mise à jour 28 Avril 2026 ── */
 const CURR = [
   {
     code:'USD', flag:'🇺🇸', name:'Dollar US', bank:'Federal Reserve',
     rate:'3.50-3.75%', score:-1.0,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['PCE/Core','2.7%'],['Fed','3.50-3.75%'],['FOMC','29 Avr.']],
+    keyData:[['PCE/Core','2.7%'],['Fed','3.50-3.75%'],['FOMC','28-29 Avr. · Hold · Ton hawkish']],
     pillars:{
       monetary:  {score:-0.5, wt:'40%'},
       inflation: {score:-0.5, wt:'20%'},
@@ -1040,8 +1040,8 @@ const CURR = [
       employment:{rows:[{k:'Chômage prévu',v:'4.4% · Stable',c:'neutral'},{k:'Marché emploi',v:'Toujours solide mais se normalise',c:'neutral'},{k:'Salaires',v:'Refroidissement graduel',c:'neutral'}],pr:'Emploi toujours solide (4.4%) mais en légère détente. Pas de signal d\'alarme mais plus le moteur de 2024. Facteur neutre.'},
       risk:{rows:[{k:'Tarifs douaniers',v:'Risque stagflationniste',c:'bear'},{k:'Dédollarisation',v:'Achats BC Or · Flux hors USD',c:'bear'},{k:'FOMC 29 Avr.',v:'Hold attendu · Pas de catalyseur',c:'neutral'},{k:'GDP 2.4%',v:'Solide · Atténue le bearish',c:'bull'}],pr:'USD sans catalyseur fort : Fed dovish marginal, tarifs créent de l\'incertitude, dédollarisation continue. GDP révisé à la hausse atténue le bearish mais ne l\'inverse pas.'},
     },
-    pricing:'FOMC 29 Avr. → hold quasi-certain. PCE 2.7% au-dessus cible. 1 seul cut signalé pour 2026. GDP 2.4% révisé à la hausse.',
-    concl:'USD LÉG. BAISSIER : Fed attentiste + tarifs créent incertitude + dédollarisation continue. GDP solide (2.4%) atténue le bearish. Éviter les longs USD sauf choc exogène. FOMC 29 Avr. = event clé.',
+    pricing:'FOMC 28-29 Avr. → hold 94% prob. · Ton hawkish attendu (pétrole $96 · inflation upside). DXY ~98.5 (rebond). Cuts 2026 repoussés · 1 seul cut possible CT.',
+    concl:'USD NEUTRE/LÉG. HAUSSIER CT : FOMC 28-29 Avr. hold + pétrole $96 = inflation upside = ton hawkish. DXY ~98.5 · rebond partiel. Dédollarisation = frein LT. Neutre CT, surveiller FOMC statement.',
   },
   {
     code:'EUR', flag:'🇪🇺', name:'Euro', bank:'BCE',
@@ -1056,8 +1056,8 @@ const CURR = [
       employment:{rows:[{k:'Chômage Zone €',v:'Stable · ~6%',c:'neutral'},{k:'Signal',v:'Pas de détérioration visible',c:'neutral'}],pr:'Emploi stable dans la zone €. Pas d\'alerte. Facteur neutre.'},
       risk:{rows:[{k:'Rotation hors USD',v:'EUR bénéficiaire principal',c:'bull'},{k:'EUR/USD',v:'~1.178 · Direction haussière',c:'bull'},{k:'GDP 0.9%',v:'Frein fondamental à l\'upside',c:'bear'},{k:'ECB vs Fed',v:'ECB stable = avantage yield relatif',c:'bull'}],pr:'Rotation hors USD continue à favoriser l\'EUR. ECB stable + incertitude Fed = EUR soutenu. Frein : GDP 2026 à seulement 0.9% limite l\'upside CT.'},
     },
-    pricing:'EUR/USD ~1.178 · ECB 2.00% en pause · GDP 2026 coupé à 0.9% · Inflation 2.6%. Rotation hors USD = principal support.',
-    concl:'EUR LÉG. HAUSSIER : ECB stable + rotation hors USD = supportif. MAIS GDP 2026 à seulement 0.9% = frein à l\'upside. EUR/USD 1.178, potentiel limité à 1.20 CT. Acheter sur replis.',
+    pricing:'EUR/USD ~1.171 · ECB 2.00% en pause · Pétrole $108 = pression inflation zone €. FOMC 28-29 Avr. = direction EUR/USD. GDP 0.9% frein persistant.',
+    concl:'EUR NEUTRE/LÉG. HAUSSIER : EUR/USD 1.171 · ECB stable. FOMC hawkish = pression EUR CT. GDP 0.9% + pétrole $108 = freins. Range 1.150-1.185 CT.',
   },
   {
     code:'GBP', flag:'🇬🇧', name:'Livre Sterling', bank:'Banque d\'Angleterre',
@@ -1072,14 +1072,14 @@ const CURR = [
       employment:{rows:[{k:'Chômage LFS',v:'~5.2% · Légère hausse',c:'neutral'},{k:'Salaires',v:'Refroidissement graduel',c:'neutral'}],pr:'Marché du travail se normalise. Pas d\'alarme mais pas de support non plus. Facteur neutre.'},
       risk:{rows:[{k:'Régime',v:'Risk-on · GBP bénéficie',c:'bull'},{k:'GBP/USD',v:'~1.320 · USD faible aide',c:'bull'},{k:'GDP 0.7%',v:'Pire G20 avancé = plafond fondamental',c:'bear'},{k:'BoE 30 Avr.',v:'5/50 pro-hike → volatilité possible',c:'neutral'}],pr:'GBP tiraillé : taux élevés + USD faible = support · Mais GDP 0.7% + plus forte exposition UK au conflit = frein. NEUTRE avec légère incertitude autour du BoE 30 Avr.'},
     },
-    pricing:'GBP/USD ~1.320 · BoE 3.75% hold prévu 30 Avr. · CPI 3.0-3.5% · GDP 2026 seulement 0.7% (pire G20 avancé selon OCDE).',
-    concl:'GBP NEUTRE : hausse de taux soutient mais GDP 2026 à 0.7% (pire G20) = frein majeur. GBP/USD ~1.32 = juste valeur CT. Éviter le directionnel fort. Catalyseur : BoE 30 Avr.',
+    pricing:'GBP/USD ~1.341 · BoE 3.75% hold prévu 30 Avr. · CPI 3.0-3.5% · GDP 2026 0.7% (pire G20 avancé). GBP fort malgré Brent $108 (UK importateur).',
+    concl:'GBP NEUTRE/LÉG. HAUSSIER CT : GBP/USD 1.341 · taux BoE 3.75% + USD léger rebond = compétition. BoE 30 Avr. = catalyseur. GDP 0.7% = frein. Pétrole $108 = pression UK.',
   },
   {
     code:'JPY', flag:'🇯🇵', name:'Yen Japonais', bank:'Banque du Japon',
     rate:'0.75%', score:0.0,
     bias:'NEUTRE', biasCls:'bt-neu',
-    keyData:[['BoJ','0.75%'],['USD/JPY','~160'],['Hike Avr.','~10%']],
+    keyData:[['BoJ','0.75% HOLD · 3/9 dissenters pro-hike'],['USD/JPY','~158.0'],['Hike Juil.','Scénario CT post-BoJ hawkish']],
     pillars:{monetary:{score:1.0,wt:'40%'},inflation:{score:0.5,wt:'20%'},growth:{score:1.0,wt:'15%'},employment:{score:1.0,wt:'15%'},risk:{score:-3.0,wt:'10%'}},
     detail:{
       monetary:{rows:[{k:'Taux actuel',v:'0.75% (max depuis 1995)',c:'bull'},{k:'Réunion BoJ',v:'27-28 Avril 2026 · Décision imminente',c:'neutral'},{k:'Prob. hike Avr.',v:'~10% · Très peu probable',c:'bear'},{k:'Ueda',v:'Signaux prudents · Pèse Iran/géopo',c:'bear'},{k:'Juillet',v:'Hike juillet = scénario central post-Avr.',c:'bull'}],pr:'BoJ à 0.75% (max 30 ans). Mais le hike d\'avril est devenu très improbable (~10%) suite aux signaux prudents d\'Ueda face aux tensions géopolitiques. Le report à juillet semble désormais le scénario central.'},
@@ -1088,14 +1088,14 @@ const CURR = [
       employment:{rows:[{k:'Chômage',v:'2.4% · Quasi-plein emploi',c:'bull'},{k:'Salaires',v:'+5.2% YoY · Record 2026',c:'bull'},{k:'Marché emploi',v:'Ultra-serré',c:'bull'}],pr:'Plein emploi + salaires records = conditions idéales pour normalisation. L\'argument dovish sur l\'emploi n\'existe plus. Le seul frein est géopolitique.'},
       risk:{rows:[{k:'Carry trade',v:'USD/JPY 160 · Carry actif',c:'bear'},{k:'Hike Avr.',v:'~10% prob. → catalyseur immédiat faible',c:'bear'},{k:'Hike Juillet',v:'Scénario central · Catalyseur à MT',c:'bull'},{k:'Géopolitique',v:'Iran = argument pour reporter',c:'bear'}],pr:'USD/JPY à 160 = carry trade très tendu. Avec hike avril peu probable (~10%), le catalyseur immédiat disparaît. Hike juillet = scénario central. JPY NEUTRE à CT, haussier à MT.'},
     },
-    pricing:'USD/JPY ~160 · BoJ 27-28 Avr. : hike très peu probable (~10%). Report à juillet attendu. Fondamentaux solides mais timing retardé.',
-    concl:'JPY NEUTRE CT : hike d\'avril peu probable (~10%) → catalyseur immédiat faible. Hike juillet = scénario central. USD/JPY 160 = carry extrême mais sans catalyseur proche. Attendre juillet pour les longs JPY.',
+    pricing:'USD/JPY ~158.0 · BoJ HOLD 28 Avr. (6-3 · 3 pro-hike) · Inflation révisée 2.8% · Growth coupé 0.5%. JPY légèrement fort post-décision. Hike juillet renforcé (3 dissenters).',
+    concl:'JPY NEUTRE/LÉG. HAUSSIER : BoJ HOLD mais 3 dissenters = signal hawkish MT. USD/JPY 158.0 (JPY légèrement fort). Inflation 2.8% BoJ = argument prochain hike juil. Longs JPY vs USD.',
   },
   {
     code:'CHF', flag:'🇨🇭', name:'Franc Suisse', bank:'BNS / SNB',
     rate:'0.00%', score:1.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['USD/CHF','0.782'],['EUR/CHF','0.920'],['SNB','0.00%']],
+    keyData:[['USD/CHF','0.792'],['EUR/CHF','0.927'],['SNB','0.00%']],
     pillars:{monetary:{score:-2.0,wt:'40%'},inflation:{score:-1.0,wt:'20%'},growth:{score:0.0,wt:'15%'},employment:{score:0.5,wt:'15%'},risk:{score:5.0,wt:'10%'}},
     detail:{
       monetary:{rows:[{k:'Taux actuel',v:'0.00% · SNB = plancher effectif',c:'bear'},{k:'Biais SNB',v:'Dovish · Interventionniste',c:'bear'},{k:'Outlook 2026',v:'Aucun changement attendu',c:'bear'},{k:'Intervention',v:'SNB prêt à vendre CHF · Impuissant',c:'neutral'}],pr:'SNB à 0.00% — plancher effectif. Aucun changement attendu en 2026, premier hike reporté à 2027. SNB prêt à intervenir pour limiter l\'appréciation du CHF mais les flux sont trop massifs.'},
@@ -1356,10 +1356,10 @@ const METALS_PDEF  = [
 const METALS = [
   {
     code:'GOLD', flag:'🥇', name:'Or', bank:'OANDA:XAUUSD',
-    rate:'~$4,830', score:4.5,
+    rate:'~$4,683', score:4.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$4,830'],['YTD 2026','+12%'],['ATH','$4,830 (nouveau)']],
-    pillars:{supply:{score:0.5,wt:'15%'},demand:{score:4.5,wt:'30%'},usd:{score:4.5,wt:'20%'},rates:{score:3.5,wt:'25%'},risk:{score:3.5,wt:'10%'}},
+    keyData:[['Prix','$4,683'],['ATH','$4,830 (2 Avr.)'],['YTD 2026','+9%']],
+    pillars:{supply:{score:0.5,wt:'15%'},demand:{score:4.0,wt:'30%'},usd:{score:3.5,wt:'20%'},rates:{score:3.5,wt:'25%'},risk:{score:2.5,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Production mine',v:'~3,800T · Stable',c:'neutral'},{k:'Coût marginal',v:'~$1,400/oz · Bien loin du spot',c:'bull'},{k:'Recyclage',v:'Hausse modeste',c:'neutral'}],pr:'Offre mine stable. Coût de production bien en dessous du prix spot à $4,830. Aucune pression vendeuse côté offre.'},
       demand:{rows:[{k:'Banques centrales',v:'Achats records 2026 · Dédollarisation',c:'bull'},{k:'ETF SPDR',v:'AUM record · Flux massifs',c:'bull'},{k:'Joaillerie Asie',v:'Chine + Inde · Forte demande',c:'bull'},{k:'Institutionnel',v:'Or = hedge USD · Conviction élevée',c:'bull'}],pr:'Demande exceptionnelle : BC records (dédollarisation) + ETF institutionnels massifs + joaillerie asiatique. Toutes les sources de demande convergent.'},
@@ -1367,14 +1367,14 @@ const METALS = [
       rates:{rows:[{k:'Taux réels US',v:'En baisse attendue · Cuts Fed',c:'bull'},{k:'Fed 3.50-3.75%',v:'Prochain mouvement = baisse',c:'bull'},{k:'Taux réels ↓',v:'Historiquement = Or ↑↑↑',c:'bull'},{k:'Signal',v:'Fed dovish = Or structurellement haussier',c:'bull'}],pr:'Anticipation de cuts Fed = taux réels en baisse = Or structurellement haussier. Ce driver seul est suffisant. Additionné au USD faible = confluence maximale.'},
       risk:{rows:[{k:'Iran · Négociations ceasefire',v:'Détente partielle · Moins de prime géopo.',c:'neutral'},{k:'Régime',v:'Reflation + safe haven toujours actif',c:'bull'},{k:'Or vs SPX',v:'Tous deux en ATH = reflation trade',c:'bull'},{k:'Risque',v:'Ceasefire total + USD rally = correction',c:'bear'}],pr:'Or à nouveau ATH malgré la détente Iran. Preuve que les drivers structurels (dédollarisation, taux réels) dominent le geopolitique. Ceasefire complet = risque de correction de $100-150 mais pas plus.'},
     },
-    pricing:'Or à $4,830 · Nouveau ATH. Taux réels attendus en baisse + USD faible structurel + dédollarisation = confluence maximale. Cible MT : $5,000-$5,200.',
-    concl:'Or TRÈS HAUSSIER : nouveau ATH $4,830 malgré détente Iran = force structurelle extrême. $4,830 → cible $5,000 MT. Acheter sur replis vers $4,650-$4,700. Stop $4,400. Conviction maximale.',
+    pricing:'Or $4,683 · Repli depuis ATH $4,830 (2 Avr.) · USD léger rebond (DXY ~98.5) + talks Iran stagnent = prise de bénéfices. Drivers structurels intacts : dédollarisation + taux réels bas. FOMC 29 Avr. = event clé.',
+    concl:'Or TRÈS HAUSSIER : repli $4,683 depuis ATH $4,830 = opportunité d'achat. Talks Iran stagnent = prime géopo. partielle revenue. Acheter replis $4,600-$4,650. Cible MT $5,000. Stop $4,350.',
   },
   {
     code:'SILVER', flag:'🥈', name:'Argent', bank:'OANDA:XAGUSD',
-    rate:'~$79.56', score:3.5,
+    rate:'~$75.28', score:3.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$79.56'],['Ratio Or/Ag','~60x'],['ATH','ATH zone']],
+    keyData:[['Prix','$75.28'],['Ratio Or/Ag','~62x'],['ATH','ATH zone (repli -5% depuis ATH)']],
     pillars:{supply:{score:-0.5,wt:'15%'},demand:{score:2.0,wt:'30%'},usd:{score:2.0,wt:'20%'},rates:{score:1.5,wt:'25%'},risk:{score:1.0,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Production minière',v:'+4% 2026 · Excédent partiel',c:'bear'},{k:'Mexique / Pérou',v:'Principaux producteurs · Stables',c:'neutral'},{k:'Signal',v:'Offre légèrement en hausse',c:'bear'}],pr:'Production minière en légère hausse = facteur négatif marginal. Excédent partiel pèse sur le prix vs Or.'},
@@ -1383,14 +1383,14 @@ const METALS = [
       rates:{rows:[{k:'Taux réels',v:'Même dynamique que l\'Or',c:'bull'},{k:'Baisse attendue Fed',v:'Haussier pour Argent',c:'bull'}],pr:'Bénéficie de la même dynamique que l\'Or via les anticipations de baisses Fed 2026.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Bénéfique Argent',c:'bull'},{k:'Ratio Or/Ag',v:'~60x · Médiane historique 65-75x',c:'neutral'},{k:'Argent vs Or',v:'Légèrement riche vs médianehistorique',c:'neutral'},{k:'Risk-on',v:'Argent surperforme en risk-on',c:'bull'}],pr:'Ratio Or/Argent à 60x = argent légèrement cher vs or par rapport à la médiane historique. Mais en absolu, $79 = ATH + risk-on = momentum très fort.'},
     },
-    pricing:'Argent $79.56 · ATH zone · Ratio Or/Ag à 60x (proche médiane historique de 65-75x). USD faible + transition énergétique + risk-on = triple driver.',
-    concl:'Argent TRÈS HAUSSIER en absolu : ATH zone + USD faible + risk-on + transition énergétique. Maintenir les longs. Cible $90-$100. Stop $72.',
+    pricing:'Argent $75.28 · Repli depuis ATH avec Or · Ratio Or/Ag 62x. USD léger rebond (DXY 98.5) · Transition énergétique + Hormuz = volatilité. Driver industriel solaire intact.',
+    concl:'Argent TRÈS HAUSSIER : repli $75.28 = zone d'achat. Triple driver intacts : USD, transition énergétique, risk-on. Acheter $73-75. Cible $90-$100. Stop $68.',
   },
   {
     code:'COPPER', flag:'🟫', name:'Cuivre', bank:'COMEX:HG1!',
-    rate:'~$5.89/lb', score:2.0,
+    rate:'~$6.03/lb', score:2.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$5.89/lb (~$12,987/MT)'],['LME Stock','Tendu'],['Chine PMI','50.5+']],
+    keyData:[['Prix','$6.03/lb (~$13,295/MT)'],['YTD','↑ +24.17%'],['Chine','Restocking Labour Day (1-5 Mai)']],
     pillars:{supply:{score:-0.5,wt:'20%'},demand:{score:3.0,wt:'35%'},usd:{score:2.5,wt:'15%'},rates:{score:1.5,wt:'20%'},risk:{score:2.0,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Stocks LME',v:'En baisse · Marché physique tendu',c:'bull'},{k:'Production Chili',v:'Codelco · Production sous pression',c:'neutral'},{k:'Disruptions',v:'Grèves minières · Offre contrainte',c:'bull'}],pr:'Stocks LME en baisse dans un contexte de demande forte. Disruptions minières au Chili limitent l\'offre. Marché physique tendu = support prix structurel.'},
@@ -1399,14 +1399,14 @@ const METALS = [
       rates:{rows:[{k:'Fed en cycle baisse',v:'3.50-3.75% → coupures attendues',c:'bull'},{k:'Chine assouplissement',v:'PBOC accommodant · Infrastructure financée',c:'bull'},{k:'Crédit facile',v:'Stimule les grands projets cuivro-intensifs',c:'bull'}],pr:'Double assouplissement Fed + PBOC = financement bon marché pour les grands projets d\'infrastructure et d\'énergie. Driver clé de la demande.'},
       risk:{rows:[{k:'Régime',v:'REFLATION · RISK-ON',c:'bull'},{k:'Cuivre = "Dr. Copper"',v:'+30% valide thèse croissance globale',c:'bull'},{k:'Signal CT',v:'Breakout majeur · $5.89/lb nouveau range',c:'bull'},{k:'Risque',v:'Récession Chine ou recul demande EV',c:'bear'}],pr:'Cuivre = proxy de la croissance mondiale. La hausse à $5.89/lb (+30% YTD) est le signal le plus clair du régime REFLATION actuel. "Dr. Copper" crie la croissance.'},
     },
-    pricing:'Cuivre $5.89/lb (IMF ~$12,987/MT) · Breakout majeur +30% YTD. USD faible + transition énergétique + stimulus Chine = triple driver. Range probable $5.50-$6.50 en régime REFLATION.',
-    concl:'Cuivre HAUSSIER : breakout +30% YTD validé par données IMF. USD très faible + REFLATION + demande transition énergétique record. Acheter sur replis vers $5.40-5.50. Cible $6.50-7.00 MT.',
+    pricing:'Cuivre $6.03/lb (~$13,295/MT) · +24% YoY · Restocking pré-Labour Day Chine (1-5 Mai). Production record Chine 1.33M T mars. USD léger rebond mais drivers structurels intacts. Range $5.80-$6.80 REFLATION.',
+    concl:'Cuivre HAUSSIER : $6.03 · +24% YoY · Record production Chine + restocking Labour Day. Momentum solide. Acheter replis $5.80-5.90. Cible $6.80-7.00 MT. Stop $5.50.',
   },
   {
     code:'PLATINUM', flag:'⬜', name:'Platine', bank:'TVC:PLATINUM',
-    rate:'~$2,093/oz', score:1.0,
+    rate:'~$1,959/oz', score:0.5,
     bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Prix','$2,093/oz'],['Ratio Pt/Au','0.43x'],['$2,300','Résistance clé']],
+    keyData:[['Prix','$1,959/oz'],['Ratio Pt/Au','0.42x'],['$2,100','Résistance clé (ex-support)']],
     pillars:{supply:{score:1.0,wt:'20%'},demand:{score:1.5,wt:'35%'},usd:{score:1.5,wt:'15%'},rates:{score:0.5,wt:'20%'},risk:{score:-0.5,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Afrique du Sud',v:'~75% production mondiale',c:'neutral'},{k:'Disruptions',v:'Grèves / coupures électriques',c:'bull'},{k:'Offre 2026',v:'~8.0M oz · Contrainte mais pas suffisant',c:'neutral'}],pr:'Production sud-africaine sous contrainte (coupures, grèves) = offre limitée. Facteur positif mais insuffisant pour compenser la faiblesse de la demande CT.'},
@@ -1415,15 +1415,15 @@ const METALS = [
       rates:{rows:[{k:'Taux réels ↓',v:'Bénéfique pour métaux pécieux',c:'bull'},{k:'Impact',v:'Moins puissant que sur Or ou Argent',c:'neutral'}],pr:'Bénéficie marginalement de la dynamique des taux. Moins impacté que l\'Or/Argent par les taux réels.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON mais Or dominant en safe haven',c:'neutral'},{k:'$2,300 résistance',v:'Breakout raté · Retour $2,093 = signal technique négatif',c:'bear'},{k:'Ratio Pt/Au',v:'0.43x (hist. ~0.8x) · Très sous-valorisé LT',c:'bull'}],pr:'Le platine a raté son breakout au-dessus de $2,300 et est revenu à $2,093. Techniquement négatif CT. Mais ratio Pt/Au à 0.43x (hist. 0.8x) = sous-valorisation extrême = opportunité LT.'},
     },
-    pricing:'Platine $2,093 · Breakout $2,300 raté = repli. Ratio Pt/Au 0.43x (historiquement ~0.8x = sous-valorisé de 46%). Déficit 120K oz LT. Résistance $2,300, support $1,950.',
-    concl:'Platine légèrement haussier : sous-valorisation extrême LT (Pt/Au 0.43x vs 0.8x histori.) + déficit structurel. Mais breakout $2,300 raté = CT moins convaincant. Accumuler sous $2,000 pour pari LT.',
+    pricing:'Platine $1,959 · Repli depuis $2,093. Support $1,950 testé. Ratio Pt/Au 0.42x (hist. 0.8x = sous-valorisé de 47%). Déficit 120K oz LT non intégré. Résistance $2,100.',
+    concl:'Platine neutre/légèrement haussier : support $1,950 testé · sous-valorisation extrême LT (Pt/Au 0.42x). Accumuler sous $1,950 pour pari LT. Déficit structurel 120K oz toujours non intégré.',
   },
 ];
 
 const METALS_OPPS = [
-  {rank:'01',top:true,pair:'GOLD (Long / Renforcement)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Nouveau ATH $4,830 · Confluence maximale inchangée</strong> : dédollarisation structurelle + achats BC records + Fed en cycle de baisse + USD très faible (EUR/USD 1.178). Malgré détente Iran, Or tient l\'ATH = force structurelle extrême. Acheter sur replis $4,650-$4,700.',spread:'Score : <span>+4.5</span> · Cible MT : <span>$5,000-$5,200</span> · Stop : <span>$4,400</span>'},
-  {rank:'02',top:true,pair:'COPPER (Long / Breakout)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Cuivre $5.89/lb · Breakout +30% YTD · IMF $12,987/MT.</strong> Transition énergétique (EV, solaire, réseaux) + stimulus Chine + USD faible = triple driver. "Dr. Copper" valide la thèse REFLATION. Nouveau range établi.',spread:'Score : <span>+2.0</span> · Cible MT : <span>$6.50-7.00</span> · Stop : <span>$5.40</span>'},
-  {rank:'03',top:false,pair:'SILVER (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Argent $79.56 · ATH zone + Ratio Or/Ag à 60x</strong> (médiane historique 65-75x = argent encore cheap). Triple driver : USD faible + transition énergétique (solaire, EV) + risk-on. Surperforme en fin de cycle haussier.',spread:'Score : <span>+3.5</span> · Cible : <span>$90-$100</span> · Ratio Or/Ag cible : <span>55-60x</span>'},
+  {rank:'01',top:true,pair:'GOLD (Long / Repli = opportunité)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Or $4,683 · Repli depuis ATH $4,830 (2 Avr.) · FOMC 28-29 Avr. + Talks Iran stagnent = prise de bénéfices.</strong> Drivers structurels intacts : dédollarisation + achats BC records + taux réels bas. Acheter replis $4,600-$4,650.',spread:'Score : <span>+4.0</span> · Cible MT : <span>$5,000-$5,200</span> · Stop : <span>$4,350</span>'},
+  {rank:'02',top:true,pair:'COPPER (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Cuivre $6.03/lb · +24% YoY · Record production Chine 1.33M T mars · Restocking Labour Day 1-5 Mai.</strong> Transition EV/solaire + stimulus Chine. Momentum solide.',spread:'Score : <span>+2.5</span> · Cible MT : <span>$6.80-7.00</span> · Stop : <span>$5.50</span>'},
+  {rank:'03',top:false,pair:'SILVER (Long / Repli)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Argent $75.28 · Repli depuis ATH · Ratio Or/Ag 62x.</strong> Zone d'achat : triple driver intact (USD, solaire, risk-on). Acheter $73-75.',spread:'Score : <span>+3.0</span> · Cible : <span>$90-$100</span> · Stop : <span>$68</span>'},
   {rank:'04',top:false,pair:'PLATINUM (Accumulation LT)',dir:'BUY (différé)',dirCls:'dir-buy',logic:'<strong>Platine $2,093 · Breakout $2,300 raté mais sous-valorisation extrême.</strong> Ratio Pt/Au à 0.43x (historique ~0.8x = sous-valorisé de 46%). Déficit structurel 120K oz + hydrogène LT. Accumuler sous $2,000 pour pari long terme.',spread:'Score : <span>+1.0</span> · Ratio Pt/Au : <span>0.43x</span> · Cible LT : <span>$2,500-$3,000</span>'},
 ];
 
@@ -1443,42 +1443,42 @@ const ENERGY_PDEF  = [
 const ENERGY = [
   {
     code:'WTI', flag:'🛢️', name:'Pétrole WTI', bank:'TVC:USOIL',
-    rate:'~$88.8', score:0.5,
-    bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Prix','$88.8'],['Iran · Ceasefire','Négociations actives'],['OPEC+','Cuts maintenus']],
+    rate:'~$96.4', score:2.5,
+    bias:'HAUSSIER', biasCls:'bt-hawk',
+    keyData:[['Prix','$96.4'],['Hormuz','Toujours fermé · Talks échoués'],['OPEC+','Cuts maintenus · Plancher $80']],
     pillars:{opec:{score:1.5,wt:'35%'},inventories:{score:0.5,wt:'20%'},demand:{score:1.5,wt:'20%'},usd:{score:1.5,wt:'15%'},seasonal:{score:1.0,wt:'10%'}},
     detail:{
-      opec:{rows:[{k:'Ceasefire Iran en cours',v:'Ormuz rouvert progressivement · Prime retirée',c:'bear'},{k:'OPEC+ cuts',v:'3.6 Mb/j de réductions maintenues',c:'bull'},{k:'Plancher OPEC',v:'$70-75 défendu par les membres',c:'bull'},{k:'Détroit d\'Ormuz',v:'Trafic reprend partiellement',c:'neutral'},{k:'Risque recul',v:'Si ceasefire confirmé → WTI $75-80',c:'bear'}],pr:'Tournant majeur : les négociations de ceasefire Iran ont retiré $6-8 de prime géopolitique. WTI tombe de $95 à $88.8. OPEC+ seul maintient le marché (plancher $70-75). La prime de risque Iran disparaît progressivement.'},
+      opec:{rows:[{k:'Hormuz toujours fermé',v:'Iran doubles down · Talks avec US échoués · 9e semaine',c:'bear'},{k:'OPEC+ cuts',v:'3.6 Mb/j · Plancher $80 défendu',c:'bull'},{k:'IEA outlook',v:'Peak Q2 $115/b · Supply shock record mondial',c:'bear'},{k:'Iran statement',v:'Ormuz "ne reviendra jamais" à l\'état précédent',c:'bear'},{k:'Citi scenario',v:'$150 si Hormuz fermé jusqu\'en juin',c:'bear'}],pr:'CHOC PÉTROLIER MAJEUR : Ormuz toujours fermé (9e semaine). Iran double la mise. Brent pic $128 le 2 Avril. EIA anticipe pic Q2 à $115. Citi: $150 si fermeture jusqu\'en juin.'},
       inventories:{rows:[{k:'Stocks EIA (US)',v:'Normalisés · Iran logistique reprend',c:'neutral'},{k:'Cushing (hub)',v:'Légèrement sous 5Y avg',c:'neutral'},{k:'IEA global',v:'Moins tendu qu\'avant ceasefire',c:'neutral'}],pr:'Stocks US se normalisent avec la reprise logistique du Moyen-Orient. Moins de tension physique qu\'en période d\'Ormuz bloqué. Facteur neutre CT.'},
       demand:{rows:[{k:'Demand IEA 2026',v:'103.8 Mb/j (+1.1% YoY)',c:'bull'},{k:'Chine',v:'Reprise REFLATION · +4.2% demande pétro.',c:'bull'},{k:'US',v:'Driving season approche (mai-août)',c:'bull'},{k:'USD faible',v:'Pétrole plus accessible pays émergents',c:'bull'}],pr:'Demande mondiale toujours solide. USD très faible → pétrole accessible pour importateurs. Driving season US approche = soutien saisonnier CT.'},
       usd:{rows:[{k:'Pétrole / USD',v:'Libellé en USD → corrélation inverse',c:'bull'},{k:'EUR/USD 1.178',v:'USD très faible = boost pétrole',c:'bull'},{k:'DXY ↓↓',v:'Driver positif structurel',c:'bull'}],pr:'USD très faible (EUR/USD 1.178) = boost mécanique pour le pétrole. Seul driver haussier vraiment fort maintenant que la prime géopo. s\'efface.'},
       seasonal:{rows:[{k:'Driving season approche',v:'Mai-août · Demande essence montante',c:'bull'},{k:'Raffinage',v:'Marges stables',c:'neutral'}],pr:'Driving season US qui approche = soutien saisonnier. Facteur positif CT mais moins puissant que la prime géopolitique qui disparaît.'},
     },
-    pricing:'WTI $88.8 · Chute depuis $95 due aux négociations de ceasefire Iran. OPEC+ plancher $70-75 + USD faible + driving season = support. Cible range $85-92. Risque baissier si ceasefire confirmé ($75-80).',
-    concl:'WTI légèrement haussier : OPEC+ discipline + USD faible + driving season compensent partiellement la disparition de la prime Iran. Risque majeur : ceasefire confirmé → retour $75-80. Réduire l\'exposition, stops à $85.',
+    pricing:'WTI $96.4 · Hormuz toujours fermé (9e semaine) · Talks US-Iran échoués · Iran doubles down · OPEC+ plancher $80 + USD ~98.5 · EIA peak $115 Q2. Range probable $92-105.',
+    concl:'WTI HAUSSIER : Hormuz toujours fermé + Iran doubles down = prime de risque maximale. EIA peak $115 Q2. OPEC+ plancher $80. Acheter replis $92-94. Stop $85.',
   },
   {
     code:'BRENT', flag:'🛢️', name:'Pétrole Brent', bank:'TVC:UKOIL',
-    rate:'~$95.42', score:1.5,
-    bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$95.42'],['Spread vs WTI','+$6.62 (structure normale)'],['Prime géopo.','Iran · Résiduelle']],
+    rate:'~$107.6', score:3.5,
+    bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
+    keyData:[['Prix','$107.6 · Brent pic $128 (2 Avr.)'],['Spread vs WTI','+$11.2 · Élargi · Hormuz prime'],['Hormuz','Toujours fermé · Talks échoués · 9e sem.']],
     pillars:{opec:{score:2.5,wt:'35%'},inventories:{score:1.0,wt:'20%'},demand:{score:1.5,wt:'20%'},usd:{score:1.5,wt:'15%'},seasonal:{score:1.0,wt:'10%'}},
     detail:{
-      opec:{rows:[{k:'Iran · Ceasefire partiel',v:'Ormuz rouvre progressivement · Prime résiduelle',c:'neutral'},{k:'Brent = référence internationale',v:'Prime géopolitique Brent > WTI (structure normale)',c:'bull'},{k:'Spread Brent/WTI',v:'+$6.62 · Structure normale rétablie',c:'bull'},{k:'OPEC+',v:'Cuts maintenus · Plancher $70-75',c:'bull'}],pr:'Retour à la structure normale : Brent à $6.62 de prime vs WTI. Curieusement, Brent tient $95+ alors que WTI chute à $88.8. La prime géopolitique reste dans le Brent (référence internationale/ME).'},
+      opec:{rows:[{k:'Hormuz toujours fermé',v:'Iran doubles down · Talks US échoués · 9e semaine',c:'bear'},{k:'Brent = référence internationale',v:'Prime géopolitique Brent > WTI · Spread $11.2',c:'bull'},{k:'Spread Brent/WTI',v:'+$11.2 · Pic géopolitique · Ormuz prime maximale',c:'bull'},{k:'OPEC+',v:'Cuts maintenus · Plancher $80',c:'bull'}],pr:'Brent $107.6 = prime géopolitique max. Spread Brent/WTI à $11.2 (vs $6.62 précédemment). Hormuz toujours fermé = marché pétrolier le plus tendu depuis 2022. Brent peak $128 le 2 Avril.'},
       inventories:{rows:[{k:'Europe / ARA stocks',v:'Légèrement en dessous avg',c:'neutral'},{k:'Flottant iranien',v:'Reprise progressive · Moins de tension',c:'neutral'}],pr:'Stocks européens se normalisent avec la reprise partielle des flux iraniens. Marché international moins tendu qu\'avant le ceasefire.'},
       demand:{rows:[{k:'Europe',v:'Demande stable · Transition vers été',c:'neutral'},{k:'Asie (Chine/Inde)',v:'Importateurs actifs · Routes alternatives',c:'bull'},{k:'USD faible',v:'Rend Brent cher en USD mais attractif en local',c:'bull'}],pr:'Asie toujours active sur le marché physique. Demande mondiale robuste malgré détente geopolitique.'},
       usd:{rows:[{k:'USD / Brent',v:'Corrélation inverse classique',c:'bull'},{k:'EUR/USD 1.178',v:'USD très faible = fort supportif',c:'bull'}],pr:'USD très faible (EUR/USD 1.178) = support fort pour Brent libellé en USD. Compense partiellement la perte de prime géopolitique.'},
       seasonal:{rows:[{k:'Maintenance raffineries',v:'Europe printemps → tension',c:'bull'},{k:'Driving season',v:'Mai-août · Demande globale croissante',c:'bull'}],pr:'Maintenance printanière européenne + approaching driving season = demande crude soutenue. Timing saisonnier toujours positif.'},
     },
-    pricing:'Brent $95.42 · Structure Brent/WTI normale rétablie (+$6.62 de prime). Brent tient mieux que WTI en ceasefire = prime résiduelle + USD faible + demand asiatique. Range $90-98.',
-    concl:'Brent haussier : tient mieux que WTI dans la détente Iran (prime géopolitique résiduelle + structure normale +$6 vs WTI). USD faible = support. Risque ceasefire total = $80-85. Préférer Brent à WTI.',
+    pricing:'Brent $107.6 · Hormuz toujours fermé (9e sem.) · Iran doubles down · Pic $128 le 2 Avr. EIA peak $115 Q2 · Citi $150 si fermé juin. Spread Brent/WTI $11.2.',
+    concl:'Brent TRÈS HAUSSIER : $107.6 · Hormuz fermé + Iran doubles down + EIA $115 Q2. Spread Brent/WTI $11.2 (prime géopo. maximale). Acheter les replis $103-105. Stop $95. Citi scénario extrême $150.',
   },
   {
     code:'NATGAS', flag:'🔥', name:'Gaz Naturel', bank:'TVC:NGAS',
-    rate:'~$2.62', score:-1.0,
+    rate:'~$2.58', score:-1.5,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['Prix (Henry Hub)','$2.62'],['Stocks EIA','+12% vs avg'],['Saison','Creuse (Avr.)']],
-    pillars:{opec:{score:0.5,wt:'20%'},inventories:{score:-1.5,wt:'25%'},demand:{score:0.5,wt:'25%'},usd:{score:0.5,wt:'15%'},seasonal:{score:-2.0,wt:'15%'}},
+    keyData:[['Prix (Henry Hub)','$2.58'],['Stocks EIA','+8% vs avg (en normalisation)'],['Saison','Creuse (Avr.) · EQT réduit production']],
+    pillars:{opec:{score:0.5,wt:'20%'},inventories:{score:-1.0,wt:'25%'},demand:{score:0.5,wt:'25%'},usd:{score:0.5,wt:'15%'},seasonal:{score:-2.0,wt:'15%'}},
     detail:{
       opec:{rows:[{k:'Pipeline russe Europe',v:'Quasi-stoppé · LNG US demandé',c:'bull'},{k:'Ormuz sem. 8',v:'GNL alternatif toujours recherché',c:'bull'},{k:'OPEC Gaz',v:'Pas de cartel équivalent',c:'neutral'}],pr:'L\'Europe cherche alternatives au gaz russe → LNG US = support structurel. Ormuz bloqué = GNL encore plus demandé. Facteur positif MT.'},
       inventories:{rows:[{k:'Stocks EIA US',v:'+12% vs 5Y average · EXCÉDENT',c:'bear'},{k:'Hiver doux 2025-26',v:'Stocks accumulés · Non consommés',c:'bear'},{k:'Injection printemps',v:'Saison d\'injection · Stocks montent',c:'bear'}],pr:'RETOURNEMENT : stocks US maintenant en EXCÉDENT (+12% vs 5Y avg) suite à hiver doux. Saison d\'injection = stocks continuent à monter = pression baissière CT.'},
@@ -1486,15 +1486,15 @@ const ENERGY = [
       usd:{rows:[{k:'Impact USD',v:'Marginal pour le gaz domestique',c:'neutral'}],pr:'Le gaz Henry Hub est principalement un marché domestique US = faible sensibilité au DXY.'},
       seasonal:{rows:[{k:'Avril = saison creuse',v:'Ni chauffe ni clim · Creux annuel',c:'bear'},{k:'Mai-juin injection',v:'Stocks montent → prix bas',c:'bear'},{k:'Été (juillet-août)',v:'Demande clim = rebond possible',c:'neutral'}],pr:'Pire moment saisonnier : après hiver, avant été. Stocks excédentaires + saison creuse = double pression baissière. Attendre l\'été pour le rebond.'},
     },
-    pricing:'Henry Hub $2.62 · Stocks excédentaires (+12% vs avg) + saison creuse = pression baissière CT. Support $2.40. Rebond possible $3.00-3.20 avec chaleur estivale.',
+    pricing:'Henry Hub $2.58 · Stocks encore +8% vs avg (en normalisation). Production en baisse (-4.1 bcfd EQT coupe output). Saison creuse maintient pression. Support $2.40. Rebond $3.00+ avec chaleur estivale.',
     concl:'Gaz Naturel légèrement baissier CT : stocks excédentaires + saison creuse printanière. Attendre fin juin / chaleur estivale pour rebond. Achat CT non recommandé avant $2.40.',
   },
 ];
 
 const ENERGY_OPPS = [
-  {rank:'01',top:true,pair:'BRENT (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Brent $95.42 · Tient mieux que WTI en ceasefire Iran.</strong> Structure Brent/WTI normale rétablie (+$6.62). Brent conserve une prime géopolitique résiduelle + USD très faible + demande asiatique. Préférer Brent à WTI en ce contexte.',spread:'Score : <span>+1.5</span> · Range : <span>$90-98</span> · Stop si ceasefire confirmé : <span>$83</span>'},
-  {rank:'02',top:true,pair:'BRENT/WTI (Spread Long Brent)',dir:'BUY BRENT spread',dirCls:'dir-buy',logic:'<strong>Structure normale rétablie : Brent > WTI (+$6.62).</strong> Tendance à s\'élargir si ceasefire progresse (Brent conserve prime ME, WTI chute plus fort). Trade directionnel : long Brent / short WTI. Cible spread +$8-10 si ceasefire total.',spread:'Spread Brent/WTI : <span>+$6.62</span> · Cible élargissement : <span>+$9.0-10.0</span> · Trigger : <span>Ceasefire Iran confirmé</span>'},
-  {rank:'03',top:false,pair:'NAT GAS (Vente CT)',dir:'SELL / ÉVITER',dirCls:'dir-sell',logic:'<strong>Stocks EIA +12% vs avg + saison creuse printanière.</strong> Hiver doux a laissé des stocks massifs. Saison d\'injection = pression continue. Attendre $2.40 ou juillet pour rebond.',spread:'Score : <span>−1.0</span> · Support : <span>$2.40</span> · Rebond potentiel : <span>Juillet $3.00</span>'},
+  {rank:'01',top:true,pair:'BRENT (Long / Hormuz fermé)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Brent $107.6 · Hormuz toujours fermé (9e sem.) · Iran doubles down · Talks échoués.</strong> EIA peak $115 Q2 · Citi $150 si juin fermé. Spread Brent/WTI $11.2 (prime géopo. max). Acheter replis $103-105.',spread:'Score : <span>+3.5</span> · Range : <span>$100-120</span> · Stop : <span>$95</span>'},
+  {rank:'02',top:true,pair:'WTI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>WTI $96.4 · Hormuz fermé + OPEC+ plancher $80 + Driving season US (mai-août).</strong> IEA demand 103.8 Mb/j · Chine +4.2%. Acheter replis $92-94.',spread:'Score : <span>+2.5</span> · Range : <span>$92-105</span> · Stop : <span>$85</span>'},
+  {rank:'03',top:false,pair:'NAT GAS (Éviter CT)',dir:'SELL / ÉVITER',dirCls:'dir-sell',logic:'<strong>Stocks EIA +8% vs avg · Saison creuse printanière · Production EQT en baisse (-4.1 bcfd).</strong> Floor possible CT. Attendre $2.40 ou chaleur estivale pour rebond.',spread:'Score : <span>−1.5</span> · Support : <span>$2.40</span> · Rebond été : <span>$3.00-3.20</span>'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -1513,9 +1513,9 @@ const INDICES_PDEF  = [
 const INDICES = [
   {
     code:'S&P 500', flag:'🇺🇸', name:'S&P 500', bank:'FOREXCOM:SPXUSD',
-    rate:'~7,124', score:2.0,
+    rate:'~7,174', score:2.0,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','7,124 ATH'],['P/E fwd','~25x'],['VIX','~15 (bas)']],
+    keyData:[['Niveau','7,174 ATH'],['P/E fwd','~25x'],['FOMC','28-29 Avr. · Hold 94% prob.']],
     pillars:{policy:{score:2.0,wt:'25%'},macro:{score:1.5,wt:'25%'},earnings:{score:1.0,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'Fed Funds',v:'3.50-3.75% · Cycle baissier amorcé',c:'bull'},{k:'Cuts Fed 2026',v:'Plusieurs cuts effectués · Liquidité ↑',c:'bull'},{k:'Fed pivot',v:'USD faible + taux réels bas = supportif',c:'bull'}],pr:'Fed en cycle de baisse (3.50-3.75%) = taux réels en baisse = valorisations soutenues. USD faible = pas de pression sur les bénéfices des multinationales. Régime monétaire accommodant.'},
@@ -1524,14 +1524,14 @@ const INDICES = [
       flows:{rows:[{k:'ETF SPY flows',v:'Flux entrants records · Risk-on',c:'bull'},{k:'Institutionnels',v:'Net long S&P · Consensus haussier',c:'bull'},{k:'Buybacks',v:'Records · MAG7 rachète massif',c:'bull'}],pr:'Positionnement institutionnel net long. Buybacks records des MAG7. Flux entrants ETF = soutien mécanique continu.'},
       risk:{rows:[{k:'VIX',v:'~15 · Risk-on · Complacency',c:'bull'},{k:'Régime',v:'REFLATION · RISK-ON',c:'bull'},{k:'Risque correction',v:'P/E 25x = vulnérable à surprise hawkish',c:'bear'},{k:'Iran ceasefire',v:'Pétrole $88.8 · Pression marges réduite',c:'bull'}],pr:'VIX bas = confiance du marché. Détente Iran → pétrole en baisse = marges améliorées. Risque : Fed hawkish surprise. Tant que le régime REFLATION tient et pétrole < $95, biais haussier.'},
     },
-    pricing:'S&P 7,124 ATH · Régime REFLATION + Fed dovish + earnings forts + détente Iran (pétrole $88) = progression structurelle. Support 6,900 (précédent niveau). Cible CT 7,300-7,500.',
-    concl:'S&P 500 HAUSSIER : nouveau ATH 7,124 en régime REFLATION + Fed dovish + earnings solides + pétrole en baisse. Acheter les replis vers 6,900-7,000. Stop 6,700. Attention à la valorisation élevée (25x).',
+    pricing:'S&P 7,174 ATH · REFLATION intact + EPS saison solide + FOMC 28-29 Avr. hold attendu. Pétrole $96 = légère pression marges. VIX bas = risk-on. Support 7,000. Cible CT 7,300-7,500.',
+    concl:'S&P 500 HAUSSIER : ATH 7,174 · REFLATION + EPS forts + FOMC hold 28-29 Avr. Pétrole $96 surveiller (marges). Acheter replis 7,000-7,050. Stop 6,750.',
   },
   {
     code:'NASDAQ', flag:'🇺🇸', name:'Nasdaq 100', bank:'FOREXCOM:NSXUSD',
-    rate:'~24,404', score:2.5,
+    rate:'~24,887', score:2.5,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','24,404 ATH'],['P/E fwd','~30x'],['IA capex','Records 2026']],
+    keyData:[['Niveau','24,887 ATH'],['P/E fwd','~30x'],['MAG7','Saison EPS en cours']],
     pillars:{policy:{score:2.5,wt:'25%'},macro:{score:1.5,wt:'20%'},earnings:{score:2.0,wt:'25%'},flows:{score:2.0,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'Fed dovish',v:'Cuts amorcés = support massif tech',c:'bull'},{k:'Taux réels ↓',v:'Discount cash-flows futurs = re-rating',c:'bull'},{k:'USD faible',v:'Tech = revenus mondiaux · USD faible boost',c:'bull'}],pr:'Triple soutien tech : Fed dovish + taux réels en baisse + USD faible. Environnement idéal pour la tech à high-multiple. Re-rating de toute la catégorie.'},
@@ -1540,14 +1540,14 @@ const INDICES = [
       flows:{rows:[{k:'ETF QQQ flows',v:'Flux entrants massifs',c:'bull'},{k:'Institutionnels tech',v:'Réallocation vers croissance',c:'bull'}],pr:'Flux massifs vers tech = momentum de momentum. Réallocation globale vers la croissance en régime REFLATION.'},
       risk:{rows:[{k:'Bêta vs S&P',v:'1.35 · Amplifie la hausse',c:'bull'},{k:'VIX / VXN',v:'VXN bas · Confiance tech',c:'bull'},{k:'Risque valorisation',v:'30x = sensible à surprise hawkish',c:'bear'}],pr:'En RISK-ON, le beta élevé de 1.35 est un avantage. Amplifie la hausse du S&P. Risque = valorisation extrême si Fed hawkish surprise.'},
     },
-    pricing:'NQ 24,404 ATH · Monétisation IA + Fed dovish + USD faible + pétrole en baisse (marges tech) = confluence maximale. Support 23,500. Cible MT 26,000-27,000.',
-    concl:'Nasdaq TRÈS HAUSSIER : nouveau ATH 24,404 (+3.8% en quelques jours) + monétisation IA + Fed dovish + USD faible. Plus fort momentum du marché. Acheter les replis 23,500-24,000. Stop 23,000.',
+    pricing:'NQ 24,887 ATH · Monétisation IA + FOMC hold 29 Avr. + EPS MAG7 saison. Pétrole $96 impact marginal tech. Support 24,000. Cible MT 26,500-27,500.',
+    concl:'Nasdaq TRÈS HAUSSIER : ATH 24,887 · Supercycle IA + FOMC hold + EPS MAG7 saison. Plus fort momentum marché. Acheter replis 24,000-24,400. Stop 23,200.',
   },
   {
     code:'DAX 40', flag:'🇩🇪', name:'DAX 40', bank:'FOREXCOM:DEU40',
-    rate:'~24,417', score:1.5,
+    rate:'~24,100', score:1.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','24,417 ATH'],['P/E fwd','~15x'],['ECB','2.00% accommodant']],
+    keyData:[['Niveau','24,100'],['P/E fwd','~15x'],['ECB','2.00% accommodant · Zeitenwende']],
     pillars:{policy:{score:2.5,wt:'25%'},macro:{score:0.5,wt:'25%'},earnings:{score:1.0,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:1.0,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BCE',v:'2.00% · Accommodant · Cycle baissier',c:'bull'},{k:'EUR/USD 1.178',v:'EUR fort = pouvoir d\'achat import',c:'neutral'},{k:'Stimulus fiscal DE',v:'Zeitenwende · Infrastructure · Défense',c:'bull'}],pr:'BCE à 2.00% (accommodant) + stimulus fiscal massif allemand (Zeitenwende 2026 = 100Mrd€ défense + infrastructure) = soutien monétaire ET fiscal. Régime de politique idéal.'},
@@ -1556,30 +1556,30 @@ const INDICES = [
       flows:{rows:[{k:'Flux étrangers vers DAX',v:'Rotation hors US vers Europe',c:'bull'},{k:'USD faible',v:'EUR/USD 1.178 = Europe attractif $ terms',c:'bull'}],pr:'Rotation globale hors USD vers Europe. DAX bénéficie doublement : rotation Europe + stimulus fiscal. Flux forts.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Favorable',c:'bull'},{k:'Iran pétrole',v:'WTI $95 · Pression marges industrie',c:'bear'},{k:'EUR fort',v:'Légère contrainte exportateurs',c:'neutral'}],pr:'RISK-ON = favorable DAX. Risque principal : EUR trop fort ou Iran bloque les chaînes logistiques. Mais stimulus compense largement.'},
     },
-    pricing:'DAX 24,417 ATH · BCE accommodante + stimulus Zeitenwende + rotation hors USD + pétrole en baisse (allège coûts industrie allemande) = ATH justifié. Support 23,700. Cible 25,500-26,000.',
-    concl:'DAX HAUSSIER : nouveau ATH 24,417 + ECB 2.00% + stimulus fiscal Zeitenwende (défense/infra) + rotation hors USD + pétrole moins cher. Secteur défense = driver structurel 2026. Acheter les replis 23,700.',
+    pricing:'DAX 24,100 · Léger repli depuis ATH. Pétrole $96-$108 = coûts industrie allemande sous pression. BCE 2.00% + Zeitenwende = soutien. EUR/USD 1.171. Support 23,500. Cible 25,000-26,000.',
+    concl:'DAX HAUSSIER : 24,100 · BCE 2.00% + Zeitenwende + défense = soutien. Risque : Brent $108 pèse industrie. Secteur défense (Rheinmetall) = driver offsetting. Acheter replis 23,500-23,700.',
   },
   {
     code:'NIKKEI', flag:'🇯🇵', name:'Nikkei 225', bank:'FOREXCOM:JPN225',
-    rate:'~59,420', score:3.0,
+    rate:'~60,537', score:3.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','59,420 ATH'],['P/E fwd','~18x'],['USD/JPY','~159 · JPY faible']],
+    keyData:[['Niveau','60,537 ATH'],['BoJ','Hold 0.75% · 3/9 membres pro-hike'],['USD/JPY','~158.0 · JPY légèrement fort']],
     pillars:{policy:{score:3.0,wt:'25%'},macro:{score:2.5,wt:'25%'},earnings:{score:2.5,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:2.0,wt:'15%'}},
     detail:{
-      policy:{rows:[{k:'BoJ',v:'0.75% · Réunion 27-28 Avr. · Seulement 10% prob. hike',c:'bull'},{k:'USD/JPY',v:'~159 · JPY très faible · Exportateurs au paradis',c:'bull'},{k:'Taux réels JPN',v:'Encore négatifs · Accommodation maximale',c:'bull'},{k:'BoJ dovish surprise',v:'44% → 10% hike prob. = JPY reste faible',c:'bull'}],pr:'Tournant majeur : la probabilité de hike BoJ le 27-28 Avr. est tombée de 44% à seulement 10%. USD/JPY reste à 159 = JPY ultra-faible = exportateurs ENCORE plus profitables. BoJ dovish surprise = meilleur scénario pour le Nikkei.'},
+      policy:{rows:[{k:'BoJ 28 Avr.',v:'HOLD 0.75% confirmé MAIS 3/9 membres pro-hike (Nakagawa, Takata, Tamura)',c:'neutral'},{k:'Inflation BoJ',v:'Core CPI révisé 2.8% (vs 1.9%) · Upside Iran war',c:'bear'},{k:'USD/JPY',v:'~158.0 · JPY légèrement plus fort post-BoJ',c:'neutral'},{k:'Croissance BoJ',v:'GDP FY2026 coupé à 0.5% (vs 1%)',c:'bear'}],pr:'BoJ HOLD confirmé (6-3) mais signal hawkish : 3 membres dissidents pro-hike. Inflation révisée à 2.8%. USD/JPY retombe vers 158 (JPY légèrement fort). Growth coupé à 0.5% = argument contre hike immédiat.'},
       macro:{rows:[{k:'GDP Japon 2026',v:'Meilleur en 30 ans · Reflation',c:'bull'},{k:'Shunto 2026',v:'+5.8% hausse salariale · Record',c:'bull'},{k:'PMI Mfg',v:'En expansion · Commandes export',c:'bull'},{k:'CPI Japon',v:'>2% · Sortie déflation = historique',c:'bull'}],pr:'Japon en train de sortir de 30 ans de déflation. Hausse salariale record Shunto 2026 (+5.8%) = spirale vertueuse prix-salaires pour la première fois. Événement macro majeur.'},
       earnings:{rows:[{k:'EPS exportateurs',v:'USD/JPY 159 = profits records Toyota, Sony',c:'bull'},{k:'P/E fwd Nikkei',v:'~18x · Raisonnable vs US',c:'bull'},{k:'Révisions EPS',v:'En forte hausse · Shunto + FX',c:'bull'},{k:'Corporate governance',v:'TSE reform · ROE improvement',c:'bull'}],pr:'USD/JPY 159 = exportateurs japonais au pic de profitabilité. EPS en forte révision à la hausse. Corporate governance reform (TSE) = re-rating structurel. Valorisation encore raisonnable.'},
       flows:{rows:[{k:'Flux étrangers',v:'Acheteurs nets massifs',c:'bull'},{k:'Berkshire Hathaway',v:'Augmente position Japon 2026',c:'bull'},{k:'Réforme TSE',v:'Buybacks records + dividendes',c:'bull'}],pr:'Flux étrangers très forts. Berkshire Hathaway continue d\'augmenter ses positions. TSE reform = flood de buybacks + dividendes = support mécanique.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON global · Parfait pour Nikkei',c:'bull'},{k:'BoJ dovish 27-28 Avr.',v:'10% prob. hike (était 44%) = JPY reste faible',c:'bull'},{k:'ATH zone',v:'59,000+ · Consolidation avant nouveau leg',c:'neutral'}],pr:'RISK-ON + BoJ dovish = scénario parfait pour le Nikkei. La chute de 44% à 10% de probabilité de hike BoJ = JPY reste faible = exportateurs profitables plus longtemps. Risque résiduel : si géopolitique JPY safe-haven se réveille.'},
     },
-    pricing:'Nikkei 59,420 ATH zone · USD/JPY 159 + BoJ dovish (10% hike prob.) + Shunto record + TSE reform + risk-on = confluence maximale. Support 57,500. Cible 62,000-65,000.',
-    concl:'Nikkei TRÈS HAUSSIER renforcé : ATH zone + BoJ 10% hike prob. (vs 44% attendu) = JPY reste ultra-faible + exportateurs profitables + sortie déflation. Meilleur indice DM. Achat conviction.',
+    pricing:'Nikkei 60,537 ATH · BoJ HOLD 0.75% (3/9 pro-hike) · USD/JPY 158 · Shunto +5.8% · TSE reform · RISK-ON = ATH confirmé. Support 59,000. Cible 62,000-65,000.',
+    concl:'Nikkei TRÈS HAUSSIER : ATH 60,537 · BoJ HOLD confirmé (3 dissenters = futur signal hike MT) · USD/JPY 158 · EPS exportateurs records. Achat conviction. Stop 58,500.',
   },
   {
     code:'CAC 40', flag:'🇫🇷', name:'CAC 40', bank:'FOREXCOM:FRA40',
-    rate:'~8,331', score:0.5,
+    rate:'~8,139', score:0.5,
     bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Niveau','8,331'],['P/E fwd','~14x'],['LVMH','Chine reprend']],
+    keyData:[['Niveau','8,139'],['P/E fwd','~14x'],['LVMH','Chine reprend · Pétrole $108 pèse']],
     pillars:{policy:{score:2.0,wt:'25%'},macro:{score:0.5,wt:'25%'},earnings:{score:0.5,wt:'20%'},flows:{score:1.0,wt:'15%'},risk:{score:0.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BCE 2.00%',v:'Accommodant · Cycle baissier amorcé',c:'bull'},{k:'EUR/USD 1.178',v:'EUR fort · Mixte',c:'neutral'}],pr:'BCE à 2.00% = accommodant = support valorisations. EUR fort = légère pression compétitivité exportateurs mais signe de confiance en zone euro.'},
@@ -1588,14 +1588,14 @@ const INDICES = [
       flows:{rows:[{k:'Rotation hors USD',v:'EUR/USD 1.178 = Europe attractif',c:'bull'},{k:'Value vs Growth',v:'CAC = value · Bénéficie de la rotation',c:'bull'}],pr:'Rotation globale vers l\'Europe (USD faible) = flux entrants CAC. Valorisations attractives vs US attirent les réallocations.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Favorable',c:'bull'},{k:'EUR trop fort',v:'Si 1.20+ → pression exportateurs',c:'neutral'},{k:'WTI $95',v:'France importatrice net pétrole · Neutre',c:'neutral'}],pr:'RISK-ON = support général. EUR fort à surveiller si 1.20+. Pétrole $95 = léger frein mais compensé par EUR fort pour les importations.'},
     },
-    pricing:'CAC 8,331 · BCE accommodante + LVMH Chine rebond + rotation hors USD + pétrole en baisse (France importatrice). Support 8,100. Cible 8,700-9,000.',
-    concl:'CAC légèrement haussier : BCE 2.00% + rotation Europe + LVMH Chine rebond + pétrole moins cher. Moins dynamique que DAX/Nikkei mais fondamentaux en amélioration. Acheter les replis 8,100.',
+    pricing:'CAC 8,139 · BCE 2.00% + LVMH Chine rebond · MAIS Brent $108 pèse France (importatrice nette). Support 7,900-8,000. Cible 8,500-8,700 si pétrole cède.',
+    concl:'CAC légèrement haussier : 8,139 · BCE 2.00% + LVMH rebond. MAIS Brent $108 = vent de face France importatrice. Acheter replis 7,900-8,000. Surveiller pétrole.',
   },
   {
     code:'FTSE 100', flag:'🇬🇧', name:'FTSE 100', bank:'FOREXCOM:UK100',
-    rate:'~10,609', score:1.5,
+    rate:'~10,334', score:1.0,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','10,609 ATH'],['Div. Yield','3.5%'],['Or $4,830','Rio/BHP ↑↑']],
+    keyData:[['Niveau','10,334'],['Div. Yield','3.5%'],['Shell/BP','WTI $96.4 = profits ↑ · Or $4,683 Rio/BHP ↑']],
     pillars:{policy:{score:1.5,wt:'25%'},macro:{score:1.0,wt:'25%'},earnings:{score:2.0,wt:'20%'},flows:{score:1.5,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BoE',v:'3.75% · Cycle baissier',c:'bull'},{k:'GBP/USD 1.32',v:'GBP fort · Revenus étrangers en £ = atténués',c:'neutral'},{k:'BoE dovish',v:'Cuts = support indirect valorisations',c:'bull'}],pr:'BoE en cycle baissier (3.75%) = valorisations soutenues. GBP fort (1.32) = légère pression sur la traduction des revenus étrangers. Mais BoE dovish = support net positif.'},
@@ -1604,16 +1604,16 @@ const INDICES = [
       flows:{rows:[{k:'Flux value',v:'FTSE = value pur · Réallocation globale',c:'bull'},{k:'Dividend hunters',v:'3.5% + GBP/USD 1.32 = attractif',c:'bull'}],pr:'Double attractivité : yield élevé + potentiel hausse. GBP fort = rendement en EUR/USD encore plus attractif pour étrangers.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Bénéfique',c:'bull'},{k:'GBP fort',v:'1.32 · Léger frein revenus étrangers',c:'neutral'},{k:'Defensif',v:'Énergie/banques/mines = stables',c:'bull'}],pr:'RISK-ON = favorable FTSE (composition cyclique via énergie). GBP fort = léger headwind mais compensé par commodités très fortes.'},
     },
-    pricing:'FTSE 10,609 ATH · Or ATH $4,830 + Cuivre $5.89 boostent Rio/BHP. Shell/BP = WTI $88.8 légèrement en baisse. Net positif : minières > pétrolières dans le FTSE actuellement. P/E 13x + yield 3.5% = attractif. Support 10,300. Cible 11,000-11,500.',
-    concl:'FTSE HAUSSIER : ATH 10,609 + super-cycle or/cuivre (Or $4,830 ATH + Cuivre +30%) booste Rio/BHP. Shell/BP légèrement freiné par WTI $88.8. Net positif. P/E 13x + yield 3.5% = excellent rapport risque/récompense.',
+    pricing:'FTSE 10,334 · Léger repli · Shell/BP profitent de WTI $96 · Rio/BHP = Or $4,683 + Cuivre $6.03. Composition énergétique favorable en choc pétrolier. P/E 13x + yield 3.5% = attractif. Support 10,100. Cible 10,700-11,200.',
+    concl:'FTSE LÉG. HAUSSIER : 10,334 · Shell/BP profitent du WTI $96 · Rio/BHP = Or $4,683 + Cuivre $6.03. Composition FTSE (énergie + mines) = hedge naturel choc pétrolier. P/E 13x + yield 3.5%. Acheter replis 10,100.',
   },
 ];
 
 const INDICES_OPPS = [
-  {rank:'01',top:true,pair:'NIKKEI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH zone 59,420 · MEILLEUR indice fondamental renforcé.</strong> BoJ hike prob. tombée à 10% (vs 44%) = JPY reste ultra-faible à 159 = exports records + Shunto +5.8% = sortie déflation historique + TSE reform. Scénario parfait.',spread:'Score : <span>+3.0</span> · Niveau : <span>59,420 ATH</span> · Cible : <span>62,000-65,000</span>'},
-  {rank:'02',top:true,pair:'NASDAQ (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Nouveau ATH 24,404 (+3.8%) · Monétisation IA concrète + Fed dovish + USD faible.</strong> MAG7 beats records. 30x P/E se justifie avec +20% EPS. Beta 1.35 = amplificateur de la hausse.',spread:'Score : <span>+2.5</span> · Niveau : <span>24,404 ATH</span> · Cible : <span>26,000-27,000</span>'},
+  {rank:'01',top:true,pair:'NIKKEI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 60,537 · BoJ HOLD confirmé (3/9 pro-hike = futur signal hawkish MT).</strong> USD/JPY 158 · Shunto +5.8% · TSE reform · EPS exportateurs records. Meilleur indice DM.',spread:'Score : <span>+3.0</span> · Niveau : <span>60,537 ATH</span> · Cible : <span>62,000-65,000</span>'},
+  {rank:'02',top:true,pair:'NASDAQ (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 24,887 · Monétisation IA concrète · FOMC hold + EPS MAG7 saison.</strong> MAG7 beats records. 30x P/E justifié +20% EPS. Beta 1.35 = amplificateur RISK-ON.',spread:'Score : <span>+2.5</span> · Niveau : <span>24,887 ATH</span> · Cible : <span>26,500-27,500</span>'},
   {rank:'03',top:false,pair:'FTSE (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 10,609 · Super-cycle Or/Cuivre.</strong> Rio/BHP = Or $4,830 ATH + Cuivre $5.89/lb (+30%). Shell/BP légèrement freiné (WTI $88.8). Net positif. P/E 13x + yield 3.5% = moins cher + mieux rémunéré.',spread:'Score : <span>+1.5</span> · Niveau : <span>10,609 ATH</span> · Yield : <span>3.5%</span>'},
-  {rank:'04',top:false,pair:'DAX (Long) / NASDAQ (Spread)',dir:'BUY DAX / Relatif',dirCls:'dir-buy',logic:'<strong>Nouveau ATH 24,417 · Zeitenwende fiscal + BCE 2.00% + pétrole $88 (moins cher = industrie allemande soulagée).</strong> Pair trade : long DAX (15x) / short NQ (30x) si valorisation US fatigue.',spread:'Score : <span>+1.5</span> · P/E spread : <span>15x DAX vs 30x NQ</span>'},
+  {rank:'04',top:false,pair:'DAX (Long) / NASDAQ (Spread)',dir:'BUY DAX / Relatif',dirCls:'dir-buy',logic:'<strong>24,100 · Zeitenwende fiscal + BCE 2.00% · Pétrole $108 = pression mais secteur défense offsette.</strong> Pair trade : long DAX (15x) / short NQ (30x) si valorisation US fatigue.',spread:'Score : <span>+1.5</span> · P/E spread : <span>15x DAX vs 30x NQ</span>'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -1632,9 +1632,9 @@ const CRYPTO_PDEF  = [
 const CRYPTO = [
   {
     code:'BTC', flag:'₿', name:'Bitcoin', bank:'BINANCE:BTCUSDT',
-    rate:'~$79,000', score:-0.5,
+    rate:'~$78,263', score:-0.5,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['Prix','~$79,000'],['Dominance','58.2%'],['vs ATH','−38% depuis $128K']],
+    keyData:[['Prix','~$78,263'],['Dominance','58.2%'],['vs ATH','−39% depuis $128K']],
     pillars:{
       macro:     {score:-1.5, wt:'20%'},
       onchain:   {score:1.0,  wt:'25%'},
@@ -1649,14 +1649,14 @@ const CRYPTO = [
       supply:{rows:[{k:'Halving Avr. 2024',v:'Récompense : 3.125 BTC/bloc',c:'bull'},{k:'Émission annuelle',v:'~165,000 BTC/an · −50% vs avant',c:'bull'},{k:'Correction mid-cycle',v:'Typique : −30-50% avant nouveau leg',c:'neutral'},{k:'Prochain halving',v:'2028 → supply encore réduite',c:'bull'}],pr:'Correction -42% = normale en cycle post-halving (chaque cycle a 1-2 corrections -40-50% avant ATH final). Supply compressée + demande ETF = thèse LT intacte.'},
       sentiment:{rows:[{k:'Fear & Greed Index',v:'28 / 100 → EXTREME FEAR',c:'bear'},{k:'Funding Rates',v:'Très négatifs · Shorts massifs',c:'bear'},{k:'Dominance BTC',v:'58.2% → flight to quality crypto',c:'neutral'},{k:'Contrarian signal',v:'Extreme fear = zone d\'accumulation historique',c:'bull'},{k:'Retail',v:'Capitulation partielle',c:'neutral'}],pr:'EXTREME FEAR (28) = zone de capitulation = historiquement zone d\'achat LT. Funding ultra-négatif = squeeze violent possible. Contrarian positif pour les accumulateurs patients.'},
     },
-    pricing:'BTC ~$79,000 · Rebond depuis $74K · Correction mid-cycle -38% depuis ATH. Base potentielle en formation. Zone d\'accumulation $74-80K = smart money active. Cible prochain cycle : $150-200K.',
+    pricing:'BTC ~$78,263 · Rebond depuis $74K · Correction mid-cycle -39% depuis ATH. Zone d\'accumulation $74-80K = smart money active. FOMC 28-29 Avr. = catalyseur potentiel. Cible 18-24M : $150-200K.',
     concl:'BTC légèrement baissier CT mais signal de rebond : $79K (+6% depuis le bas) + USD faible + Or ATH = environnement favorable. DCA aggressif $74-80K. Cible 18-24M : $150-200K. Accumulation stratégique.',
   },
   {
     code:'ETH', flag:'Ξ', name:'Ethereum', bank:'BINANCE:ETHUSDT',
-    rate:'~$2,324', score:-1.5,
+    rate:'~$2,282', score:-1.5,
     bias:'BAISSIER', biasCls:'bt-dov',
-    keyData:[['Prix','$2,324'],['ETH/BTC','0.0313'],['vs ATH','−68% depuis $7,500']],
+    keyData:[['Prix','$2,282'],['ETH/BTC','0.0291'],['vs ATH','−70% depuis $7,500']],
     pillars:{
       macro:     {score:-2.0, wt:'20%'},
       onchain:   {score:0.5,  wt:'25%'},
@@ -1676,9 +1676,9 @@ const CRYPTO = [
   },
   {
     code:'SOL', flag:'◎', name:'Solana', bank:'BINANCE:SOLUSDT',
-    rate:'~$86', score:-1.5,
+    rate:'~$84', score:-1.5,
     bias:'BAISSIER', biasCls:'bt-dov',
-    keyData:[['Prix','$86'],['vs ATH','−57% depuis $200'],['FTX sells','Pression continue']],
+    keyData:[['Prix','$84'],['vs ATH','−58% depuis $200'],['FTX sells','Pression continue']],
     pillars:{
       macro:     {score:-2.0, wt:'20%'},
       onchain:   {score:1.5,  wt:'25%'},
@@ -1720,9 +1720,9 @@ const CRYPTO = [
   },
   {
     code:'BNB', flag:'⬡', name:'BNB', bank:'BINANCE:BNBUSDT',
-    rate:'~$635', score:0.0,
+    rate:'~$623', score:0.0,
     bias:'NEUTRE', biasCls:'bt-neu',
-    keyData:[['Prix','$635'],['BSC TVL','$8.8Bn'],['Burn Trim.','$130M']],
+    keyData:[['Prix','$623'],['BSC TVL','$8.8Bn'],['Burn Trim.','$130M']],
     pillars:{
       macro:     {score:-1.0, wt:'20%'},
       onchain:   {score:1.0,  wt:'25%'},
@@ -1743,7 +1743,7 @@ const CRYPTO = [
 ];
 
 const CRYPTO_OPPS = [
-  {rank:'01',top:true,pair:'BTC (DCA Aggressif)',dir:'BUY (DCA)',dirCls:'dir-buy',logic:'<strong>Rebond $79K depuis le bas $74K · Correction mid-cycle −38% · EXTREME FEAR.</strong> Zone d\'accumulation historique. ETF flows positifs = institutionnels achètent la faiblesse. USD faible + Or ATH = environnement favorable. DCA $74-82K. Halving cycle cible $150-200K.',spread:'Score MT : <span>HAUSSIER</span> · Niveau actuel : <span>~$79,000</span> · Cible 18-24M : <span>$150-200K</span>'},
+  {rank:'01',top:true,pair:'BTC (DCA Aggressif)',dir:'BUY (DCA)',dirCls:'dir-buy',logic:'<strong>Rebond $78.3K depuis $74K · Correction mid-cycle −39% · EXTREME FEAR.</strong> Zone d\'accumulation historique. ETF flows positifs = institutionnels achètent la faiblesse. USD faible + Or ATH = environnement favorable. DCA $74-82K. Halving cycle cible $150-200K.',spread:'Score MT : <span>HAUSSIER</span> · Niveau actuel : <span>~$78,263</span> · Cible 18-24M : <span>$150-200K</span>'},
   {rank:'02',top:true,pair:'BTC/ETH (Long Ratio)',dir:'BUY BTC / SELL ETH',dirCls:'dir-buy',logic:'<strong>ETH/BTC à 0.0313 · Quasi-ATB.</strong> ETH perd la guerre narrative vs BTC. L2 cannibalise fees ETH. ETF BTC 6x > ETF ETH. Ratio peut aller à 0.025 dans ce cycle.',spread:'Ratio ETH/BTC : <span>0.0313</span> · Cible : <span>0.025-0.028</span> · Driver : <span>narratif BTC > ETH</span>'},
   {rank:'03',top:false,pair:'XRP (Pari ETF)',dir:'BUY (spéculatif)',dirCls:'dir-buy',logic:'<strong>ETF XRP 2026 = catalyseur binaire.</strong> Clarté légale SEC Win + nouveau régime réglementaire Trump. Si ETF approuvé → $3.50-5.00 (+150%). Accumuler sous $1.30 pour asymétrie.',spread:'Score : <span>−0.5</span> · Catalyseur : <span>ETF XRP 2026</span> · Cible si approuvé : <span>$3.50-5.00</span>'},
   {rank:'04',top:false,pair:'SOL (Rebond différé)',dir:'BUY (différé)',dirCls:'dir-buy',logic:'<strong>Beta 1.8x = rebond violent possible.</strong> Attendre : (1) FTX estate termine les ventes ET (2) Fear&Greed > 50 ET (3) BTC > $85K. Si tous réunis → SOL cible $120-140.',spread:'Score CT : <span>−1.5</span> · Rebond potentiel : <span>+40-60%</span> · Déclencheurs : <span>FTX + BTC $85K</span>'},
@@ -2062,7 +2062,7 @@ document.getElementById('catTabs').addEventListener('click', function(e) {
 });
 
 /* ── DATE ── */
-document.getElementById('update-date').textContent = '21 Avril 2026';
+document.getElementById('update-date').textContent = '28 Avril 2026';
 
 /* ── INIT ── */
 renderGrid();
@@ -2272,13 +2272,13 @@ if (!window._FA_NAV_INIT) {
    DATA & RENDERING
 ══════════════════════════════════════ -->
 <script>
-/* ── DATA G10 — Mise à jour 21 Avril 2026 ── */
+/* ── DATA G10 — Mise à jour 28 Avril 2026 ── */
 const CURR = [
   {
     code:'USD', flag:'🇺🇸', name:'Dollar US', bank:'Federal Reserve',
     rate:'3.50-3.75%', score:-1.0,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['PCE/Core','2.7%'],['Fed','3.50-3.75%'],['FOMC','29 Avr.']],
+    keyData:[['PCE/Core','2.7%'],['Fed','3.50-3.75%'],['FOMC','28-29 Avr. · Hold · Ton hawkish']],
     pillars:{
       monetary:  {score:-0.5, wt:'40%'},
       inflation: {score:-0.5, wt:'20%'},
@@ -2293,8 +2293,8 @@ const CURR = [
       employment:{rows:[{k:'Chômage prévu',v:'4.4% · Stable',c:'neutral'},{k:'Marché emploi',v:'Toujours solide mais se normalise',c:'neutral'},{k:'Salaires',v:'Refroidissement graduel',c:'neutral'}],pr:'Emploi toujours solide (4.4%) mais en légère détente. Pas de signal d\'alarme mais plus le moteur de 2024. Facteur neutre.'},
       risk:{rows:[{k:'Tarifs douaniers',v:'Risque stagflationniste',c:'bear'},{k:'Dédollarisation',v:'Achats BC Or · Flux hors USD',c:'bear'},{k:'FOMC 29 Avr.',v:'Hold attendu · Pas de catalyseur',c:'neutral'},{k:'GDP 2.4%',v:'Solide · Atténue le bearish',c:'bull'}],pr:'USD sans catalyseur fort : Fed dovish marginal, tarifs créent de l\'incertitude, dédollarisation continue. GDP révisé à la hausse atténue le bearish mais ne l\'inverse pas.'},
     },
-    pricing:'FOMC 29 Avr. → hold quasi-certain. PCE 2.7% au-dessus cible. 1 seul cut signalé pour 2026. GDP 2.4% révisé à la hausse.',
-    concl:'USD LÉG. BAISSIER : Fed attentiste + tarifs créent incertitude + dédollarisation continue. GDP solide (2.4%) atténue le bearish. Éviter les longs USD sauf choc exogène. FOMC 29 Avr. = event clé.',
+    pricing:'FOMC 28-29 Avr. → hold 94% prob. · Ton hawkish attendu (pétrole $96 · inflation upside). DXY ~98.5 (rebond). Cuts 2026 repoussés · 1 seul cut possible CT.',
+    concl:'USD NEUTRE/LÉG. HAUSSIER CT : FOMC 28-29 Avr. hold + pétrole $96 = inflation upside = ton hawkish. DXY ~98.5 · rebond partiel. Dédollarisation = frein LT. Neutre CT, surveiller FOMC statement.',
   },
   {
     code:'EUR', flag:'🇪🇺', name:'Euro', bank:'BCE',
@@ -2309,8 +2309,8 @@ const CURR = [
       employment:{rows:[{k:'Chômage Zone €',v:'Stable · ~6%',c:'neutral'},{k:'Signal',v:'Pas de détérioration visible',c:'neutral'}],pr:'Emploi stable dans la zone €. Pas d\'alerte. Facteur neutre.'},
       risk:{rows:[{k:'Rotation hors USD',v:'EUR bénéficiaire principal',c:'bull'},{k:'EUR/USD',v:'~1.178 · Direction haussière',c:'bull'},{k:'GDP 0.9%',v:'Frein fondamental à l\'upside',c:'bear'},{k:'ECB vs Fed',v:'ECB stable = avantage yield relatif',c:'bull'}],pr:'Rotation hors USD continue à favoriser l\'EUR. ECB stable + incertitude Fed = EUR soutenu. Frein : GDP 2026 à seulement 0.9% limite l\'upside CT.'},
     },
-    pricing:'EUR/USD ~1.178 · ECB 2.00% en pause · GDP 2026 coupé à 0.9% · Inflation 2.6%. Rotation hors USD = principal support.',
-    concl:'EUR LÉG. HAUSSIER : ECB stable + rotation hors USD = supportif. MAIS GDP 2026 à seulement 0.9% = frein à l\'upside. EUR/USD 1.178, potentiel limité à 1.20 CT. Acheter sur replis.',
+    pricing:'EUR/USD ~1.171 · ECB 2.00% en pause · Pétrole $108 = pression inflation zone €. FOMC 28-29 Avr. = direction EUR/USD. GDP 0.9% frein persistant.',
+    concl:'EUR NEUTRE/LÉG. HAUSSIER : EUR/USD 1.171 · ECB stable. FOMC hawkish = pression EUR CT. GDP 0.9% + pétrole $108 = freins. Range 1.150-1.185 CT.',
   },
   {
     code:'GBP', flag:'🇬🇧', name:'Livre Sterling', bank:'Banque d\'Angleterre',
@@ -2325,14 +2325,14 @@ const CURR = [
       employment:{rows:[{k:'Chômage LFS',v:'~5.2% · Légère hausse',c:'neutral'},{k:'Salaires',v:'Refroidissement graduel',c:'neutral'}],pr:'Marché du travail se normalise. Pas d\'alarme mais pas de support non plus. Facteur neutre.'},
       risk:{rows:[{k:'Régime',v:'Risk-on · GBP bénéficie',c:'bull'},{k:'GBP/USD',v:'~1.320 · USD faible aide',c:'bull'},{k:'GDP 0.7%',v:'Pire G20 avancé = plafond fondamental',c:'bear'},{k:'BoE 30 Avr.',v:'5/50 pro-hike → volatilité possible',c:'neutral'}],pr:'GBP tiraillé : taux élevés + USD faible = support · Mais GDP 0.7% + plus forte exposition UK au conflit = frein. NEUTRE avec légère incertitude autour du BoE 30 Avr.'},
     },
-    pricing:'GBP/USD ~1.320 · BoE 3.75% hold prévu 30 Avr. · CPI 3.0-3.5% · GDP 2026 seulement 0.7% (pire G20 avancé selon OCDE).',
-    concl:'GBP NEUTRE : hausse de taux soutient mais GDP 2026 à 0.7% (pire G20) = frein majeur. GBP/USD ~1.32 = juste valeur CT. Éviter le directionnel fort. Catalyseur : BoE 30 Avr.',
+    pricing:'GBP/USD ~1.341 · BoE 3.75% hold prévu 30 Avr. · CPI 3.0-3.5% · GDP 2026 0.7% (pire G20 avancé). GBP fort malgré Brent $108 (UK importateur).',
+    concl:'GBP NEUTRE/LÉG. HAUSSIER CT : GBP/USD 1.341 · taux BoE 3.75% + USD léger rebond = compétition. BoE 30 Avr. = catalyseur. GDP 0.7% = frein. Pétrole $108 = pression UK.',
   },
   {
     code:'JPY', flag:'🇯🇵', name:'Yen Japonais', bank:'Banque du Japon',
     rate:'0.75%', score:0.0,
     bias:'NEUTRE', biasCls:'bt-neu',
-    keyData:[['BoJ','0.75%'],['USD/JPY','~160'],['Hike Avr.','~10%']],
+    keyData:[['BoJ','0.75% HOLD · 3/9 dissenters pro-hike'],['USD/JPY','~158.0'],['Hike Juil.','Scénario CT post-BoJ hawkish']],
     pillars:{monetary:{score:1.0,wt:'40%'},inflation:{score:0.5,wt:'20%'},growth:{score:1.0,wt:'15%'},employment:{score:1.0,wt:'15%'},risk:{score:-3.0,wt:'10%'}},
     detail:{
       monetary:{rows:[{k:'Taux actuel',v:'0.75% (max depuis 1995)',c:'bull'},{k:'Réunion BoJ',v:'27-28 Avril 2026 · Décision imminente',c:'neutral'},{k:'Prob. hike Avr.',v:'~10% · Très peu probable',c:'bear'},{k:'Ueda',v:'Signaux prudents · Pèse Iran/géopo',c:'bear'},{k:'Juillet',v:'Hike juillet = scénario central post-Avr.',c:'bull'}],pr:'BoJ à 0.75% (max 30 ans). Mais le hike d\'avril est devenu très improbable (~10%) suite aux signaux prudents d\'Ueda face aux tensions géopolitiques. Le report à juillet semble désormais le scénario central.'},
@@ -2341,14 +2341,14 @@ const CURR = [
       employment:{rows:[{k:'Chômage',v:'2.4% · Quasi-plein emploi',c:'bull'},{k:'Salaires',v:'+5.2% YoY · Record 2026',c:'bull'},{k:'Marché emploi',v:'Ultra-serré',c:'bull'}],pr:'Plein emploi + salaires records = conditions idéales pour normalisation. L\'argument dovish sur l\'emploi n\'existe plus. Le seul frein est géopolitique.'},
       risk:{rows:[{k:'Carry trade',v:'USD/JPY 160 · Carry actif',c:'bear'},{k:'Hike Avr.',v:'~10% prob. → catalyseur immédiat faible',c:'bear'},{k:'Hike Juillet',v:'Scénario central · Catalyseur à MT',c:'bull'},{k:'Géopolitique',v:'Iran = argument pour reporter',c:'bear'}],pr:'USD/JPY à 160 = carry trade très tendu. Avec hike avril peu probable (~10%), le catalyseur immédiat disparaît. Hike juillet = scénario central. JPY NEUTRE à CT, haussier à MT.'},
     },
-    pricing:'USD/JPY ~160 · BoJ 27-28 Avr. : hike très peu probable (~10%). Report à juillet attendu. Fondamentaux solides mais timing retardé.',
-    concl:'JPY NEUTRE CT : hike d\'avril peu probable (~10%) → catalyseur immédiat faible. Hike juillet = scénario central. USD/JPY 160 = carry extrême mais sans catalyseur proche. Attendre juillet pour les longs JPY.',
+    pricing:'USD/JPY ~158.0 · BoJ HOLD 28 Avr. (6-3 · 3 pro-hike) · Inflation révisée 2.8% · Growth coupé 0.5%. JPY légèrement fort post-décision. Hike juillet renforcé (3 dissenters).',
+    concl:'JPY NEUTRE/LÉG. HAUSSIER : BoJ HOLD mais 3 dissenters = signal hawkish MT. USD/JPY 158.0 (JPY légèrement fort). Inflation 2.8% BoJ = argument prochain hike juil. Longs JPY vs USD.',
   },
   {
     code:'CHF', flag:'🇨🇭', name:'Franc Suisse', bank:'BNS / SNB',
     rate:'0.00%', score:1.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['USD/CHF','0.782'],['EUR/CHF','0.920'],['SNB','0.00%']],
+    keyData:[['USD/CHF','0.792'],['EUR/CHF','0.927'],['SNB','0.00%']],
     pillars:{monetary:{score:-2.0,wt:'40%'},inflation:{score:-1.0,wt:'20%'},growth:{score:0.0,wt:'15%'},employment:{score:0.5,wt:'15%'},risk:{score:5.0,wt:'10%'}},
     detail:{
       monetary:{rows:[{k:'Taux actuel',v:'0.00% · SNB = plancher effectif',c:'bear'},{k:'Biais SNB',v:'Dovish · Interventionniste',c:'bear'},{k:'Outlook 2026',v:'Aucun changement attendu',c:'bear'},{k:'Intervention',v:'SNB prêt à vendre CHF · Impuissant',c:'neutral'}],pr:'SNB à 0.00% — plancher effectif. Aucun changement attendu en 2026, premier hike reporté à 2027. SNB prêt à intervenir pour limiter l\'appréciation du CHF mais les flux sont trop massifs.'},
@@ -2609,10 +2609,10 @@ const METALS_PDEF  = [
 const METALS = [
   {
     code:'GOLD', flag:'🥇', name:'Or', bank:'OANDA:XAUUSD',
-    rate:'~$4,830', score:4.5,
+    rate:'~$4,683', score:4.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$4,830'],['YTD 2026','+12%'],['ATH','$4,830 (nouveau)']],
-    pillars:{supply:{score:0.5,wt:'15%'},demand:{score:4.5,wt:'30%'},usd:{score:4.5,wt:'20%'},rates:{score:3.5,wt:'25%'},risk:{score:3.5,wt:'10%'}},
+    keyData:[['Prix','$4,683'],['ATH','$4,830 (2 Avr.)'],['YTD 2026','+9%']],
+    pillars:{supply:{score:0.5,wt:'15%'},demand:{score:4.0,wt:'30%'},usd:{score:3.5,wt:'20%'},rates:{score:3.5,wt:'25%'},risk:{score:2.5,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Production mine',v:'~3,800T · Stable',c:'neutral'},{k:'Coût marginal',v:'~$1,400/oz · Bien loin du spot',c:'bull'},{k:'Recyclage',v:'Hausse modeste',c:'neutral'}],pr:'Offre mine stable. Coût de production bien en dessous du prix spot à $4,830. Aucune pression vendeuse côté offre.'},
       demand:{rows:[{k:'Banques centrales',v:'Achats records 2026 · Dédollarisation',c:'bull'},{k:'ETF SPDR',v:'AUM record · Flux massifs',c:'bull'},{k:'Joaillerie Asie',v:'Chine + Inde · Forte demande',c:'bull'},{k:'Institutionnel',v:'Or = hedge USD · Conviction élevée',c:'bull'}],pr:'Demande exceptionnelle : BC records (dédollarisation) + ETF institutionnels massifs + joaillerie asiatique. Toutes les sources de demande convergent.'},
@@ -2620,14 +2620,14 @@ const METALS = [
       rates:{rows:[{k:'Taux réels US',v:'En baisse attendue · Cuts Fed',c:'bull'},{k:'Fed 3.50-3.75%',v:'Prochain mouvement = baisse',c:'bull'},{k:'Taux réels ↓',v:'Historiquement = Or ↑↑↑',c:'bull'},{k:'Signal',v:'Fed dovish = Or structurellement haussier',c:'bull'}],pr:'Anticipation de cuts Fed = taux réels en baisse = Or structurellement haussier. Ce driver seul est suffisant. Additionné au USD faible = confluence maximale.'},
       risk:{rows:[{k:'Iran · Négociations ceasefire',v:'Détente partielle · Moins de prime géopo.',c:'neutral'},{k:'Régime',v:'Reflation + safe haven toujours actif',c:'bull'},{k:'Or vs SPX',v:'Tous deux en ATH = reflation trade',c:'bull'},{k:'Risque',v:'Ceasefire total + USD rally = correction',c:'bear'}],pr:'Or à nouveau ATH malgré la détente Iran. Preuve que les drivers structurels (dédollarisation, taux réels) dominent le geopolitique. Ceasefire complet = risque de correction de $100-150 mais pas plus.'},
     },
-    pricing:'Or à $4,830 · Nouveau ATH. Taux réels attendus en baisse + USD faible structurel + dédollarisation = confluence maximale. Cible MT : $5,000-$5,200.',
-    concl:'Or TRÈS HAUSSIER : nouveau ATH $4,830 malgré détente Iran = force structurelle extrême. $4,830 → cible $5,000 MT. Acheter sur replis vers $4,650-$4,700. Stop $4,400. Conviction maximale.',
+    pricing:'Or $4,683 · Repli depuis ATH $4,830 (2 Avr.) · USD léger rebond (DXY ~98.5) + talks Iran stagnent = prise de bénéfices. Drivers structurels intacts : dédollarisation + taux réels bas. FOMC 29 Avr. = event clé.',
+    concl:'Or TRÈS HAUSSIER : repli $4,683 depuis ATH $4,830 = opportunité d'achat. Talks Iran stagnent = prime géopo. partielle revenue. Acheter replis $4,600-$4,650. Cible MT $5,000. Stop $4,350.',
   },
   {
     code:'SILVER', flag:'🥈', name:'Argent', bank:'OANDA:XAGUSD',
-    rate:'~$79.56', score:3.5,
+    rate:'~$75.28', score:3.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$79.56'],['Ratio Or/Ag','~60x'],['ATH','ATH zone']],
+    keyData:[['Prix','$75.28'],['Ratio Or/Ag','~62x'],['ATH','ATH zone (repli -5% depuis ATH)']],
     pillars:{supply:{score:-0.5,wt:'15%'},demand:{score:2.0,wt:'30%'},usd:{score:2.0,wt:'20%'},rates:{score:1.5,wt:'25%'},risk:{score:1.0,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Production minière',v:'+4% 2026 · Excédent partiel',c:'bear'},{k:'Mexique / Pérou',v:'Principaux producteurs · Stables',c:'neutral'},{k:'Signal',v:'Offre légèrement en hausse',c:'bear'}],pr:'Production minière en légère hausse = facteur négatif marginal. Excédent partiel pèse sur le prix vs Or.'},
@@ -2636,14 +2636,14 @@ const METALS = [
       rates:{rows:[{k:'Taux réels',v:'Même dynamique que l\'Or',c:'bull'},{k:'Baisse attendue Fed',v:'Haussier pour Argent',c:'bull'}],pr:'Bénéficie de la même dynamique que l\'Or via les anticipations de baisses Fed 2026.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Bénéfique Argent',c:'bull'},{k:'Ratio Or/Ag',v:'~60x · Médiane historique 65-75x',c:'neutral'},{k:'Argent vs Or',v:'Légèrement riche vs médianehistorique',c:'neutral'},{k:'Risk-on',v:'Argent surperforme en risk-on',c:'bull'}],pr:'Ratio Or/Argent à 60x = argent légèrement cher vs or par rapport à la médiane historique. Mais en absolu, $79 = ATH + risk-on = momentum très fort.'},
     },
-    pricing:'Argent $79.56 · ATH zone · Ratio Or/Ag à 60x (proche médiane historique de 65-75x). USD faible + transition énergétique + risk-on = triple driver.',
-    concl:'Argent TRÈS HAUSSIER en absolu : ATH zone + USD faible + risk-on + transition énergétique. Maintenir les longs. Cible $90-$100. Stop $72.',
+    pricing:'Argent $75.28 · Repli depuis ATH avec Or · Ratio Or/Ag 62x. USD léger rebond (DXY 98.5) · Transition énergétique + Hormuz = volatilité. Driver industriel solaire intact.',
+    concl:'Argent TRÈS HAUSSIER : repli $75.28 = zone d'achat. Triple driver intacts : USD, transition énergétique, risk-on. Acheter $73-75. Cible $90-$100. Stop $68.',
   },
   {
     code:'COPPER', flag:'🟫', name:'Cuivre', bank:'COMEX:HG1!',
-    rate:'~$5.89/lb', score:2.0,
+    rate:'~$6.03/lb', score:2.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$5.89/lb (~$12,987/MT)'],['LME Stock','Tendu'],['Chine PMI','50.5+']],
+    keyData:[['Prix','$6.03/lb (~$13,295/MT)'],['YTD','↑ +24.17%'],['Chine','Restocking Labour Day (1-5 Mai)']],
     pillars:{supply:{score:-0.5,wt:'20%'},demand:{score:3.0,wt:'35%'},usd:{score:2.5,wt:'15%'},rates:{score:1.5,wt:'20%'},risk:{score:2.0,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Stocks LME',v:'En baisse · Marché physique tendu',c:'bull'},{k:'Production Chili',v:'Codelco · Production sous pression',c:'neutral'},{k:'Disruptions',v:'Grèves minières · Offre contrainte',c:'bull'}],pr:'Stocks LME en baisse dans un contexte de demande forte. Disruptions minières au Chili limitent l\'offre. Marché physique tendu = support prix structurel.'},
@@ -2652,14 +2652,14 @@ const METALS = [
       rates:{rows:[{k:'Fed en cycle baisse',v:'3.50-3.75% → coupures attendues',c:'bull'},{k:'Chine assouplissement',v:'PBOC accommodant · Infrastructure financée',c:'bull'},{k:'Crédit facile',v:'Stimule les grands projets cuivro-intensifs',c:'bull'}],pr:'Double assouplissement Fed + PBOC = financement bon marché pour les grands projets d\'infrastructure et d\'énergie. Driver clé de la demande.'},
       risk:{rows:[{k:'Régime',v:'REFLATION · RISK-ON',c:'bull'},{k:'Cuivre = "Dr. Copper"',v:'+30% valide thèse croissance globale',c:'bull'},{k:'Signal CT',v:'Breakout majeur · $5.89/lb nouveau range',c:'bull'},{k:'Risque',v:'Récession Chine ou recul demande EV',c:'bear'}],pr:'Cuivre = proxy de la croissance mondiale. La hausse à $5.89/lb (+30% YTD) est le signal le plus clair du régime REFLATION actuel. "Dr. Copper" crie la croissance.'},
     },
-    pricing:'Cuivre $5.89/lb (IMF ~$12,987/MT) · Breakout majeur +30% YTD. USD faible + transition énergétique + stimulus Chine = triple driver. Range probable $5.50-$6.50 en régime REFLATION.',
-    concl:'Cuivre HAUSSIER : breakout +30% YTD validé par données IMF. USD très faible + REFLATION + demande transition énergétique record. Acheter sur replis vers $5.40-5.50. Cible $6.50-7.00 MT.',
+    pricing:'Cuivre $6.03/lb (~$13,295/MT) · +24% YoY · Restocking pré-Labour Day Chine (1-5 Mai). Production record Chine 1.33M T mars. USD léger rebond mais drivers structurels intacts. Range $5.80-$6.80 REFLATION.',
+    concl:'Cuivre HAUSSIER : $6.03 · +24% YoY · Record production Chine + restocking Labour Day. Momentum solide. Acheter replis $5.80-5.90. Cible $6.80-7.00 MT. Stop $5.50.',
   },
   {
     code:'PLATINUM', flag:'⬜', name:'Platine', bank:'TVC:PLATINUM',
-    rate:'~$2,093/oz', score:1.0,
+    rate:'~$1,959/oz', score:0.5,
     bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Prix','$2,093/oz'],['Ratio Pt/Au','0.43x'],['$2,300','Résistance clé']],
+    keyData:[['Prix','$1,959/oz'],['Ratio Pt/Au','0.42x'],['$2,100','Résistance clé (ex-support)']],
     pillars:{supply:{score:1.0,wt:'20%'},demand:{score:1.5,wt:'35%'},usd:{score:1.5,wt:'15%'},rates:{score:0.5,wt:'20%'},risk:{score:-0.5,wt:'10%'}},
     detail:{
       supply:{rows:[{k:'Afrique du Sud',v:'~75% production mondiale',c:'neutral'},{k:'Disruptions',v:'Grèves / coupures électriques',c:'bull'},{k:'Offre 2026',v:'~8.0M oz · Contrainte mais pas suffisant',c:'neutral'}],pr:'Production sud-africaine sous contrainte (coupures, grèves) = offre limitée. Facteur positif mais insuffisant pour compenser la faiblesse de la demande CT.'},
@@ -2668,15 +2668,15 @@ const METALS = [
       rates:{rows:[{k:'Taux réels ↓',v:'Bénéfique pour métaux pécieux',c:'bull'},{k:'Impact',v:'Moins puissant que sur Or ou Argent',c:'neutral'}],pr:'Bénéficie marginalement de la dynamique des taux. Moins impacté que l\'Or/Argent par les taux réels.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON mais Or dominant en safe haven',c:'neutral'},{k:'$2,300 résistance',v:'Breakout raté · Retour $2,093 = signal technique négatif',c:'bear'},{k:'Ratio Pt/Au',v:'0.43x (hist. ~0.8x) · Très sous-valorisé LT',c:'bull'}],pr:'Le platine a raté son breakout au-dessus de $2,300 et est revenu à $2,093. Techniquement négatif CT. Mais ratio Pt/Au à 0.43x (hist. 0.8x) = sous-valorisation extrême = opportunité LT.'},
     },
-    pricing:'Platine $2,093 · Breakout $2,300 raté = repli. Ratio Pt/Au 0.43x (historiquement ~0.8x = sous-valorisé de 46%). Déficit 120K oz LT. Résistance $2,300, support $1,950.',
-    concl:'Platine légèrement haussier : sous-valorisation extrême LT (Pt/Au 0.43x vs 0.8x histori.) + déficit structurel. Mais breakout $2,300 raté = CT moins convaincant. Accumuler sous $2,000 pour pari LT.',
+    pricing:'Platine $1,959 · Repli depuis $2,093. Support $1,950 testé. Ratio Pt/Au 0.42x (hist. 0.8x = sous-valorisé de 47%). Déficit 120K oz LT non intégré. Résistance $2,100.',
+    concl:'Platine neutre/légèrement haussier : support $1,950 testé · sous-valorisation extrême LT (Pt/Au 0.42x). Accumuler sous $1,950 pour pari LT. Déficit structurel 120K oz toujours non intégré.',
   },
 ];
 
 const METALS_OPPS = [
-  {rank:'01',top:true,pair:'GOLD (Long / Renforcement)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Nouveau ATH $4,830 · Confluence maximale inchangée</strong> : dédollarisation structurelle + achats BC records + Fed en cycle de baisse + USD très faible (EUR/USD 1.178). Malgré détente Iran, Or tient l\'ATH = force structurelle extrême. Acheter sur replis $4,650-$4,700.',spread:'Score : <span>+4.5</span> · Cible MT : <span>$5,000-$5,200</span> · Stop : <span>$4,400</span>'},
-  {rank:'02',top:true,pair:'COPPER (Long / Breakout)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Cuivre $5.89/lb · Breakout +30% YTD · IMF $12,987/MT.</strong> Transition énergétique (EV, solaire, réseaux) + stimulus Chine + USD faible = triple driver. "Dr. Copper" valide la thèse REFLATION. Nouveau range établi.',spread:'Score : <span>+2.0</span> · Cible MT : <span>$6.50-7.00</span> · Stop : <span>$5.40</span>'},
-  {rank:'03',top:false,pair:'SILVER (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Argent $79.56 · ATH zone + Ratio Or/Ag à 60x</strong> (médiane historique 65-75x = argent encore cheap). Triple driver : USD faible + transition énergétique (solaire, EV) + risk-on. Surperforme en fin de cycle haussier.',spread:'Score : <span>+3.5</span> · Cible : <span>$90-$100</span> · Ratio Or/Ag cible : <span>55-60x</span>'},
+  {rank:'01',top:true,pair:'GOLD (Long / Repli = opportunité)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Or $4,683 · Repli depuis ATH $4,830 (2 Avr.) · FOMC 28-29 Avr. + Talks Iran stagnent = prise de bénéfices.</strong> Drivers structurels intacts : dédollarisation + achats BC records + taux réels bas. Acheter replis $4,600-$4,650.',spread:'Score : <span>+4.0</span> · Cible MT : <span>$5,000-$5,200</span> · Stop : <span>$4,350</span>'},
+  {rank:'02',top:true,pair:'COPPER (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Cuivre $6.03/lb · +24% YoY · Record production Chine 1.33M T mars · Restocking Labour Day 1-5 Mai.</strong> Transition EV/solaire + stimulus Chine. Momentum solide.',spread:'Score : <span>+2.5</span> · Cible MT : <span>$6.80-7.00</span> · Stop : <span>$5.50</span>'},
+  {rank:'03',top:false,pair:'SILVER (Long / Repli)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Argent $75.28 · Repli depuis ATH · Ratio Or/Ag 62x.</strong> Zone d'achat : triple driver intact (USD, solaire, risk-on). Acheter $73-75.',spread:'Score : <span>+3.0</span> · Cible : <span>$90-$100</span> · Stop : <span>$68</span>'},
   {rank:'04',top:false,pair:'PLATINUM (Accumulation LT)',dir:'BUY (différé)',dirCls:'dir-buy',logic:'<strong>Platine $2,093 · Breakout $2,300 raté mais sous-valorisation extrême.</strong> Ratio Pt/Au à 0.43x (historique ~0.8x = sous-valorisé de 46%). Déficit structurel 120K oz + hydrogène LT. Accumuler sous $2,000 pour pari long terme.',spread:'Score : <span>+1.0</span> · Ratio Pt/Au : <span>0.43x</span> · Cible LT : <span>$2,500-$3,000</span>'},
 ];
 
@@ -2696,42 +2696,42 @@ const ENERGY_PDEF  = [
 const ENERGY = [
   {
     code:'WTI', flag:'🛢️', name:'Pétrole WTI', bank:'TVC:USOIL',
-    rate:'~$88.8', score:0.5,
-    bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Prix','$88.8'],['Iran · Ceasefire','Négociations actives'],['OPEC+','Cuts maintenus']],
+    rate:'~$96.4', score:2.5,
+    bias:'HAUSSIER', biasCls:'bt-hawk',
+    keyData:[['Prix','$96.4'],['Hormuz','Toujours fermé · Talks échoués'],['OPEC+','Cuts maintenus · Plancher $80']],
     pillars:{opec:{score:1.5,wt:'35%'},inventories:{score:0.5,wt:'20%'},demand:{score:1.5,wt:'20%'},usd:{score:1.5,wt:'15%'},seasonal:{score:1.0,wt:'10%'}},
     detail:{
-      opec:{rows:[{k:'Ceasefire Iran en cours',v:'Ormuz rouvert progressivement · Prime retirée',c:'bear'},{k:'OPEC+ cuts',v:'3.6 Mb/j de réductions maintenues',c:'bull'},{k:'Plancher OPEC',v:'$70-75 défendu par les membres',c:'bull'},{k:'Détroit d\'Ormuz',v:'Trafic reprend partiellement',c:'neutral'},{k:'Risque recul',v:'Si ceasefire confirmé → WTI $75-80',c:'bear'}],pr:'Tournant majeur : les négociations de ceasefire Iran ont retiré $6-8 de prime géopolitique. WTI tombe de $95 à $88.8. OPEC+ seul maintient le marché (plancher $70-75). La prime de risque Iran disparaît progressivement.'},
+      opec:{rows:[{k:'Hormuz toujours fermé',v:'Iran doubles down · Talks avec US échoués · 9e semaine',c:'bear'},{k:'OPEC+ cuts',v:'3.6 Mb/j · Plancher $80 défendu',c:'bull'},{k:'IEA outlook',v:'Peak Q2 $115/b · Supply shock record mondial',c:'bear'},{k:'Iran statement',v:'Ormuz "ne reviendra jamais" à l\'état précédent',c:'bear'},{k:'Citi scenario',v:'$150 si Hormuz fermé jusqu\'en juin',c:'bear'}],pr:'CHOC PÉTROLIER MAJEUR : Ormuz toujours fermé (9e semaine). Iran double la mise. Brent pic $128 le 2 Avril. EIA anticipe pic Q2 à $115. Citi: $150 si fermeture jusqu\'en juin.'},
       inventories:{rows:[{k:'Stocks EIA (US)',v:'Normalisés · Iran logistique reprend',c:'neutral'},{k:'Cushing (hub)',v:'Légèrement sous 5Y avg',c:'neutral'},{k:'IEA global',v:'Moins tendu qu\'avant ceasefire',c:'neutral'}],pr:'Stocks US se normalisent avec la reprise logistique du Moyen-Orient. Moins de tension physique qu\'en période d\'Ormuz bloqué. Facteur neutre CT.'},
       demand:{rows:[{k:'Demand IEA 2026',v:'103.8 Mb/j (+1.1% YoY)',c:'bull'},{k:'Chine',v:'Reprise REFLATION · +4.2% demande pétro.',c:'bull'},{k:'US',v:'Driving season approche (mai-août)',c:'bull'},{k:'USD faible',v:'Pétrole plus accessible pays émergents',c:'bull'}],pr:'Demande mondiale toujours solide. USD très faible → pétrole accessible pour importateurs. Driving season US approche = soutien saisonnier CT.'},
       usd:{rows:[{k:'Pétrole / USD',v:'Libellé en USD → corrélation inverse',c:'bull'},{k:'EUR/USD 1.178',v:'USD très faible = boost pétrole',c:'bull'},{k:'DXY ↓↓',v:'Driver positif structurel',c:'bull'}],pr:'USD très faible (EUR/USD 1.178) = boost mécanique pour le pétrole. Seul driver haussier vraiment fort maintenant que la prime géopo. s\'efface.'},
       seasonal:{rows:[{k:'Driving season approche',v:'Mai-août · Demande essence montante',c:'bull'},{k:'Raffinage',v:'Marges stables',c:'neutral'}],pr:'Driving season US qui approche = soutien saisonnier. Facteur positif CT mais moins puissant que la prime géopolitique qui disparaît.'},
     },
-    pricing:'WTI $88.8 · Chute depuis $95 due aux négociations de ceasefire Iran. OPEC+ plancher $70-75 + USD faible + driving season = support. Cible range $85-92. Risque baissier si ceasefire confirmé ($75-80).',
-    concl:'WTI légèrement haussier : OPEC+ discipline + USD faible + driving season compensent partiellement la disparition de la prime Iran. Risque majeur : ceasefire confirmé → retour $75-80. Réduire l\'exposition, stops à $85.',
+    pricing:'WTI $96.4 · Hormuz toujours fermé (9e semaine) · Talks US-Iran échoués · Iran doubles down · OPEC+ plancher $80 + USD ~98.5 · EIA peak $115 Q2. Range probable $92-105.',
+    concl:'WTI HAUSSIER : Hormuz toujours fermé + Iran doubles down = prime de risque maximale. EIA peak $115 Q2. OPEC+ plancher $80. Acheter replis $92-94. Stop $85.',
   },
   {
     code:'BRENT', flag:'🛢️', name:'Pétrole Brent', bank:'TVC:UKOIL',
-    rate:'~$95.42', score:1.5,
-    bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Prix','$95.42'],['Spread vs WTI','+$6.62 (structure normale)'],['Prime géopo.','Iran · Résiduelle']],
+    rate:'~$107.6', score:3.5,
+    bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
+    keyData:[['Prix','$107.6 · Brent pic $128 (2 Avr.)'],['Spread vs WTI','+$11.2 · Élargi · Hormuz prime'],['Hormuz','Toujours fermé · Talks échoués · 9e sem.']],
     pillars:{opec:{score:2.5,wt:'35%'},inventories:{score:1.0,wt:'20%'},demand:{score:1.5,wt:'20%'},usd:{score:1.5,wt:'15%'},seasonal:{score:1.0,wt:'10%'}},
     detail:{
-      opec:{rows:[{k:'Iran · Ceasefire partiel',v:'Ormuz rouvre progressivement · Prime résiduelle',c:'neutral'},{k:'Brent = référence internationale',v:'Prime géopolitique Brent > WTI (structure normale)',c:'bull'},{k:'Spread Brent/WTI',v:'+$6.62 · Structure normale rétablie',c:'bull'},{k:'OPEC+',v:'Cuts maintenus · Plancher $70-75',c:'bull'}],pr:'Retour à la structure normale : Brent à $6.62 de prime vs WTI. Curieusement, Brent tient $95+ alors que WTI chute à $88.8. La prime géopolitique reste dans le Brent (référence internationale/ME).'},
+      opec:{rows:[{k:'Hormuz toujours fermé',v:'Iran doubles down · Talks US échoués · 9e semaine',c:'bear'},{k:'Brent = référence internationale',v:'Prime géopolitique Brent > WTI · Spread $11.2',c:'bull'},{k:'Spread Brent/WTI',v:'+$11.2 · Pic géopolitique · Ormuz prime maximale',c:'bull'},{k:'OPEC+',v:'Cuts maintenus · Plancher $80',c:'bull'}],pr:'Brent $107.6 = prime géopolitique max. Spread Brent/WTI à $11.2 (vs $6.62 précédemment). Hormuz toujours fermé = marché pétrolier le plus tendu depuis 2022. Brent peak $128 le 2 Avril.'},
       inventories:{rows:[{k:'Europe / ARA stocks',v:'Légèrement en dessous avg',c:'neutral'},{k:'Flottant iranien',v:'Reprise progressive · Moins de tension',c:'neutral'}],pr:'Stocks européens se normalisent avec la reprise partielle des flux iraniens. Marché international moins tendu qu\'avant le ceasefire.'},
       demand:{rows:[{k:'Europe',v:'Demande stable · Transition vers été',c:'neutral'},{k:'Asie (Chine/Inde)',v:'Importateurs actifs · Routes alternatives',c:'bull'},{k:'USD faible',v:'Rend Brent cher en USD mais attractif en local',c:'bull'}],pr:'Asie toujours active sur le marché physique. Demande mondiale robuste malgré détente geopolitique.'},
       usd:{rows:[{k:'USD / Brent',v:'Corrélation inverse classique',c:'bull'},{k:'EUR/USD 1.178',v:'USD très faible = fort supportif',c:'bull'}],pr:'USD très faible (EUR/USD 1.178) = support fort pour Brent libellé en USD. Compense partiellement la perte de prime géopolitique.'},
       seasonal:{rows:[{k:'Maintenance raffineries',v:'Europe printemps → tension',c:'bull'},{k:'Driving season',v:'Mai-août · Demande globale croissante',c:'bull'}],pr:'Maintenance printanière européenne + approaching driving season = demande crude soutenue. Timing saisonnier toujours positif.'},
     },
-    pricing:'Brent $95.42 · Structure Brent/WTI normale rétablie (+$6.62 de prime). Brent tient mieux que WTI en ceasefire = prime résiduelle + USD faible + demand asiatique. Range $90-98.',
-    concl:'Brent haussier : tient mieux que WTI dans la détente Iran (prime géopolitique résiduelle + structure normale +$6 vs WTI). USD faible = support. Risque ceasefire total = $80-85. Préférer Brent à WTI.',
+    pricing:'Brent $107.6 · Hormuz toujours fermé (9e sem.) · Iran doubles down · Pic $128 le 2 Avr. EIA peak $115 Q2 · Citi $150 si fermé juin. Spread Brent/WTI $11.2.',
+    concl:'Brent TRÈS HAUSSIER : $107.6 · Hormuz fermé + Iran doubles down + EIA $115 Q2. Spread Brent/WTI $11.2 (prime géopo. maximale). Acheter les replis $103-105. Stop $95. Citi scénario extrême $150.',
   },
   {
     code:'NATGAS', flag:'🔥', name:'Gaz Naturel', bank:'TVC:NGAS',
-    rate:'~$2.62', score:-1.0,
+    rate:'~$2.58', score:-1.5,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['Prix (Henry Hub)','$2.62'],['Stocks EIA','+12% vs avg'],['Saison','Creuse (Avr.)']],
-    pillars:{opec:{score:0.5,wt:'20%'},inventories:{score:-1.5,wt:'25%'},demand:{score:0.5,wt:'25%'},usd:{score:0.5,wt:'15%'},seasonal:{score:-2.0,wt:'15%'}},
+    keyData:[['Prix (Henry Hub)','$2.58'],['Stocks EIA','+8% vs avg (en normalisation)'],['Saison','Creuse (Avr.) · EQT réduit production']],
+    pillars:{opec:{score:0.5,wt:'20%'},inventories:{score:-1.0,wt:'25%'},demand:{score:0.5,wt:'25%'},usd:{score:0.5,wt:'15%'},seasonal:{score:-2.0,wt:'15%'}},
     detail:{
       opec:{rows:[{k:'Pipeline russe Europe',v:'Quasi-stoppé · LNG US demandé',c:'bull'},{k:'Ormuz sem. 8',v:'GNL alternatif toujours recherché',c:'bull'},{k:'OPEC Gaz',v:'Pas de cartel équivalent',c:'neutral'}],pr:'L\'Europe cherche alternatives au gaz russe → LNG US = support structurel. Ormuz bloqué = GNL encore plus demandé. Facteur positif MT.'},
       inventories:{rows:[{k:'Stocks EIA US',v:'+12% vs 5Y average · EXCÉDENT',c:'bear'},{k:'Hiver doux 2025-26',v:'Stocks accumulés · Non consommés',c:'bear'},{k:'Injection printemps',v:'Saison d\'injection · Stocks montent',c:'bear'}],pr:'RETOURNEMENT : stocks US maintenant en EXCÉDENT (+12% vs 5Y avg) suite à hiver doux. Saison d\'injection = stocks continuent à monter = pression baissière CT.'},
@@ -2739,15 +2739,15 @@ const ENERGY = [
       usd:{rows:[{k:'Impact USD',v:'Marginal pour le gaz domestique',c:'neutral'}],pr:'Le gaz Henry Hub est principalement un marché domestique US = faible sensibilité au DXY.'},
       seasonal:{rows:[{k:'Avril = saison creuse',v:'Ni chauffe ni clim · Creux annuel',c:'bear'},{k:'Mai-juin injection',v:'Stocks montent → prix bas',c:'bear'},{k:'Été (juillet-août)',v:'Demande clim = rebond possible',c:'neutral'}],pr:'Pire moment saisonnier : après hiver, avant été. Stocks excédentaires + saison creuse = double pression baissière. Attendre l\'été pour le rebond.'},
     },
-    pricing:'Henry Hub $2.62 · Stocks excédentaires (+12% vs avg) + saison creuse = pression baissière CT. Support $2.40. Rebond possible $3.00-3.20 avec chaleur estivale.',
+    pricing:'Henry Hub $2.58 · Stocks encore +8% vs avg (en normalisation). Production en baisse (-4.1 bcfd EQT coupe output). Saison creuse maintient pression. Support $2.40. Rebond $3.00+ avec chaleur estivale.',
     concl:'Gaz Naturel légèrement baissier CT : stocks excédentaires + saison creuse printanière. Attendre fin juin / chaleur estivale pour rebond. Achat CT non recommandé avant $2.40.',
   },
 ];
 
 const ENERGY_OPPS = [
-  {rank:'01',top:true,pair:'BRENT (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Brent $95.42 · Tient mieux que WTI en ceasefire Iran.</strong> Structure Brent/WTI normale rétablie (+$6.62). Brent conserve une prime géopolitique résiduelle + USD très faible + demande asiatique. Préférer Brent à WTI en ce contexte.',spread:'Score : <span>+1.5</span> · Range : <span>$90-98</span> · Stop si ceasefire confirmé : <span>$83</span>'},
-  {rank:'02',top:true,pair:'BRENT/WTI (Spread Long Brent)',dir:'BUY BRENT spread',dirCls:'dir-buy',logic:'<strong>Structure normale rétablie : Brent > WTI (+$6.62).</strong> Tendance à s\'élargir si ceasefire progresse (Brent conserve prime ME, WTI chute plus fort). Trade directionnel : long Brent / short WTI. Cible spread +$8-10 si ceasefire total.',spread:'Spread Brent/WTI : <span>+$6.62</span> · Cible élargissement : <span>+$9.0-10.0</span> · Trigger : <span>Ceasefire Iran confirmé</span>'},
-  {rank:'03',top:false,pair:'NAT GAS (Vente CT)',dir:'SELL / ÉVITER',dirCls:'dir-sell',logic:'<strong>Stocks EIA +12% vs avg + saison creuse printanière.</strong> Hiver doux a laissé des stocks massifs. Saison d\'injection = pression continue. Attendre $2.40 ou juillet pour rebond.',spread:'Score : <span>−1.0</span> · Support : <span>$2.40</span> · Rebond potentiel : <span>Juillet $3.00</span>'},
+  {rank:'01',top:true,pair:'BRENT (Long / Hormuz fermé)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Brent $107.6 · Hormuz toujours fermé (9e sem.) · Iran doubles down · Talks échoués.</strong> EIA peak $115 Q2 · Citi $150 si juin fermé. Spread Brent/WTI $11.2 (prime géopo. max). Acheter replis $103-105.',spread:'Score : <span>+3.5</span> · Range : <span>$100-120</span> · Stop : <span>$95</span>'},
+  {rank:'02',top:true,pair:'WTI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>WTI $96.4 · Hormuz fermé + OPEC+ plancher $80 + Driving season US (mai-août).</strong> IEA demand 103.8 Mb/j · Chine +4.2%. Acheter replis $92-94.',spread:'Score : <span>+2.5</span> · Range : <span>$92-105</span> · Stop : <span>$85</span>'},
+  {rank:'03',top:false,pair:'NAT GAS (Éviter CT)',dir:'SELL / ÉVITER',dirCls:'dir-sell',logic:'<strong>Stocks EIA +8% vs avg · Saison creuse printanière · Production EQT en baisse (-4.1 bcfd).</strong> Floor possible CT. Attendre $2.40 ou chaleur estivale pour rebond.',spread:'Score : <span>−1.5</span> · Support : <span>$2.40</span> · Rebond été : <span>$3.00-3.20</span>'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -2766,9 +2766,9 @@ const INDICES_PDEF  = [
 const INDICES = [
   {
     code:'S&P 500', flag:'🇺🇸', name:'S&P 500', bank:'FOREXCOM:SPXUSD',
-    rate:'~7,124', score:2.0,
+    rate:'~7,174', score:2.0,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','7,124 ATH'],['P/E fwd','~25x'],['VIX','~15 (bas)']],
+    keyData:[['Niveau','7,174 ATH'],['P/E fwd','~25x'],['FOMC','28-29 Avr. · Hold 94% prob.']],
     pillars:{policy:{score:2.0,wt:'25%'},macro:{score:1.5,wt:'25%'},earnings:{score:1.0,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'Fed Funds',v:'3.50-3.75% · Cycle baissier amorcé',c:'bull'},{k:'Cuts Fed 2026',v:'Plusieurs cuts effectués · Liquidité ↑',c:'bull'},{k:'Fed pivot',v:'USD faible + taux réels bas = supportif',c:'bull'}],pr:'Fed en cycle de baisse (3.50-3.75%) = taux réels en baisse = valorisations soutenues. USD faible = pas de pression sur les bénéfices des multinationales. Régime monétaire accommodant.'},
@@ -2777,14 +2777,14 @@ const INDICES = [
       flows:{rows:[{k:'ETF SPY flows',v:'Flux entrants records · Risk-on',c:'bull'},{k:'Institutionnels',v:'Net long S&P · Consensus haussier',c:'bull'},{k:'Buybacks',v:'Records · MAG7 rachète massif',c:'bull'}],pr:'Positionnement institutionnel net long. Buybacks records des MAG7. Flux entrants ETF = soutien mécanique continu.'},
       risk:{rows:[{k:'VIX',v:'~15 · Risk-on · Complacency',c:'bull'},{k:'Régime',v:'REFLATION · RISK-ON',c:'bull'},{k:'Risque correction',v:'P/E 25x = vulnérable à surprise hawkish',c:'bear'},{k:'Iran ceasefire',v:'Pétrole $88.8 · Pression marges réduite',c:'bull'}],pr:'VIX bas = confiance du marché. Détente Iran → pétrole en baisse = marges améliorées. Risque : Fed hawkish surprise. Tant que le régime REFLATION tient et pétrole < $95, biais haussier.'},
     },
-    pricing:'S&P 7,124 ATH · Régime REFLATION + Fed dovish + earnings forts + détente Iran (pétrole $88) = progression structurelle. Support 6,900 (précédent niveau). Cible CT 7,300-7,500.',
-    concl:'S&P 500 HAUSSIER : nouveau ATH 7,124 en régime REFLATION + Fed dovish + earnings solides + pétrole en baisse. Acheter les replis vers 6,900-7,000. Stop 6,700. Attention à la valorisation élevée (25x).',
+    pricing:'S&P 7,174 ATH · REFLATION intact + EPS saison solide + FOMC 28-29 Avr. hold attendu. Pétrole $96 = légère pression marges. VIX bas = risk-on. Support 7,000. Cible CT 7,300-7,500.',
+    concl:'S&P 500 HAUSSIER : ATH 7,174 · REFLATION + EPS forts + FOMC hold 28-29 Avr. Pétrole $96 surveiller (marges). Acheter replis 7,000-7,050. Stop 6,750.',
   },
   {
     code:'NASDAQ', flag:'🇺🇸', name:'Nasdaq 100', bank:'FOREXCOM:NSXUSD',
-    rate:'~24,404', score:2.5,
+    rate:'~24,887', score:2.5,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','24,404 ATH'],['P/E fwd','~30x'],['IA capex','Records 2026']],
+    keyData:[['Niveau','24,887 ATH'],['P/E fwd','~30x'],['MAG7','Saison EPS en cours']],
     pillars:{policy:{score:2.5,wt:'25%'},macro:{score:1.5,wt:'20%'},earnings:{score:2.0,wt:'25%'},flows:{score:2.0,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'Fed dovish',v:'Cuts amorcés = support massif tech',c:'bull'},{k:'Taux réels ↓',v:'Discount cash-flows futurs = re-rating',c:'bull'},{k:'USD faible',v:'Tech = revenus mondiaux · USD faible boost',c:'bull'}],pr:'Triple soutien tech : Fed dovish + taux réels en baisse + USD faible. Environnement idéal pour la tech à high-multiple. Re-rating de toute la catégorie.'},
@@ -2793,14 +2793,14 @@ const INDICES = [
       flows:{rows:[{k:'ETF QQQ flows',v:'Flux entrants massifs',c:'bull'},{k:'Institutionnels tech',v:'Réallocation vers croissance',c:'bull'}],pr:'Flux massifs vers tech = momentum de momentum. Réallocation globale vers la croissance en régime REFLATION.'},
       risk:{rows:[{k:'Bêta vs S&P',v:'1.35 · Amplifie la hausse',c:'bull'},{k:'VIX / VXN',v:'VXN bas · Confiance tech',c:'bull'},{k:'Risque valorisation',v:'30x = sensible à surprise hawkish',c:'bear'}],pr:'En RISK-ON, le beta élevé de 1.35 est un avantage. Amplifie la hausse du S&P. Risque = valorisation extrême si Fed hawkish surprise.'},
     },
-    pricing:'NQ 24,404 ATH · Monétisation IA + Fed dovish + USD faible + pétrole en baisse (marges tech) = confluence maximale. Support 23,500. Cible MT 26,000-27,000.',
-    concl:'Nasdaq TRÈS HAUSSIER : nouveau ATH 24,404 (+3.8% en quelques jours) + monétisation IA + Fed dovish + USD faible. Plus fort momentum du marché. Acheter les replis 23,500-24,000. Stop 23,000.',
+    pricing:'NQ 24,887 ATH · Monétisation IA + FOMC hold 29 Avr. + EPS MAG7 saison. Pétrole $96 impact marginal tech. Support 24,000. Cible MT 26,500-27,500.',
+    concl:'Nasdaq TRÈS HAUSSIER : ATH 24,887 · Supercycle IA + FOMC hold + EPS MAG7 saison. Plus fort momentum marché. Acheter replis 24,000-24,400. Stop 23,200.',
   },
   {
     code:'DAX 40', flag:'🇩🇪', name:'DAX 40', bank:'FOREXCOM:DEU40',
-    rate:'~24,417', score:1.5,
+    rate:'~24,100', score:1.5,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','24,417 ATH'],['P/E fwd','~15x'],['ECB','2.00% accommodant']],
+    keyData:[['Niveau','24,100'],['P/E fwd','~15x'],['ECB','2.00% accommodant · Zeitenwende']],
     pillars:{policy:{score:2.5,wt:'25%'},macro:{score:0.5,wt:'25%'},earnings:{score:1.0,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:1.0,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BCE',v:'2.00% · Accommodant · Cycle baissier',c:'bull'},{k:'EUR/USD 1.178',v:'EUR fort = pouvoir d\'achat import',c:'neutral'},{k:'Stimulus fiscal DE',v:'Zeitenwende · Infrastructure · Défense',c:'bull'}],pr:'BCE à 2.00% (accommodant) + stimulus fiscal massif allemand (Zeitenwende 2026 = 100Mrd€ défense + infrastructure) = soutien monétaire ET fiscal. Régime de politique idéal.'},
@@ -2809,30 +2809,30 @@ const INDICES = [
       flows:{rows:[{k:'Flux étrangers vers DAX',v:'Rotation hors US vers Europe',c:'bull'},{k:'USD faible',v:'EUR/USD 1.178 = Europe attractif $ terms',c:'bull'}],pr:'Rotation globale hors USD vers Europe. DAX bénéficie doublement : rotation Europe + stimulus fiscal. Flux forts.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Favorable',c:'bull'},{k:'Iran pétrole',v:'WTI $95 · Pression marges industrie',c:'bear'},{k:'EUR fort',v:'Légère contrainte exportateurs',c:'neutral'}],pr:'RISK-ON = favorable DAX. Risque principal : EUR trop fort ou Iran bloque les chaînes logistiques. Mais stimulus compense largement.'},
     },
-    pricing:'DAX 24,417 ATH · BCE accommodante + stimulus Zeitenwende + rotation hors USD + pétrole en baisse (allège coûts industrie allemande) = ATH justifié. Support 23,700. Cible 25,500-26,000.',
-    concl:'DAX HAUSSIER : nouveau ATH 24,417 + ECB 2.00% + stimulus fiscal Zeitenwende (défense/infra) + rotation hors USD + pétrole moins cher. Secteur défense = driver structurel 2026. Acheter les replis 23,700.',
+    pricing:'DAX 24,100 · Léger repli depuis ATH. Pétrole $96-$108 = coûts industrie allemande sous pression. BCE 2.00% + Zeitenwende = soutien. EUR/USD 1.171. Support 23,500. Cible 25,000-26,000.',
+    concl:'DAX HAUSSIER : 24,100 · BCE 2.00% + Zeitenwende + défense = soutien. Risque : Brent $108 pèse industrie. Secteur défense (Rheinmetall) = driver offsetting. Acheter replis 23,500-23,700.',
   },
   {
     code:'NIKKEI', flag:'🇯🇵', name:'Nikkei 225', bank:'FOREXCOM:JPN225',
-    rate:'~59,420', score:3.0,
+    rate:'~60,537', score:3.0,
     bias:'TRÈS HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','59,420 ATH'],['P/E fwd','~18x'],['USD/JPY','~159 · JPY faible']],
+    keyData:[['Niveau','60,537 ATH'],['BoJ','Hold 0.75% · 3/9 membres pro-hike'],['USD/JPY','~158.0 · JPY légèrement fort']],
     pillars:{policy:{score:3.0,wt:'25%'},macro:{score:2.5,wt:'25%'},earnings:{score:2.5,wt:'20%'},flows:{score:2.0,wt:'15%'},risk:{score:2.0,wt:'15%'}},
     detail:{
-      policy:{rows:[{k:'BoJ',v:'0.75% · Réunion 27-28 Avr. · Seulement 10% prob. hike',c:'bull'},{k:'USD/JPY',v:'~159 · JPY très faible · Exportateurs au paradis',c:'bull'},{k:'Taux réels JPN',v:'Encore négatifs · Accommodation maximale',c:'bull'},{k:'BoJ dovish surprise',v:'44% → 10% hike prob. = JPY reste faible',c:'bull'}],pr:'Tournant majeur : la probabilité de hike BoJ le 27-28 Avr. est tombée de 44% à seulement 10%. USD/JPY reste à 159 = JPY ultra-faible = exportateurs ENCORE plus profitables. BoJ dovish surprise = meilleur scénario pour le Nikkei.'},
+      policy:{rows:[{k:'BoJ 28 Avr.',v:'HOLD 0.75% confirmé MAIS 3/9 membres pro-hike (Nakagawa, Takata, Tamura)',c:'neutral'},{k:'Inflation BoJ',v:'Core CPI révisé 2.8% (vs 1.9%) · Upside Iran war',c:'bear'},{k:'USD/JPY',v:'~158.0 · JPY légèrement plus fort post-BoJ',c:'neutral'},{k:'Croissance BoJ',v:'GDP FY2026 coupé à 0.5% (vs 1%)',c:'bear'}],pr:'BoJ HOLD confirmé (6-3) mais signal hawkish : 3 membres dissidents pro-hike. Inflation révisée à 2.8%. USD/JPY retombe vers 158 (JPY légèrement fort). Growth coupé à 0.5% = argument contre hike immédiat.'},
       macro:{rows:[{k:'GDP Japon 2026',v:'Meilleur en 30 ans · Reflation',c:'bull'},{k:'Shunto 2026',v:'+5.8% hausse salariale · Record',c:'bull'},{k:'PMI Mfg',v:'En expansion · Commandes export',c:'bull'},{k:'CPI Japon',v:'>2% · Sortie déflation = historique',c:'bull'}],pr:'Japon en train de sortir de 30 ans de déflation. Hausse salariale record Shunto 2026 (+5.8%) = spirale vertueuse prix-salaires pour la première fois. Événement macro majeur.'},
       earnings:{rows:[{k:'EPS exportateurs',v:'USD/JPY 159 = profits records Toyota, Sony',c:'bull'},{k:'P/E fwd Nikkei',v:'~18x · Raisonnable vs US',c:'bull'},{k:'Révisions EPS',v:'En forte hausse · Shunto + FX',c:'bull'},{k:'Corporate governance',v:'TSE reform · ROE improvement',c:'bull'}],pr:'USD/JPY 159 = exportateurs japonais au pic de profitabilité. EPS en forte révision à la hausse. Corporate governance reform (TSE) = re-rating structurel. Valorisation encore raisonnable.'},
       flows:{rows:[{k:'Flux étrangers',v:'Acheteurs nets massifs',c:'bull'},{k:'Berkshire Hathaway',v:'Augmente position Japon 2026',c:'bull'},{k:'Réforme TSE',v:'Buybacks records + dividendes',c:'bull'}],pr:'Flux étrangers très forts. Berkshire Hathaway continue d\'augmenter ses positions. TSE reform = flood de buybacks + dividendes = support mécanique.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON global · Parfait pour Nikkei',c:'bull'},{k:'BoJ dovish 27-28 Avr.',v:'10% prob. hike (était 44%) = JPY reste faible',c:'bull'},{k:'ATH zone',v:'59,000+ · Consolidation avant nouveau leg',c:'neutral'}],pr:'RISK-ON + BoJ dovish = scénario parfait pour le Nikkei. La chute de 44% à 10% de probabilité de hike BoJ = JPY reste faible = exportateurs profitables plus longtemps. Risque résiduel : si géopolitique JPY safe-haven se réveille.'},
     },
-    pricing:'Nikkei 59,420 ATH zone · USD/JPY 159 + BoJ dovish (10% hike prob.) + Shunto record + TSE reform + risk-on = confluence maximale. Support 57,500. Cible 62,000-65,000.',
-    concl:'Nikkei TRÈS HAUSSIER renforcé : ATH zone + BoJ 10% hike prob. (vs 44% attendu) = JPY reste ultra-faible + exportateurs profitables + sortie déflation. Meilleur indice DM. Achat conviction.',
+    pricing:'Nikkei 60,537 ATH · BoJ HOLD 0.75% (3/9 pro-hike) · USD/JPY 158 · Shunto +5.8% · TSE reform · RISK-ON = ATH confirmé. Support 59,000. Cible 62,000-65,000.',
+    concl:'Nikkei TRÈS HAUSSIER : ATH 60,537 · BoJ HOLD confirmé (3 dissenters = futur signal hike MT) · USD/JPY 158 · EPS exportateurs records. Achat conviction. Stop 58,500.',
   },
   {
     code:'CAC 40', flag:'🇫🇷', name:'CAC 40', bank:'FOREXCOM:FRA40',
-    rate:'~8,331', score:0.5,
+    rate:'~8,139', score:0.5,
     bias:'LÉG. HAUSSIER', biasCls:'bt-lhawk',
-    keyData:[['Niveau','8,331'],['P/E fwd','~14x'],['LVMH','Chine reprend']],
+    keyData:[['Niveau','8,139'],['P/E fwd','~14x'],['LVMH','Chine reprend · Pétrole $108 pèse']],
     pillars:{policy:{score:2.0,wt:'25%'},macro:{score:0.5,wt:'25%'},earnings:{score:0.5,wt:'20%'},flows:{score:1.0,wt:'15%'},risk:{score:0.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BCE 2.00%',v:'Accommodant · Cycle baissier amorcé',c:'bull'},{k:'EUR/USD 1.178',v:'EUR fort · Mixte',c:'neutral'}],pr:'BCE à 2.00% = accommodant = support valorisations. EUR fort = légère pression compétitivité exportateurs mais signe de confiance en zone euro.'},
@@ -2841,14 +2841,14 @@ const INDICES = [
       flows:{rows:[{k:'Rotation hors USD',v:'EUR/USD 1.178 = Europe attractif',c:'bull'},{k:'Value vs Growth',v:'CAC = value · Bénéficie de la rotation',c:'bull'}],pr:'Rotation globale vers l\'Europe (USD faible) = flux entrants CAC. Valorisations attractives vs US attirent les réallocations.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Favorable',c:'bull'},{k:'EUR trop fort',v:'Si 1.20+ → pression exportateurs',c:'neutral'},{k:'WTI $95',v:'France importatrice net pétrole · Neutre',c:'neutral'}],pr:'RISK-ON = support général. EUR fort à surveiller si 1.20+. Pétrole $95 = léger frein mais compensé par EUR fort pour les importations.'},
     },
-    pricing:'CAC 8,331 · BCE accommodante + LVMH Chine rebond + rotation hors USD + pétrole en baisse (France importatrice). Support 8,100. Cible 8,700-9,000.',
-    concl:'CAC légèrement haussier : BCE 2.00% + rotation Europe + LVMH Chine rebond + pétrole moins cher. Moins dynamique que DAX/Nikkei mais fondamentaux en amélioration. Acheter les replis 8,100.',
+    pricing:'CAC 8,139 · BCE 2.00% + LVMH Chine rebond · MAIS Brent $108 pèse France (importatrice nette). Support 7,900-8,000. Cible 8,500-8,700 si pétrole cède.',
+    concl:'CAC légèrement haussier : 8,139 · BCE 2.00% + LVMH rebond. MAIS Brent $108 = vent de face France importatrice. Acheter replis 7,900-8,000. Surveiller pétrole.',
   },
   {
     code:'FTSE 100', flag:'🇬🇧', name:'FTSE 100', bank:'FOREXCOM:UK100',
-    rate:'~10,609', score:1.5,
+    rate:'~10,334', score:1.0,
     bias:'HAUSSIER', biasCls:'bt-hawk',
-    keyData:[['Niveau','10,609 ATH'],['Div. Yield','3.5%'],['Or $4,830','Rio/BHP ↑↑']],
+    keyData:[['Niveau','10,334'],['Div. Yield','3.5%'],['Shell/BP','WTI $96.4 = profits ↑ · Or $4,683 Rio/BHP ↑']],
     pillars:{policy:{score:1.5,wt:'25%'},macro:{score:1.0,wt:'25%'},earnings:{score:2.0,wt:'20%'},flows:{score:1.5,wt:'15%'},risk:{score:1.5,wt:'15%'}},
     detail:{
       policy:{rows:[{k:'BoE',v:'3.75% · Cycle baissier',c:'bull'},{k:'GBP/USD 1.32',v:'GBP fort · Revenus étrangers en £ = atténués',c:'neutral'},{k:'BoE dovish',v:'Cuts = support indirect valorisations',c:'bull'}],pr:'BoE en cycle baissier (3.75%) = valorisations soutenues. GBP fort (1.32) = légère pression sur la traduction des revenus étrangers. Mais BoE dovish = support net positif.'},
@@ -2857,16 +2857,16 @@ const INDICES = [
       flows:{rows:[{k:'Flux value',v:'FTSE = value pur · Réallocation globale',c:'bull'},{k:'Dividend hunters',v:'3.5% + GBP/USD 1.32 = attractif',c:'bull'}],pr:'Double attractivité : yield élevé + potentiel hausse. GBP fort = rendement en EUR/USD encore plus attractif pour étrangers.'},
       risk:{rows:[{k:'Régime',v:'RISK-ON · Bénéfique',c:'bull'},{k:'GBP fort',v:'1.32 · Léger frein revenus étrangers',c:'neutral'},{k:'Defensif',v:'Énergie/banques/mines = stables',c:'bull'}],pr:'RISK-ON = favorable FTSE (composition cyclique via énergie). GBP fort = léger headwind mais compensé par commodités très fortes.'},
     },
-    pricing:'FTSE 10,609 ATH · Or ATH $4,830 + Cuivre $5.89 boostent Rio/BHP. Shell/BP = WTI $88.8 légèrement en baisse. Net positif : minières > pétrolières dans le FTSE actuellement. P/E 13x + yield 3.5% = attractif. Support 10,300. Cible 11,000-11,500.',
-    concl:'FTSE HAUSSIER : ATH 10,609 + super-cycle or/cuivre (Or $4,830 ATH + Cuivre +30%) booste Rio/BHP. Shell/BP légèrement freiné par WTI $88.8. Net positif. P/E 13x + yield 3.5% = excellent rapport risque/récompense.',
+    pricing:'FTSE 10,334 · Léger repli · Shell/BP profitent de WTI $96 · Rio/BHP = Or $4,683 + Cuivre $6.03. Composition énergétique favorable en choc pétrolier. P/E 13x + yield 3.5% = attractif. Support 10,100. Cible 10,700-11,200.',
+    concl:'FTSE LÉG. HAUSSIER : 10,334 · Shell/BP profitent du WTI $96 · Rio/BHP = Or $4,683 + Cuivre $6.03. Composition FTSE (énergie + mines) = hedge naturel choc pétrolier. P/E 13x + yield 3.5%. Acheter replis 10,100.',
   },
 ];
 
 const INDICES_OPPS = [
-  {rank:'01',top:true,pair:'NIKKEI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH zone 59,420 · MEILLEUR indice fondamental renforcé.</strong> BoJ hike prob. tombée à 10% (vs 44%) = JPY reste ultra-faible à 159 = exports records + Shunto +5.8% = sortie déflation historique + TSE reform. Scénario parfait.',spread:'Score : <span>+3.0</span> · Niveau : <span>59,420 ATH</span> · Cible : <span>62,000-65,000</span>'},
-  {rank:'02',top:true,pair:'NASDAQ (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Nouveau ATH 24,404 (+3.8%) · Monétisation IA concrète + Fed dovish + USD faible.</strong> MAG7 beats records. 30x P/E se justifie avec +20% EPS. Beta 1.35 = amplificateur de la hausse.',spread:'Score : <span>+2.5</span> · Niveau : <span>24,404 ATH</span> · Cible : <span>26,000-27,000</span>'},
+  {rank:'01',top:true,pair:'NIKKEI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 60,537 · BoJ HOLD confirmé (3/9 pro-hike = futur signal hawkish MT).</strong> USD/JPY 158 · Shunto +5.8% · TSE reform · EPS exportateurs records. Meilleur indice DM.',spread:'Score : <span>+3.0</span> · Niveau : <span>60,537 ATH</span> · Cible : <span>62,000-65,000</span>'},
+  {rank:'02',top:true,pair:'NASDAQ (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 24,887 · Monétisation IA concrète · FOMC hold + EPS MAG7 saison.</strong> MAG7 beats records. 30x P/E justifié +20% EPS. Beta 1.35 = amplificateur RISK-ON.',spread:'Score : <span>+2.5</span> · Niveau : <span>24,887 ATH</span> · Cible : <span>26,500-27,500</span>'},
   {rank:'03',top:false,pair:'FTSE (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 10,609 · Super-cycle Or/Cuivre.</strong> Rio/BHP = Or $4,830 ATH + Cuivre $5.89/lb (+30%). Shell/BP légèrement freiné (WTI $88.8). Net positif. P/E 13x + yield 3.5% = moins cher + mieux rémunéré.',spread:'Score : <span>+1.5</span> · Niveau : <span>10,609 ATH</span> · Yield : <span>3.5%</span>'},
-  {rank:'04',top:false,pair:'DAX (Long) / NASDAQ (Spread)',dir:'BUY DAX / Relatif',dirCls:'dir-buy',logic:'<strong>Nouveau ATH 24,417 · Zeitenwende fiscal + BCE 2.00% + pétrole $88 (moins cher = industrie allemande soulagée).</strong> Pair trade : long DAX (15x) / short NQ (30x) si valorisation US fatigue.',spread:'Score : <span>+1.5</span> · P/E spread : <span>15x DAX vs 30x NQ</span>'},
+  {rank:'04',top:false,pair:'DAX (Long) / NASDAQ (Spread)',dir:'BUY DAX / Relatif',dirCls:'dir-buy',logic:'<strong>24,100 · Zeitenwende fiscal + BCE 2.00% · Pétrole $108 = pression mais secteur défense offsette.</strong> Pair trade : long DAX (15x) / short NQ (30x) si valorisation US fatigue.',spread:'Score : <span>+1.5</span> · P/E spread : <span>15x DAX vs 30x NQ</span>'},
 ];
 
 /* ═══════════════════════════════════════════
@@ -2885,9 +2885,9 @@ const CRYPTO_PDEF  = [
 const CRYPTO = [
   {
     code:'BTC', flag:'₿', name:'Bitcoin', bank:'BINANCE:BTCUSDT',
-    rate:'~$79,000', score:-0.5,
+    rate:'~$78,263', score:-0.5,
     bias:'LÉG. BAISSIER', biasCls:'bt-ldov',
-    keyData:[['Prix','~$79,000'],['Dominance','58.2%'],['vs ATH','−38% depuis $128K']],
+    keyData:[['Prix','~$78,263'],['Dominance','58.2%'],['vs ATH','−39% depuis $128K']],
     pillars:{
       macro:     {score:-1.5, wt:'20%'},
       onchain:   {score:1.0,  wt:'25%'},
@@ -2902,14 +2902,14 @@ const CRYPTO = [
       supply:{rows:[{k:'Halving Avr. 2024',v:'Récompense : 3.125 BTC/bloc',c:'bull'},{k:'Émission annuelle',v:'~165,000 BTC/an · −50% vs avant',c:'bull'},{k:'Correction mid-cycle',v:'Typique : −30-50% avant nouveau leg',c:'neutral'},{k:'Prochain halving',v:'2028 → supply encore réduite',c:'bull'}],pr:'Correction -42% = normale en cycle post-halving (chaque cycle a 1-2 corrections -40-50% avant ATH final). Supply compressée + demande ETF = thèse LT intacte.'},
       sentiment:{rows:[{k:'Fear & Greed Index',v:'28 / 100 → EXTREME FEAR',c:'bear'},{k:'Funding Rates',v:'Très négatifs · Shorts massifs',c:'bear'},{k:'Dominance BTC',v:'58.2% → flight to quality crypto',c:'neutral'},{k:'Contrarian signal',v:'Extreme fear = zone d\'accumulation historique',c:'bull'},{k:'Retail',v:'Capitulation partielle',c:'neutral'}],pr:'EXTREME FEAR (28) = zone de capitulation = historiquement zone d\'achat LT. Funding ultra-négatif = squeeze violent possible. Contrarian positif pour les accumulateurs patients.'},
     },
-    pricing:'BTC ~$79,000 · Rebond depuis $74K · Correction mid-cycle -38% depuis ATH. Base potentielle en formation. Zone d\'accumulation $74-80K = smart money active. Cible prochain cycle : $150-200K.',
+    pricing:'BTC ~$78,263 · Rebond depuis $74K · Correction mid-cycle -39% depuis ATH. Zone d\'accumulation $74-80K = smart money active. FOMC 28-29 Avr. = catalyseur potentiel. Cible 18-24M : $150-200K.',
     concl:'BTC légèrement baissier CT mais signal de rebond : $79K (+6% depuis le bas) + USD faible + Or ATH = environnement favorable. DCA aggressif $74-80K. Cible 18-24M : $150-200K. Accumulation stratégique.',
   },
   {
     code:'ETH', flag:'Ξ', name:'Ethereum', bank:'BINANCE:ETHUSDT',
-    rate:'~$2,324', score:-1.5,
+    rate:'~$2,282', score:-1.5,
     bias:'BAISSIER', biasCls:'bt-dov',
-    keyData:[['Prix','$2,324'],['ETH/BTC','0.0313'],['vs ATH','−68% depuis $7,500']],
+    keyData:[['Prix','$2,282'],['ETH/BTC','0.0291'],['vs ATH','−70% depuis $7,500']],
     pillars:{
       macro:     {score:-2.0, wt:'20%'},
       onchain:   {score:0.5,  wt:'25%'},
@@ -2929,9 +2929,9 @@ const CRYPTO = [
   },
   {
     code:'SOL', flag:'◎', name:'Solana', bank:'BINANCE:SOLUSDT',
-    rate:'~$86', score:-1.5,
+    rate:'~$84', score:-1.5,
     bias:'BAISSIER', biasCls:'bt-dov',
-    keyData:[['Prix','$86'],['vs ATH','−57% depuis $200'],['FTX sells','Pression continue']],
+    keyData:[['Prix','$84'],['vs ATH','−58% depuis $200'],['FTX sells','Pression continue']],
     pillars:{
       macro:     {score:-2.0, wt:'20%'},
       onchain:   {score:1.5,  wt:'25%'},
@@ -2973,9 +2973,9 @@ const CRYPTO = [
   },
   {
     code:'BNB', flag:'⬡', name:'BNB', bank:'BINANCE:BNBUSDT',
-    rate:'~$635', score:0.0,
+    rate:'~$623', score:0.0,
     bias:'NEUTRE', biasCls:'bt-neu',
-    keyData:[['Prix','$635'],['BSC TVL','$8.8Bn'],['Burn Trim.','$130M']],
+    keyData:[['Prix','$623'],['BSC TVL','$8.8Bn'],['Burn Trim.','$130M']],
     pillars:{
       macro:     {score:-1.0, wt:'20%'},
       onchain:   {score:1.0,  wt:'25%'},
@@ -2996,7 +2996,7 @@ const CRYPTO = [
 ];
 
 const CRYPTO_OPPS = [
-  {rank:'01',top:true,pair:'BTC (DCA Aggressif)',dir:'BUY (DCA)',dirCls:'dir-buy',logic:'<strong>Rebond $79K depuis le bas $74K · Correction mid-cycle −38% · EXTREME FEAR.</strong> Zone d\'accumulation historique. ETF flows positifs = institutionnels achètent la faiblesse. USD faible + Or ATH = environnement favorable. DCA $74-82K. Halving cycle cible $150-200K.',spread:'Score MT : <span>HAUSSIER</span> · Niveau actuel : <span>~$79,000</span> · Cible 18-24M : <span>$150-200K</span>'},
+  {rank:'01',top:true,pair:'BTC (DCA Aggressif)',dir:'BUY (DCA)',dirCls:'dir-buy',logic:'<strong>Rebond $78.3K depuis $74K · Correction mid-cycle −39% · EXTREME FEAR.</strong> Zone d\'accumulation historique. ETF flows positifs = institutionnels achètent la faiblesse. USD faible + Or ATH = environnement favorable. DCA $74-82K. Halving cycle cible $150-200K.',spread:'Score MT : <span>HAUSSIER</span> · Niveau actuel : <span>~$78,263</span> · Cible 18-24M : <span>$150-200K</span>'},
   {rank:'02',top:true,pair:'BTC/ETH (Long Ratio)',dir:'BUY BTC / SELL ETH',dirCls:'dir-buy',logic:'<strong>ETH/BTC à 0.0313 · Quasi-ATB.</strong> ETH perd la guerre narrative vs BTC. L2 cannibalise fees ETH. ETF BTC 6x > ETF ETH. Ratio peut aller à 0.025 dans ce cycle.',spread:'Ratio ETH/BTC : <span>0.0313</span> · Cible : <span>0.025-0.028</span> · Driver : <span>narratif BTC > ETH</span>'},
   {rank:'03',top:false,pair:'XRP (Pari ETF)',dir:'BUY (spéculatif)',dirCls:'dir-buy',logic:'<strong>ETF XRP 2026 = catalyseur binaire.</strong> Clarté légale SEC Win + nouveau régime réglementaire Trump. Si ETF approuvé → $3.50-5.00 (+150%). Accumuler sous $1.30 pour asymétrie.',spread:'Score : <span>−0.5</span> · Catalyseur : <span>ETF XRP 2026</span> · Cible si approuvé : <span>$3.50-5.00</span>'},
   {rank:'04',top:false,pair:'SOL (Rebond différé)',dir:'BUY (différé)',dirCls:'dir-buy',logic:'<strong>Beta 1.8x = rebond violent possible.</strong> Attendre : (1) FTX estate termine les ventes ET (2) Fear&Greed > 50 ET (3) BTC > $85K. Si tous réunis → SOL cible $120-140.',spread:'Score CT : <span>−1.5</span> · Rebond potentiel : <span>+40-60%</span> · Déclencheurs : <span>FTX + BTC $85K</span>'},
@@ -3315,7 +3315,7 @@ document.getElementById('catTabs').addEventListener('click', function(e) {
 });
 
 /* ── DATE ── */
-document.getElementById('update-date').textContent = '21 Avril 2026';
+document.getElementById('update-date').textContent = '28 Avril 2026';
 
 /* ── INIT ── */
 renderGrid();
