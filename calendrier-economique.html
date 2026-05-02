@@ -566,6 +566,41 @@
                 display: block !important;
             }
         }
+
+        /* ─── TABLEAU G10 ─── */
+        .g10-section { margin-bottom: 3rem; }
+        .g10-section h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--gold); display: flex; align-items: center; gap: 0.8rem; }
+        .g10-subtitle { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+        .g10-subtitle span { color: var(--gold); font-weight: 600; }
+        .g10-table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+        .g10-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 720px; }
+        .g10-table thead tr { background: rgba(255,215,0,0.07); border-bottom: 1px solid rgba(255,215,0,0.2); }
+        .g10-table th { padding: 0.85rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #ffffff; white-space: nowrap; }
+        .g10-table th:not(:first-child) { text-align: right; }
+        .g10-table tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }
+        .g10-table tbody tr:last-child { border-bottom: none; }
+        .g10-table tbody tr:hover { background: rgba(255,215,0,0.03); }
+        .g10-table td { padding: 0.85rem 1rem; color: var(--text-muted); white-space: nowrap; }
+        .g10-table td:not(:first-child) { text-align: right; }
+        .td-country { display: flex; align-items: center; gap: 0.65rem; }
+        .td-flag { font-size: 1.2rem; line-height: 1; }
+        .td-names { display: flex; flex-direction: column; }
+        .td-country-name { font-weight: 700; color: #fff; font-size: 0.9rem; }
+        .td-currency { font-size: 0.72rem; color: rgba(255,215,0,0.65); font-weight: 600; letter-spacing: 0.5px; }
+        .td-bank { font-size: 0.78rem; color: rgba(255,255,255,0.45); font-weight: 500; }
+        .td-rate { font-weight: 400; color: var(--text-muted); font-size: 0.88rem; }
+        .badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.18rem 0.55rem; border-radius: 4px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.3px; }
+        .badge-cut  { background: rgba(34,197,94,0.15);  color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+        .badge-hold { background: rgba(255,215,0,0.10);  color: #FFD700;  border: 1px solid rgba(255,215,0,0.2); }
+        .badge-hike { background: rgba(59,130,246,0.12);  color: #60a5fa;  border: 1px solid rgba(59,130,246,0.25); }
+        .inf-low  { color: var(--text-muted); font-weight: 400; }
+        .inf-mid  { color: var(--text-muted); font-weight: 400; }
+        .inf-high { color: var(--text-muted); font-weight: 400; }
+        .g10-note { font-size: 0.75rem; color: rgba(255,255,255,0.28); margin-top: 0.8rem; text-align: right; }
+        @media (max-width: 900px) {
+            .g10-table { font-size: 0.82rem; }
+            .g10-table th, .g10-table td { padding: 0.7rem 0.75rem; }
+        }
 </style>
 </head>
 <body>
@@ -728,6 +763,121 @@
                 <div class="session-next" id="newyork-next">Ouverture dans...</div>
             </div>
         </div>
+    </section>
+
+    <!-- TABLEAU G10 -->
+    <section class="g10-section">
+        <h2>🌐 Taux & Inflation — G10</h2>
+        <p class="g10-subtitle">Taux directeurs des banques centrales et inflation actuelle — <span>Avril 2026</span></p>
+        <div class="g10-table-wrap">
+            <table class="g10-table">
+                <thead>
+                    <tr>
+                        <th>Pays / Devise</th>
+                        <th>Banque Centrale</th>
+                        <th>Taux Directeur</th>
+                        <th>Taux d'Intérêt</th>
+                        <th>Inflation (CPI)</th>
+                        <th>Chômage</th>
+                        <th>PIB Growth</th>
+                        <th>Cible Inflation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-key="US"><td><div class="td-country"><span class="td-flag">🇺🇸</span><div class="td-names"><span class="td-country-name">États-Unis</span><span class="td-currency">USD</span></div></div></td>
+                        <td><span class="td-bank">Fed</span></td>
+                        <td><span class="td-rate">4.25–4.50%</span></td>
+                        <td>4.38%</td>
+                        <td><span class="inf-mid">2.8%</span></td>
+                        <td>4.1%</td>
+                        <td>2.4%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="EU"><td><div class="td-country"><span class="td-flag">🇪🇺</span><div class="td-names"><span class="td-country-name">Zone Euro</span><span class="td-currency">EUR</span></div></div></td>
+                        <td><span class="td-bank">BCE</span></td>
+                        <td><span class="td-rate">2.40%</span></td>
+                        <td>2.40%</td>
+                        <td><span class="inf-low">2.2%</span></td>
+                        <td>6.1%</td>
+                        <td>1.2%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="GB"><td><div class="td-country"><span class="td-flag">🇬🇧</span><div class="td-names"><span class="td-country-name">Royaume-Uni</span><span class="td-currency">GBP</span></div></div></td>
+                        <td><span class="td-bank">BoE</span></td>
+                        <td><span class="td-rate">4.50%</span></td>
+                        <td>4.50%</td>
+                        <td><span class="inf-mid">3.0%</span></td>
+                        <td>4.4%</td>
+                        <td>1.1%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="JP"><td><div class="td-country"><span class="td-flag">🇯🇵</span><div class="td-names"><span class="td-country-name">Japon</span><span class="td-currency">JPY</span></div></div></td>
+                        <td><span class="td-bank">BoJ</span></td>
+                        <td><span class="td-rate">0.50%</span></td>
+                        <td>0.50%</td>
+                        <td><span class="inf-mid">3.7%</span></td>
+                        <td>2.5%</td>
+                        <td>0.6%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="CA"><td><div class="td-country"><span class="td-flag">🇨🇦</span><div class="td-names"><span class="td-country-name">Canada</span><span class="td-currency">CAD</span></div></div></td>
+                        <td><span class="td-bank">BoC</span></td>
+                        <td><span class="td-rate">2.75%</span></td>
+                        <td>2.75%</td>
+                        <td><span class="inf-low">2.1%</span></td>
+                        <td>6.6%</td>
+                        <td>1.5%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="AU"><td><div class="td-country"><span class="td-flag">🇦🇺</span><div class="td-names"><span class="td-country-name">Australie</span><span class="td-currency">AUD</span></div></div></td>
+                        <td><span class="td-bank">RBA</span></td>
+                        <td><span class="td-rate">4.10%</span></td>
+                        <td>4.10%</td>
+                        <td><span class="inf-mid">2.4%</span></td>
+                        <td>4.1%</td>
+                        <td>1.3%</td>
+                        <td>2–3%</td>
+                    </tr>
+                    <tr data-key="NZ"><td><div class="td-country"><span class="td-flag">🇳🇿</span><div class="td-names"><span class="td-country-name">Nouvelle-Zélande</span><span class="td-currency">NZD</span></div></div></td>
+                        <td><span class="td-bank">RBNZ</span></td>
+                        <td><span class="td-rate">3.50%</span></td>
+                        <td>3.50%</td>
+                        <td><span class="inf-low">2.2%</span></td>
+                        <td>5.1%</td>
+                        <td>0.5%</td>
+                        <td>1–3%</td>
+                    </tr>
+                    <tr data-key="CH"><td><div class="td-country"><span class="td-flag">🇨🇭</span><div class="td-names"><span class="td-country-name">Suisse</span><span class="td-currency">CHF</span></div></div></td>
+                        <td><span class="td-bank">SNB</span></td>
+                        <td><span class="td-rate">0.25%</span></td>
+                        <td>0.25%</td>
+                        <td><span class="inf-low">0.3%</span></td>
+                        <td>2.9%</td>
+                        <td>1.6%</td>
+                        <td>0–2%</td>
+                    </tr>
+                    <tr data-key="NO"><td><div class="td-country"><span class="td-flag">🇳🇴</span><div class="td-names"><span class="td-country-name">Norvège</span><span class="td-currency">NOK</span></div></div></td>
+                        <td><span class="td-bank">Norges Bank</span></td>
+                        <td><span class="td-rate">4.50%</span></td>
+                        <td>4.50%</td>
+                        <td><span class="inf-mid">2.6%</span></td>
+                        <td>2.1%</td>
+                        <td>1.8%</td>
+                        <td>2.0%</td>
+                    </tr>
+                    <tr data-key="SE"><td><div class="td-country"><span class="td-flag">🇸🇪</span><div class="td-names"><span class="td-country-name">Suède</span><span class="td-currency">SEK</span></div></div></td>
+                        <td><span class="td-bank">Riksbank</span></td>
+                        <td><span class="td-rate">2.25%</span></td>
+                        <td>2.25%</td>
+                        <td><span class="inf-low">0.5%</span></td>
+                        <td>8.5%</td>
+                        <td>0.5%</td>
+                        <td>2.0%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="g10-note">⚠️ Données indicatives — Avril 2026. Sources : Fed, BCE, BoE, BoJ, BoC, RBA, RBNZ, SNB, Norges Bank, Riksbank.</p>
     </section>
 
     <!-- CALENDRIER ÉCONOMIQUE -->
