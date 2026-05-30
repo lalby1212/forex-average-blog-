@@ -60,8 +60,93 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 .bias-bear{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);color:var(--red);}
 .bias-neut{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);color:var(--gold);}
 
+/* ═══ SIDEBAR TABS ═══ */
+.sb-tabs{display:flex;gap:2px;padding:5px 6px;background:var(--card2);border-bottom:1px solid var(--border);flex-shrink:0;}
+.sb-tab{flex:1;padding:5px 4px;border-radius:5px;border:none;background:transparent;
+  color:var(--muted);font-size:0.67rem;font-weight:700;font-family:inherit;cursor:pointer;
+  transition:all .15s;white-space:nowrap;letter-spacing:0.01em;}
+.sb-tab:hover{color:#fff;background:rgba(255,255,255,0.05);}
+.sb-tab.active{background:rgba(255,215,0,0.1);color:var(--gold);}
+.sb-panel{display:none;flex-direction:column;flex:1;min-height:0;}
+.sb-panel.active{display:flex;}
+
 /* SMC findings */
 .smc-scroll{flex:1;overflow-y:auto;overflow-x:hidden;}
+
+/* ═══ FONDAMENTAL PANEL ═══ */
+.fund-scroll{flex:1;overflow-y:auto;overflow-x:hidden;}
+.fund-scroll::-webkit-scrollbar{width:3px;}
+.fund-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
+.fund-loading{padding:1.5rem 1rem;text-align:center;color:var(--muted);font-size:0.72rem;}
+.fund-loading-dots span{animation:blink 1.2s infinite;}
+.fund-loading-dots span:nth-child(2){animation-delay:.2s;}
+.fund-loading-dots span:nth-child(3){animation-delay:.4s;}
+.fund-sentiment{margin:0.6rem 0.9rem 0.3rem;padding:0.5rem 0.7rem;border-radius:8px;
+  display:flex;align-items:center;gap:0.6rem;}
+.fund-s-bull{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);}
+.fund-s-bear{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);}
+.fund-s-neut{background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.18);}
+.fund-s-icon{font-size:1.1rem;flex-shrink:0;}
+.fund-s-label{font-size:0.72rem;font-weight:800;display:block;}
+.fund-s-score{font-size:0.62rem;color:var(--muted);margin-top:1px;}
+.fund-score-bar{height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:0.35rem;overflow:hidden;}
+.fund-score-fill{height:100%;border-radius:2px;transition:width 0.8s ease;}
+.fund-sec{padding:0.5rem 0.9rem;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fund-sec:last-child{border-bottom:none;}
+.fund-sec-title{font-size:0.58rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;
+  color:rgba(255,215,0,0.45);margin-bottom:0.35rem;}
+.fund-tldr{font-size:0.72rem;line-height:1.55;color:#d0d0d0;font-style:italic;
+  border-left:2px solid rgba(255,215,0,0.35);padding-left:0.55rem;}
+.fund-factor{display:flex;gap:0.45rem;padding:0.25rem 0;font-size:0.7rem;color:#aaa;line-height:1.45;}
+.fund-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.7;flex-shrink:0;margin-top:5px;}
+.fund-concl{font-size:0.7rem;line-height:1.55;color:#ccc;background:rgba(255,215,0,0.03);
+  border-left:2px solid rgba(255,215,0,0.4);padding:0.4rem 0.55rem;border-radius:0 5px 5px 0;}
+.fund-news-item{padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.04);}
+.fund-news-item:last-child{border-bottom:none;}
+.fund-news-title{font-size:0.67rem;color:#ccc;line-height:1.45;cursor:pointer;transition:color .15s;}
+.fund-news-title:hover{color:var(--gold);}
+.fund-news-src{font-size:0.6rem;color:rgba(255,255,255,0.3);margin-top:2px;}
+/* Chat */
+.fund-chat{display:flex;flex-direction:column;border-top:1px solid var(--border);flex-shrink:0;max-height:220px;}
+.fund-chat-label{padding:0.45rem 0.9rem 0.25rem;font-size:0.58rem;font-weight:700;letter-spacing:0.09em;
+  text-transform:uppercase;color:rgba(255,215,0,0.4);flex-shrink:0;}
+.fund-chat-msgs{flex:1;overflow-y:auto;padding:0 0.7rem;display:flex;flex-direction:column;gap:0.4rem;min-height:0;}
+.fund-chat-msgs::-webkit-scrollbar{width:2px;}
+.fund-msg-user{align-self:flex-end;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);
+  color:#fff;border-radius:10px 10px 2px 10px;padding:0.35rem 0.65rem;font-size:0.7rem;max-width:88%;line-height:1.4;}
+.fund-msg-ai{align-self:flex-start;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+  color:rgba(255,255,255,0.8);border-radius:2px 10px 10px 10px;padding:0.35rem 0.65rem;font-size:0.7rem;max-width:88%;line-height:1.4;}
+.fund-chat-input{display:flex;gap:0.3rem;padding:0.45rem 0.7rem;border-top:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
+.fund-input{flex:1;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:15px;
+  color:#fff;font-size:0.72rem;padding:0.38rem 0.75rem;outline:none;font-family:inherit;transition:border-color .2s;}
+.fund-input:focus{border-color:rgba(255,215,0,0.35);}
+.fund-input::placeholder{color:rgba(255,255,255,0.22);}
+.fund-send{background:var(--gold);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:#000;font-size:0.8rem;flex-shrink:0;}
+.fund-send:hover{opacity:0.85;}
+
+/* ═══ DRAWING TOOLBAR ═══ */
+.draw-toolbar{display:flex;align-items:center;gap:3px;padding:0 0.75rem;height:36px;
+  background:rgba(8,8,8,0.95);border-bottom:1px solid rgba(255,215,0,0.08);flex-shrink:0;}
+.draw-tool{display:inline-flex;align-items:center;justify-content:center;gap:0.25rem;
+  width:28px;height:26px;border-radius:5px;border:1px solid transparent;
+  background:transparent;color:var(--muted);font-size:0.75rem;cursor:pointer;
+  font-family:inherit;flex-shrink:0;transition:all .15s;}
+.draw-tool:hover{background:rgba(255,255,255,0.07);color:#fff;border-color:rgba(255,255,255,0.1);}
+.draw-tool.active{background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.35);color:var(--gold);}
+.draw-tool-label{display:inline-flex;align-items:center;justify-content:center;gap:0.25rem;
+  padding:0 0.55rem;height:26px;border-radius:5px;border:1px solid transparent;
+  background:transparent;color:var(--muted);font-size:0.65rem;font-weight:700;cursor:pointer;
+  font-family:inherit;flex-shrink:0;transition:all .15s;white-space:nowrap;letter-spacing:0.02em;}
+.draw-tool-label:hover{background:rgba(255,255,255,0.07);color:#fff;border-color:rgba(255,255,255,0.1);}
+.draw-tool-label.active{background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.35);color:var(--gold);}
+.draw-sep{width:1px;height:18px;background:rgba(255,255,255,0.07);margin:0 3px;flex-shrink:0;}
+.color-dot{width:12px;height:12px;border-radius:50%;cursor:pointer;flex-shrink:0;
+  border:2px solid transparent;transition:all .15s;}
+.color-dot:hover{transform:scale(1.2);}
+.color-dot.active{border-color:#fff;transform:scale(1.15);}
+.draw-spacer{flex:1;}
+.draw-count{font-size:0.62rem;color:rgba(255,255,255,0.25);white-space:nowrap;}
 .smc-scroll::-webkit-scrollbar{width:3px;}
 .smc-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px;}
 .smc-group{padding:0.55rem 0.9rem 0.3rem;}
@@ -165,6 +250,19 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 .chart-retry-btn{padding:0.5rem 1.2rem;border-radius:8px;background:rgba(255,215,0,0.1);
   border:1px solid rgba(255,215,0,0.3);color:var(--gold);font-size:0.78rem;font-weight:700;
   cursor:pointer;font-family:inherit;margin-top:0.3rem;}
+
+/* Live price badge */
+.live-price-badge{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.22rem 0.65rem;border-radius:5px;
+  background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);
+  font-size:0.78rem;font-weight:800;color:var(--gold);
+  font-family:'Monaco','Courier New',monospace;letter-spacing:0.02em;
+}
+.live-pulse{width:5px;height:5px;border-radius:50%;background:var(--green);
+  animation:blink 1s infinite;flex-shrink:0;}
+.price-change-up{color:var(--green);font-size:0.65rem;font-weight:700;font-family:inherit;}
+.price-change-dn{color:var(--red);font-size:0.65rem;font-weight:700;font-family:inherit;}
 
 /* Toast */
 .toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(8px);
@@ -281,6 +379,14 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
       <div class="sidebar-price">Prix actuel : <span id="sb-price">—</span></div>
     </div>
 
+    <!-- Tabs -->
+    <div class="sb-tabs">
+      <button class="sb-tab active" data-panel="smc">📊 Technique</button>
+      <button class="sb-tab" data-panel="fund">📰 Fondamental</button>
+    </div>
+
+    <!-- ── PANEL TECHNIQUE ── -->
+    <div class="sb-panel active" id="sb-panel-smc">
     <div class="mode-header">
       <div class="mode-name" id="mode-name">SMC — Smart Money</div>
       <div class="mode-desc" id="mode-desc">Order Blocks · FVG · BOS/CHoCH · Liquidités</div>
@@ -330,6 +436,27 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
       </div>
     </div>
 
+    </div><!-- /sb-panel-smc -->
+
+    <!-- ── PANEL FONDAMENTAL ── -->
+    <div class="sb-panel" id="sb-panel-fund">
+      <div class="fund-scroll" id="fund-scroll">
+        <div class="fund-loading" id="fund-loading">
+          <div>Analyse en cours</div>
+          <div class="fund-loading-dots"><span>●</span> <span>●</span> <span>●</span></div>
+        </div>
+        <!-- Content injected by JS -->
+      </div>
+      <div class="fund-chat">
+        <div class="fund-chat-label">💬 Demander à l'IA</div>
+        <div class="fund-chat-msgs" id="fund-chat-msgs"></div>
+        <div class="fund-chat-input">
+          <input class="fund-input" id="fund-input" placeholder="Ex: Quel est le biais sur EUR/USD ?" />
+          <button class="fund-send" id="fund-send">➤</button>
+        </div>
+      </div>
+    </div><!-- /sb-panel-fund -->
+
     <div class="kz-section">
       <div class="kz-title">ICT Killzones</div>
       <div class="kz-row"><span class="kz-name">🌏 Tokyo</span><span class="kz-status" id="kz-tokyo">—</span></div>
@@ -356,11 +483,48 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
     <!-- Dynamic symbol bar -->
     <div class="symbol-bar" id="symbolBar"></div>
 
+    <!-- Drawing toolbar -->
+    <div class="draw-toolbar" id="drawToolbar">
+      <!-- Pointer -->
+      <button class="draw-tool active" data-tool="pointer" title="Sélection">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-7 2-4 7z"/></svg>
+      </button>
+      <div class="draw-sep"></div>
+      <!-- Drawing tools -->
+      <button class="draw-tool-label" data-tool="hline" title="Niveau horizontal">— Horizontal</button>
+      <button class="draw-tool-label" data-tool="trend" title="Ligne de tendance">⟋ Tendance</button>
+      <button class="draw-tool-label" data-tool="rect" title="Rectangle">▭ Zone</button>
+      <button class="draw-tool-label" data-tool="fib" title="Fibonacci">⚡ Fibonacci</button>
+      <div class="draw-sep"></div>
+      <!-- Colors -->
+      <div class="color-dot active" data-color="#FFD700" style="background:#FFD700" title="Or"></div>
+      <div class="color-dot" data-color="#22c55e" style="background:#22c55e" title="Vert"></div>
+      <div class="color-dot" data-color="#ef4444" style="background:#ef4444" title="Rouge"></div>
+      <div class="color-dot" data-color="#818cf8" style="background:#818cf8" title="Violet"></div>
+      <div class="color-dot" data-color="#38bdf8" style="background:#38bdf8" title="Bleu"></div>
+      <div class="color-dot" data-color="#ffffff" style="background:rgba(255,255,255,0.8)" title="Blanc"></div>
+      <div class="draw-sep"></div>
+      <!-- Actions -->
+      <button class="draw-tool" id="undoBtn" title="Annuler">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="draw-tool" id="clearBtn" title="Tout effacer">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </button>
+      <div class="draw-spacer"></div>
+      <span class="draw-count" id="draw-count"></span>
+    </div>
+
     <!-- Top bar -->
     <div class="chart-topbar">
       <div class="live-dot"></div>
       <div class="chart-sym-name" id="tb-symbol">EUR/USD</div>
       <div class="chart-sym-desc" id="tb-desc">Euro / Dollar US</div>
+      <div class="live-price-badge" id="live-price-badge" style="display:none;">
+        <span class="live-pulse"></span>
+        <span id="live-price-val">—</span>
+        <span id="live-price-chg"></span>
+      </div>
       <div class="topbar-spacer"></div>
 
       <!-- SMC Toggles -->
@@ -738,6 +902,15 @@ async function loadChart(symbol, label, tfKey) {
     drawOverlay();
     showLoader(false);
 
+    /* Start live price feed */
+    startLiveFeed(symbol);
+
+    /* Reset fondamental if already loaded for previous pair */
+    fundLoaded = false;
+    if (document.getElementById('sb-panel-fund')?.classList.contains('active')) {
+      loadFundamental();
+    }
+
   } catch(e) {
     showLoader(false);
     showError();
@@ -1072,6 +1245,9 @@ function drawOverlay() {
       ctx.fillText('L', x-3, y+16);
     }
   }
+
+  /* ── User drawings (always on top) ── */
+  drawUserDrawings(ctx, W, H);
 
   /* ── ICT: Premium / Discount zone ── */
   if (toggles.pd && extraData.pd) {
@@ -1474,11 +1650,525 @@ document.querySelectorAll('.strat-btn').forEach(btn => {
   });
 });
 
+/* ═══════════════════════════════════════════════
+   SIDEBAR TABS
+═══════════════════════════════════════════════ */
+document.querySelectorAll('.sb-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.sb-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.sb-panel').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('sb-panel-' + this.dataset.panel)?.classList.add('active');
+    if (this.dataset.panel === 'fund' && !fundLoaded) loadFundamental();
+  });
+});
+
+/* ═══════════════════════════════════════════════
+   DRAWING TOOLS ENGINE
+═══════════════════════════════════════════════ */
+let drawings     = [];        // Tous les dessins
+let activeTool   = 'pointer'; // Outil actif
+let drawColor    = '#FFD700'; // Couleur active
+let drawStart    = null;      // Point de départ (en cours)
+let isDrawing    = false;
+let mousePos     = null;      // Position souris courante (canvas)
+
+/* Outil sélectionné */
+document.querySelectorAll('.draw-tool, .draw-tool-label').forEach(btn => {
+  if (!btn.dataset.tool) return;
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.draw-tool, .draw-tool-label').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    activeTool = this.dataset.tool;
+    const canvas = document.getElementById('smc-canvas');
+    canvas.style.pointerEvents = activeTool === 'pointer' ? 'none' : 'all';
+    canvas.style.cursor = activeTool === 'pointer' ? 'default' :
+      activeTool === 'hline' ? 'crosshair' : 'crosshair';
+  });
+});
+
+/* Couleur */
+document.querySelectorAll('.color-dot').forEach(dot => {
+  dot.addEventListener('click', function() {
+    document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    this.classList.add('active');
+    drawColor = this.dataset.color;
+  });
+});
+
+/* Undo */
+document.getElementById('undoBtn')?.addEventListener('click', () => {
+  drawings.pop(); updateDrawCount(); drawOverlay();
+});
+
+/* Clear all */
+document.getElementById('clearBtn')?.addEventListener('click', () => {
+  if (confirm('Effacer tous les dessins ?')) { drawings = []; updateDrawCount(); drawOverlay(); }
+});
+
+function updateDrawCount() {
+  const el = document.getElementById('draw-count');
+  if (el) el.textContent = drawings.length ? `${drawings.length} élément${drawings.length>1?'s':''}` : '';
+}
+
+/* Canvas mouse events */
+function initDrawingEvents() {
+  const canvas = document.getElementById('smc-canvas');
+
+  canvas.addEventListener('mousedown', e => {
+    if (activeTool === 'pointer') return;
+    const rect = canvas.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+    const time  = chart.timeScale().coordinateToTime(cx);
+    const price = candleSeries.coordinateToPrice(cy);
+    if (!time || price === null) return;
+
+    if (activeTool === 'hline') {
+      drawings.push({ type:'hline', price, color:drawColor });
+      updateDrawCount(); drawOverlay(); return;
+    }
+    drawStart = { cx, cy, time, price };
+    isDrawing = true;
+  });
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    mousePos = { cx: e.clientX - rect.left, cy: e.clientY - rect.top };
+    if (isDrawing) drawOverlay(); // redraw with preview
+  });
+
+  canvas.addEventListener('mouseup', e => {
+    if (!isDrawing || !drawStart) return;
+    const rect = canvas.getBoundingClientRect();
+    const cx = e.clientX - rect.left;
+    const cy = e.clientY - rect.top;
+    const time  = chart.timeScale().coordinateToTime(cx);
+    const price = candleSeries.coordinateToPrice(cy);
+    if (!time || price === null) { isDrawing=false; drawStart=null; return; }
+
+    if (activeTool === 'trend') {
+      drawings.push({ type:'trend', t1:drawStart.time, p1:drawStart.price, t2:time, p2:price, color:drawColor });
+    } else if (activeTool === 'rect') {
+      drawings.push({ type:'rect',  t1:drawStart.time, p1:drawStart.price, t2:time, p2:price, color:drawColor });
+    } else if (activeTool === 'fib') {
+      drawings.push({ type:'fib',   t1:drawStart.time, p1:drawStart.price, t2:time, p2:price, color:drawColor });
+    }
+    isDrawing=false; drawStart=null; updateDrawCount(); drawOverlay();
+  });
+
+  canvas.addEventListener('mouseleave', () => { mousePos=null; });
+}
+
+/* Draw user drawings on canvas */
+function drawUserDrawings(ctx, W, H) {
+  const toX = t => chart.timeScale().timeToCoordinate(t);
+  const toY = p => candleSeries.priceToCoordinate(p);
+
+  for (const d of drawings) {
+    ctx.save();
+    ctx.strokeStyle = d.color || '#FFD700';
+    ctx.fillStyle   = d.color || '#FFD700';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([]);
+
+    if (d.type === 'hline') {
+      const y = toY(d.price);
+      if (y === null) { ctx.restore(); continue; }
+      ctx.globalAlpha = 0.85;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      ctx.globalAlpha = 0.7;
+      ctx.font = 'bold 9px -apple-system,sans-serif';
+      ctx.fillText(formatPrice(d.price), W - 58, y - 3);
+
+    } else if (d.type === 'trend') {
+      const x1=toX(d.t1), y1=toY(d.p1), x2=toX(d.t2), y2=toY(d.p2);
+      if (!x1||!y1||!x2||!y2) { ctx.restore(); continue; }
+      ctx.globalAlpha = 0.85;
+      /* Extend line slightly */
+      const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+      const ext=80; const ux=dx/len, uy=dy/len;
+      ctx.beginPath(); ctx.moveTo(x1-ux*ext, y1-uy*ext); ctx.lineTo(x2+ux*ext, y2+uy*ext); ctx.stroke();
+      /* End dots */
+      ctx.beginPath(); ctx.arc(x1,y1,3,0,Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x2,y2,3,0,Math.PI*2); ctx.fill();
+
+    } else if (d.type === 'rect') {
+      const x1=toX(d.t1), y1=toY(d.p1), x2=toX(d.t2), y2=toY(d.p2);
+      if (!x1||!y1||!x2||!y2) { ctx.restore(); continue; }
+      ctx.globalAlpha = 0.12;
+      ctx.fillRect(Math.min(x1,x2), Math.min(y1,y2), Math.abs(x2-x1), Math.abs(y2-y1));
+      ctx.globalAlpha = 0.7;
+      ctx.strokeRect(Math.min(x1,x2), Math.min(y1,y2), Math.abs(x2-x1), Math.abs(y2-y1));
+
+    } else if (d.type === 'fib') {
+      const x1=toX(d.t1), y1=toY(d.p1), x2=toX(d.t2), y2=toY(d.p2);
+      if (!x1||!y1||!x2||!y2) { ctx.restore(); continue; }
+      const levels = [0, 0.236, 0.382, 0.5, 0.618, 0.786, 1];
+      const fibColors = ['#22c55e','#a78bfa','#f59e0b','#FFD700','#f59e0b','#a78bfa','#ef4444'];
+      const range = d.p1 - d.p2;
+      ctx.font = 'bold 8px -apple-system,sans-serif';
+      levels.forEach((l, i) => {
+        const p = d.p2 + range * l;
+        const y = toY(p);
+        if (y === null) return;
+        ctx.globalAlpha = 0.6;
+        ctx.strokeStyle = fibColors[i];
+        ctx.lineWidth   = 1;
+        ctx.setLineDash([4,4]);
+        ctx.beginPath(); ctx.moveTo(Math.min(x1,x2), y); ctx.lineTo(W, y); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle   = fibColors[i];
+        ctx.globalAlpha = 0.75;
+        ctx.fillText(`${(l*100).toFixed(1)}%  ${formatPrice(p)}`, Math.min(x1,x2)+4, y-2);
+      });
+    }
+    ctx.restore();
+  }
+
+  /* Preview en cours */
+  if (isDrawing && drawStart && mousePos) {
+    ctx.save();
+    ctx.strokeStyle = drawColor;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,4]);
+    ctx.globalAlpha = 0.6;
+    if (activeTool === 'trend') {
+      ctx.beginPath(); ctx.moveTo(drawStart.cx, drawStart.cy); ctx.lineTo(mousePos.cx, mousePos.cy); ctx.stroke();
+    } else if (activeTool === 'rect') {
+      const w = mousePos.cx - drawStart.cx, h = mousePos.cy - drawStart.cy;
+      ctx.fillStyle = drawColor; ctx.globalAlpha = 0.06;
+      ctx.fillRect(drawStart.cx, drawStart.cy, w, h);
+      ctx.globalAlpha = 0.5;
+      ctx.strokeRect(drawStart.cx, drawStart.cy, w, h);
+    } else if (activeTool === 'fib') {
+      ctx.beginPath(); ctx.moveTo(drawStart.cx, drawStart.cy); ctx.lineTo(mousePos.cx, mousePos.cy); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   ANALYSE FONDAMENTALE
+═══════════════════════════════════════════════ */
+let fundLoaded   = false;
+let fundNewsData = [];
+let fundContext  = '';  // Contexte pour le chat
+
+const FUND_CAT = {
+  'EURUSD=X':'forex','GBPUSD=X':'forex','USDJPY=X':'forex','USDCHF=X':'forex',
+  'USDCAD=X':'forex','AUDUSD=X':'forex','NZDUSD=X':'forex','EURGBP=X':'forex',
+  'EURJPY=X':'forex','GBPJPY=X':'forex','XAUUSD=X':'or','CL=F':'petrole',
+  'BZ=F':'petrole','BTC-USD':'crypto','ETH-USD':'crypto','SOL-USD':'crypto',
+  'BNB-USD':'crypto','XRP-USD':'crypto','^GSPC':'macro','^NDX':'macro','^DJI':'macro',
+};
+
+const BULL_KW = ['hausse','haussier','bull','acheter','long','monte','positif','fort','solidifie','rebond','progression','croissance','optimiste','gain','sommet','record','support','force','favorable'];
+const BEAR_KW = ['baisse','baissier','bear','vendre','short','descend','négatif','faible','chute','recul','correction','risque','pression','résistance','rejet','pessimiste','perte','creux'];
+
+function scoreSentiment(texts) {
+  let bull = 0, bear = 0;
+  const combined = texts.join(' ').toLowerCase();
+  BULL_KW.forEach(w => { bull += (combined.match(new RegExp(w,'g'))||[]).length; });
+  BEAR_KW.forEach(w => { bear += (combined.match(new RegExp(w,'g'))||[]).length; });
+  const total = bull + bear || 1;
+  return { bull, bear, score: bull/total, bias: bull>bear?'bull':bear>bull?'bear':'neut' };
+}
+
+async function loadFundamental() {
+  fundLoaded = true;
+  const cat  = FUND_CAT[currentSym] || 'forex';
+  const scroll = document.getElementById('fund-scroll');
+
+  scroll.innerHTML = `<div class="fund-loading"><div>Chargement des actualités…</div><div class="fund-loading-dots"><span>●</span> <span>●</span> <span>●</span></div></div>`;
+
+  try {
+    const sources = [
+      `/api/news?category=${cat}`,
+      `https://corsproxy.io/?url=${encodeURIComponent(`https://forexaverage.com/api/news?category=${cat}`)}`,
+    ];
+    let items = [];
+    for (const url of sources) {
+      try {
+        const res = await fetch(url, { signal:AbortSignal.timeout(10000) });
+        if (!res.ok) continue;
+        const json = await res.json();
+        if (json.items?.length) { items = json.items; break; }
+      } catch(e) {}
+    }
+
+    if (!items.length) throw new Error('Pas de données');
+
+    fundNewsData = items.slice(0, 12);
+    const titles = items.map(i => i.title + ' ' + (i.summary||''));
+    const sent   = scoreSentiment(titles);
+
+    /* Build context for chat */
+    fundContext = `Paire: ${currentLabel} | Catégorie: ${cat} | Biais: ${sent.bias==='bull'?'Haussier':sent.bias==='bear'?'Baissier':'Neutre'} | Score: ${Math.round(sent.score*100)}% bull\nActualités récentes:\n` + items.slice(0,5).map(i=>`- ${i.title}`).join('\n');
+
+    /* Render */
+    const sentClass = sent.bias==='bull'?'fund-s-bull':sent.bias==='bear'?'fund-s-bear':'fund-s-neut';
+    const sentIcon  = sent.bias==='bull'?'▲':sent.bias==='bear'?'▼':'◆';
+    const sentLabel = sent.bias==='bull'?'Haussier':sent.bias==='bear'?'Baissier':'Neutre';
+    const sentColor = sent.bias==='bull'?'var(--green)':sent.bias==='bear'?'var(--red)':'var(--gold)';
+    const barW      = Math.round(sent.score*100);
+
+    /* Auto-generate TLDR */
+    const tldr = generateTLDR(sent, currentLabel, items);
+    const factors = generateFactors(items.slice(0,5));
+
+    scroll.innerHTML = `
+      <div class="fund-sentiment ${sentClass}">
+        <div style="font-size:1.4rem;">${sentIcon}</div>
+        <div>
+          <span class="fund-s-label" style="color:${sentColor}">${sentLabel} — ${currentLabel}</span>
+          <span class="fund-s-score">Bull ${sent.bull} · Bear ${sent.bear} · Score ${Math.round(sent.score*100)}%</span>
+          <div class="fund-score-bar"><div class="fund-score-fill" style="width:${barW}%;background:${sentColor};"></div></div>
+        </div>
+      </div>
+      <div class="fund-sec">
+        <div class="fund-sec-title">Résumé de marché</div>
+        <div class="fund-tldr">${tldr}</div>
+      </div>
+      <div class="fund-sec">
+        <div class="fund-sec-title">Facteurs clés</div>
+        ${factors.map(f=>`<div class="fund-factor"><div class="fund-dot"></div><div>${f}</div></div>`).join('')}
+      </div>
+      <div class="fund-sec">
+        <div class="fund-sec-title">Actualités récentes (${items.length})</div>
+        ${fundNewsData.map(n=>`
+          <div class="fund-news-item">
+            <div class="fund-news-title" onclick="window.open('${n.link}','_blank')">${n.title}</div>
+            <div class="fund-news-src">${n.source} · ${timeAgo ? timeAgo(n.date) : ''}</div>
+          </div>`).join('')}
+      </div>
+    `;
+
+  } catch(e) {
+    scroll.innerHTML = `<div class="fund-loading" style="color:var(--red);">❌ Impossible de charger les données</div>`;
+  }
+}
+
+function generateTLDR(sent, label, items) {
+  const dir   = sent.bias==='bull'?'haussier':'baissier';
+  const score = Math.round(sent.score*100);
+  const recent = items[0]?.title?.slice(0,60) || '';
+  if (sent.bias === 'neut') return `Le marché sur ${label} montre un sentiment neutre. Les données fondamentales sont mitigées, sans direction claire.`;
+  return `Le sentiment sur ${label} est ${dir} avec un score de ${score}%. Les actualités récentes tendent vers une continuation ${dir}e. "${recent}…"`;
+}
+
+function generateFactors(items) {
+  const factors = [];
+  const keywords = {
+    'Fed|FOMC|taux|interest rate': 'Décision de la Fed / politique monétaire impacte la devise',
+    'BCE|ECB|banque centrale': 'La banque centrale européenne surveille l\'inflation',
+    'inflation|CPI|PCE': 'Les données d\'inflation influencent les prochaines décisions de taux',
+    'NFP|emploi|chômage|jobs': 'Les données emploi américaines sont le principal catalyseur',
+    'or|gold|refuge|safe': 'L\'or joue son rôle de valeur refuge face à l\'incertitude',
+    'bitcoin|crypto|btc': 'Le marché crypto réagit aux flux institutionnels',
+    'pétrole|oil|opep|opec': 'Les niveaux de production OPEP+ conditionnent le prix',
+    'géopolitique|war|conflit': 'Les tensions géopolitiques augmentent l\'aversion au risque',
+    'gdp|pib|croissance|growth': 'Les perspectives de croissance économique orientent le biais',
+  };
+  const combined = items.map(i=>i.title+' '+(i.summary||'')).join(' ').toLowerCase();
+  for (const [pattern, factor] of Object.entries(keywords)) {
+    if (new RegExp(pattern,'i').test(combined)) factors.push(factor);
+    if (factors.length >= 4) break;
+  }
+  if (!factors.length) factors.push('Surveillance des données macro et des flux institutionnels recommandée.');
+  return factors;
+}
+
+/* ── Chat fondamental ── */
+const CHAT_RESPONSES = [
+  { q:/biais|direction|tendance/, r:(c) => `Selon les actualités récentes : ${c.includes('Haussier')?'le biais est HAUSSIER — chercher des setups à l\'achat sur retrace.':'le biais est BAISSIER — les vendeurs ont la main, favoriser les positions courtes.'}` },
+  { q:/niveau|support|résistance|prix/, r:() => `Consultez l'onglet Technique (SMC/ICT) pour les niveaux précis : Order Blocks, FVG et zones de liquidité sont tracés automatiquement sur le graphique.` },
+  { q:/trade|entrer|setup|signal/, r:() => `Un bon setup combine : 1) Biais fondamental (onglet Fondamental), 2) Confirmation technique (BOS + OB sur l'onglet Technique), 3) Entrée en killzone ICT (Tokyo/London/NY).` },
+  { q:/inflation|taux|fed|bce/, r:() => `Les banques centrales restent le principal driver des devises. Surveillez CPI, NFP et les minutes Fed/BCE pour anticiper les pivots de politique monétaire.` },
+  { q:/risk|risque|sl|stop/, r:() => `Règle de gestion : ne risquez jamais plus de 1-2% du capital par trade. Placez votre SL sous/sur l'Order Block identifié. Le R/R minimal recommandé est 1:2.` },
+];
+
+function chatResponse(msg) {
+  const m = msg.toLowerCase();
+  for (const r of CHAT_RESPONSES) {
+    if (r.q.test(m)) return r.r(fundContext);
+  }
+  /* Fallback contextuel */
+  const bias = fundContext.includes('Haussier')?'haussier':'baissier';
+  return `Sur ${currentLabel}, le contexte fondamental est actuellement ${bias}. Pour plus de précision, combineze avec l'analyse technique (SMC) visible sur le graphique.`;
+}
+
+document.getElementById('fund-send')?.addEventListener('click', sendFundChat);
+document.getElementById('fund-input')?.addEventListener('keydown', e => { if (e.key==='Enter') sendFundChat(); });
+
+function sendFundChat() {
+  const input = document.getElementById('fund-input');
+  const msgs  = document.getElementById('fund-chat-msgs');
+  const msg   = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+
+  msgs.innerHTML += `<div class="fund-msg-user">${msg}</div>`;
+  msgs.scrollTop = msgs.scrollHeight;
+
+  setTimeout(() => {
+    const reply = chatResponse(msg);
+    msgs.innerHTML += `<div class="fund-msg-ai">${reply}</div>`;
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 400);
+}
+
+/* ═══════════════════════════════════════════════
+   LIVE PRICE ENGINE
+   Crypto  → Binance WebSocket (temps réel)
+   Forex / Indices / Commodités → Polling Yahoo (10s)
+═══════════════════════════════════════════════ */
+
+let livePriceLine  = null;   // ligne horizontale sur le chart
+let liveWS         = null;   // WebSocket Binance
+let livePollTimer  = null;   // Timer polling
+let lastLivePrice  = null;   // Dernier prix reçu
+let openLivePrice  = null;   // Prix d'ouverture (pour variation %)
+
+/* Binance symbol map */
+const BINANCE_SYM = {
+  'BTC-USD':'BTCUSDT','ETH-USD':'ETHUSDT','SOL-USD':'SOLUSDT',
+  'BNB-USD':'BNBUSDT','XRP-USD':'XRPUSDT','ADA-USD':'ADAUSDT',
+  'AVAX-USD':'AVAXUSDT','DOGE-USD':'DOGEUSDT','DOT-USD':'DOTUSDT',
+  'LINK-USD':'LINKUSDT','MATIC-USD':'MATICUSDT','LTC-USD':'LTCUSDT',
+  'ATOM-USD':'ATOMUSDT','UNI-USD':'UNIUSDT','NEAR-USD':'NEARUSDT',
+  'OP-USD':'OPUSDT','ARB-USD':'ARBUSDT','SUI-USD':'SUIUSDT',
+  'TRX-USD':'TRXUSDT','SHIB-USD':'SHIBUSDT',
+};
+
+function stopLiveFeed() {
+  if (liveWS)       { liveWS.close(); liveWS = null; }
+  if (livePollTimer){ clearInterval(livePollTimer); livePollTimer = null; }
+  if (livePriceLine && candleSeries) {
+    try { candleSeries.removePriceLine(livePriceLine); } catch(e){}
+    livePriceLine = null;
+  }
+  document.getElementById('live-price-badge').style.display = 'none';
+}
+
+function startLiveFeed(symbol) {
+  stopLiveFeed();
+  lastLivePrice = null;
+  openLivePrice = null;
+
+  const binSym = BINANCE_SYM[symbol];
+  if (binSym) {
+    startBinanceWS(binSym);
+  } else {
+    startYahooPoll(symbol);
+  }
+}
+
+/* ── Binance WebSocket ── */
+function startBinanceWS(binSym) {
+  const url = `wss://stream.binance.com:9443/ws/${binSym.toLowerCase()}@ticker`;
+  liveWS = new WebSocket(url);
+
+  liveWS.onmessage = (evt) => {
+    try {
+      const d = JSON.parse(evt.data);
+      const price = parseFloat(d.c);   // current price
+      const open  = parseFloat(d.o);   // open price (24h)
+      if (!isNaN(price)) updateLivePrice(price, open);
+    } catch(e) {}
+  };
+
+  liveWS.onerror = () => {
+    liveWS = null;
+    startYahooPoll(currentSym); // fallback
+  };
+
+  liveWS.onclose = () => { liveWS = null; };
+}
+
+/* ── Yahoo Finance polling ── */
+async function fetchLiveYahoo(symbol) {
+  const sources = [
+    `/api/ohlc?symbol=${encodeURIComponent(symbol)}&interval=1m&range=1d`,
+    `https://corsproxy.io/?url=${encodeURIComponent(`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1m&range=1d`)}`,
+  ];
+  for (const url of sources) {
+    try {
+      const res  = await fetch(url, { signal: AbortSignal.timeout(8000) });
+      if (!res.ok) continue;
+      const json = await res.json();
+      const r = json.chart?.result?.[0];
+      if (!r) continue;
+      const q = r.indicators.quote[0];
+      const closes = q.close?.filter(v => v != null);
+      const opens  = q.open?.filter(v => v != null);
+      if (closes?.length) {
+        const price    = closes[closes.length-1];
+        const dayOpen  = opens?.[0] ?? price;
+        updateLivePrice(price, dayOpen);
+        return;
+      }
+    } catch(e) {}
+  }
+}
+
+function startYahooPoll(symbol) {
+  fetchLiveYahoo(symbol);
+  livePollTimer = setInterval(() => fetchLiveYahoo(symbol), 10000);
+}
+
+/* ── Update UI & chart line ── */
+function updateLivePrice(price, dayOpen) {
+  if (!price || isNaN(price)) return;
+  lastLivePrice = price;
+  if (dayOpen) openLivePrice = dayOpen;
+
+  /* Badge topbar */
+  const badge = document.getElementById('live-price-badge');
+  const valEl = document.getElementById('live-price-val');
+  const chgEl = document.getElementById('live-price-chg');
+  badge.style.display = 'inline-flex';
+  valEl.textContent = formatPrice(price);
+
+  if (openLivePrice) {
+    const pct = ((price - openLivePrice) / openLivePrice * 100);
+    const sign = pct >= 0 ? '+' : '';
+    chgEl.textContent = `${sign}${pct.toFixed(2)}%`;
+    chgEl.className   = pct >= 0 ? 'price-change-up' : 'price-change-dn';
+  }
+
+  /* Sidebar price */
+  document.getElementById('sb-price').textContent = formatPrice(price);
+
+  /* Ligne de prix sur le chart */
+  if (!chart || !candleSeries) return;
+  if (livePriceLine) {
+    try { candleSeries.removePriceLine(livePriceLine); } catch(e){}
+  }
+  livePriceLine = candleSeries.createPriceLine({
+    price,
+    color:         'rgba(255,215,0,0.85)',
+    lineWidth:     1,
+    lineStyle:     LightweightCharts.LineStyle.Dashed,
+    axisLabelVisible: true,
+    title:         '● LIVE',
+  });
+
+  /* Mettre à jour la dernière bougie si visible */
+  if (currentCandles.length > 0) {
+    const last = currentCandles[currentCandles.length-1];
+    const updated = { ...last, close: price, high: Math.max(last.high, price), low: Math.min(last.low, price) };
+    try { candleSeries.update(updated); } catch(e) {}
+  }
+}
+
 /* ── Boot ── */
 applyStrategy('smc');
 renderSymbolBar('forex-maj', 'EURUSD=X');
 initChart();
 loadChart('EURUSD=X', 'EUR/USD', 'H1');
+initDrawingEvents();
 updateKillzones();
 setInterval(updateKillzones, 30000);
 
