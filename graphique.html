@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Graphiques SMC Live | Forex Average</title>
-<meta name="description" content="Graphiques de trading avec analyse SMC & ICT automatique — Order Blocks, FVG, BOS, Liquidités."/>
+<title>Graphiques Live | SMC · ICT · Chartiste | Forex Average</title>
+<meta name="description" content="Graphiques de trading avec analyse automatique — SMC, ICT, Chartiste, Liquidités."/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -39,7 +39,7 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 @media(max-width:820px){.nav-links{display:none;}.nav-burger{display:flex;}}
 
 /* ═══ LAYOUT ═══ */
-.page-body{display:flex;height:calc(100vh - var(--nav-h));margin-top:var(--nav-h);}
+.page-body{display:flex;height:calc(100vh - var(--nav-h) - 44px);margin-top:calc(var(--nav-h) + 44px);}
 
 /* ═══ SIDEBAR ═══ */
 .sidebar{width:220px;flex-shrink:0;background:var(--card);border-right:1px solid var(--border);
@@ -169,15 +169,53 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 .leg-box{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
 .leg-line{width:14px;height:2px;border-radius:1px;flex-shrink:0;}
 
+/* ═══ STRATEGY BAR ═══ */
+.strategy-bar{
+  display:flex;align-items:center;gap:6px;
+  padding:0 1rem;height:44px;flex-shrink:0;
+  background:rgba(5,5,5,0.98);
+  border-bottom:1px solid rgba(255,215,0,0.14);
+  overflow-x:auto;scrollbar-width:none;
+}
+.strategy-bar::-webkit-scrollbar{display:none;}
+.strat-label{font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(255,215,0,0.4);white-space:nowrap;margin-right:4px;}
+.strat-btn{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.32rem 0.85rem;border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);
+  color:var(--muted);font-size:0.75rem;font-weight:700;cursor:pointer;
+  font-family:inherit;white-space:nowrap;flex-shrink:0;transition:all .18s;
+  letter-spacing:0.01em;
+}
+.strat-btn:hover{border-color:rgba(255,215,0,0.3);color:#fff;background:rgba(255,255,255,0.07);}
+.strat-btn.active{
+  background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.45);
+  color:var(--gold);box-shadow:0 0 12px rgba(255,215,0,0.1);
+}
+.strat-btn .strat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+
+/* Sidebar mode header */
+.mode-header{
+  padding:0.5rem 0.9rem;
+  background:rgba(255,215,0,0.05);
+  border-bottom:1px solid rgba(255,215,0,0.12);
+  flex-shrink:0;
+}
+.mode-name{font-size:0.65rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
+.mode-desc{font-size:0.65rem;color:var(--muted);margin-top:2px;line-height:1.4;}
+
 @media(max-width:900px){
   .sidebar{display:none;}
   .chart-sym-desc{display:none;}
   .smc-toggles{display:none;}
+  .strategy-bar{padding:0 0.75rem;}
 }
 @media(max-width:640px){
   .chart-topbar{height:38px;padding:0 0.75rem;}
   .tf-btn[data-tf="M15"]{display:none;}
   .tf-btn[data-tf="W"]{display:none;}
+  .strat-btn{font-size:0.7rem;padding:0.28rem 0.65rem;}
 }
 </style>
 </head>
@@ -198,15 +236,40 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
   </div>
 </nav>
 
+<!-- STRATEGY BAR -->
+<div class="strategy-bar" id="strategyBar">
+  <span class="strat-label">Stratégie :</span>
+  <button class="strat-btn active" data-strat="smc">
+    <span class="strat-dot" style="background:#FFD700;"></span>SMC
+  </button>
+  <button class="strat-btn" data-strat="ict">
+    <span class="strat-dot" style="background:#a78bfa;"></span>ICT
+  </button>
+  <button class="strat-btn" data-strat="liq">
+    <span class="strat-dot" style="background:#fbbf24;"></span>Liquidités
+  </button>
+  <button class="strat-btn" data-strat="chartiste">
+    <span class="strat-dot" style="background:#22c55e;"></span>Chartiste
+  </button>
+  <button class="strat-btn" data-strat="classique">
+    <span class="strat-dot" style="background:#38bdf8;"></span>Classique
+  </button>
+</div>
+
 <!-- PAGE -->
-<div class="page-body">
+<div class="page-body" style="height:calc(100vh - var(--nav-h) - 44px);margin-top:calc(var(--nav-h) + 44px);">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <div class="sidebar-title"><span class="sidebar-dot"></span>SMC &amp; ICT — Analyse Auto</div>
+      <div class="sidebar-title"><span class="sidebar-dot"></span>Analyse Auto</div>
       <div class="sidebar-symbol" id="sb-symbol">EUR/USD</div>
       <div class="sidebar-price">Prix actuel : <span id="sb-price">—</span></div>
+    </div>
+
+    <div class="mode-header">
+      <div class="mode-name" id="mode-name">SMC — Smart Money</div>
+      <div class="mode-desc" id="mode-desc">Order Blocks · FVG · BOS/CHoCH · Liquidités</div>
     </div>
 
     <div id="sb-bias" class="bias-pill bias-neut">⬛ Biais : Calcul…</div>
@@ -227,6 +290,29 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
       <div class="smc-group">
         <div class="smc-group-title">Liquidités</div>
         <div id="list-liq"><div class="smc-empty">Chargement…</div></div>
+      </div>
+      <!-- ICT extras -->
+      <div class="smc-group" id="grp-pd" style="display:none;">
+        <div class="smc-group-title">Premium / Discount</div>
+        <div id="list-pd"><div class="smc-empty">Calcul…</div></div>
+      </div>
+      <div class="smc-group" id="grp-ote" style="display:none;">
+        <div class="smc-group-title">OTE Zone (62–79%)</div>
+        <div id="list-ote"><div class="smc-empty">Calcul…</div></div>
+      </div>
+      <!-- Chartiste extras -->
+      <div class="smc-group" id="grp-sr" style="display:none;">
+        <div class="smc-group-title">Support / Résistance</div>
+        <div id="list-sr"><div class="smc-empty">Calcul…</div></div>
+      </div>
+      <div class="smc-group" id="grp-swing" style="display:none;">
+        <div class="smc-group-title">Swing Points</div>
+        <div id="list-swing"><div class="smc-empty">—</div></div>
+      </div>
+      <!-- Classique extras -->
+      <div class="smc-group" id="grp-ema" style="display:none;">
+        <div class="smc-group-title">EMA</div>
+        <div id="list-ema"><div class="smc-empty">Calcul…</div></div>
       </div>
     </div>
 
@@ -499,6 +585,13 @@ async function loadChart(symbol, label, tfKey) {
 
     /* Run SMC */
     runSMC(candles);
+
+    /* Compute extra data for current strategy */
+    if (toggles.pd || toggles.ote) computeICTZones(candles);
+    if (toggles.sr)  computeSRLevels(candles);
+    if (toggles.ema) computeEMAs(candles);
+    updateSidebarExtra();
+
     resizeCanvas();
     drawOverlay();
     showLoader(false);
@@ -838,6 +931,92 @@ function drawOverlay() {
     }
   }
 
+  /* ── ICT: Premium / Discount zone ── */
+  if (toggles.pd && extraData.pd) {
+    const pd = extraData.pd;
+    const yMid  = toY(pd.mid);
+    const yHigh = toY(pd.high);
+    const yLow  = toY(pd.low);
+    if (yMid!==null && yHigh!==null && yLow!==null) {
+      // Premium zone (above mid)
+      ctx.fillStyle = 'rgba(239,68,68,0.04)';
+      ctx.fillRect(0, yHigh, W, yMid - yHigh);
+      // Discount zone (below mid)
+      ctx.fillStyle = 'rgba(34,197,94,0.04)';
+      ctx.fillRect(0, yMid, W, yLow - yMid);
+      // Mid line
+      ctx.strokeStyle = 'rgba(255,215,0,0.5)';
+      ctx.lineWidth = 1; ctx.setLineDash([6,4]);
+      ctx.beginPath(); ctx.moveTo(0,yMid); ctx.lineTo(W,yMid); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle='rgba(255,215,0,0.7)'; ctx.font='bold 9px -apple-system,sans-serif';
+      ctx.fillText('EQ 50%', 6, yMid-3);
+      ctx.fillStyle='rgba(239,68,68,0.7)'; ctx.fillText('PREMIUM', 6, yHigh+12);
+      ctx.fillStyle='rgba(34,197,94,0.7)'; ctx.fillText('DISCOUNT', 6, yLow-4);
+    }
+  }
+
+  /* ── ICT: OTE Zone ── */
+  if (toggles.ote && extraData.ote) {
+    const ote = extraData.ote;
+    const y1 = toY(ote.top), y2 = toY(ote.bottom);
+    if (y1!==null && y2!==null) {
+      ctx.fillStyle = 'rgba(167,139,250,0.12)';
+      ctx.strokeStyle = 'rgba(167,139,250,0.55)';
+      ctx.lineWidth=1; ctx.setLineDash([4,3]);
+      ctx.fillRect(0, y1, W, y2-y1);
+      ctx.strokeRect(0, y1, W, y2-y1);
+      ctx.setLineDash([]);
+      ctx.fillStyle='rgba(167,139,250,0.85)'; ctx.font='bold 9px -apple-system,sans-serif';
+      ctx.fillText('OTE 62–79%', 6, y1+12);
+    }
+  }
+
+  /* ── Chartiste: Support / Resistance ── */
+  if (toggles.sr && extraData.srLevels.length) {
+    for (const sr of extraData.srLevels) {
+      const y = toY(sr.price);
+      if (y===null) continue;
+      const alpha = Math.min(0.85, 0.4 + sr.touches*0.1);
+      ctx.strokeStyle = `rgba(34,197,94,${alpha})`;
+      ctx.lineWidth = sr.touches >= 3 ? 1.5 : 1;
+      ctx.setLineDash(sr.touches >= 3 ? [] : [5,4]);
+      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = `rgba(34,197,94,${alpha})`;
+      ctx.font = `${sr.touches>=3?'bold ':''}9px -apple-system,sans-serif`;
+      ctx.fillText(`S/R (${sr.touches}x)`, W-60, y-3);
+    }
+  }
+
+  /* ── Classique: EMAs ── */
+  if (toggles.ema && extraData.emas) {
+    const emaColors = { e20:'#22c55e', e50:'#fbbf24', e200:'#ef4444' };
+    const emaLabels = { e20:'EMA 20', e50:'EMA 50', e200:'EMA 200' };
+    for (const [key, data] of Object.entries(extraData.emas)) {
+      if (!data?.length) continue;
+      ctx.strokeStyle = emaColors[key] || '#fff';
+      ctx.lineWidth = key==='e200' ? 1.5 : 1;
+      ctx.setLineDash([]);
+      ctx.beginPath();
+      let started = false;
+      for (const pt of data) {
+        const x = toX(pt.time), y = toY(pt.value);
+        if (x===null||y===null) continue;
+        if (!started) { ctx.moveTo(x,y); started=true; }
+        else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      // Label at right edge
+      const last = data[data.length-1];
+      const lx = toX(last.time), ly = toY(last.value);
+      if (lx!==null&&ly!==null) {
+        ctx.fillStyle=emaColors[key]; ctx.font='bold 9px -apple-system,sans-serif';
+        ctx.fillText(emaLabels[key], W-52, ly-3);
+      }
+    }
+  }
+
   /* ── Liquidity lines ── */
   if (toggles.liq) {
     for (const b of smcData.liq.bsl) {
@@ -912,6 +1091,198 @@ function updateKillzones() {
   }
 }
 
+/* ═══════════════════════════════════════════════
+   STRATEGY SYSTEM
+   Chaque stratégie active/désactive des couches
+   et affiche une sidebar adaptée
+═══════════════════════════════════════════════ */
+
+const STRATEGIES = {
+  smc: {
+    name:'SMC — Smart Money',
+    desc:'Order Blocks · FVG · BOS/CHoCH · Liquidités',
+    toggles:{ ob:true, fvg:true, bos:true, liq:true, swing:true, ema:false, sr:false, pd:false, ote:false },
+    sections:['bos','ob','fvg','liq'],
+    color:'#FFD700'
+  },
+  ict: {
+    name:'ICT — Inner Circle Trader',
+    desc:'FVG · OTE Zone · Premium/Discount · Killzones',
+    toggles:{ ob:false, fvg:true, bos:true, liq:false, swing:true, ema:false, sr:false, pd:true, ote:true },
+    sections:['bos','fvg','pd','ote'],
+    color:'#a78bfa'
+  },
+  liq: {
+    name:'Liquidités — Chasse aux Stops',
+    desc:'BSL · SSL · Equal Highs/Lows · Swing Points',
+    toggles:{ ob:false, fvg:false, bos:false, liq:true, swing:true, ema:false, sr:false, pd:false, ote:false },
+    sections:['liq','swing'],
+    color:'#fbbf24'
+  },
+  chartiste: {
+    name:'Chartiste — Analyse Technique',
+    desc:'Support/Résistance · Tendance · Niveaux clés',
+    toggles:{ ob:false, fvg:false, bos:false, liq:false, swing:true, ema:false, sr:true, pd:false, ote:false },
+    sections:['sr','swing'],
+    color:'#22c55e'
+  },
+  classique: {
+    name:'Classique — EMA & S/R',
+    desc:'EMA 20/50/200 · Support/Résistance · Tendance',
+    toggles:{ ob:false, fvg:false, bos:false, liq:false, swing:false, ema:true, sr:true, pd:false, ote:false },
+    sections:['ema','sr'],
+    color:'#38bdf8'
+  }
+};
+
+let currentStrat = 'smc';
+// Extra SMC data for ICT/Chartiste modes
+let extraData = { pd:null, ote:null, srLevels:[], emas:{} };
+
+function applyStrategy(stratKey) {
+  currentStrat = stratKey;
+  const s = STRATEGIES[stratKey];
+
+  /* Update toggles */
+  Object.assign(toggles, s.toggles);
+
+  /* Update toggle buttons */
+  ['ob','fvg','bos','liq','swing'].forEach(k => {
+    const el = document.getElementById('tog-'+k);
+    if (el) el.classList.toggle('on', !!toggles[k]);
+  });
+
+  /* Update mode header */
+  document.getElementById('mode-name').textContent = s.name;
+  document.getElementById('mode-desc').textContent = s.desc;
+
+  /* Update sidebar sections visibility */
+  const allSections = ['bos','ob','fvg','liq','pd','ote','sr','ema','swing'];
+  allSections.forEach(sec => {
+    const el = document.getElementById('list-'+sec);
+    const grp = document.getElementById('grp-'+sec);
+    if (el) el.closest('.smc-group')?.style && (el.closest('.smc-group').style.display = s.sections.includes(sec) ? '' : 'none');
+    if (grp) grp.style.display = s.sections.includes(sec) ? '' : 'none';
+  });
+
+  /* Compute extra data if needed */
+  if (currentCandles.length > 0) {
+    if (toggles.pd || toggles.ote) computeICTZones(currentCandles);
+    if (toggles.sr)  computeSRLevels(currentCandles);
+    if (toggles.ema) computeEMAs(currentCandles);
+    updateSidebarExtra();
+  }
+
+  drawOverlay();
+}
+
+/* ── ICT: Premium/Discount & OTE ── */
+function computeICTZones(candles) {
+  const n = candles.length;
+  if (n < 20) return;
+  // Use last significant range (last 50 candles)
+  const slice = candles.slice(-50);
+  const high  = Math.max(...slice.map(c=>c.high));
+  const low   = Math.min(...slice.map(c=>c.low));
+  const mid   = (high + low) / 2;
+  const range = high - low;
+
+  extraData.pd = { high, low, mid, premium: mid + range*0.1, discount: mid - range*0.1 };
+
+  // OTE: 62–79% retracement of last swing
+  const { highs, lows } = findSwings(candles);
+  if (highs.length && lows.length) {
+    const lastH = highs[highs.length-1];
+    const lastL = lows[lows.length-1];
+    if (lastH.i > lastL.i) {
+      // Bearish swing — OTE = 62–79% retrace from high to low
+      extraData.ote = { top: lastH.price - (lastH.price-lastL.price)*0.62, bottom: lastH.price - (lastH.price-lastL.price)*0.79, type:'bear', swingH:lastH.price, swingL:lastL.price };
+    } else {
+      extraData.ote = { top: lastL.price + (lastH.price-lastL.price)*0.79, bottom: lastL.price + (lastH.price-lastL.price)*0.62, type:'bull', swingH:lastH.price, swingL:lastL.price };
+    }
+  }
+}
+
+/* ── Chartiste: Support/Resistance ── */
+function computeSRLevels(candles) {
+  const tol = 0.001; // 0.1%
+  const levels = [];
+  const { highs, lows } = findSwings(candles);
+
+  // Cluster highs/lows into S/R zones
+  const points = [...highs.map(h=>h.price), ...lows.map(l=>l.price)];
+  points.sort((a,b)=>a-b);
+
+  const clusters = [];
+  let cluster = [points[0]];
+  for (let i=1;i<points.length;i++) {
+    if ((points[i]-cluster[0])/cluster[0] < tol) { cluster.push(points[i]); }
+    else { clusters.push(cluster); cluster=[points[i]]; }
+  }
+  clusters.push(cluster);
+
+  extraData.srLevels = clusters
+    .filter(c=>c.length>=2) // needs at least 2 touches
+    .map(c=>({ price: c.reduce((s,x)=>s+x,0)/c.length, touches: c.length }))
+    .sort((a,b)=>b.touches-a.touches)
+    .slice(0,8);
+}
+
+/* ── Classique: EMAs ── */
+function computeEMAs(candles) {
+  function ema(data, period) {
+    const k = 2/(period+1), out = [];
+    let prev = data.slice(0,period).reduce((s,c)=>s+c.close,0)/period;
+    out.push({ time:data[period-1].time, value:prev });
+    for (let i=period;i<data.length;i++) {
+      prev = data[i].close*k + prev*(1-k);
+      out.push({ time:data[i].time, value:prev });
+    }
+    return out;
+  }
+  if (candles.length > 20)  extraData.emas.e20  = ema(candles,20);
+  if (candles.length > 50)  extraData.emas.e50  = ema(candles,50);
+  if (candles.length > 200) extraData.emas.e200 = ema(candles,200);
+}
+
+/* ── Extra sidebar content ── */
+function updateSidebarExtra() {
+  const strat = STRATEGIES[currentStrat];
+
+  if (strat.sections.includes('pd') && extraData.pd) {
+    const pd = extraData.pd;
+    const el = document.getElementById('list-pd');
+    if (el) el.innerHTML = `
+      <div class="smc-item"><span class="smc-badge" style="background:rgba(239,68,68,0.12);color:#ef4444;">PREMIUM</span><span>Au-dessus de ${formatPrice(pd.mid)}</span></div>
+      <div class="smc-item"><span class="smc-badge" style="background:rgba(34,197,94,0.12);color:#22c55e;">DISCOUNT</span><span>En-dessous de ${formatPrice(pd.mid)}</span></div>
+    `;
+  }
+  if (strat.sections.includes('ote') && extraData.ote) {
+    const ote = extraData.ote;
+    const el = document.getElementById('list-ote');
+    if (el) el.innerHTML = `<div class="smc-item"><span class="smc-badge" style="background:rgba(167,139,250,0.12);color:#a78bfa;">OTE</span><span>${formatPrice(ote.bottom)} – ${formatPrice(ote.top)}</span></div>`;
+  }
+  if (strat.sections.includes('sr') && extraData.srLevels.length) {
+    const el = document.getElementById('list-sr');
+    if (el) el.innerHTML = extraData.srLevels.map(l=>`
+      <div class="smc-item"><span class="smc-badge" style="background:rgba(34,197,94,0.1);color:#22c55e;">${l.touches}x</span><span>${formatPrice(l.price)}</span></div>
+    `).join('');
+  }
+  if (strat.sections.includes('ema') && extraData.emas) {
+    const el = document.getElementById('list-ema');
+    if (el) {
+      const last20  = extraData.emas.e20?.[extraData.emas.e20.length-1];
+      const last50  = extraData.emas.e50?.[extraData.emas.e50.length-1];
+      const last200 = extraData.emas.e200?.[extraData.emas.e200.length-1];
+      el.innerHTML = [
+        last20  ? `<div class="smc-item"><span class="smc-badge" style="background:rgba(34,197,94,0.1);color:#22c55e;">EMA 20</span><span>${formatPrice(last20.value)}</span></div>` : '',
+        last50  ? `<div class="smc-item"><span class="smc-badge" style="background:rgba(251,191,36,0.1);color:#fbbf24;">EMA 50</span><span>${formatPrice(last50.value)}</span></div>` : '',
+        last200 ? `<div class="smc-item"><span class="smc-badge" style="background:rgba(239,68,68,0.1);color:#ef4444;">EMA 200</span><span>${formatPrice(last200.value)}</span></div>` : '',
+      ].join('');
+    }
+  }
+}
+
 /* ── Events ── */
 /* Symbol chips */
 document.querySelectorAll('.sym-chip').forEach(btn => {
@@ -945,7 +1316,18 @@ Object.entries(togMap).forEach(([id, key]) => {
   });
 });
 
+/* Strategy buttons */
+document.querySelectorAll('.strat-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.strat-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    applyStrategy(this.dataset.strat);
+    showToast('Mode : ' + STRATEGIES[this.dataset.strat].name);
+  });
+});
+
 /* ── Boot ── */
+applyStrategy('smc'); // initialiser les sections visibles
 initChart();
 loadChart('EURUSD=X', 'EUR/USD', 'H1');
 updateKillzones();
