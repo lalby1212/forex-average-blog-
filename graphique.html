@@ -93,18 +93,30 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 /* ═══ CHART MAIN ═══ */
 .chart-main{flex:1;display:flex;flex-direction:column;min-width:0;background:#000;}
 
+/* Market category bar */
+.market-bar{display:flex;align-items:center;gap:3px;padding:0 0.8rem;height:36px;
+  background:rgba(5,5,5,0.9);border-bottom:1px solid rgba(255,215,0,0.08);flex-shrink:0;
+  overflow-x:auto;scrollbar-width:none;}
+.market-bar::-webkit-scrollbar{display:none;}
+.mkt-btn{display:inline-flex;align-items:center;gap:0.3rem;padding:0.2rem 0.65rem;
+  border-radius:4px;background:none;border:1px solid transparent;cursor:pointer;
+  color:rgba(255,255,255,0.38);font-size:0.68rem;font-weight:700;white-space:nowrap;
+  font-family:inherit;flex-shrink:0;transition:all .15s;letter-spacing:0.03em;text-transform:uppercase;}
+.mkt-btn:hover{color:rgba(255,255,255,0.75);}
+.mkt-btn.active{color:var(--gold);border-color:rgba(255,215,0,0.25);background:rgba(255,215,0,0.06);}
+
 /* Symbol bar */
-.symbol-bar{display:flex;align-items:center;gap:3px;padding:0 0.8rem;height:42px;
+.symbol-bar{display:flex;align-items:center;gap:3px;padding:0 0.8rem;height:40px;
   background:var(--card2);border-bottom:1px solid var(--border);flex-shrink:0;
   overflow-x:auto;scrollbar-width:none;}
 .symbol-bar::-webkit-scrollbar{display:none;}
-.sym-chip{display:inline-flex;align-items:center;gap:0.28rem;padding:0.22rem 0.65rem;
+.sym-chip{display:inline-flex;align-items:center;gap:0.28rem;padding:0.2rem 0.6rem;
   border-radius:5px;background:none;border:1px solid transparent;cursor:pointer;
-  color:var(--muted);font-size:0.72rem;font-weight:600;white-space:nowrap;
+  color:var(--muted);font-size:0.71rem;font-weight:600;white-space:nowrap;
   font-family:inherit;flex-shrink:0;transition:all .15s;}
 .sym-chip:hover{background:rgba(255,255,255,0.06);color:#fff;}
 .sym-chip.active{background:rgba(255,215,0,0.1);border-color:rgba(255,215,0,0.3);color:var(--gold);}
-.sym-sep{width:1px;height:16px;background:rgba(255,255,255,0.07);flex-shrink:0;margin:0 3px;}
+.sym-sep{width:1px;height:14px;background:rgba(255,255,255,0.07);flex-shrink:0;margin:0 2px;}
 
 /* Top bar */
 .chart-topbar{display:flex;align-items:center;gap:0.6rem;padding:0 1rem;height:44px;
@@ -171,9 +183,11 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 
 /* ═══ STRATEGY BAR ═══ */
 .strategy-bar{
+  position:fixed;top:var(--nav-h);left:0;right:0;z-index:990;
   display:flex;align-items:center;gap:6px;
-  padding:0 1rem;height:44px;flex-shrink:0;
+  padding:0 1rem;height:44px;
   background:rgba(5,5,5,0.98);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
   border-bottom:1px solid rgba(255,215,0,0.14);
   overflow-x:auto;scrollbar-width:none;
 }
@@ -257,7 +271,7 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 </div>
 
 <!-- PAGE -->
-<div class="page-body" style="height:calc(100vh - var(--nav-h) - 44px);margin-top:calc(var(--nav-h) + 44px);">
+<div class="page-body">
 
   <!-- SIDEBAR -->
   <aside class="sidebar">
@@ -327,22 +341,20 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
   <!-- CHART MAIN -->
   <div class="chart-main">
 
-    <!-- Symbol selector -->
-    <div class="symbol-bar">
-      <button class="sym-chip active" data-sym="EURUSD=X" data-label="EUR/USD">EUR/USD</button>
-      <button class="sym-chip" data-sym="GBPUSD=X" data-label="GBP/USD">GBP/USD</button>
-      <button class="sym-chip" data-sym="USDJPY=X" data-label="USD/JPY">USD/JPY</button>
-      <button class="sym-chip" data-sym="GBPJPY=X" data-label="GBP/JPY">GBP/JPY</button>
+    <!-- Market category selector -->
+    <div class="market-bar" id="marketBar">
+      <button class="mkt-btn active" data-mkt="forex-maj">💱 Forex Majeurs</button>
+      <button class="mkt-btn" data-mkt="forex-min">↗ Forex Croisés</button>
+      <button class="mkt-btn" data-mkt="forex-exo">🌍 Forex Exotiques</button>
       <div class="sym-sep"></div>
-      <button class="sym-chip" data-sym="XAUUSD=X" data-label="XAU/USD">Gold</button>
-      <button class="sym-chip" data-sym="CL=F" data-label="WTI Oil">WTI</button>
+      <button class="mkt-btn" data-mkt="crypto">₿ Crypto</button>
       <div class="sym-sep"></div>
-      <button class="sym-chip" data-sym="BTC-USD" data-label="BTC/USD">BTC</button>
-      <button class="sym-chip" data-sym="ETH-USD" data-label="ETH/USD">ETH</button>
-      <div class="sym-sep"></div>
-      <button class="sym-chip" data-sym="^GSPC" data-label="S&P 500">S&amp;P 500</button>
-      <button class="sym-chip" data-sym="^NDX" data-label="Nasdaq">Nasdaq</button>
+      <button class="mkt-btn" data-mkt="matieres">🥇 Matières Premières</button>
+      <button class="mkt-btn" data-mkt="indices">📈 Indices</button>
     </div>
+
+    <!-- Dynamic symbol bar -->
+    <div class="symbol-bar" id="symbolBar"></div>
 
     <!-- Top bar -->
     <div class="chart-topbar">
@@ -412,6 +424,136 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
    FOREX AVERAGE — SMC / ICT AUTO CHART
    Lightweight Charts + Yahoo Finance OHLC + SMC Engine
 ═══════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════
+   MARCHÉS — Toutes les paires disponibles
+═══════════════════════════════════════════════ */
+const MARKETS = {
+  'forex-maj': [
+    { sym:'EURUSD=X', label:'EUR/USD' },
+    { sym:'GBPUSD=X', label:'GBP/USD' },
+    { sym:'USDJPY=X', label:'USD/JPY' },
+    { sym:'USDCHF=X', label:'USD/CHF' },
+    { sym:'USDCAD=X', label:'USD/CAD' },
+    { sym:'AUDUSD=X', label:'AUD/USD' },
+    { sym:'NZDUSD=X', label:'NZD/USD' },
+  ],
+  'forex-min': [
+    { sym:'EURGBP=X', label:'EUR/GBP' },
+    { sym:'EURJPY=X', label:'EUR/JPY' },
+    { sym:'EURCHF=X', label:'EUR/CHF' },
+    { sym:'EURAUD=X', label:'EUR/AUD' },
+    { sym:'EURCAD=X', label:'EUR/CAD' },
+    { sym:'EURNZD=X', label:'EUR/NZD' },
+    { sym:'GBPJPY=X', label:'GBP/JPY' },
+    { sym:'GBPCHF=X', label:'GBP/CHF' },
+    { sym:'GBPAUD=X', label:'GBP/AUD' },
+    { sym:'GBPCAD=X', label:'GBP/CAD' },
+    { sym:'GBPNZD=X', label:'GBP/NZD' },
+    { sym:'AUDJPY=X', label:'AUD/JPY' },
+    { sym:'AUDCAD=X', label:'AUD/CAD' },
+    { sym:'AUDNZD=X', label:'AUD/NZD' },
+    { sym:'AUDCHF=X', label:'AUD/CHF' },
+    { sym:'CADJPY=X', label:'CAD/JPY' },
+    { sym:'CADCHF=X', label:'CAD/CHF' },
+    { sym:'NZDJPY=X', label:'NZD/JPY' },
+    { sym:'NZDCHF=X', label:'NZD/CHF' },
+    { sym:'NZDCAD=X', label:'NZD/CAD' },
+    { sym:'CHFJPY=X', label:'CHF/JPY' },
+  ],
+  'forex-exo': [
+    { sym:'USDMXN=X', label:'USD/MXN' },
+    { sym:'USDZAR=X', label:'USD/ZAR' },
+    { sym:'USDTRY=X', label:'USD/TRY' },
+    { sym:'USDSEK=X', label:'USD/SEK' },
+    { sym:'USDNOK=X', label:'USD/NOK' },
+    { sym:'USDDKK=X', label:'USD/DKK' },
+    { sym:'USDSGD=X', label:'USD/SGD' },
+    { sym:'USDHKD=X', label:'USD/HKD' },
+    { sym:'USDPLN=X', label:'USD/PLN' },
+    { sym:'USDCZK=X', label:'USD/CZK' },
+    { sym:'USDHUF=X', label:'USD/HUF' },
+    { sym:'USDTHB=X', label:'USD/THB' },
+    { sym:'EURPLN=X', label:'EUR/PLN' },
+    { sym:'EURTRY=X', label:'EUR/TRY' },
+    { sym:'GBPTRY=X', label:'GBP/TRY' },
+  ],
+  'crypto': [
+    { sym:'BTC-USD',  label:'BTC/USD'  },
+    { sym:'ETH-USD',  label:'ETH/USD'  },
+    { sym:'SOL-USD',  label:'SOL/USD'  },
+    { sym:'BNB-USD',  label:'BNB/USD'  },
+    { sym:'XRP-USD',  label:'XRP/USD'  },
+    { sym:'ADA-USD',  label:'ADA/USD'  },
+    { sym:'AVAX-USD', label:'AVAX/USD' },
+    { sym:'DOGE-USD', label:'DOGE/USD' },
+    { sym:'DOT-USD',  label:'DOT/USD'  },
+    { sym:'LINK-USD', label:'LINK/USD' },
+    { sym:'MATIC-USD',label:'MATIC/USD'},
+    { sym:'LTC-USD',  label:'LTC/USD'  },
+    { sym:'ATOM-USD', label:'ATOM/USD' },
+    { sym:'UNI-USD',  label:'UNI/USD'  },
+    { sym:'NEAR-USD', label:'NEAR/USD' },
+    { sym:'OP-USD',   label:'OP/USD'   },
+    { sym:'ARB-USD',  label:'ARB/USD'  },
+    { sym:'SUI-USD',  label:'SUI/USD'  },
+    { sym:'TRX-USD',  label:'TRX/USD'  },
+    { sym:'SHIB-USD', label:'SHIB/USD' },
+  ],
+  'matieres': [
+    { sym:'XAUUSD=X', label:'Or (XAU)' },
+    { sym:'XAGUSD=X', label:'Argent (XAG)' },
+    { sym:'CL=F',     label:'WTI Oil' },
+    { sym:'BZ=F',     label:'Brent' },
+    { sym:'NG=F',     label:'Gaz Nat.' },
+    { sym:'HG=F',     label:'Cuivre' },
+    { sym:'PL=F',     label:'Platine' },
+    { sym:'PA=F',     label:'Palladium' },
+    { sym:'ZW=F',     label:'Blé' },
+    { sym:'ZC=F',     label:'Maïs' },
+    { sym:'ZS=F',     label:'Soja' },
+    { sym:'KC=F',     label:'Café' },
+    { sym:'SB=F',     label:'Sucre' },
+    { sym:'CC=F',     label:'Cacao' },
+  ],
+  'indices': [
+    { sym:'^GSPC',   label:'S&P 500'   },
+    { sym:'^NDX',    label:'Nasdaq 100'},
+    { sym:'^DJI',    label:'Dow Jones' },
+    { sym:'^GDAXI',  label:'DAX'       },
+    { sym:'^FTSE',   label:'FTSE 100'  },
+    { sym:'^N225',   label:'Nikkei'    },
+    { sym:'^FCHI',   label:'CAC 40'    },
+    { sym:'^STOXX50E',label:'Euro Stoxx 50'},
+    { sym:'^HSI',    label:'Hang Seng' },
+    { sym:'^AXJO',   label:'ASX 200'   },
+    { sym:'^IBEX',   label:'IBEX 35'   },
+    { sym:'ES=F',    label:'S&P Futures'},
+    { sym:'NQ=F',    label:'Nasdaq Fut.'},
+    { sym:'YM=F',    label:'Dow Futures'},
+  ],
+};
+
+let currentMkt = 'forex-maj';
+
+function renderSymbolBar(mktKey, activeSym) {
+  const bar   = document.getElementById('symbolBar');
+  const syms  = MARKETS[mktKey] || [];
+  bar.innerHTML = syms.map((s, i) => {
+    const isActive = s.sym === (activeSym || syms[0].sym);
+    return `<button class="sym-chip${isActive?' active':''}" data-sym="${s.sym}" data-label="${s.label}">${s.label}</button>`;
+  }).join('');
+
+  bar.querySelectorAll('.sym-chip').forEach(btn => {
+    btn.addEventListener('click', function() {
+      bar.querySelectorAll('.sym-chip').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      currentSym   = this.dataset.sym;
+      currentLabel = this.dataset.label;
+      loadChart(currentSym, currentLabel, currentTF);
+    });
+  });
+}
 
 /* ── State ── */
 let chart, candleSeries, currentCandles = [];
@@ -1284,17 +1426,7 @@ function updateSidebarExtra() {
 }
 
 /* ── Events ── */
-/* Symbol chips */
-document.querySelectorAll('.sym-chip').forEach(btn => {
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.sym-chip').forEach(b => b.classList.remove('active'));
-    this.classList.add('active');
-    currentSym   = this.dataset.sym;
-    currentLabel = this.dataset.label;
-    loadChart(currentSym, currentLabel, currentTF);
-    showToast('Chargement ' + currentLabel + '…');
-  });
-});
+/* Symbol chips — gérés dynamiquement par renderSymbolBar() */
 
 /* Timeframe buttons */
 document.querySelectorAll('.tf-btn').forEach(btn => {
@@ -1316,6 +1448,22 @@ Object.entries(togMap).forEach(([id, key]) => {
   });
 });
 
+/* Market category buttons */
+document.querySelectorAll('.mkt-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.mkt-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    currentMkt = this.dataset.mkt;
+    const syms = MARKETS[currentMkt];
+    if (syms?.length) {
+      renderSymbolBar(currentMkt, null);
+      currentSym   = syms[0].sym;
+      currentLabel = syms[0].label;
+      loadChart(currentSym, currentLabel, currentTF);
+    }
+  });
+});
+
 /* Strategy buttons */
 document.querySelectorAll('.strat-btn').forEach(btn => {
   btn.addEventListener('click', function() {
@@ -1327,7 +1475,8 @@ document.querySelectorAll('.strat-btn').forEach(btn => {
 });
 
 /* ── Boot ── */
-applyStrategy('smc'); // initialiser les sections visibles
+applyStrategy('smc');
+renderSymbolBar('forex-maj', 'EURUSD=X');
 initChart();
 loadChart('EURUSD=X', 'EUR/USD', 'H1');
 updateKillzones();
