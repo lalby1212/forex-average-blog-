@@ -1812,6 +1812,18 @@ let drawStart    = null;      // Point de départ (en cours)
 let isDrawing    = false;
 let mousePos     = null;      // Position souris courante (canvas)
 
+/* Retour automatique en mode Nav */
+function switchToPointer() {
+  activeTool = 'pointer';
+  document.querySelectorAll('.draw-tool, .draw-tool-label').forEach(b => b.classList.remove('active'));
+  const navBtn = document.querySelector('.draw-tool[data-tool="pointer"]');
+  if (navBtn) navBtn.classList.add('active');
+  const canvas = document.getElementById('smc-canvas');
+  if (canvas) { canvas.style.pointerEvents = 'none'; canvas.style.cursor = 'default'; }
+  const hint = document.getElementById('draw-hint');
+  if (hint) hint.textContent = TOOL_HINTS['pointer'];
+}
+
 /* Outil sélectionné */
 const TOOL_HINTS = {
   pointer: '← Sélectionne un outil pour dessiner sur le graphique',
@@ -1870,7 +1882,9 @@ function initDrawingEvents() {
 
     if (activeTool === 'hline') {
       drawings.push({ type:'hline', price, color:drawColor });
-      drawOverlay(); return;
+      drawOverlay();
+      switchToPointer();
+      return;
     }
     drawStart = { cx, cy, time, price };
     isDrawing = true;
@@ -1899,6 +1913,8 @@ function initDrawingEvents() {
       drawings.push({ type:'fib',   t1:drawStart.time, p1:drawStart.price, t2:time, p2:price, color:drawColor });
     }
     isDrawing=false; drawStart=null; drawOverlay();
+    /* Repasser automatiquement en mode Nav après le dessin */
+    switchToPointer();
   });
 
   canvas.addEventListener('mouseleave', () => { mousePos=null; });
