@@ -134,8 +134,35 @@ function show(name, btn) {
   document.getElementById('p-' + name).classList.add('active');
   btn.classList.add('active');
 }
+
 document.getElementById('burger').addEventListener('click', function(){
   document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Masquer la nav interne de chaque iframe (même domaine)
+function hideIframeNav(iframe) {
+  try {
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    const style = doc.createElement('style');
+    style.textContent = `
+      #mainNav, nav, .tab-bar-outer,
+      [id*="Nav"], [class*="mainNav"],
+      header { display: none !important; }
+      body { margin-top: 0 !important; padding-top: 0 !important; }
+      .page-body, .page-content {
+        margin-top: 0 !important;
+        height: 100vh !important;
+      }
+    `;
+    doc.head.appendChild(style);
+  } catch(e) {}
+}
+
+document.querySelectorAll('iframe').forEach(iframe => {
+  iframe.addEventListener('load', function() { hideIframeNav(this); });
+  if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+    hideIframeNav(iframe);
+  }
 });
 </script>
 </body>
