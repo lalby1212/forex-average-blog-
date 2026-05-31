@@ -143,17 +143,26 @@ document.getElementById('burger').addEventListener('click', function(){
 function hideIframeNav(iframe) {
   try {
     const doc = iframe.contentDocument || iframe.contentWindow.document;
+    const src = iframe.src || '';
     const style = doc.createElement('style');
-    style.textContent = `
-      #mainNav, nav, .tab-bar-outer,
-      [id*="Nav"], [class*="mainNav"],
-      header { display: none !important; }
-      body { margin-top: 0 !important; padding-top: 0 !important; }
-      .page-body, .page-content {
-        margin-top: 0 !important;
-        height: 100vh !important;
-      }
-    `;
+
+    let css = `#mainNav { display: none !important; }`;
+
+    if (src.includes('graphique')) {
+      // graphique.html: page-body margin compense la nav (62px) + filter bar (44px)
+      // Sans la nav, on garde seulement le filter bar
+      css += `
+        .page-body {
+          margin-top: 44px !important;
+          height: calc(100vh - 44px) !important;
+        }
+      `;
+    } else {
+      // fondamentaux + calculateurs : sticky nav, le contenu suit naturellement
+      css += `body { padding-top: 0 !important; }`;
+    }
+
+    style.textContent = css;
     doc.head.appendChild(style);
   } catch(e) {}
 }
