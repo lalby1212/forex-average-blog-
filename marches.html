@@ -306,13 +306,7 @@
         <ul class="nav-links-wrap" id="navLinksWrap">
             <li class="nav-item"><a href="/">Accueil</a></li>
             <li class="nav-item"><a href="marches.html" class="nav-active">Marché</a></li>
-            <li class="nav-item-drop">
-                <a href="#" role="button">Outils <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
-                <div class="drop-panel">
-                    <a href="graphique.html" class="drop-link"><span class="drop-icon">📊</span><span><span class="drop-label">Graphiques Live</span><span class="drop-desc">Charts TradingView temps réel</span></span></a>
-                    <a href="calculateurs-trading.html" class="drop-link"><span class="drop-icon">🧮</span><span><span class="drop-label">Calculateurs</span><span class="drop-desc">Levier, position, R/R, pip</span></span></a>
-                </div>
-            </li>
+            <li class="nav-item"><a href="outils.html">Outils</a></li>
             <li class="nav-item-drop">
                 <a href="#" role="button">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
                 <div class="drop-panel">
@@ -853,7 +847,7 @@ function refreshCurrent() { const btn=document.getElementById('refresh-btn'); bt
 
 let gateApplied = false;
 function applyNewsGate(loggedIn) {
-    if (loggedIn) return;
+    if (loggedIn || (window.FA && window.FA.isLogged())) return;
     const grid=document.getElementById('news-grid'); if(!grid)return;
     const cards=grid.querySelectorAll('.news-card'); if(cards.length<=3||gateApplied)return;
     gateApplied=true;
