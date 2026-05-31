@@ -129,9 +129,9 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 .draw-toolbar{display:flex;align-items:center;gap:3px;padding:0 0.75rem;height:36px;
   background:rgba(8,8,8,0.95);border-bottom:1px solid rgba(255,215,0,0.08);flex-shrink:0;}
 .draw-tool{display:inline-flex;align-items:center;justify-content:center;gap:0.25rem;
-  width:28px;height:26px;border-radius:5px;border:1px solid transparent;
-  background:transparent;color:var(--muted);font-size:0.75rem;cursor:pointer;
-  font-family:inherit;flex-shrink:0;transition:all .15s;}
+  padding:0 0.5rem;min-width:28px;height:26px;border-radius:5px;border:1px solid transparent;
+  background:transparent;color:var(--muted);font-size:0.68rem;font-weight:600;cursor:pointer;
+  font-family:inherit;flex-shrink:0;transition:all .15s;white-space:nowrap;letter-spacing:0.01em;}
 .draw-tool:hover{background:rgba(255,255,255,0.07);color:#fff;border-color:rgba(255,255,255,0.1);}
 .draw-tool.active{background:rgba(255,215,0,0.12);border-color:rgba(255,215,0,0.35);color:var(--gold);}
 .draw-tool-label{display:inline-flex;align-items:center;justify-content:center;gap:0.25rem;
@@ -392,7 +392,8 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
       <div class="mode-desc" id="mode-desc">Order Blocks · FVG · BOS/CHoCH · Liquidités</div>
     </div>
 
-    <div id="sb-bias" class="bias-pill bias-neut">⬛ Biais : Calcul…</div>
+    <div id="sb-bias" class="bias-pill bias-neut">⬛ Biais MTF : Calcul…</div>
+    <div id="htf-bias-badge" style="display:none;font-size:0.65rem;font-weight:700;padding:0.2rem 0.9rem 0.35rem;color:var(--gold);"></div>
 
     <div class="smc-scroll" id="smc-scroll">
       <div class="smc-group">
@@ -447,14 +448,6 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
         </div>
         <!-- Content injected by JS -->
       </div>
-      <div class="fund-chat">
-        <div class="fund-chat-label">💬 Demander à l'IA</div>
-        <div class="fund-chat-msgs" id="fund-chat-msgs"></div>
-        <div class="fund-chat-input">
-          <input class="fund-input" id="fund-input" placeholder="Ex: Quel est le biais sur EUR/USD ?" />
-          <button class="fund-send" id="fund-send">➤</button>
-        </div>
-      </div>
     </div><!-- /sb-panel-fund -->
 
     <div class="kz-section">
@@ -485,34 +478,30 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 
     <!-- Drawing toolbar -->
     <div class="draw-toolbar" id="drawToolbar">
-      <!-- Pointer -->
-      <button class="draw-tool active" data-tool="pointer" title="Sélection">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-7 2-4 7z"/></svg>
+      <!-- Mode navigation (défaut) -->
+      <button class="draw-tool active" data-tool="pointer" title="Navigation — déplacer/zoomer le graphique">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 3l14 9-7 2-4 7z"/></svg>
+        Nav
       </button>
       <div class="draw-sep"></div>
-      <!-- Drawing tools -->
-      <button class="draw-tool-label" data-tool="hline" title="Niveau horizontal">— Horizontal</button>
-      <button class="draw-tool-label" data-tool="trend" title="Ligne de tendance">⟋ Tendance</button>
-      <button class="draw-tool-label" data-tool="rect" title="Rectangle">▭ Zone</button>
-      <button class="draw-tool-label" data-tool="fib" title="Fibonacci">⚡ Fibonacci</button>
+      <!-- Outils — cliquer pour activer, puis cliquer/glisser sur le graphique -->
+      <button class="draw-tool-label" data-tool="hline">— Niveau</button>
+      <button class="draw-tool-label" data-tool="trend">⟋ Tendance</button>
+      <button class="draw-tool-label" data-tool="rect">▭ Zone</button>
+      <button class="draw-tool-label" data-tool="fib">⚡ Fib</button>
       <div class="draw-sep"></div>
-      <!-- Colors -->
-      <div class="color-dot active" data-color="#FFD700" style="background:#FFD700" title="Or"></div>
-      <div class="color-dot" data-color="#22c55e" style="background:#22c55e" title="Vert"></div>
-      <div class="color-dot" data-color="#ef4444" style="background:#ef4444" title="Rouge"></div>
-      <div class="color-dot" data-color="#818cf8" style="background:#818cf8" title="Violet"></div>
-      <div class="color-dot" data-color="#38bdf8" style="background:#38bdf8" title="Bleu"></div>
-      <div class="color-dot" data-color="#ffffff" style="background:rgba(255,255,255,0.8)" title="Blanc"></div>
+      <!-- Couleurs -->
+      <div class="color-dot active" data-color="#FFD700" style="background:#FFD700"></div>
+      <div class="color-dot" data-color="#22c55e" style="background:#22c55e"></div>
+      <div class="color-dot" data-color="#ef4444" style="background:#ef4444"></div>
+      <div class="color-dot" data-color="#818cf8" style="background:#818cf8"></div>
+      <div class="color-dot" data-color="#38bdf8" style="background:#38bdf8"></div>
       <div class="draw-sep"></div>
-      <!-- Actions -->
-      <button class="draw-tool" id="undoBtn" title="Annuler">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
-      </button>
-      <button class="draw-tool" id="clearBtn" title="Tout effacer">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
-      </button>
+      <button class="draw-tool" id="undoBtn" title="Annuler le dernier dessin">↩ Annuler</button>
+      <button class="draw-tool" id="clearBtn" title="Tout effacer">🗑 Effacer</button>
       <div class="draw-spacer"></div>
-      <span class="draw-count" id="draw-count"></span>
+      <!-- Instruction contextuelle -->
+      <span class="draw-count" id="draw-hint" style="font-size:0.62rem;color:rgba(255,215,0,0.5);white-space:nowrap;">← Sélectionne un outil puis clique sur le graphique</span>
     </div>
 
     <!-- Top bar -->
@@ -905,6 +894,9 @@ async function loadChart(symbol, label, tfKey) {
     /* Start live price feed */
     startLiveFeed(symbol);
 
+    /* ⑥ Fetch biais HTF D1 en parallèle */
+    fetchHTFBias(symbol);
+
     /* Reset fondamental if already loaded for previous pair */
     fundLoaded = false;
     if (document.getElementById('sb-panel-fund')?.classList.contains('active')) {
@@ -917,16 +909,60 @@ async function loadChart(symbol, label, tfKey) {
   }
 }
 
-/* ── SMC Engine ── */
-const SWING_LB = 3; // lookback bars
+/* ═══════════════════════════════════════════════
+   SMC ENGINE v2 — Bugs corrigés
+   ① BOS/CHoCH : passe chronologique unique
+   ② Lookback adaptatif par timeframe
+   ③ Mitigation OB : close (pas wick)
+   ④ Tolérance dynamique par actif
+   ⑤ FVG : filtre taille minimum (ATR)
+   ⑥ Biais HTF : chargé en parallèle sur D1
+═══════════════════════════════════════════════ */
 
-function findSwings(candles) {
+/* ── FIX ② : Lookback adaptatif ── */
+function getSwingLookback(tf) {
+  return { 'M15':3, 'H1':5, 'H4':7, 'D1':10, 'W':12 }[tf] || 5;
+}
+
+/* ── FIX ④ : Tolérance dynamique par actif ── */
+function getPriceTolerance(sym) {
+  const CRYPTO = ['BTC-USD','ETH-USD','SOL-USD','BNB-USD','XRP-USD','ADA-USD',
+    'AVAX-USD','DOGE-USD','DOT-USD','LINK-USD','MATIC-USD','LTC-USD','ATOM-USD',
+    'UNI-USD','NEAR-USD','OP-USD','ARB-USD','SUI-USD','TRX-USD','SHIB-USD'];
+  const JPY    = ['USDJPY=X','EURJPY=X','GBPJPY=X','CADJPY=X','AUDJPY=X','NZDJPY=X','CHFJPY=X'];
+  const METALS = ['XAUUSD=X','XAGUSD=X'];
+  const INDEX  = ['^GSPC','^NDX','^DJI','^GDAXI','^FTSE','^N225','^FCHI','^STOXX50E','ES=F','NQ=F','YM=F'];
+  if (CRYPTO.includes(sym))  return 0.005;   // 0.50% crypto
+  if (JPY.includes(sym))     return 0.0002;  // 0.02% JPY
+  if (METALS.includes(sym))  return 0.001;   // 0.10% métaux
+  if (INDEX.includes(sym))   return 0.002;   // 0.20% indices
+  return 0.0008;                             // 0.08% forex majeurs
+}
+
+/* ── FIX ⑤ : ATR pour filtre FVG ── */
+function calculateATR(candles, period = 14) {
+  if (candles.length < 2) return 0;
+  const trs = [];
+  for (let i = 1; i < candles.length; i++) {
+    trs.push(Math.max(
+      candles[i].high - candles[i].low,
+      Math.abs(candles[i].high - candles[i-1].close),
+      Math.abs(candles[i].low  - candles[i-1].close)
+    ));
+  }
+  const slice = trs.slice(-period);
+  return slice.reduce((a,b) => a+b, 0) / slice.length;
+}
+
+/* ── Swing detection avec lookback adaptatif ── */
+function findSwings(candles, lb) {
+  if (!lb) lb = getSwingLookback(currentTF);
   const highs = [], lows = [];
-  for (let i = SWING_LB; i < candles.length - SWING_LB; i++) {
+  for (let i = lb; i < candles.length - lb; i++) {
     let isH = true, isL = true;
-    for (let j = 1; j <= SWING_LB; j++) {
-      if (candles[i].high  <= candles[i-j].high || candles[i].high  <= candles[i+j].high) isH = false;
-      if (candles[i].low   >= candles[i-j].low  || candles[i].low   >= candles[i+j].low)  isL = false;
+    for (let j = 1; j <= lb; j++) {
+      if (candles[i].high <= candles[i-j].high || candles[i].high <= candles[i+j].high) isH = false;
+      if (candles[i].low  >= candles[i-j].low  || candles[i].low  >= candles[i+j].low)  isL = false;
     }
     if (isH) highs.push({ i, price: candles[i].high, time: candles[i].time });
     if (isL) lows.push({  i, price: candles[i].low,  time: candles[i].time });
@@ -934,120 +970,223 @@ function findSwings(candles) {
   return { highs, lows };
 }
 
+/* ── FIX ① : BOS/CHoCH — passe chronologique unique ── */
 function detectBOSCHoCH(candles, swings) {
-  const events = [];
   const { highs, lows } = swings;
-  let lastTrend = null; // 'up' | 'down'
 
-  /* Bullish BOS: close above swing high */
-  for (const sh of highs.slice(-8)) {
-    for (let i = sh.i + 1; i < candles.length; i++) {
-      if (candles[i].close > sh.price) {
-        const type = lastTrend === 'down' ? 'CHoCH' : 'BOS';
-        events.push({ type: 'BULL_' + type, level: sh.price, fromTime: sh.time, toTime: candles[i].time, i });
-        lastTrend = 'up';
-        break;
+  // Étape 1 : fusionner et trier chronologiquement tous les swings
+  const allSwings = [
+    ...highs.map(s => ({ ...s, swingType: 'high' })),
+    ...lows.map(s  => ({ ...s, swingType: 'low'  })),
+  ].sort((a, b) => a.i - b.i);
+
+  const events = [];
+  let trend = null; // 'up' | 'down' — partagé entre highs ET lows
+
+  for (const swing of allSwings) {
+    if (swing.swingType === 'high') {
+      // Chercher la première clôture AU-DESSUS de ce swing high
+      for (let i = swing.i + 1; i < candles.length; i++) {
+        if (candles[i].close > swing.price) {
+          // CHoCH si on était en downtrend, BOS sinon
+          const type = trend === 'down' ? 'CHoCH' : 'BOS';
+          events.push({ type:'BULL_'+type, level:swing.price, fromTime:swing.time, toTime:candles[i].time, i });
+          trend = 'up';
+          break;
+        }
+        // Stop si un nouveau swing high plus bas invalide le niveau
+        if (candles[i].high > swing.price * 1.01) break;
+      }
+    } else {
+      // Chercher la première clôture EN-DESSOUS de ce swing low
+      for (let i = swing.i + 1; i < candles.length; i++) {
+        if (candles[i].close < swing.price) {
+          const type = trend === 'up' ? 'CHoCH' : 'BOS';
+          events.push({ type:'BEAR_'+type, level:swing.price, fromTime:swing.time, toTime:candles[i].time, i });
+          trend = 'down';
+          break;
+        }
+        if (candles[i].low < swing.price * 0.99) break;
       }
     }
   }
-  /* Bearish BOS: close below swing low */
-  for (const sl of lows.slice(-8)) {
-    for (let i = sl.i + 1; i < candles.length; i++) {
-      if (candles[i].close < sl.price) {
-        const type = lastTrend === 'up' ? 'CHoCH' : 'BOS';
-        events.push({ type: 'BEAR_' + type, level: sl.price, fromTime: sl.time, toTime: candles[i].time, i });
-        lastTrend = 'down';
-        break;
-      }
-    }
+
+  // Dédupliquer : garder un seul événement par niveau proche
+  const tol = getPriceTolerance(currentSym);
+  const deduped = [];
+  for (const ev of events) {
+    const dup = deduped.find(d => Math.abs(d.level - ev.level) / ev.level < tol * 2 && d.type === ev.type);
+    if (!dup) deduped.push(ev);
   }
-  return events.sort((a,b) => a.i - b.i);
+
+  return deduped.slice(-14); // garder les 14 derniers
 }
 
+/* ── FIX ③ : OB — mitigation par clôture (pas wick) ── */
 function detectOrderBlocks(candles, bosEvents) {
   const obs = [];
+
   for (const ev of bosEvents) {
     const breakIdx = ev.i;
     if (ev.type.startsWith('BULL')) {
-      /* Last bearish candle before bullish break */
-      for (let i = breakIdx - 1; i >= 0; i--) {
+      // Dernier bloc baissier avant le break haussier
+      for (let i = breakIdx - 1; i >= Math.max(0, breakIdx - 20); i--) {
         if (candles[i].close < candles[i].open) {
-          obs.push({ type:'bullish', high:candles[i].high, low:candles[i].low, time:candles[i].time, i, mitigated:false });
+          obs.push({ type:'bullish', high:candles[i].high, low:candles[i].low,
+            open:candles[i].open, close:candles[i].close, time:candles[i].time, i, mitigated:false });
           break;
         }
       }
     } else {
-      /* Last bullish candle before bearish break */
-      for (let i = breakIdx - 1; i >= 0; i--) {
+      // Dernier bloc haussier avant le break baissier
+      for (let i = breakIdx - 1; i >= Math.max(0, breakIdx - 20); i--) {
         if (candles[i].close > candles[i].open) {
-          obs.push({ type:'bearish', high:candles[i].high, low:candles[i].low, time:candles[i].time, i, mitigated:false });
+          obs.push({ type:'bearish', high:candles[i].high, low:candles[i].low,
+            open:candles[i].open, close:candles[i].close, time:candles[i].time, i, mitigated:false });
           break;
         }
       }
     }
   }
-  /* Check mitigation */
+
+  // FIX ③ : mitigation = CLÔTURE dans la zone (pas un simple wick)
   for (const ob of obs) {
     for (let i = ob.i + 1; i < candles.length; i++) {
-      if (ob.type==='bullish' && candles[i].low  <= ob.low)  { ob.mitigated=true; break; }
-      if (ob.type==='bearish' && candles[i].high >= ob.high) { ob.mitigated=true; break; }
+      if (ob.type === 'bullish' && candles[i].close < ob.low)  { ob.mitigated = true; break; }
+      if (ob.type === 'bearish' && candles[i].close > ob.high) { ob.mitigated = true; break; }
     }
   }
-  return obs.filter(o => !o.mitigated).slice(-6);
+
+  // Dédupliquer les OB très proches
+  const tol = getPriceTolerance(currentSym);
+  const deduped = [];
+  for (const ob of obs.filter(o => !o.mitigated)) {
+    const dup = deduped.find(d => d.type === ob.type && Math.abs(d.low - ob.low) / ob.low < tol * 3);
+    if (!dup) deduped.push(ob);
+  }
+  return deduped.slice(-6);
 }
 
+/* ── FIX ⑤ : FVG avec filtre taille minimum (ATR) ── */
 function detectFVG(candles) {
   const fvgs = [];
+  const atr  = calculateATR(candles);
+  const minSize = atr * 0.25; // au moins 25% de l'ATR
+
   for (let i = 1; i < candles.length - 1; i++) {
-    const prev = candles[i-1], curr = candles[i], next = candles[i+1];
-    /* Bullish FVG */
+    const prev = candles[i-1], next = candles[i+1];
+
+    // Bullish FVG : gap entre high de prev et low de next
     if (next.low > prev.high) {
-      fvgs.push({ type:'bullish', top:next.low, bottom:prev.high, time:curr.time, i, filled:false });
+      const size = next.low - prev.high;
+      if (size >= minSize)
+        fvgs.push({ type:'bullish', top:next.low, bottom:prev.high, size, time:candles[i].time, i, filled:false });
     }
-    /* Bearish FVG */
+    // Bearish FVG
     if (next.high < prev.low) {
-      fvgs.push({ type:'bearish', top:prev.low, bottom:next.high, time:curr.time, i, filled:false });
+      const size = prev.low - next.high;
+      if (size >= minSize)
+        fvgs.push({ type:'bearish', top:prev.low, bottom:next.high, size, time:candles[i].time, i, filled:false });
     }
   }
-  /* Check fill */
+
+  // Mitigation : clôture qui comble le gap
   for (const f of fvgs) {
     for (let i = f.i + 1; i < candles.length; i++) {
-      if (f.type==='bullish' && candles[i].low  <= f.bottom) { f.filled=true; break; }
-      if (f.type==='bearish' && candles[i].high >= f.top)    { f.filled=true; break; }
+      if (f.type === 'bullish' && candles[i].close < f.bottom) { f.filled = true; break; }
+      if (f.type === 'bearish' && candles[i].close > f.top)    { f.filled = true; break; }
     }
   }
-  return fvgs.filter(f => !f.filled).slice(-8);
+
+  // Garder uniquement les FVG actifs, triés par taille (les plus importants d'abord)
+  return fvgs.filter(f => !f.filled).sort((a,b) => b.size - a.size).slice(0, 6);
 }
 
+/* ── FIX ④ : Liquidités avec tolérance dynamique ── */
 function detectLiquidity(candles, swings) {
-  const tol = 0.0008; // 0.08% tolerance
-  const bsl = [], ssl = [];
+  const tol  = getPriceTolerance(currentSym);
+  const bsl  = [], ssl = [];
   const { highs, lows } = swings;
 
-  /* Equal highs → BSL (Buy Side Liquidity) */
   for (let i = 0; i < highs.length; i++) {
-    for (let j = i+1; j < highs.length; j++) {
-      const diff = Math.abs(highs[i].price - highs[j].price) / highs[i].price;
-      if (diff < tol) { bsl.push({ price: (highs[i].price+highs[j].price)/2, time: highs[j].time }); }
+    for (let j = i + 1; j < highs.length; j++) {
+      if (Math.abs(highs[i].price - highs[j].price) / highs[i].price < tol) {
+        bsl.push({ price: (highs[i].price + highs[j].price) / 2, time: highs[j].time });
+      }
     }
   }
-  /* Equal lows → SSL (Sell Side Liquidity) */
   for (let i = 0; i < lows.length; i++) {
-    for (let j = i+1; j < lows.length; j++) {
-      const diff = Math.abs(lows[i].price - lows[j].price) / lows[i].price;
-      if (diff < tol) { ssl.push({ price: (lows[i].price+lows[j].price)/2, time: lows[j].time }); }
+    for (let j = i + 1; j < lows.length; j++) {
+      if (Math.abs(lows[i].price - lows[j].price) / lows[i].price < tol) {
+        ssl.push({ price: (lows[i].price + lows[j].price) / 2, time: lows[j].time });
+      }
     }
   }
   return { bsl: bsl.slice(-4), ssl: ssl.slice(-4) };
 }
 
-function calcBias(candles, bos) {
-  /* Simple: count last bull vs bear BOS */
+/* ── FIX ⑥ : Biais HTF chargé en parallèle sur D1 ── */
+let htfBias = null; // 'bull' | 'bear' | 'neut'
+
+async function fetchHTFBias(symbol) {
+  if (currentTF === 'D1' || currentTF === 'W') { htfBias = null; return; } // déjà en HTF
+  try {
+    const url = `/api/ohlc?symbol=${encodeURIComponent(symbol)}&interval=1d&range=1y`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+    if (!res.ok) return;
+    const json = await res.json();
+    const result = json.chart?.result?.[0];
+    if (!result) return;
+    const ts = result.timestamp, q = result.indicators.quote[0];
+    const d1 = ts.map((t,i) => ({ time:t, open:q.open[i], high:q.high[i], low:q.low[i], close:q.close[i] }))
+               .filter(c => c.open != null && c.close != null);
+    if (d1.length < 20) return;
+
+    const swings = findSwings(d1, 10);
+    const bos    = detectBOSCHoCH_simple(d1, swings); // version légère pour HTF
+    htfBias = calcBiasFromBOS(d1, bos);
+    updateHTFBiasUI();
+  } catch(e) { htfBias = null; }
+}
+
+// Version simplifiée pour HTF (pas besoin de déduplication)
+function detectBOSCHoCH_simple(candles, swings) {
+  const { highs, lows } = swings;
+  const all = [
+    ...highs.map(s => ({...s, swingType:'high'})),
+    ...lows.map(s  => ({...s, swingType:'low'})),
+  ].sort((a,b) => a.i - b.i);
+
+  const events = []; let trend = null;
+  for (const swing of all) {
+    for (let i = swing.i + 1; i < Math.min(swing.i + 30, candles.length); i++) {
+      if (swing.swingType === 'high' && candles[i].close > swing.price) {
+        events.push({ type: trend==='down'?'BULL_CHoCH':'BULL_BOS', i }); trend='up'; break;
+      }
+      if (swing.swingType === 'low' && candles[i].close < swing.price) {
+        events.push({ type: trend==='up'?'BEAR_CHoCH':'BEAR_BOS', i }); trend='down'; break;
+      }
+    }
+  }
+  return events.slice(-10);
+}
+
+function updateHTFBiasUI() {
+  const el = document.getElementById('htf-bias-badge');
+  if (!el || !htfBias) return;
+  if (htfBias === 'bull') { el.textContent = '📈 HTF D1 : Haussier'; el.style.color = 'var(--green)'; }
+  else if (htfBias === 'bear') { el.textContent = '📉 HTF D1 : Baissier'; el.style.color = 'var(--red)'; }
+  else { el.textContent = '⚖️ HTF D1 : Neutre'; el.style.color = 'var(--gold)'; }
+  el.style.display = 'block';
+}
+
+/* ── Biais depuis BOS ── */
+function calcBiasFromBOS(candles, bos) {
   const last5 = bos.slice(-5);
-  const bulls  = last5.filter(b => b.type.startsWith('BULL')).length;
-  const bears  = last5.filter(b => b.type.startsWith('BEAR')).length;
-  if (bulls > bears)   return 'bull';
-  if (bears > bulls)   return 'bear';
+  const bulls = last5.filter(b => b.type.startsWith('BULL')).length;
+  const bears = last5.filter(b => b.type.startsWith('BEAR')).length;
+  if (bulls > bears) return 'bull';
+  if (bears > bulls) return 'bear';
   /* Fallback: last 20 candles trend */
   if (candles.length < 20) return 'neut';
   const c = candles;
@@ -1056,15 +1195,14 @@ function calcBias(candles, bos) {
 }
 
 function runSMC(candles) {
-  const swings = findSwings(candles);
-  const bos    = detectBOSCHoCH(candles, swings);
-  const obs    = detectOrderBlocks(candles, bos);
-  const fvgs   = detectFVG(candles);
-  const liq    = detectLiquidity(candles, swings);
-  const bias   = calcBias(candles, bos);
+  const swings = findSwings(candles);                  // ② lookback adaptatif
+  const bos    = detectBOSCHoCH(candles, swings);      // ① passe chronologique
+  const obs    = detectOrderBlocks(candles, bos);      // ③ mitigation par close
+  const fvgs   = detectFVG(candles);                   // ⑤ filtre ATR
+  const liq    = detectLiquidity(candles, swings);     // ④ tolérance dynamique
+  const bias   = calcBiasFromBOS(candles, bos);        // biais depuis BOS corrigé
 
   smcData = { obs, fvgs, bos, swingH: swings.highs, swingL: swings.lows, liq };
-
   updateSidebar(obs, fvgs, bos, liq, bias);
 }
 
@@ -1072,9 +1210,10 @@ function runSMC(candles) {
 function updateSidebar(obs, fvgs, bos, liq, bias) {
   /* Bias */
   const biasPill = document.getElementById('sb-bias');
-  if (bias === 'bull') { biasPill.className='bias-pill bias-bull'; biasPill.innerHTML='▲ Biais Haussier'; }
-  else if (bias === 'bear') { biasPill.className='bias-pill bias-bear'; biasPill.innerHTML='▼ Biais Baissier'; }
-  else { biasPill.className='bias-pill bias-neut'; biasPill.innerHTML='◆ Biais Neutre'; }
+  const tf = currentTF;
+  if (bias === 'bull') { biasPill.className='bias-pill bias-bull'; biasPill.innerHTML=`▲ ${tf} Haussier`; }
+  else if (bias === 'bear') { biasPill.className='bias-pill bias-bear'; biasPill.innerHTML=`▼ ${tf} Baissier`; }
+  else { biasPill.className='bias-pill bias-neut'; biasPill.innerHTML=`◆ ${tf} Neutre`; }
 
   /* BOS */
   const bosList = document.getElementById('list-bos');
@@ -1674,6 +1813,14 @@ let isDrawing    = false;
 let mousePos     = null;      // Position souris courante (canvas)
 
 /* Outil sélectionné */
+const TOOL_HINTS = {
+  pointer: '← Sélectionne un outil pour dessiner sur le graphique',
+  hline:   '✏️ Clique sur le graphique pour poser un niveau horizontal',
+  trend:   '✏️ Clique + glisse pour tracer une ligne de tendance',
+  rect:    '✏️ Clique + glisse pour délimiter une zone de prix',
+  fib:     '✏️ Clique + glisse du bas vers le haut (ou inverse) pour Fibonacci',
+};
+
 document.querySelectorAll('.draw-tool, .draw-tool-label').forEach(btn => {
   if (!btn.dataset.tool) return;
   btn.addEventListener('click', function() {
@@ -1682,8 +1829,9 @@ document.querySelectorAll('.draw-tool, .draw-tool-label').forEach(btn => {
     activeTool = this.dataset.tool;
     const canvas = document.getElementById('smc-canvas');
     canvas.style.pointerEvents = activeTool === 'pointer' ? 'none' : 'all';
-    canvas.style.cursor = activeTool === 'pointer' ? 'default' :
-      activeTool === 'hline' ? 'crosshair' : 'crosshair';
+    canvas.style.cursor = activeTool === 'pointer' ? 'default' : 'crosshair';
+    const hint = document.getElementById('draw-hint');
+    if (hint) hint.textContent = TOOL_HINTS[activeTool] || '';
   });
 });
 
@@ -1698,18 +1846,14 @@ document.querySelectorAll('.color-dot').forEach(dot => {
 
 /* Undo */
 document.getElementById('undoBtn')?.addEventListener('click', () => {
-  drawings.pop(); updateDrawCount(); drawOverlay();
+  if (drawings.length) { drawings.pop(); drawOverlay(); showToast('Dernier dessin annulé'); }
 });
 
 /* Clear all */
 document.getElementById('clearBtn')?.addEventListener('click', () => {
-  if (confirm('Effacer tous les dessins ?')) { drawings = []; updateDrawCount(); drawOverlay(); }
+  if (!drawings.length) return;
+  drawings = []; drawOverlay(); showToast('Tous les dessins effacés');
 });
-
-function updateDrawCount() {
-  const el = document.getElementById('draw-count');
-  if (el) el.textContent = drawings.length ? `${drawings.length} élément${drawings.length>1?'s':''}` : '';
-}
 
 /* Canvas mouse events */
 function initDrawingEvents() {
@@ -1726,7 +1870,7 @@ function initDrawingEvents() {
 
     if (activeTool === 'hline') {
       drawings.push({ type:'hline', price, color:drawColor });
-      updateDrawCount(); drawOverlay(); return;
+      drawOverlay(); return;
     }
     drawStart = { cx, cy, time, price };
     isDrawing = true;
@@ -1754,7 +1898,7 @@ function initDrawingEvents() {
     } else if (activeTool === 'fib') {
       drawings.push({ type:'fib',   t1:drawStart.time, p1:drawStart.price, t2:time, p2:price, color:drawColor });
     }
-    isDrawing=false; drawStart=null; updateDrawCount(); drawOverlay();
+    isDrawing=false; drawStart=null; drawOverlay();
   });
 
   canvas.addEventListener('mouseleave', () => { mousePos=null; });
@@ -1850,153 +1994,285 @@ function drawUserDrawings(ctx, W, H) {
 }
 
 /* ═══════════════════════════════════════════════
-   ANALYSE FONDAMENTALE
+   ANALYSE FONDAMENTALE — Données locales (même
+   système que l'ancien graphique.html)
 ═══════════════════════════════════════════════ */
-let fundLoaded   = false;
-let fundNewsData = [];
-let fundContext  = '';  // Contexte pour le chat
+let fundLoaded = false;
 
-const FUND_CAT = {
-  'EURUSD=X':'forex','GBPUSD=X':'forex','USDJPY=X':'forex','USDCHF=X':'forex',
-  'USDCAD=X':'forex','AUDUSD=X':'forex','NZDUSD=X':'forex','EURGBP=X':'forex',
-  'EURJPY=X':'forex','GBPJPY=X':'forex','XAUUSD=X':'or','CL=F':'petrole',
-  'BZ=F':'petrole','BTC-USD':'crypto','ETH-USD':'crypto','SOL-USD':'crypto',
-  'BNB-USD':'crypto','XRP-USD':'crypto','^GSPC':'macro','^NDX':'macro','^DJI':'macro',
+const MARKET_DATA = {
+  /* ── FOREX ── */
+  'EURUSD=X': { score:72, sentiment:'bullish',
+    tldr:'EUR/USD haussier structurel. La Fed baisse ses taux tandis que la BCE reste stable à 2.00%. Différentiel de taux favorable à l\'euro. DXY sous 100 confirme le biais.',
+    factors:['Fed en cycle baissier vs BCE stable · Compression différentiel favorable EUR','DXY sous 100 · Dollar structurellement faible · Positionnement court USD','Zone euro : PMI manufacturing en rebond · Zeitenwende fiscal Allemagne','Risk-on global : flux vers actifs non-USD (EUR, EM, métaux)','Réserves mondiales : diversification lente USD → EUR en cours'],
+    conclusion:'Long EUR/USD. Entrée sur replis 1.155-1.165. Stop 1.148. Cible 1.200-1.220. Tendance MT haussière.' },
+
+  'GBPUSD=X': { score:68, sentiment:'bullish',
+    tldr:'GBP/USD haussier. La BoE maintient 3.75% tandis que le dollar reste faible. Économie UK stabilisée. WTI élevé booste Shell/BP et le PIB UK.',
+    factors:['BoE à 3.75% · Différentiel favorable vs Fed en baisse','Dollar faible · Soutien mécanique GBP/USD','Inflation UK maîtrisée → BoE pas pressée de baisser','WTI élevé : Shell/BP cash-flow boost · Indirect positif PIB UK','Positionnement spéculatif long GBP en accumulation institutionnelle'],
+    conclusion:'Long GBP/USD. Entrée 1.315-1.320. Stop 1.302. Cible 1.340-1.360.' },
+
+  'USDJPY=X': { score:42, sentiment:'neutral',
+    tldr:'USD/JPY neutre-complexe. BoJ normalise lentement (0.75%) mais le différentiel USA-JP reste large. Dollar faible vs BoJ hawkish = neutralisation. Risque intervention BoJ si > 160.',
+    factors:['BoJ à 0.75% en normalisation → JPY soutenu LT','Différentiel de taux USA-JP encore +275bp → carry trade persistant','Risque d\'intervention BoJ/MoF si JPY trop faible','USD faible macro · Pression baissière USD/JPY MT','Risk-off flush : JPY se renforce brusquement sur choc'],
+    conclusion:'Neutre. Éviter positions directionnelles fortes. Surveiller BoJ pour signal de normalisation.' },
+
+  'USDCHF=X': { score:28, sentiment:'bearish',
+    tldr:'USD/CHF ultra-baissier · CHF (valeur refuge forte) + USD faible = combinaison maximalement baissière. SNB peut intervenir sous 0.780.',
+    factors:['CHF fort : flux géopolitiques valeur refuge','USD score baissier · DXY sous 100 · Fed en baisse','Différentiel inversé : SNB 0.25% vs Fed 3.50% mais USD perd plus','Risque unique : SNB intervention verbale sous 0.780'],
+    conclusion:'Short USD/CHF. Entrée 0.788-0.793. Stop 0.801. Cible 0.770.' },
+
+  'AUDUSD=X': { score:62, sentiment:'bullish',
+    tldr:'AUD/USD haussier. Régime RISK-ON + rebond demande chinoise + RBA à 3.85% parmi les plus hauts du G10. Cuivre en hausse corrèle positivement.',
+    factors:['Risk-on global · AUD actif cyclique bénéficiaire direct','Chine rebond PMI · Demande minerai de fer + cuivre → AUD soutenu','RBA à 3.85% · Taux le plus haut → carry trade AUD attractif','Cuivre en hausse → corrélé positivement AUD/USD','USD faible · Pression haussière mécanique'],
+    conclusion:'Long AUD/USD. Entrée 0.685-0.690. Stop 0.678. Cible 0.705-0.715.' },
+
+  'GBPJPY=X': { score:60, sentiment:'bullish',
+    tldr:'GBP/JPY haussier. GBP fort (BoE 3.75%) + JPY faible (BoJ lente normalisation). Risk-on favorable au cross.',
+    factors:['GBP haussier : BoE 3.75% + USD faible libère GBP','JPY bearish relatif CT','WTI élevé · Indirect boost économie UK','Risk-on : carry GBP/JPY attractif','Corridor technique haussier bien établi'],
+    conclusion:'Long GBP/JPY. Entrée 208-210. Stop 205. Cible 215-220.' },
+
+  'EURJPY=X': { score:62, sentiment:'bullish',
+    tldr:'EUR/JPY haussier. EUR fort + JPY faible = carry trade attractif. Support des flux risk-on.',
+    factors:['EUR haussier · BCE stable · Zeitenwende fiscal','JPY bearish relatif · BoJ normalisation lente','Carry positif · Rendement EUR > JPY','Risk-on · Flux vers cross haussiers'],
+    conclusion:'Long EUR/JPY. Entrée 186-188. Stop 183. Cible 193-195.' },
+
+  /* ── OR / MÉTAUX ── */
+  'XAUUSD=X': { score:78, sentiment:'bullish',
+    tldr:'Or à des niveaux historiques. Dollar faible (DXY <100) + taux réels négatifs + achats banques centrales record + géopolitique = confluences haussières majeures.',
+    factors:['DXY sous 100 · Or libellé USD renchéri mécaniquement','Taux réels négatifs · Or actif de protection privilégié','Banques centrales · Achats massifs record (>1000t/an)','Tensions géopolitiques · Valeur refuge en demande structurelle','Momentum institutionnel · ETF inflows en reprise'],
+    conclusion:'Long Or. Entrée sur replis. Support $2 950-3 000. Cible $3 200-3 500.' },
+
+  'XAGUSD=X': { score:70, sentiment:'bullish',
+    tldr:'Argent haussier. Corrèle positivement avec l\'or + demande industrielle (panneaux solaires, semi-conducteurs) en forte hausse.',
+    factors:['Corrélation avec l\'or · Ratio Or/Argent en compression','Demande industrielle · Panneaux solaires + semi-conducteurs','Dollar faible · Soutien automatique','Transition énergétique · Argent métal clé','Stocks physiques en baisse · Offre tendue'],
+    conclusion:'Long Argent. Entrée $31-32. Stop $29. Cible $38-42.' },
+
+  /* ── PÉTROLE ── */
+  'CL=F': { score:65, sentiment:'bullish',
+    tldr:'WTI haussier. OPEC+ maintient les coupes de production + géopolitique + demande Asie en rebond. Dollar faible renchérit mécaniquement le pétrole libellé USD.',
+    factors:['OPEC+ discipline maintenue · Coupes volontaires','Demande Chine en rebond · PMI industriel positif','Dollar faible · Pétrole libellé USD mécaniquement renchéri','Géopolitique ME · Tensions supply','Réserves stratégiques US au plus bas historique'],
+    conclusion:'Long WTI. Entrée replis $75-78. Stop $72. Cible $88-95.' },
+
+  'BZ=F': { score:63, sentiment:'bullish',
+    tldr:'Brent haussier. Fondamentaux similaires au WTI. Demande Asia-Pacific soutenue. OPEC+ discipline.',
+    factors:['OPEC+ coupes maintenues · Arabie Saoudite vise prix élevés','Demande asiatique en rebond · Chine + Inde importations en hausse','Production mer du Nord stable','Dollar faible · Matières premières renchéries','Géopolitique ME latent'],
+    conclusion:'Long Brent. Entrée $78-82. Stop $75. Cible $92-100.' },
+
+  /* ── CRYPTO ── */
+  'BTC-USD': { score:58, sentiment:'bullish',
+    tldr:'Bitcoin en phase d\'accumulation post-correction. Thèse LT intacte. Halving 2024 + ETF institutionnels + régime RISK-ON macro positif. Zone d\'accumulation LT attractive.',
+    factors:['Halving Avril 2024 · Cycle 12-18 mois avant prochain ATH · Phase normale','ETF Bitcoin spot · Flux institutionnels entrants en accumulation discrète','Régime RISK-ON macro · Positif LT pour BTC','Adoption institutionnelle · MicroStrategy, BlackRock, Fidelity','Supply shock post-halving · Réduction émissions de 50%'],
+    conclusion:'Long BTC. Accumuler sur zones de support. Target MT : $120 000-150 000.' },
+
+  'ETH-USD': { score:45, sentiment:'neutral',
+    tldr:'ETH en sous-performance relative vs BTC. Ratio ETH/BTC en compression. Concurrence L1/L2 fragmente la valeur. Staking yield insuffisant vs alternatives.',
+    factors:['ETH/BTC ratio sous pression · Rotation vers BTC en cours','Narrative affaiblie · Concurrence Solana, L2 fragmentent la valeur','Staking yield 3.5% · Insuffisant vs T-bills 4%+','Dencun upgrade intégré · Pas de catalyseur majeur CT','Demande DeFi stable mais pas d\'accélération'],
+    conclusion:'Neutre CT. Préférer BTC. Si long ETH : zones $2 400-2 600 avec stop $2 100.' },
+
+  'SOL-USD': { score:55, sentiment:'neutral',
+    tldr:'Solana : réseau le plus actif (DeFi, memecoins, NFTs) mais pression vendeuse structurelle. Activité en hausse mais prix en range.',
+    factors:['Réseau le plus actif · DeFi, memecoins, NFT volumes record','Inflation tokenomique 5%/an · Dilution structurelle','BTC dominance élevée · Altcoins sous pression relative','Fondateurs vendeurs progressifs · Pression supply','Narrative forte mais prix découplé de l\'usage CT'],
+    conclusion:'Neutre CT. Long si confirmation breakout $200+. Stop $140.' },
+
+  'BNB-USD': { score:50, sentiment:'neutral',
+    tldr:'BNB neutre. Burns trimestriels déflationnistes + utilisation BSC soutiennent. Risques régulation Binance persistants.',
+    factors:['Burn trimestriel BNB · Mécanisme déflationniste efficace','BSC (BNB Chain) · Activité DeFi soutenue','Binance exchange · Volume #1 mondial · BNB utilitaire fort','Risques régulation Binance US persistants','BTC dominance haute · BNB neutre par corrélation'],
+    conclusion:'Neutre. Conserver positions existantes. Accumuler sous zones de support.' },
+
+  'XRP-USD': { score:52, sentiment:'neutral',
+    tldr:'XRP : pari binaire sur ETF/régulation. Potentiel de hausse fort si approbation SEC. Risque de retour aux supports si rejet.',
+    factors:['Pari ETF XRP · Décision SEC attendue · Événement binaire','Ripple Labs · Partenariats bancaires actifs · ODL en croissance','Liquidités XRP · Utilisation institutionnelle On-Demand Liquidity','BTC dominance haute · Altcoins en attente de rotation','Résolution judiciaire Ripple vs SEC favorable partielle'],
+    conclusion:'Neutre avec biais spéculatif haussier si ETF approuvé.' },
+
+  /* ── INDICES ── */
+  '^GSPC': { score:62, sentiment:'bullish',
+    tldr:'S&P 500 en régime RISK-ON. Monétisation IA des grandes caps tech + Fed accommodante + BPA en hausse. Support des rachats d\'actions massifs.',
+    factors:['Monétisation IA · Magnificent 7 revenue en forte hausse','Fed en baisse · Multiple de valorisation PE expansif','BPA Q1 2026 en hausse · Marges corporate solides','Rachats d\'actions record · $800 Mds annualisés','Régime RISK-ON · Flux institutions vers équités US'],
+    conclusion:'Long S&P. Entrée replis 5 600-5 700. Stop 5 400. Cible 6 500-7 000.' },
+
+  '^NDX': { score:65, sentiment:'bullish',
+    tldr:'Nasdaq 100 · Le plus fort des indices. IA monétisation en accélération. NVDA, MSFT, GOOG en phase de révision haussière BPA. Fed accommodante = secteur growth favorisé.',
+    factors:['NVDA chips IA · Revenue guidance en forte hausse','OpenAI/Anthropic licensing → MSFT, GOOG revenue IA en hausse','Cloud hyperscalers en capex record · AWS, Azure, GCP','Fed accommodation · Secteur growth/tech bénéficiaire direct','Rotation institutionnelle · "IA US" thème dominant'],
+    conclusion:'Long NQ. Entrée replis zones de support. Cible 22 000-24 000+.' },
+
+  '^GDAXI': { score:62, sentiment:'bullish',
+    tldr:'DAX haussier. Zeitenwende fiscal (réarmement/infrastructure) + rebond manufacturing + BCE stable. Catalyseurs structurels forts.',
+    factors:['Zeitenwende · Investissement défense + infrastructure','Manufacturing allemand PMI en rebond · Fin cycle bearish','ECB stable 2.00% · Coût du capital maîtrisé','Automobile en restructuration positive','Réarmement UE → commandes défense DAX (Rheinmetall)'],
+    conclusion:'Long DAX. Entrée replis 23 000-23 500. Cible 26 000-28 000.' },
 };
 
-const BULL_KW = ['hausse','haussier','bull','acheter','long','monte','positif','fort','solidifie','rebond','progression','croissance','optimiste','gain','sommet','record','support','force','favorable'];
-const BEAR_KW = ['baisse','baissier','bear','vendre','short','descend','négatif','faible','chute','recul','correction','risque','pression','résistance','rejet','pessimiste','perte','creux'];
-
-function scoreSentiment(texts) {
-  let bull = 0, bear = 0;
-  const combined = texts.join(' ').toLowerCase();
-  BULL_KW.forEach(w => { bull += (combined.match(new RegExp(w,'g'))||[]).length; });
-  BEAR_KW.forEach(w => { bear += (combined.match(new RegExp(w,'g'))||[]).length; });
-  const total = bull + bear || 1;
-  return { bull, bear, score: bull/total, bias: bull>bear?'bull':bear>bull?'bear':'neut' };
+/* Fallback générique par catégorie */
+function getFundGeneric(sym, label) {
+  const cat = FUND_CAT_MAP[sym] || 'forex';
+  const map = {
+    forex:   { score:50, sentiment:'neutral',
+      tldr:`${label} dans un contexte de dollar faible. Régime RISK-ON favorise les devises à risque vs USD.`,
+      factors:['DXY faible · Dollar structurellement sous pression','Différentiels de taux G10 en évolution','Régime RISK-ON · Flux vers devises hors-USD','Banques centrales · Cycles de baisse divergents','Positionnements spéculatifs à surveiller'],
+      conclusion:`Analyser les divergences de taux et les flux institutionnels sur ${label}.` },
+    or:      { score:75, sentiment:'bullish',
+      tldr:`${label} bénéficie du régime REFLATION et du dollar faible. Métaux précieux en tendance structurelle.`,
+      factors:['DXY sous 100 · Soutien automatique pour les métaux','Régime REFLATION · Métaux en hausse','Taux réels négatifs · Métal = protection','Géopolitique · Valeur refuge en demande','Momentum institutionnel positif · ETF inflows'],
+      conclusion:`Long ${label}. Tendance haussière structurelle confirmée.` },
+    petrole: { score:62, sentiment:'bullish',
+      tldr:`${label} soutenu par OPEC+ + géopolitique + demande Asie.`,
+      factors:['OPEC+ discipline · Coupes maintenues','Géopolitique ME · Tensions supply','Demande Chine en rebond','Dollar faible · Matières premières renchéries','Réserves stratégiques tendues'],
+      conclusion:`Biais haussier sur ${label}. Surveiller décisions OPEC+.` },
+    crypto:  { score:52, sentiment:'neutral',
+      tldr:`${label} en consolidation. BTC dominance élevée. Régime RISK-ON positif LT.`,
+      factors:['BTC dominance élevée · Altcoins sous pression relative','Cycle halving 2024 · Phase intermédiaire','Régime RISK-ON macro positif LT','Adoption institutionnelle continue','Surveiller flux ETF et régulation'],
+      conclusion:`Neutre CT. Accumuler sur zones de support. Horizon LT haussier.` },
+    macro:   { score:62, sentiment:'bullish',
+      tldr:`${label} en régime RISK-ON · Fed accommodante · IA monétisation · BPA en hausse.`,
+      factors:['Régime RISK-ON · Fed accommodante','Monétisation IA · BPA corporates en hausse','Rachats d\'actions records','Multiple PE expansif dans env. taux baissiers','Sentiment institutionnel constructif'],
+      conclusion:`Long ${label}. Tendance haussière portée par IA et Fed accommodante.` },
+  };
+  return { ...map[cat], source:'local' };
 }
+
+const FUND_CAT_MAP = {
+  'EURUSD=X':'forex','GBPUSD=X':'forex','USDJPY=X':'forex','USDCHF=X':'forex',
+  'USDCAD=X':'forex','AUDUSD=X':'forex','NZDUSD=X':'forex','EURGBP=X':'forex',
+  'EURJPY=X':'forex','GBPJPY=X':'forex','GBPAUD=X':'forex','CADJPY=X':'forex',
+  'XAUUSD=X':'or','XAGUSD=X':'or','CL=F':'petrole','BZ=F':'petrole',
+  'BTC-USD':'crypto','ETH-USD':'crypto','SOL-USD':'crypto','BNB-USD':'crypto','XRP-USD':'crypto',
+  'AVAX-USD':'crypto','DOGE-USD':'crypto','ADA-USD':'crypto','LINK-USD':'crypto',
+  '^GSPC':'macro','^NDX':'macro','^DJI':'macro','^GDAXI':'macro','^FTSE':'macro','^N225':'macro',
+};
 
 async function loadFundamental() {
   fundLoaded = true;
-  const cat  = FUND_CAT[currentSym] || 'forex';
   const scroll = document.getElementById('fund-scroll');
+  const cat    = FUND_CAT_MAP[currentSym] || 'forex';
 
-  scroll.innerHTML = `<div class="fund-loading"><div>Chargement des actualités…</div><div class="fund-loading-dots"><span>●</span> <span>●</span> <span>●</span></div></div>`;
+  /* Skeleton loader */
+  scroll.innerHTML = `
+    <div class="fund-loading">
+      <div style="margin-bottom:0.4rem;">Analyse en cours…</div>
+      <div class="fund-loading-dots"><span>●</span> <span>●</span> <span>●</span></div>
+    </div>`;
 
+  let data   = null;
+  let source = 'local'; // 'api' | 'local' | 'generic'
+
+  /* ── 1. Essayer /api/analyse (Vercel + Supabase) ── */
   try {
-    const sources = [
-      `/api/news?category=${cat}`,
-      `https://corsproxy.io/?url=${encodeURIComponent(`https://forexaverage.com/api/news?category=${cat}`)}`,
-    ];
-    let items = [];
-    for (const url of sources) {
-      try {
-        const res = await fetch(url, { signal:AbortSignal.timeout(10000) });
-        if (!res.ok) continue;
-        const json = await res.json();
-        if (json.items?.length) { items = json.items; break; }
-      } catch(e) {}
+    const url = `/api/analyse?symbol=${encodeURIComponent(currentSym)}&category=${cat}&label=${encodeURIComponent(currentLabel)}`;
+    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+    if (res.ok) {
+      const json = await res.json();
+      if (json?.sentiment && json?.tldr) { data = json; source = 'api'; }
     }
+  } catch(e) { /* fallback */ }
 
-    if (!items.length) throw new Error('Pas de données');
-
-    fundNewsData = items.slice(0, 12);
-    const titles = items.map(i => i.title + ' ' + (i.summary||''));
-    const sent   = scoreSentiment(titles);
-
-    /* Build context for chat */
-    fundContext = `Paire: ${currentLabel} | Catégorie: ${cat} | Biais: ${sent.bias==='bull'?'Haussier':sent.bias==='bear'?'Baissier':'Neutre'} | Score: ${Math.round(sent.score*100)}% bull\nActualités récentes:\n` + items.slice(0,5).map(i=>`- ${i.title}`).join('\n');
-
-    /* Render */
-    const sentClass = sent.bias==='bull'?'fund-s-bull':sent.bias==='bear'?'fund-s-bear':'fund-s-neut';
-    const sentIcon  = sent.bias==='bull'?'▲':sent.bias==='bear'?'▼':'◆';
-    const sentLabel = sent.bias==='bull'?'Haussier':sent.bias==='bear'?'Baissier':'Neutre';
-    const sentColor = sent.bias==='bull'?'var(--green)':sent.bias==='bear'?'var(--red)':'var(--gold)';
-    const barW      = Math.round(sent.score*100);
-
-    /* Auto-generate TLDR */
-    const tldr = generateTLDR(sent, currentLabel, items);
-    const factors = generateFactors(items.slice(0,5));
-
-    scroll.innerHTML = `
-      <div class="fund-sentiment ${sentClass}">
-        <div style="font-size:1.4rem;">${sentIcon}</div>
-        <div>
-          <span class="fund-s-label" style="color:${sentColor}">${sentLabel} — ${currentLabel}</span>
-          <span class="fund-s-score">Bull ${sent.bull} · Bear ${sent.bear} · Score ${Math.round(sent.score*100)}%</span>
-          <div class="fund-score-bar"><div class="fund-score-fill" style="width:${barW}%;background:${sentColor};"></div></div>
-        </div>
-      </div>
-      <div class="fund-sec">
-        <div class="fund-sec-title">Résumé de marché</div>
-        <div class="fund-tldr">${tldr}</div>
-      </div>
-      <div class="fund-sec">
-        <div class="fund-sec-title">Facteurs clés</div>
-        ${factors.map(f=>`<div class="fund-factor"><div class="fund-dot"></div><div>${f}</div></div>`).join('')}
-      </div>
-      <div class="fund-sec">
-        <div class="fund-sec-title">Actualités récentes (${items.length})</div>
-        ${fundNewsData.map(n=>`
-          <div class="fund-news-item">
-            <div class="fund-news-title" onclick="window.open('${n.link}','_blank')">${n.title}</div>
-            <div class="fund-news-src">${n.source} · ${timeAgo ? timeAgo(n.date) : ''}</div>
-          </div>`).join('')}
-      </div>
-    `;
-
-  } catch(e) {
-    scroll.innerHTML = `<div class="fund-loading" style="color:var(--red);">❌ Impossible de charger les données</div>`;
+  /* ── 2. Fallback : données locales MARKET_DATA ── */
+  if (!data) {
+    data   = MARKET_DATA[currentSym] || null;
+    source = data ? 'local' : 'generic';
   }
-}
 
-function generateTLDR(sent, label, items) {
-  const dir   = sent.bias==='bull'?'haussier':'baissier';
-  const score = Math.round(sent.score*100);
-  const recent = items[0]?.title?.slice(0,60) || '';
-  if (sent.bias === 'neut') return `Le marché sur ${label} montre un sentiment neutre. Les données fondamentales sont mitigées, sans direction claire.`;
-  return `Le sentiment sur ${label} est ${dir} avec un score de ${score}%. Les actualités récentes tendent vers une continuation ${dir}e. "${recent}…"`;
-}
-
-function generateFactors(items) {
-  const factors = [];
-  const keywords = {
-    'Fed|FOMC|taux|interest rate': 'Décision de la Fed / politique monétaire impacte la devise',
-    'BCE|ECB|banque centrale': 'La banque centrale européenne surveille l\'inflation',
-    'inflation|CPI|PCE': 'Les données d\'inflation influencent les prochaines décisions de taux',
-    'NFP|emploi|chômage|jobs': 'Les données emploi américaines sont le principal catalyseur',
-    'or|gold|refuge|safe': 'L\'or joue son rôle de valeur refuge face à l\'incertitude',
-    'bitcoin|crypto|btc': 'Le marché crypto réagit aux flux institutionnels',
-    'pétrole|oil|opep|opec': 'Les niveaux de production OPEP+ conditionnent le prix',
-    'géopolitique|war|conflit': 'Les tensions géopolitiques augmentent l\'aversion au risque',
-    'gdp|pib|croissance|growth': 'Les perspectives de croissance économique orientent le biais',
-  };
-  const combined = items.map(i=>i.title+' '+(i.summary||'')).join(' ').toLowerCase();
-  for (const [pattern, factor] of Object.entries(keywords)) {
-    if (new RegExp(pattern,'i').test(combined)) factors.push(factor);
-    if (factors.length >= 4) break;
+  /* ── 3. Fallback générique ── */
+  if (!data) {
+    data   = getFundGeneric(currentSym, currentLabel);
+    source = 'generic';
   }
-  if (!factors.length) factors.push('Surveillance des données macro et des flux institutionnels recommandée.');
-  return factors;
+
+  /* Normaliser les factors (API retourne jsonb string ou array) */
+  if (typeof data.factors === 'string') {
+    try { data.factors = JSON.parse(data.factors); } catch(e) { data.factors = [data.factors]; }
+  }
+  if (!Array.isArray(data.factors)) data.factors = [];
+
+  /* ── Contexte pour le chat ── */
+  const sentLabel = data.sentiment==='bullish'?'Haussier':data.sentiment==='bearish'?'Baissier':'Neutre';
+  fundContext = `Paire: ${currentLabel} | Biais: ${sentLabel} | Score: ${data.score}/100\nAnalyse: ${data.tldr}\nConclusion: ${data.conclusion}`;
+
+  /* ── Render ── */
+  renderFundamental(data, source);
 }
+
+function renderFundamental(data, source) {
+  const scroll    = document.getElementById('fund-scroll');
+  const sentiment = data.sentiment || 'neutral';
+  const score     = Math.max(0, Math.min(100, data.score || 50));
+  const sentColor = sentiment==='bullish'?'var(--green)':sentiment==='bearish'?'var(--red)':'var(--gold)';
+  const sentIcon  = sentiment==='bullish'?'📈 Haussier':sentiment==='bearish'?'📉 Baissier':'⚖️ Neutre';
+  const sentCls   = sentiment==='bullish'?'fund-s-bull':sentiment==='bearish'?'fund-s-bear':'fund-s-neut';
+
+  const sourceTag = source === 'api'
+    ? `<span style="font-size:0.58rem;color:rgba(34,197,94,0.6);">✓ Live — actualisé automatiquement</span>`
+    : source === 'local'
+    ? `<span style="font-size:0.58rem;color:rgba(255,215,0,0.4);">◉ Données locales</span>`
+    : `<span style="font-size:0.58rem;color:rgba(255,255,255,0.2);">⚠ Données génériques</span>`;
+
+  const factors = Array.isArray(data.factors) ? data.factors : [];
+
+  /* Timestamp */
+  const updatedAt = data.updated_at
+    ? new Date(data.updated_at).toLocaleString('fr-FR', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+    : '';
+
+  scroll.innerHTML = `
+    <div class="fund-sentiment ${sentCls}">
+      <div style="font-size:1.5rem;flex-shrink:0;">${sentiment==='bullish'?'📈':sentiment==='bearish'?'📉':'⚖️'}</div>
+      <div style="flex:1;">
+        <span class="fund-s-label" style="color:${sentColor}">${sentIcon}</span>
+        <span class="fund-s-score">Score fondamental : ${score}/100</span>
+        <div class="fund-score-bar"><div class="fund-score-fill" style="width:${score}%;background:${sentColor};"></div></div>
+      </div>
+    </div>
+
+    <div style="padding:0.2rem 0.9rem 0.4rem;display:flex;justify-content:space-between;align-items:center;">
+      ${sourceTag}
+      ${updatedAt ? `<span style="font-size:0.58rem;color:rgba(255,255,255,0.2);">${updatedAt}</span>` : ''}
+    </div>
+
+    <div class="fund-sec">
+      <div class="fund-sec-title">📊 Résumé macro</div>
+      <div class="fund-tldr">${data.tldr || '—'}</div>
+    </div>
+
+    <div class="fund-sec">
+      <div class="fund-sec-title">🔑 Facteurs clés</div>
+      ${factors.map((f,i) => `
+        <div class="fund-factor">
+          <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,215,0,0.1);color:rgba(255,215,0,0.7);font-size:0.58rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${i+1}</div>
+          <div>${f}</div>
+        </div>`).join('')}
+      ${!factors.length ? '<div class="smc-empty">Aucun facteur disponible</div>' : ''}
+    </div>
+
+    <div class="fund-sec">
+      <div class="fund-sec-title">🎯 Conclusion</div>
+      <div class="fund-concl">${data.conclusion || '—'}</div>
+    </div>
+  `;
+}
+
+let fundContext = '';
 
 /* ── Chat fondamental ── */
-const CHAT_RESPONSES = [
-  { q:/biais|direction|tendance/, r:(c) => `Selon les actualités récentes : ${c.includes('Haussier')?'le biais est HAUSSIER — chercher des setups à l\'achat sur retrace.':'le biais est BAISSIER — les vendeurs ont la main, favoriser les positions courtes.'}` },
-  { q:/niveau|support|résistance|prix/, r:() => `Consultez l'onglet Technique (SMC/ICT) pour les niveaux précis : Order Blocks, FVG et zones de liquidité sont tracés automatiquement sur le graphique.` },
-  { q:/trade|entrer|setup|signal/, r:() => `Un bon setup combine : 1) Biais fondamental (onglet Fondamental), 2) Confirmation technique (BOS + OB sur l'onglet Technique), 3) Entrée en killzone ICT (Tokyo/London/NY).` },
-  { q:/inflation|taux|fed|bce/, r:() => `Les banques centrales restent le principal driver des devises. Surveillez CPI, NFP et les minutes Fed/BCE pour anticiper les pivots de politique monétaire.` },
-  { q:/risk|risque|sl|stop/, r:() => `Règle de gestion : ne risquez jamais plus de 1-2% du capital par trade. Placez votre SL sous/sur l'Order Block identifié. Le R/R minimal recommandé est 1:2.` },
-];
-
 function chatResponse(msg) {
-  const m = msg.toLowerCase();
-  for (const r of CHAT_RESPONSES) {
-    if (r.q.test(m)) return r.r(fundContext);
+  const m      = msg.toLowerCase();
+  const isBull = fundContext.includes('Haussier') || fundContext.includes('bullish');
+  const isBear = fundContext.includes('Baissier') || fundContext.includes('bearish');
+  const bias   = isBull ? 'HAUSSIER' : isBear ? 'BAISSIER' : 'NEUTRE';
+  const dir    = isBull ? 'achat (long)' : isBear ? 'vente (short)' : 'attente';
+
+  if (/biais|direction|tendance|aller/.test(m))
+    return `Biais fondamental sur ${currentLabel} : <b>${bias}</b>. Favoriser les setups en ${dir}. Confirmer avec l'onglet Technique (BOS + OB).`;
+  if (/niveau|support|résistance|zone/.test(m))
+    return `Consultez l'onglet Technique : les Order Blocks, FVG et liquidités sont tracés automatiquement. Utilisez les outils de dessin pour annoter vos niveaux personnels.`;
+  if (/trade|entrer|setup|signal|quand/.test(m))
+    return `Setup sur ${currentLabel} : 1) Biais ${bias}, 2) Confirmation BOS+OB sur onglet Technique, 3) Entrée en killzone ICT (London 08-10h UTC ou NY 12-16h UTC).`;
+  if (/inflation|taux|fed|bce|banque/.test(m))
+    return `Les banques centrales sont le principal driver. Surveillez CPI, NFP et décisions Fed/BCE. Analyse actuelle : ${fundContext.split('\n')[0] || 'voir analyse'}.`;
+  if (/risque|sl|stop|gestion/.test(m))
+    return `Règle de gestion : max 1-2% du capital par trade. SL sous/sur l'Order Block identifié. R/R minimal recommandé : 1:2.`;
+  if (/conclusion|résumé|synthèse/.test(m)) {
+    const concl = fundContext.split('\n').find(l => l.includes('Conclusion'));
+    return concl ? concl.replace('Conclusion:','').trim() : `Biais ${bias} sur ${currentLabel}. Combinez fondamental + technique pour valider.`;
   }
-  /* Fallback contextuel */
-  const bias = fundContext.includes('Haussier')?'haussier':'baissier';
-  return `Sur ${currentLabel}, le contexte fondamental est actuellement ${bias}. Pour plus de précision, combineze avec l'analyse technique (SMC) visible sur le graphique.`;
+  return `${currentLabel} → biais ${bias}. ${isBull?'Chercher points d\'entrée long sur corrections.':isBear?'Favoriser ventes sur rebonds.':'Attendre confirmation directionnelle.'} Voir onglet Technique pour les niveaux.`;
 }
 
 document.getElementById('fund-send')?.addEventListener('click', sendFundChat);
@@ -2008,15 +2284,13 @@ function sendFundChat() {
   const msg   = input.value.trim();
   if (!msg) return;
   input.value = '';
-
   msgs.innerHTML += `<div class="fund-msg-user">${msg}</div>`;
   msgs.scrollTop = msgs.scrollHeight;
-
   setTimeout(() => {
     const reply = chatResponse(msg);
     msgs.innerHTML += `<div class="fund-msg-ai">${reply}</div>`;
     msgs.scrollTop = msgs.scrollHeight;
-  }, 400);
+  }, 350);
 }
 
 /* ═══════════════════════════════════════════════
