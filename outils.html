@@ -149,9 +149,10 @@ function hideIframeNav(iframe) {
     let css = `#mainNav { display: none !important; }`;
 
     if (src.includes('graphique')) {
-      // graphique.html: page-body margin compense la nav (62px) + filter bar (44px)
-      // Sans la nav, on garde seulement le filter bar
+      // strategy-bar est fixed à top:var(--nav-h)=62px → remonter à top:0
+      // page-body margin = nav(62px) + strategy(44px) → réduire à 44px seulement
       css += `
+        .strategy-bar { top: 0 !important; }
         .page-body {
           margin-top: 44px !important;
           height: calc(100vh - 44px) !important;
