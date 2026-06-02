@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Créer mon plan de trading | Forex Average</title>
+    <meta name="description" content="Créez votre plan de trading personnalisé. Définissez votre capital, objectif, et obtenez un plan jour par jour avec calcul de lots automatique.">
+    <meta name="theme-color" content="#FFD700">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #FFC107;
+            --dark: #000000;
+            --card: rgba(18,18,18,0.92);
+            --border: rgba(255,215,0,0.18);
+            --border-hover: rgba(255,215,0,0.40);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --orange: #f97316;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.04) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,215,0,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,215,0,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 900;
+            color: #FFD700;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            flex-shrink: 0;
+        }
+
+        .logo-sub {
+            display: block;
+            font-size: 0.55rem;
+            letter-spacing: 2px;
+            color: rgba(255,215,0,0.5);
+            font-weight: 500;
+            margin-top: -2px;
+        }
+
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a.active { color: var(--gold); }
+
+        /* ── LAYOUT ── */
+        .main-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header .tag {
+            display: inline-block;
+            background: rgba(255,215,0,0.12);
+            border: 1px solid rgba(255,215,0,0.3);
+            color: var(--gold);
+            padding: .3rem .9rem;
+            border-radius: 100px;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: .9rem;
+        }
+
+        .page-header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFD700 60%, #FFC107 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.15;
+            margin-bottom: .7rem;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* ── STEPPER ── */
+        .stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .4rem;
+            flex: 1;
+            max-width: 180px;
+            position: relative;
+            cursor: default;
+        }
+
+        .step-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: calc(50% + 22px);
+            right: calc(-50% + 22px);
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+            transition: background .4s;
+        }
+
+        .step-item.done:not(:last-child)::after {
+            background: rgba(255,215,0,0.5);
+        }
+
+        .step-num {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .85rem;
+            font-weight: 800;
+            border: 2px solid rgba(255,255,255,0.15);
+            background: rgba(18,18,18,0.9);
+            color: var(--text-muted);
+            position: relative;
+            z-index: 1;
+            transition: all .3s;
+        }
+
+        .step-item.active .step-num {
+            border-color: var(--gold);
+            background: rgba(255,215,0,0.15);
+            color: var(--gold);
+            box-shadow: 0 0 20px rgba(255,215,0,0.25);
+        }
+
+        .step-item.done .step-num {
+            border-color: var(--green);
+            background: rgba(34,197,94,0.15);
+            color: var(--green);
+        }
+
+        .step-label {
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .step-item.active .step-label { color: var(--gold); }
+        .step-item.done .step-label { color: var(--green); }
+
+        /* ── CARD ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: border-color .3s;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+        }
+
+        /* ── QUIZ ── */
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .quiz-bar-wrap {
+            flex: 1;
+            height: 5px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .quiz-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold), var(--gold-dim));
+            border-radius: 99px;
+            transition: width .4s ease;
+        }
+
+        .quiz-counter {
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .question-wrap {
+            animation: fadeIn .3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: .75rem;
+        }
+
+        @media (max-width: 480px) { .options-grid { grid-template-columns: 1fr; } }
+
+        .option-btn {
+            background: rgba(255,255,255,0.04);
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: .85rem 1rem;
+            color: var(--text);
+            font-size: .9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all .2s;
+            line-height: 1.3;
+        }
+
+        .option-btn:hover {
+            border-color: var(--gold);
+            background: rgba(255,215,0,0.08);
+            color: var(--gold);
+        }
+
+        .option-btn.selected {
+            border-color: var(--gold);
+            background: rgba(255,215,0,0.12);
+            color: var(--gold);
+        }
+
+        .option-icon {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: .3rem;
+        }
+
+        /* ── PROFILE RESULT ── */
+        .profile-result {
+            display: none;
+            text-align: center;
+            padding: 1rem 0;
+            animation: fadeIn .4s ease;
+        }
+
+        .profile-icon {
+            font-size: 3.5rem;
+            margin-bottom: .8rem;
+        }
+
+        .profile-name {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: .5rem;
+        }
+
+        .profile-desc {
+            color: var(--text-muted);
+            font-size: .95rem;
+            max-width: 480px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .profile-tags {
+            display: flex;
+            gap: .5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-tag {
+            background: rgba(255,215,0,0.1);
+            border: 1px solid rgba(255,215,0,0.25);
+            color: var(--gold);
+            padding: .25rem .75rem;
+            border-radius: 100px;
+            font-size: .78rem;
+            font-weight: 600;
+        }
+
+        /* ── FORM ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+        .form-group { display: flex; flex-direction: column; gap: .45rem; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        .form-label {
+            font-size: .82rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        .form-input, .form-select {
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: .7rem 1rem;
+            color: var(--text);
+            font-size: .95rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color .2s, background .2s;
+            width: 100%;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: var(--gold);
+            background: rgba(255,215,0,0.05);
+        }
+
+        .form-select option { background: #111; color: #fff; }
+
+        .form-hint {
+            font-size: .75rem;
+            color: var(--text-muted);
+            opacity: .75;
+        }
+
+        /* range slider */
+        .range-row {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .range-row input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 5px;
+            border-radius: 99px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .range-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--gold);
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255,215,0,0.4);
+        }
+
+        .range-val {
+            font-size: .9rem;
+            font-weight: 800;
+            color: var(--gold);
+            min-width: 45px;
+            text-align: right;
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            padding: .8rem 1.8rem;
+            border: none;
+            border-radius: 10px;
+            font-size: .95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700, #FFA000);
+            color: #000;
+            box-shadow: 0 4px 18px rgba(255,215,0,0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(255,215,0,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.07);
+            border: 1.5px solid rgba(255,255,255,0.15);
+            color: var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--text);
+        }
+
+        .btn-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.8rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-group { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+
+        /* ── PLAN OUTPUT ── */
+        .plan-hidden { display: none; }
+
+        /* stat cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 700px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+
+        .stat-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.1rem 1rem;
+            text-align: center;
+        }
+
+        .stat-card .s-label {
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            margin-bottom: .4rem;
+        }
+
+        .stat-card .s-val {
+            font-size: 1.45rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: .2rem;
+        }
+
+        .stat-card .s-sub {
+            font-size: .72rem;
+            color: var(--text-muted);
+        }
+
+        .stat-card.green .s-val { color: var(--green); }
+        .stat-card.blue  .s-val { color: var(--blue); }
+        .stat-card.purple .s-val { color: var(--purple); }
+
+        /* chart */
+        .chart-wrap {
+            position: relative;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255,255,255,0.02);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .chart-title {
+            font-size: .85rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-bottom: .8rem;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            cursor: crosshair;
+        }
+
+        #equityCanvas {
+            display: block;
+            width: 100%;
+            height: 260px;
+            border-radius: 8px;
+        }
+
+        /* chart legend */
+        .chart-legend {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: .7rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .legend-dot {
+            width: 18px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        /* journal */
+        .journal-wrap {
+            margin-bottom: 2rem;
+        }
+
+        .journal-form {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .journal-row {
+            display: flex;
+            gap: .75rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .journal-row .form-group { flex: 1; min-width: 100px; }
+
+        .journal-entries {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .journal-entry {
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+            padding: .65rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            font-size: .85rem;
+            transition: border-color .2s;
+        }
+
+        .journal-entry:hover { border-color: rgba(255,215,0,0.2); }
+
+        .je-num {
+            font-size: .72rem;
+            color: var(--text-muted);
+            min-width: 40px;
+        }
+
+        .je-badge {
+            padding: .2rem .65rem;
+            border-radius: 100px;
+            font-size: .72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .je-badge.win  { background: rgba(34,197,94,0.15);  color: var(--green); }
+        .je-badge.loss { background: rgba(239,68,68,0.15);  color: var(--red); }
+
+        .je-amount { font-weight: 700; flex: 1; }
+        .je-amount.win  { color: var(--green); }
+        .je-amount.loss { color: var(--red); }
+
+        .je-note { color: var(--text-muted); font-size: .8rem; flex: 2; }
+        .je-date { color: var(--text-muted); font-size: .72rem; white-space: nowrap; }
+
+        .je-del {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: rgba(255,255,255,0.2);
+            font-size: 1rem;
+            padding: .2rem .3rem;
+            border-radius: 6px;
+            transition: all .2s;
+        }
+
+        .je-del:hover { color: var(--red); background: rgba(239,68,68,0.1); }
+
+        .journal-stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: .6rem;
+            margin-top: .75rem;
+        }
+
+        @media (max-width: 650px) { .journal-stats { grid-template-columns: repeat(3, 1fr); } }
+
+        .jstat {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: .65rem .7rem;
+            text-align: center;
+        }
+
+        .jstat .jl { font-size: .68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .2rem; }
+        .jstat .jv { font-size: 1.05rem; font-weight: 900; }
+
+        .journal-empty {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: .88rem;
+        }
+
+        /* phases */
+        .phases-wrap { margin-bottom: 2rem; }
+
+        .section-title {
+            font-size: .95rem;
+            font-weight: 800;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: .6rem;
+        }
+
+        @media (max-width: 650px) { .phases-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 420px) { .phases-grid { grid-template-columns: 1fr 1fr; } }
+
+        .phase-card {
+            border-radius: 12px;
+            padding: .85rem .7rem;
+            text-align: center;
+            border: 1.5px solid transparent;
+        }
+
+        .phase-card .ph-icon { font-size: 1.4rem; margin-bottom: .3rem; }
+        .phase-card .ph-name { font-size: .75rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .4rem; }
+        .phase-card .ph-range { font-size: .7rem; color: var(--text-muted); margin-bottom: .2rem; }
+        .phase-card .ph-days { font-size: .72rem; font-weight: 700; }
+
+        /* table */
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .85rem;
+        }
+
+        thead th {
+            background: rgba(255,215,0,0.08);
+            color: var(--gold);
+            font-size: .72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            padding: .75rem .9rem;
+            text-align: left;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            transition: background .15s;
+        }
+
+        tbody tr:hover { background: rgba(255,255,255,0.03); }
+        tbody tr:last-child { border-bottom: none; }
+
+        tbody td {
+            padding: .6rem .9rem;
+            color: var(--text);
+            white-space: nowrap;
+        }
+
+        .td-phase { font-size: .72rem; font-weight: 700; padding: .2rem .55rem; border-radius: 6px; }
+        .td-day-label { color: var(--text-muted); font-size: .8rem; }
+        .td-profit { color: var(--green); font-weight: 700; }
+        .td-capital { font-weight: 700; }
+        .td-lot { color: var(--blue); font-weight: 700; }
+
+        /* rules */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+
+        .rule-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.1rem;
+        }
+
+        .rule-card h4 {
+            font-size: .82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            margin-bottom: .75rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .rule-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: .45rem;
+        }
+
+        .rule-card ul li {
+            font-size: .85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: .5rem;
+            line-height: 1.35;
+        }
+
+        .rule-card ul li::before {
+            content: '→';
+            color: var(--gold);
+            flex-shrink: 0;
+            font-size: .8rem;
+            margin-top: .1rem;
+        }
+
+        /* disclaimer */
+        .disclaimer {
+            background: rgba(239,68,68,0.07);
+            border: 1px solid rgba(239,68,68,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            font-size: .82rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
+
+        .disclaimer strong { color: var(--red); }
+
+        /* toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background: rgba(25,25,25,0.97);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: .75rem 1.5rem;
+            color: var(--text);
+            font-size: .88rem;
+            font-weight: 600;
+            z-index: 9999;
+            transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,.5);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* section divider */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 2rem 0;
+        }
+
+        /* print */
+        @media print {
+            nav, .stepper, .btn-actions, .disclaimer { display: none !important; }
+            body { background: #fff; color: #000; }
+            .card { border: 1px solid #ccc; background: #fff; }
+        }
+    </style>
+
+<style>
+    /* ════════════════════ NAV UNIQUE v3.0 ════════════════════ */
+    #mainNav { position:sticky;top:0;z-index:1000;height:62px;
+      background:rgba(7,7,7,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(255,215,0,0.14); }
+    .nav-container { max-width:1380px;margin:0 auto;padding:0 1.5rem;display:flex;align-items:center;height:100%;gap:0; }
+    .logo { font-weight:900;font-size:1.35rem;letter-spacing:-0.01em;text-transform:uppercase;
+      text-decoration:none;background:linear-gradient(135deg,#FFD700,#FFC107);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;flex-shrink:0;line-height:1.1; }
+    .logo-sub { display:block;font-size:0.6rem;letter-spacing:1.5px;color:rgba(255,255,255,0.38);
+      font-weight:500;margin-top:-4px;-webkit-text-fill-color:rgba(255,255,255,0.38); }
+    .nav-links { display:flex;align-items:center;list-style:none;height:100%;margin:0 0 0 2rem;padding:0;flex:1; }
+    .nav-links li a { display:flex;align-items:center;height:62px;padding:0 0.9rem;
+      color:rgba(255,255,255,0.72);font-size:0.875rem;font-weight:500;text-decoration:none;
+      white-space:nowrap;transition:color .2s;border-bottom:2px solid transparent; }
+    .nav-links li a:hover,.nav-links li a.active { color:#FFD700; }
+    .nav-links li a.active { border-bottom-color:#FFD700; }
+    .nav-links li { position:relative; }
+    /* Dropdown (Communauté) */
+    .nav-item-drop > a { cursor:pointer;gap:0.3rem; }
+    .nav-chevron { width:12px;height:12px;transition:transform .22s ease;flex-shrink:0;opacity:0.7; }
+    .nav-item-drop:hover > a .nav-chevron { transform:rotate(180deg); }
+    .drop-panel { display:none;position:absolute;top:62px;right:0;min-width:270px;
+      background:rgba(10,10,10,0.98);border:1px solid rgba(255,215,0,0.16);border-radius:14px;
+      padding:0.5rem;box-shadow:0 24px 64px rgba(0,0,0,0.75);z-index:200; }
+    .nav-item-drop:hover .drop-panel { display:block; }
+    .drop-link { display:flex !important;align-items:center;gap:0.75rem;padding:0.65rem 0.85rem !important;
+      border-radius:9px;color:rgba(255,255,255,0.75) !important;text-decoration:none;
+      transition:background .15s,color .15s;height:auto !important;border-bottom:none !important; }
+    .drop-link:hover { background:rgba(255,215,0,0.07) !important;color:#FFD700 !important; }
+    .drop-icon { width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.06);
+      display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem; }
+    .drop-link:hover .drop-icon { background:rgba(255,215,0,0.12); }
+    .drop-label { display:block;font-size:0.875rem;font-weight:600;color:inherit; }
+    .drop-desc { display:block;font-size:0.72rem;color:rgba(255,255,255,0.42);margin-top:1px; }
+    .drop-sep { height:1px;background:rgba(255,255,255,0.06);margin:0.35rem 0.85rem; }
+    .nav-spacer { flex:1; }
+    .nav-login-btn { display:inline-flex;align-items:center;padding:0.42rem 1rem;
+      border:1.5px solid rgba(255,255,255,0.2);border-radius:8px;color:rgba(255,255,255,0.75);
+      text-decoration:none;font-size:0.85rem;font-weight:600;white-space:nowrap;transition:all .2s; }
+    .nav-login-btn:hover { border-color:rgba(255,215,0,0.5);color:#FFD700; }
+    .nav-cta { display:inline-flex;align-items:center;padding:0.42rem 1.1rem;
+      background:linear-gradient(135deg,#FFD700,#FFA000);border-radius:8px;color:#000;
+      text-decoration:none;font-size:0.85rem;font-weight:800;margin-left:0.5rem;
+      white-space:nowrap;box-shadow:0 2px 12px rgba(255,215,0,0.25);transition:all .2s; }
+    .nav-cta:hover { transform:translateY(-1px);box-shadow:0 4px 18px rgba(255,215,0,0.35); }
+    .fa-avatar { width:28px;height:28px;border-radius:50%;
+      background:linear-gradient(135deg,#FFD700,#FFA000);color:#000;font-weight:800;font-size:0.8rem;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+    .fa-plan-badge { font-size:0.65rem;font-weight:800;padding:0.18rem 0.55rem;
+      border-radius:100px;text-transform:uppercase;letter-spacing:0.06em; }
+    .badge-free { background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.6); }
+    .badge-vip  { background:rgba(255,215,0,0.2);color:#FFD700; }
+    .nav-burger { display:none;flex-direction:column;justify-content:center;align-items:center;
+      width:40px;height:40px;border:none;background:transparent;cursor:pointer;gap:5px;margin-left:auto; }
+    .nav-burger span { display:block;width:22px;height:2px;background:rgba(255,255,255,0.8);border-radius:2px; }
+    @media(max-width:900px){
+      .nav-burger{display:flex;}
+      .nav-links{display:none;position:fixed;top:62px;left:0;right:0;bottom:0;
+        background:rgba(5,5,5,0.99);flex-direction:column;align-items:stretch;height:auto;
+        margin:0;padding:1rem;gap:0;z-index:999;border-top:1px solid rgba(255,215,0,0.12);overflow-y:auto;}
+      .nav-links.open{display:flex;}
+      .nav-links li a{height:auto;padding:0.85rem 1rem;border-radius:10px;border-bottom:none;
+        font-size:0.95rem;font-weight:600;}
+      .nav-item-drop:hover .drop-panel{display:none;}
+      .nav-item-drop.mob-open .drop-panel{display:block;position:static;box-shadow:none;border:none;
+        background:rgba(255,255,255,0.03);border-radius:10px;margin:0.25rem 0 0.5rem 0.75rem;padding:0.35rem;}
+      .nav-item-drop.mob-open > a .nav-chevron{transform:rotate(180deg);}
+      .nav-spacer{display:none;}
+      .nav-cta,.nav-login-btn{margin:0.5rem 0;justify-content:center;}
+    }
+    /* ════════════════════ FIN NAV UNIQUE ════════════════════ */
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav id="mainNav">
+  <div class="nav-container">
+    <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
+      Forex Average
+      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="marches.html">Marchés</a></li>
+      <li><a href="outils.html">Outils</a></li>
+      <li><a href="plan-trading.html" class="active">Créer mon plan</a></li>
+      <li><a href="partenaires.html">Partenaires</a></li>
+      <li class="nav-item-drop">
+        <a href="#" role="button">
+          Communauté
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="drop-panel">
+          <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon">📺</span>
+            <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
+          </a>
+          <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon">📱</span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="feed.html" class="drop-link">
+            <span class="drop-icon">💬</span>
+            <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses &amp; idées communauté</span></span>
+          </a>
+        </div>
+      </li>
+      <div class="nav-spacer"></div>
+      <!-- Invité -->
+      <li class="nav-auth-guest" style="display:none;list-style:none;">
+        <a href="login.html" class="nav-login-btn">Connexion</a>
+        <a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a>
+      </li>
+      <!-- Connecté -->
+      <li class="nav-auth-user" style="display:none;list-style:none;">
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.75rem;border:1.5px solid rgba(255,215,0,0.2);border-radius:8px;cursor:pointer;">
+          <div class="fa-avatar">?</div>
+          <span class="fa-username" style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.85);">Profil</span>
+          <span class="fa-plan-badge badge-free" style="margin-left:0.25rem;">Gratuit</span>
+          <button class="fa-logout-btn" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:0.8rem;margin-left:0.5rem;font-family:inherit;" title="Déconnexion">✕</button>
+        </div>
+      </li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+    <!-- HEADER -->
+    <div class="page-header">
+        <div class="tag">🎯 Outil Gratuit</div>
+        <h1>Générateur de Plan de Trading</h1>
+        <p>Définissez votre profil, votre capital et votre objectif. Obtenez un plan complet jour par jour avec calcul des lots automatique.</p>
+    </div>
+
+    <!-- STEPPER -->
+    <div class="stepper" id="stepper">
+        <div class="step-item active" id="step-item-1">
+            <div class="step-num">1</div>
+            <div class="step-label">Profil</div>
+        </div>
+        <div class="step-item" id="step-item-2">
+            <div class="step-num">2</div>
+            <div class="step-label">Paramètres</div>
+        </div>
+        <div class="step-item" id="step-item-3">
+            <div class="step-num">3</div>
+            <div class="step-label">Votre Plan</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ STEP 1 : QUIZ ═══════════════ -->
+    <div id="section-quiz">
+        <div class="card">
+            <div class="card-title">❓ Déterminez votre profil de trader</div>
+
+            <div class="quiz-progress">
+                <div class="quiz-bar-wrap">
+                    <div class="quiz-bar-fill" id="quiz-bar" style="width:20%"></div>
+                </div>
+                <div class="quiz-counter" id="quiz-counter">1 / 5</div>
+            </div>
+
+            <div id="question-container"></div>
+
+            <!-- Profile result (shown after quiz) -->
+            <div class="profile-result" id="profile-result">
+                <div class="profile-icon" id="p-icon">🏎️</div>
+                <div class="profile-name" id="p-name">Scalper</div>
+                <div class="profile-desc" id="p-desc">Tu entres et sors vite. Tu veux des résultats rapides avec une gestion stricte du risque.</div>
+                <div class="profile-tags" id="p-tags"></div>
+                <div class="btn-actions" style="justify-content:center">
+                    <button class="btn btn-secondary" onclick="restartQuiz()">↩ Recommencer</button>
+                    <button class="btn btn-primary" onclick="goToStep2()">Configurer mon plan →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ STEP 2 : PARAMETERS ═══════════════ -->
+    <div id="section-params" style="display:none;">
+        <div class="card">
+            <div class="card-title">⚙️ Paramètres de votre plan</div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label class="form-label">💰 Capital de départ ($)</label>
+                    <input type="number" class="form-input" id="p-capital" value="100" min="1" step="1" oninput="updatePreview()">
+                    <div class="form-hint">Montant disponible pour trader</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🎯 Capital objectif ($)</label>
+                    <input type="number" class="form-input" id="p-target" value="1000" min="1" step="1" oninput="updatePreview()">
+                    <div class="form-hint">Objectif à atteindre</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📈 Gain visé par trade (%)</label>
+                    <div class="range-row">
+                        <input type="range" id="p-risk" min="1" max="30" value="10" oninput="syncRange('p-risk','p-risk-val'); updatePreview()">
+                        <span class="range-val" id="p-risk-val">10%</span>
+                    </div>
+                    <div class="form-hint">% du capital misé pour atteindre le TP (composé)</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📏 TP en pips</label>
+                    <input type="number" class="form-input" id="p-tp" value="20" min="1" step="1" oninput="updatePreview()">
+                    <div class="form-hint">Take profit en nombre de pips</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">⚖️ Ratio Risque/Récompense</label>
+                    <div class="range-row">
+                        <input type="range" id="p-rr" min="1" max="10" value="5" step="1" oninput="syncRR(); updatePreview()">
+                        <span class="range-val" id="p-rr-val">1:0.5</span>
+                    </div>
+                    <div class="form-hint">SL = TP × ratio inverse</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📊 Valeur pip par lot ($)</label>
+                    <input type="number" class="form-input" id="p-pipval" value="10" min="0.01" step="0.01" oninput="updatePreview()">
+                    <div class="form-hint">Ex: EUR/USD = 10, XAU/USD = 1, V75 = 1</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🏦 Instrument principal</label>
+                    <select class="form-select" id="p-instrument" onchange="setInstrumentPipVal()">
+                        <optgroup label="Forex Majeurs">
+                            <option value="10">EUR/USD — pip val $10/lot</option>
+                            <option value="10">GBP/USD — pip val $10/lot</option>
+                            <option value="10">AUD/USD — pip val $10/lot</option>
+                            <option value="10">NZD/USD — pip val $10/lot</option>
+                            <option value="7.5">USD/JPY — pip val ~$7.5/lot</option>
+                            <option value="8.5">USD/CHF — pip val ~$8.5/lot</option>
+                            <option value="8.5">USD/CAD — pip val ~$8.5/lot</option>
+                        </optgroup>
+                        <optgroup label="Forex Croisés">
+                            <option value="10">EUR/GBP — pip val ~$10/lot</option>
+                            <option value="10">EUR/JPY — pip val ~$10/lot</option>
+                            <option value="10">GBP/JPY — pip val ~$10/lot</option>
+                        </optgroup>
+                        <optgroup label="Métaux">
+                            <option value="1">XAU/USD (Or) — pip val $1/lot</option>
+                            <option value="0.5">XAG/USD (Argent) — pip val $0.5/lot</option>
+                        </optgroup>
+                        <optgroup label="Énergie">
+                            <option value="1">WTI Pétrole — pip val ~$1/lot</option>
+                        </optgroup>
+                        <optgroup label="Crypto">
+                            <option value="1">BTC/USD — pip val $1/lot</option>
+                            <option value="1">ETH/USD — pip val $1/lot</option>
+                        </optgroup>
+                        <optgroup label="Deriv Volatility">
+                            <option value="1">Volatility 10 (V10) — $1/pt/lot</option>
+                            <option value="1">Volatility 25 (V25) — $1/pt/lot</option>
+                            <option value="1">Volatility 50 (V50) — $1/pt/lot</option>
+                            <option value="1">Volatility 75 (V75) — $1/pt/lot</option>
+                            <option value="1">Volatility 100 (V100) — $1/pt/lot</option>
+                        </optgroup>
+                        <optgroup label="Deriv Crash/Boom">
+                            <option value="1">Crash 500 — $1/pt/lot</option>
+                            <option value="1">Crash 1000 — $1/pt/lot</option>
+                            <option value="1">Boom 500 — $1/pt/lot</option>
+                            <option value="1">Boom 1000 — $1/pt/lot</option>
+                        </optgroup>
+                        <option value="custom">Personnalisé (voir pip val ci-dessus)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🕐 Session de trading</label>
+                    <select class="form-select" id="p-session">
+                        <option value="london">London (08h–17h GMT)</option>
+                        <option value="newyork">New York (13h–22h GMT)</option>
+                        <option value="london-ny">London + New York (overlap 13h–17h)</option>
+                        <option value="asia">Asie/Tokyo (00h–09h GMT)</option>
+                        <option value="any">Flexible / Toutes sessions</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">📅 Jours de trading / semaine</label>
+                    <div class="range-row">
+                        <input type="range" id="p-days-week" min="1" max="5" value="5" oninput="syncRange('p-days-week','p-days-week-val'); updatePreview()">
+                        <span class="range-val" id="p-days-week-val">5j</span>
+                    </div>
+                    <div class="form-hint">Lundi–Vendredi recommandé</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">🎲 Trades par jour</label>
+                    <div class="range-row">
+                        <input type="range" id="p-trades-day" min="1" max="10" value="1" oninput="syncRange('p-trades-day','p-trades-day-val'); updatePreview()">
+                        <span class="range-val" id="p-trades-day-val">1/j</span>
+                    </div>
+                    <div class="form-hint">1 trade/jour conseillé pour le composé</div>
+                </div>
+
+            </div>
+
+            <!-- Live preview -->
+            <div style="margin-top:1.5rem; padding:1rem 1.2rem; background:rgba(255,215,0,0.06); border:1px solid rgba(255,215,0,0.2); border-radius:12px;">
+                <div style="font-size:.8rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.6rem;">📋 Aperçu instantané</div>
+                <div id="preview-text" style="font-size:.9rem; color:var(--text-muted); line-height:1.7;"></div>
+            </div>
+
+            <div class="btn-actions">
+                <button class="btn btn-secondary" onclick="goToStep1()">← Retour profil</button>
+                <button class="btn btn-primary" onclick="generatePlan()">🚀 Générer mon plan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ STEP 3 : PLAN ═══════════════ -->
+    <div id="section-plan" style="display:none;">
+
+        <!-- Header plan -->
+        <div class="card" style="margin-bottom:1.5rem;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <div style="font-size:.78rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:.3rem;">Plan généré pour</div>
+                    <div id="plan-header-name" style="font-size:1.3rem; font-weight:900; color:var(--gold);">— Chargement —</div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="goToStep2()">← Modifier</button>
+                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimer</button>
+                    <button class="btn btn-primary" onclick="exportCSV()">⬇️ Export CSV</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid" id="stats-grid"></div>
+
+        <!-- EQUITY CURVE -->
+        <div class="chart-wrap">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom:.7rem;">
+                <div class="chart-title" style="margin-bottom:0">📈 Courbe de progression du capital</div>
+                <div class="chart-legend">
+                    <div class="legend-item"><div class="legend-dot" style="background:#FFD700;"></div> Plan prévu</div>
+                    <div class="legend-item" id="legend-actual" style="display:none"><div class="legend-dot" style="background:#22c55e; border-top:2px dashed #22c55e; background:none; border-radius:0;"></div> Réel (journal)</div>
+                </div>
+            </div>
+            <div class="canvas-container">
+                <canvas id="equityCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- PHASES -->
+        <div class="phases-wrap">
+            <div class="section-title">🏁 Phases de progression</div>
+            <div class="phases-grid" id="phases-grid"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- DAY TABLE -->
+        <div class="section-title">📅 Plan jour par jour</div>
+        <div class="table-wrap">
+            <table id="plan-table">
+                <thead>
+                    <tr>
+                        <th>Trade</th>
+                        <th>Capital</th>
+                        <th>Lots</th>
+                        <th>TP (gain)</th>
+                        <th>SL (risque)</th>
+                        <th>Après TP</th>
+                        <th>Phase</th>
+                    </tr>
+                </thead>
+                <tbody id="plan-tbody"></tbody>
+            </table>
+        </div>
+
+        <!-- JOURNAL DE TRADING -->
+        <div class="divider"></div>
+        <div class="section-title">📓 Journal de trading — Track Record</div>
+        <div class="journal-wrap">
+
+            <!-- Stats bar -->
+            <div class="journal-stats" id="journal-stats" style="display:none;"></div>
+
+            <!-- Form -->
+            <div class="journal-form">
+                <div style="font-size:.8rem; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.9rem;">➕ Enregistrer un trade réel</div>
+                <div class="journal-row">
+                    <div class="form-group" style="max-width:80px;">
+                        <label class="form-label">Résultat</label>
+                        <select class="form-select" id="j-result">
+                            <option value="win">✅ Win</option>
+                            <option value="loss">❌ Loss</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="max-width:120px;">
+                        <label class="form-label">Gain / Perte ($)</label>
+                        <input type="number" class="form-input" id="j-amount" placeholder="Ex: 12.50" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Note (optionnel)</label>
+                        <input type="text" class="form-input" id="j-note" placeholder="Setup utilisé, raison, leçon...">
+                    </div>
+                    <div class="form-group" style="max-width:fit-content;">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary" onclick="addJournalEntry()" style="white-space:nowrap;">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Entries list -->
+            <div class="journal-entries" id="journal-entries">
+                <div class="journal-empty" id="journal-empty">Aucun trade enregistré. Commencez à logger vos trades pour voir votre courbe réelle.</div>
+            </div>
+
+        </div>
+
+        <!-- RULES -->
+        <div class="section-title">📌 Règles personnalisées</div>
+        <div class="rules-grid" id="rules-grid"></div>
+
+        <!-- DISCLAIMER -->
+        <div class="disclaimer">
+            <strong>⚠️ Avertissement risque :</strong> Ce plan est un outil éducatif. Le trading implique des risques significatifs de perte. Les performances passées ou projetées ne garantissent pas les résultats futurs. Ne tradez jamais de l'argent que vous ne pouvez pas vous permettre de perdre. Consultez un conseiller financier agréé avant d'investir.
+        </div>
+
+        <div class="btn-actions">
+            <button class="btn btn-secondary" onclick="goToStep2()">← Modifier les paramètres</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="exportCSV()">⬇️ CSV</button>
+                <a href="journal-lab.html" class="btn btn-primary" style="text-decoration:none;">📓 Ouvrir mon Trading Lab →</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   QUIZ DATA
+══════════════════════════════════════ */
+const QUESTIONS = [
+    {
+        q: "Combien de temps peux-tu consacrer au trading par jour ?",
+        opts: [
+            { icon: "⚡", text: "Moins de 30 min", val: "scalper" },
+            { icon: "⏱️", text: "1 à 3 heures",   val: "day" },
+            { icon: "🌅", text: "3 à 6 heures",   val: "day" },
+            { icon: "📅", text: "Juste quelques heures par semaine", val: "swing" }
+        ]
+    },
+    {
+        q: "Comment réagis-tu face à une série de pertes ?",
+        opts: [
+            { icon: "🧊", text: "Je reste calme et je respecte mon plan", val: "swing" },
+            { icon: "🔥", text: "J'ai envie de récupérer rapidement",      val: "scalper" },
+            { icon: "📊", text: "J'analyse ce qui s'est passé avant de reprendre", val: "day" },
+            { icon: "😤", text: "Je prends une pause et je reviens le lendemain", val: "swing" }
+        ]
+    },
+    {
+        q: "Quelle session de trading te convient le mieux ?",
+        opts: [
+            { icon: "🌏", text: "Asie (nuit, calme)",             val: "swing" },
+            { icon: "🇬🇧", text: "London (matin, dynamique)",     val: "day" },
+            { icon: "🇺🇸", text: "New York (après-midi, volatile)", val: "scalper" },
+            { icon: "🔀", text: "Overlap London/NY (très volatile)", val: "scalper" }
+        ]
+    },
+    {
+        q: "Quel type de trading t'attire le plus ?",
+        opts: [
+            { icon: "🏎️", text: "Entrées/sorties rapides (quelques minutes)", val: "scalper" },
+            { icon: "📈", text: "Trades de quelques heures",                    val: "day" },
+            { icon: "🌙", text: "Je garde mes positions plusieurs jours",        val: "swing" },
+            { icon: "🎯", text: "Je cherche les gros mouvements directionnels",  val: "swing" }
+        ]
+    },
+    {
+        q: "Quelle est ton expérience en trading ?",
+        opts: [
+            { icon: "🌱", text: "Débutant — moins de 6 mois",         val: "scalper" },
+            { icon: "📘", text: "Intermédiaire — 6 mois à 2 ans",     val: "day" },
+            { icon: "🏆", text: "Confirmé — plus de 2 ans",           val: "day" },
+            { icon: "💎", text: "Expert — trading professionnel",     val: "swing" }
+        ]
+    }
+];
+
+const PROFILES = {
+    scalper: {
+        icon: "🏎️",
+        name: "Scalper",
+        desc: "Tu aimes la vitesse et l'action. Tu ouvres et fermes des positions rapidement pour capturer de petits mouvements fréquents.",
+        tags: ["Moves rapides", "Discipline stricte", "Sessions volatiles", "TP courts"],
+        session: "newyork",
+        tp: 10,
+        rr: 5,
+        tradesDay: 3,
+        riskPct: 10,
+        rules: {
+            trading: ["TP max 10-15 pips par trade", "Utilise un trailing stop dès +5 pips", "Ne garde jamais une position plus de 30 min"],
+            risk: ["Stop loss toujours avant d'entrer", "Stoppe-toi après 2 pertes consécutives", "Maximum 3 trades par session"],
+            mental: ["Respecte ton plan même si le marché te tente", "Pas de revenge trading", "Pause obligatoire après une perte"],
+            session: ["London/NY overlap 13h-17h GMT optimal", "Évite les annonces macro", "Vérifie le spread avant d'entrer"]
+        }
+    },
+    day: {
+        icon: "📊",
+        name: "Day Trader",
+        desc: "Tu analyses le marché et prends des décisions calculées dans la journée. Tu fermes toutes tes positions avant la clôture.",
+        tags: ["Analyse technique", "Gestion des news", "Positions intraday", "Ratio R/R précis"],
+        session: "london-ny",
+        tp: 20,
+        rr: 5,
+        tradesDay: 1,
+        riskPct: 10,
+        rules: {
+            trading: ["TP entre 15 et 30 pips selon la volatilité", "Entrée sur confirmation de biais H1/H4", "Ferme toutes les positions avant 20h GMT"],
+            risk: ["Risque max 10% du capital par trade", "Ne dépasse jamais 2 trades simultanés", "Si -20% du capital en une semaine : arrêt total"],
+            mental: ["Définis ton plan la veille au soir", "Journal de trading obligatoire", "Évalue ta performance chaque vendredi"],
+            session: ["Open London 08h GMT pour détecter la tendance", "Cherche les confluences H1 + M15", "Évite le trading dans les 30 min avant les news"]
+        }
+    },
+    swing: {
+        icon: "🌊",
+        name: "Swing Trader",
+        desc: "Tu es patient et stratégique. Tu analyses sur les grands timeframes et gardes tes positions plusieurs jours pour viser de grands mouvements.",
+        tags: ["H4 / Daily", "Patience", "Positions multi-jours", "TP larges"],
+        session: "any",
+        tp: 50,
+        rr: 3,
+        tradesDay: 1,
+        riskPct: 5,
+        rules: {
+            trading: ["TP minimum 40-80 pips selon la structure", "Entre sur Daily/H4 avec confirmation Weekly", "Laisse courir tes gagnants — trailing stop sur +50%"],
+            risk: ["Risque conservateur: 5% max par trade", "Peut garder une position le week-end (avec prudence)", "Rebalance ton lot si le capital monte de +20%"],
+            mental: ["Analyse une fois par jour maximum", "Accepte que le trade peut ne pas bouger pendant 2 jours", "La patience est ton edge principal"],
+            session: ["Analyse en fin de session London pour placer tes ordres", "Utilise les ordres limites / stop orders", "Vérifie les niveaux hebdomadaires le lundi matin"]
+        }
+    }
+};
+
+/* ══════════════════════════════════════
+   QUIZ STATE
+══════════════════════════════════════ */
+let qIndex = 0;
+let answers = [];
+let profile = null;
+
+function renderQuestion() {
+    const q = QUESTIONS[qIndex];
+    const pct = ((qIndex + 1) / QUESTIONS.length) * 100;
+    document.getElementById('quiz-bar').style.width = pct + '%';
+    document.getElementById('quiz-counter').textContent = (qIndex + 1) + ' / ' + QUESTIONS.length;
+
+    document.getElementById('question-container').innerHTML = `
+        <div class="question-wrap">
+            <div class="question-text">${q.q}</div>
+            <div class="options-grid">
+                ${q.opts.map((o, i) => `
+                    <button class="option-btn" onclick="answerQuestion('${o.val}')">
+                        <span class="option-icon">${o.icon}</span>
+                        ${o.text}
+                    </button>
+                `).join('')}
+            </div>
+        </div>
+    `;
+}
+
+function answerQuestion(val) {
+    answers.push(val);
+
+    if (qIndex < QUESTIONS.length - 1) {
+        qIndex++;
+        renderQuestion();
+    } else {
+        showProfileResult();
+    }
+}
+
+function showProfileResult() {
+    // Tally votes
+    const counts = { scalper: 0, day: 0, swing: 0 };
+    answers.forEach(a => counts[a]++);
+    const winner = Object.keys(counts).reduce((a, b) => counts[a] >= counts[b] ? a : b);
+    profile = PROFILES[winner];
+
+    document.getElementById('question-container').style.display = 'none';
+    document.getElementById('quiz-bar').style.width = '100%';
+    document.getElementById('quiz-counter').textContent = '✓ Terminé';
+
+    const pr = document.getElementById('profile-result');
+    document.getElementById('p-icon').textContent = profile.icon;
+    document.getElementById('p-name').textContent = profile.name;
+    document.getElementById('p-desc').textContent = profile.desc;
+    document.getElementById('p-tags').innerHTML = profile.tags.map(t => `<span class="profile-tag">${t}</span>`).join('');
+    pr.style.display = 'block';
+
+    setStepDone(1);
+    setStepActive(1);
+}
+
+function restartQuiz() {
+    qIndex = 0;
+    answers = [];
+    profile = null;
+    document.getElementById('question-container').style.display = 'block';
+    document.getElementById('profile-result').style.display = 'none';
+    renderQuestion();
+    setStepActive(1);
+}
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+function goToStep1() {
+    show('section-quiz');
+    hide('section-params');
+    hide('section-plan');
+    setStepActive(1);
+}
+
+function goToStep2() {
+    if (!profile) { showToast('⚠️ Veuillez compléter le quiz d\'abord'); return; }
+
+    // Pre-fill from profile
+    document.getElementById('p-tp').value = profile.tp;
+    document.getElementById('p-session').value = profile.session;
+    document.getElementById('p-trades-day').value = profile.tradesDay;
+    document.getElementById('p-trades-day-val').textContent = profile.tradesDay + '/j';
+
+    const riskSlider = document.getElementById('p-risk');
+    riskSlider.value = profile.riskPct;
+    document.getElementById('p-risk-val').textContent = profile.riskPct + '%';
+
+    const rrVal = profile.rr; // stored as slider 1-10 where 5 = 1:0.5
+    document.getElementById('p-rr').value = rrVal;
+    syncRR();
+
+    show('section-params');
+    hide('section-quiz');
+    hide('section-plan');
+    setStepDone(1);
+    setStepActive(2);
+    updatePreview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ══════════════════════════════════════
+   STEPPER HELPERS
+══════════════════════════════════════ */
+function setStepActive(n) {
+    [1,2,3].forEach(i => {
+        const el = document.getElementById('step-item-' + i);
+        el.classList.remove('active');
+        if (i === n) el.classList.add('active');
+    });
+}
+
+function setStepDone(n) {
+    const el = document.getElementById('step-item-' + n);
+    el.classList.remove('active');
+    el.classList.add('done');
+    const num = el.querySelector('.step-num');
+    num.textContent = '✓';
+}
+
+function show(id) { document.getElementById(id).style.display = 'block'; }
+function hide(id) { document.getElementById(id).style.display = 'none'; }
+
+/* ══════════════════════════════════════
+   FORM HELPERS
+══════════════════════════════════════ */
+function syncRange(sliderId, valId) {
+    const v = document.getElementById(sliderId).value;
+    const el = document.getElementById(valId);
+    if (sliderId === 'p-days-week') el.textContent = v + 'j';
+    else if (sliderId === 'p-trades-day') el.textContent = v + '/j';
+    else el.textContent = v + '%';
+}
+
+function syncRR() {
+    const v = parseInt(document.getElementById('p-rr').value);
+    // v: 1=1:0.1, 5=1:0.5, 10=1:1, 15=1:1.5, 20=1:2
+    // range 1-10 → ratio 0.5 to 3.0
+    const ratioMap = {1:'1:0.2',2:'1:0.3',3:'1:0.4',4:'1:0.5',5:'1:0.5',6:'1:0.6',7:'1:0.7',8:'1:1',9:'1:1.5',10:'1:2'};
+    document.getElementById('p-rr-val').textContent = ratioMap[v] || '1:0.5';
+}
+
+function getRRRatio() {
+    const v = parseInt(document.getElementById('p-rr').value);
+    const map = {1:0.2,2:0.3,3:0.4,4:0.5,5:0.5,6:0.6,7:0.7,8:1.0,9:1.5,10:2.0};
+    return map[v] || 0.5;
+}
+
+function setInstrumentPipVal() {
+    const sel = document.getElementById('p-instrument');
+    const v = sel.value;
+    if (v !== 'custom') {
+        document.getElementById('p-pipval').value = v;
+    }
+    updatePreview();
+}
+
+function updatePreview() {
+    const capital = parseFloat(document.getElementById('p-capital').value) || 100;
+    const target  = parseFloat(document.getElementById('p-target').value)  || 1000;
+    const riskPct = parseFloat(document.getElementById('p-risk').value) / 100 || 0.10;
+    const tp      = parseInt(document.getElementById('p-tp').value) || 20;
+    const pipVal  = parseFloat(document.getElementById('p-pipval').value) || 10;
+    const rrRatio = getRRRatio();
+    const tradesDay = parseInt(document.getElementById('p-trades-day').value) || 1;
+    const daysWeek  = parseInt(document.getElementById('p-days-week').value) || 5;
+
+    const gainPerTrade = capital * riskPct;
+    const lot = Math.floor(gainPerTrade / (tp * pipVal) / 0.01) * 0.01;
+    const sl = Math.round(tp / rrRatio);
+    const winrate = Math.round(100 / (1 + rrRatio));
+    const growthFactor = 1 + riskPct;
+
+    // Days needed
+    let c = capital; let days = 0;
+    while (c < target && days < 10000) { c *= growthFactor; days++; }
+    const weeks = Math.ceil(days / (daysWeek * tradesDay));
+    const calDays = Math.ceil(days / tradesDay / daysWeek * 7);
+
+    document.getElementById('preview-text').innerHTML = `
+        Lot jour 1 : <strong style="color:var(--gold)">${lot.toFixed(2)} lots</strong> &nbsp;|&nbsp;
+        Gain/trade : <strong style="color:var(--green)">$${gainPerTrade.toFixed(2)}</strong> &nbsp;|&nbsp;
+        SL : <strong style="color:var(--red)">${sl} pips</strong><br>
+        Winrate min : <strong style="color:var(--blue)">${winrate}%</strong> &nbsp;|&nbsp;
+        Nombre de trades gagnants : <strong style="color:var(--gold)">${days} trades</strong> &nbsp;|&nbsp;
+        Durée estimée : <strong style="color:var(--purple)">~${calDays} jours calendaires</strong>
+    `;
+}
+
+/* ══════════════════════════════════════
+   GENERATE PLAN
+══════════════════════════════════════ */
+const PHASE_DEFS = [
+    { key:'micro',  icon:'🌱', name:'Micro',   color:'rgba(34,197,94,0.12)',   border:'rgba(34,197,94,0.3)',   text:'#22c55e',  maxPct: 0.01  },
+    { key:'petite', icon:'📈', name:'Petite',  color:'rgba(59,130,246,0.12)',  border:'rgba(59,130,246,0.3)',  text:'#3b82f6',  maxPct: 0.05  },
+    { key:'moyenne',icon:'🚀', name:'Moyenne', color:'rgba(168,85,247,0.12)', border:'rgba(168,85,247,0.3)', text:'#a855f7',  maxPct: 0.50  },
+    { key:'grande', icon:'💥', name:'Grande',  color:'rgba(249,115,22,0.12)', border:'rgba(249,115,22,0.3)', text:'#f97316',  maxPct: 1.00  },
+    { key:'final',  icon:'👑', name:'Final',   color:'rgba(255,215,0,0.12)',  border:'rgba(255,215,0,0.3)',  text:'#FFD700',  maxPct: Infinity }
+];
+
+function getPhase(capital, startCapital, targetCapital) {
+    const progress = (capital - startCapital) / (targetCapital - startCapital);
+    for (const p of PHASE_DEFS) {
+        if (progress < p.maxPct) return p;
+    }
+    return PHASE_DEFS[4];
+}
+
+let planData = [];
+
+function generatePlan() {
+    const capital0 = parseFloat(document.getElementById('p-capital').value) || 100;
+    const target   = parseFloat(document.getElementById('p-target').value)  || 1000;
+    const riskPct  = parseFloat(document.getElementById('p-risk').value) / 100 || 0.10;
+    const tp       = parseInt(document.getElementById('p-tp').value) || 20;
+    const pipVal   = parseFloat(document.getElementById('p-pipval').value) || 10;
+    const rrRatio  = getRRRatio();
+    const tradesDay = parseInt(document.getElementById('p-trades-day').value) || 1;
+    const daysWeek  = parseInt(document.getElementById('p-days-week').value) || 5;
+
+    if (capital0 >= target) {
+        showToast('⚠️ Le capital de départ doit être inférieur à l\'objectif');
+        return;
+    }
+
+    const sl = Math.round(tp / rrRatio);
+    const winrate = Math.round(100 / (1 + rrRatio));
+
+    // Build plan rows
+    planData = [];
+    let capital = capital0;
+    let tradeNum = 0;
+    const MAX_TRADES = 5000;
+
+    while (capital < target && tradeNum < MAX_TRADES) {
+        tradeNum++;
+        const gain = capital * riskPct;
+        const lot  = Math.floor(gain / (tp * pipVal) / 0.01) * 0.01;
+        const lotActual = lot < 0.01 ? 0.01 : lot;
+        const realGain = lotActual * tp * pipVal;
+        const newCapital = capital + realGain;
+
+        planData.push({
+            trade: tradeNum,
+            capital: capital,
+            lot: lotActual,
+            gain: realGain,
+            sl: lotActual * sl * pipVal,
+            newCapital: newCapital,
+            phase: getPhase(capital, capital0, target)
+        });
+
+        capital = newCapital;
+    }
+
+    // Calendar
+    const calDays = Math.ceil(tradeNum / tradesDay / daysWeek * 7);
+
+    // ── Show section FIRST so canvas has real dimensions ──
+    hide('section-params');
+    show('section-plan');
+    setStepDone(2);
+    setStepActive(3);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Render after layout paint so clientWidth is correct
+    requestAnimationFrame(() => {
+        renderPlan({ capital0, target, riskPct, tp, pipVal, rrRatio, sl, winrate, tradeNum, calDays, tradesDay, daysWeek, capital });
+    });
+}
+
+function renderPlan(meta) {
+    const { capital0, target, riskPct, tp, pipVal, rrRatio, sl, winrate, tradeNum, calDays, tradesDay, daysWeek, capital } = meta;
+
+    // Header
+    const sess = document.getElementById('p-session');
+    const sessLabel = sess.options[sess.selectedIndex].text;
+    const instLabel = document.getElementById('p-instrument').options[document.getElementById('p-instrument').selectedIndex].text.split(' —')[0];
+    document.getElementById('plan-header-name').textContent =
+        `${profile ? profile.icon + ' ' + profile.name + ' · ' : ''}${instLabel} · $${capital0} → $${target.toLocaleString()}`;
+
+    // ── Sauvegarder le plan actif pour journal-lab.html ──
+    localStorage.setItem('fa_active_plan', JSON.stringify({
+        capital0,
+        target,
+        riskPct,
+        tp,
+        pipVal,
+        rrRatio,
+        sl,
+        winrate,
+        tradesDay,
+        daysWeek,
+        profile: profile ? profile.name : 'Day Trader',
+        profileIcon: profile ? profile.icon : '📊',
+        instrument: instLabel,
+        session: sessLabel,
+        createdAt: Date.now()
+    }));
+
+    // Stats
+    const totalGain = capital - capital0;
+    const roi = ((capital / capital0 - 1) * 100).toFixed(0);
+    document.getElementById('stats-grid').innerHTML = `
+        <div class="stat-card">
+            <div class="s-label">Durée estimée</div>
+            <div class="s-val">${calDays}j</div>
+            <div class="s-sub">${Math.ceil(calDays/7)} semaines · ${tradesDay} trade${tradesDay>1?'s':''}/j</div>
+        </div>
+        <div class="stat-card green">
+            <div class="s-label">Trades gagnants</div>
+            <div class="s-val">${tradeNum}</div>
+            <div class="s-sub">Sur ${Math.round(tradeNum/winrate*100)} trades si winrate ${winrate}%</div>
+        </div>
+        <div class="stat-card blue">
+            <div class="s-label">Winrate minimum</div>
+            <div class="s-val">${winrate}%</div>
+            <div class="s-sub">Ratio R/R 1:${rrRatio}</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="s-label">ROI total</div>
+            <div class="s-val">${roi}%</div>
+            <div class="s-sub">+$${totalGain.toLocaleString('fr',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        </div>
+    `;
+
+    // Phases summary
+    const phaseCounts = {};
+    PHASE_DEFS.forEach(p => { phaseCounts[p.key] = { days: 0, startCap: null, endCap: null }; });
+
+    planData.forEach(row => {
+        const pk = row.phase.key;
+        phaseCounts[pk].days++;
+        if (!phaseCounts[pk].startCap) phaseCounts[pk].startCap = row.capital;
+        phaseCounts[pk].endCap = row.newCapital;
+    });
+
+    document.getElementById('phases-grid').innerHTML = PHASE_DEFS.map(p => {
+        const cnt = phaseCounts[p.key];
+        if (!cnt.days) return '';
+        return `
+            <div class="phase-card" style="background:${p.color}; border-color:${p.border};">
+                <div class="ph-icon">${p.icon}</div>
+                <div class="ph-name" style="color:${p.text}">${p.name}</div>
+                <div class="ph-range" style="font-size:.68rem">$${fmt(cnt.startCap)} → $${fmt(cnt.endCap)}</div>
+                <div class="ph-days" style="color:${p.text}">${cnt.days} trades</div>
+            </div>
+        `;
+    }).join('');
+
+    // Table (show first 100 rows + summary)
+    const MAX_ROWS = 200;
+    const tbody = document.getElementById('plan-tbody');
+    tbody.innerHTML = '';
+
+    planData.slice(0, MAX_ROWS).forEach(row => {
+        const ph = row.phase;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td class="td-day-label">#${row.trade}</td>
+            <td class="td-capital">$${fmt(row.capital)}</td>
+            <td class="td-lot">${row.lot.toFixed(2)}</td>
+            <td class="td-profit">+$${fmt(row.gain)}</td>
+            <td style="color:var(--red)">-$${fmt(row.sl)}</td>
+            <td class="td-capital">$${fmt(row.newCapital)}</td>
+            <td><span class="td-phase" style="background:${ph.color};color:${ph.text};border:1px solid ${ph.border}">${ph.icon} ${ph.name}</span></td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    if (planData.length > MAX_ROWS) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="7" style="text-align:center; color:var(--text-muted); padding:1rem; font-style:italic;">… ${planData.length - MAX_ROWS} trades supplémentaires dans le CSV (Exporter)</td>`;
+        tbody.appendChild(tr);
+    }
+
+    // Chart (canvas now visible so clientWidth is real)
+    drawEquityChart(capital0, target);
+
+    // Journal (reload from localStorage)
+    renderJournal();
+
+    // Rules
+    renderRules();
+}
+
+function fmt(n) {
+    return parseFloat(n).toLocaleString('fr', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+/* ══════════════════════════════════════
+   EQUITY CHART — Interactive
+══════════════════════════════════════ */
+let _chart = null; // persistent chart state
+
+function drawEquityChart(startCap, target) {
+    const canvas = document.getElementById('equityCanvas');
+    const dpr    = window.devicePixelRatio || 1;
+    const W      = Math.max(canvas.parentElement.clientWidth - 2, 300);
+    const H      = 260;
+
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+
+    const PAD = { top: 24, right: 24, bottom: 36, left: 62 };
+
+    // Build sampled planned curve (max 400 pts)
+    const step = Math.max(1, Math.floor(planData.length / 400));
+    const sampledPlan = [startCap];
+    for (let i = 0; i < planData.length; i += step)
+        sampledPlan.push(planData[i].newCapital);
+    if (sampledPlan[sampledPlan.length - 1] !== planData[planData.length - 1].newCapital)
+        sampledPlan.push(planData[planData.length - 1].newCapital);
+
+    // Build actual curve from journal
+    const actualCaps = getActualCurve(startCap);
+
+    const allVals = [...sampledPlan, ...actualCaps, target];
+    const maxCap  = Math.max(...allVals);
+    const minCap  = Math.min(...allVals, startCap);
+    const range   = maxCap - minCap || 1;
+
+    // Store state for interactive redraw
+    _chart = { canvas, dpr, W, H, PAD, sampledPlan, actualCaps, startCap, target, minCap, range };
+
+    // Attach mouse events (once)
+    canvas._hasEvents = canvas._hasEvents || (() => {
+        canvas.addEventListener('mousemove', (e) => {
+            if (!_chart) return;
+            const rect = canvas.getBoundingClientRect();
+            const mx = (e.clientX - rect.left);
+            const my = (e.clientY - rect.top);
+            redrawChart(mx, my);
+        });
+        canvas.addEventListener('mouseleave', () => redrawChart(null, null));
+        canvas._hasEvents = true;
+    })();
+
+    redrawChart(null, null);
+}
+
+function redrawChart(hoverX, hoverY) {
+    if (!_chart) return;
+    const { canvas, dpr, W, H, PAD, sampledPlan, actualCaps, startCap, target, minCap, range } = _chart;
+    const ctx = canvas.getContext('2d');
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    const cW = W - PAD.left - PAD.right;
+    const cH = H - PAD.top  - PAD.bottom;
+
+    const xOf = (i, total) => PAD.left + (i / Math.max(total - 1, 1)) * cW;
+    const yOf = (v) => PAD.top + cH - ((v - minCap) / range) * cH;
+
+    // ── Background grid ──
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([]);
+    for (let i = 0; i <= 5; i++) {
+        const y = PAD.top + (i / 5) * cH;
+        ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + cW, y); ctx.stroke();
+    }
+
+    // ── Target dashed line ──
+    const ty = yOf(target);
+    if (ty >= PAD.top - 2 && ty <= PAD.top + cH + 2) {
+        ctx.setLineDash([6, 4]);
+        ctx.strokeStyle = 'rgba(255,215,0,0.35)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.moveTo(PAD.left, ty); ctx.lineTo(PAD.left + cW, ty); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = 'rgba(255,215,0,0.65)';
+        ctx.font = 'bold 10px -apple-system,sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('Objectif $' + Math.round(target).toLocaleString(), PAD.left + 6, ty - 5);
+    }
+    ctx.setLineDash([]);
+
+    // ── Planned curve fill ──
+    const grad = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + cH);
+    grad.addColorStop(0, 'rgba(255,215,0,0.18)');
+    grad.addColorStop(1, 'rgba(255,215,0,0.01)');
+
+    ctx.beginPath();
+    sampledPlan.forEach((c, i) => {
+        const x = xOf(i, sampledPlan.length);
+        const y = yOf(c);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.lineTo(xOf(sampledPlan.length - 1, sampledPlan.length), PAD.top + cH);
+    ctx.lineTo(PAD.left, PAD.top + cH);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // ── Planned curve line ──
+    ctx.beginPath();
+    sampledPlan.forEach((c, i) => {
+        const x = xOf(i, sampledPlan.length);
+        const y = yOf(c);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = '#FFD700';
+    ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    // ── Actual curve (journal) ──
+    if (actualCaps.length > 1) {
+        // Green fill
+        const gradA = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + cH);
+        gradA.addColorStop(0, 'rgba(34,197,94,0.15)');
+        gradA.addColorStop(1, 'rgba(34,197,94,0.01)');
+
+        ctx.beginPath();
+        actualCaps.forEach((c, i) => {
+            const xi = xOf(i, sampledPlan.length); // same x-scale as plan
+            const y  = yOf(c);
+            i === 0 ? ctx.moveTo(xi, y) : ctx.lineTo(xi, y);
+        });
+        ctx.lineTo(xOf(actualCaps.length - 1, sampledPlan.length), PAD.top + cH);
+        ctx.lineTo(PAD.left, PAD.top + cH);
+        ctx.closePath();
+        ctx.fillStyle = gradA;
+        ctx.fill();
+
+        // Dashed green line
+        ctx.setLineDash([6, 3]);
+        ctx.beginPath();
+        actualCaps.forEach((c, i) => {
+            const xi = xOf(i, sampledPlan.length);
+            const y  = yOf(c);
+            i === 0 ? ctx.moveTo(xi, y) : ctx.lineTo(xi, y);
+        });
+        ctx.strokeStyle = '#22c55e';
+        ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Show legend
+        const legEl = document.getElementById('legend-actual');
+        if (legEl) legEl.style.display = 'flex';
+    }
+
+    // ── Y axis labels ──
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '10px -apple-system,sans-serif';
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= 5; i++) {
+        const val = minCap + (range * i / 5);
+        const y   = PAD.top + cH - (i / 5) * cH;
+        ctx.fillText('$' + fmtShort(val), PAD.left - 6, y + 4);
+    }
+
+    // ── X axis labels ──
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    [0, 0.25, 0.5, 0.75, 1].forEach(t => {
+        const xi  = xOf(Math.round(t * (sampledPlan.length - 1)), sampledPlan.length);
+        const tn  = Math.round(t * planData.length);
+        ctx.fillText('#' + tn, xi, PAD.top + cH + 20);
+    });
+
+    // ── Hover crosshair + tooltip ──
+    if (hoverX !== null) {
+        // Find nearest planned point
+        const ni = Math.round(((hoverX - PAD.left) / cW) * (sampledPlan.length - 1));
+        const idx = Math.max(0, Math.min(ni, sampledPlan.length - 1));
+        const px  = xOf(idx, sampledPlan.length);
+        const py  = yOf(sampledPlan[idx]);
+        const capVal = sampledPlan[idx];
+
+        // Find nearest actual point (if any)
+        let actVal = null;
+        if (actualCaps.length > 1 && idx < actualCaps.length) {
+            actVal = actualCaps[Math.min(idx, actualCaps.length - 1)];
+        }
+
+        // Vertical line
+        ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(px, PAD.top); ctx.lineTo(px, PAD.top + cH); ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Dot on planned curve
+        ctx.beginPath();
+        ctx.arc(px, py, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFD700';
+        ctx.fill();
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Dot on actual curve
+        if (actVal !== null) {
+            const ay = yOf(actVal);
+            ctx.beginPath();
+            ctx.arc(px, ay, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#22c55e';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+
+        // Tooltip box
+        const tradeIdx = Math.round((idx / (sampledPlan.length - 1)) * planData.length);
+        const safeIdx  = Math.min(tradeIdx, planData.length - 1);
+        const row      = planData[safeIdx];
+
+        let tooltipLines = [
+            { label: 'Trade', val: '#' + (safeIdx + 1) },
+            { label: 'Capital prévu', val: '$' + fmt(capVal), color: '#FFD700' },
+        ];
+        if (row) {
+            tooltipLines.push({ label: 'Lot', val: row.lot.toFixed(2), color: 'var(--blue)' });
+            tooltipLines.push({ label: 'Gain TP', val: '+$' + fmt(row.gain), color: '#22c55e' });
+        }
+        if (actVal !== null) {
+            tooltipLines.push({ label: 'Capital réel', val: '$' + fmt(actVal), color: '#22c55e' });
+            const diff = actVal - capVal;
+            tooltipLines.push({
+                label: 'Écart plan',
+                val: (diff >= 0 ? '+' : '') + '$' + fmt(diff),
+                color: diff >= 0 ? '#22c55e' : '#ef4444'
+            });
+        }
+
+        const TW = 170, TH = 16 + tooltipLines.length * 18 + 8;
+        let tx = px + 14;
+        let ttY = Math.max(PAD.top, Math.min(py - 20, PAD.top + cH - TH));
+        if (tx + TW > W - 10) tx = px - TW - 14;
+
+        ctx.fillStyle = 'rgba(10,10,10,0.92)';
+        ctx.strokeStyle = 'rgba(255,215,0,0.3)';
+        ctx.lineWidth = 1;
+        roundRect(ctx, tx, ttY, TW, TH, 8);
+        ctx.fill(); ctx.stroke();
+
+        tooltipLines.forEach((l, i) => {
+            const ly = ttY + 16 + i * 18;
+            ctx.font = '10px -apple-system,sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.4)';
+            ctx.textAlign = 'left';
+            ctx.fillText(l.label, tx + 10, ly);
+            ctx.font = 'bold 10px -apple-system,sans-serif';
+            ctx.fillStyle = l.color || '#ffffff';
+            ctx.textAlign = 'right';
+            ctx.fillText(l.val, tx + TW - 10, ly);
+        });
+    }
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+}
+
+function fmtShort(n) {
+    if (n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+    if (n >= 1000)    return (n/1000).toFixed(1) + 'k';
+    return Math.round(n).toString();
+}
+
+/* ══════════════════════════════════════
+   JOURNAL DE TRADING
+══════════════════════════════════════ */
+function journalKey() {
+    const c0 = document.getElementById('p-capital').value;
+    const tg = document.getElementById('p-target').value;
+    return 'fa_journal_' + c0 + '_' + tg;
+}
+
+function loadJournal() {
+    try { return JSON.parse(localStorage.getItem(journalKey()) || '[]'); }
+    catch(e) { return []; }
+}
+
+function saveJournal(data) {
+    localStorage.setItem(journalKey(), JSON.stringify(data));
+}
+
+function getActualCurve(startCap) {
+    const entries = loadJournal();
+    if (!entries.length) return [];
+    const curve = [startCap];
+    let cap = startCap;
+    entries.forEach(e => {
+        cap += (e.result === 'win' ? 1 : -1) * e.amount;
+        curve.push(Math.max(0, cap));
+    });
+    return curve;
+}
+
+function addJournalEntry() {
+    const result = document.getElementById('j-result').value;
+    const amount = parseFloat(document.getElementById('j-amount').value);
+    const note   = document.getElementById('j-note').value.trim();
+
+    if (!amount || amount <= 0) {
+        showToast('⚠️ Entrez un montant valide');
+        return;
+    }
+
+    const entries = loadJournal();
+    entries.push({
+        id: Date.now(),
+        result,
+        amount,
+        note,
+        ts: new Date().toLocaleDateString('fr', { day:'2-digit', month:'short' })
+    });
+    saveJournal(entries);
+
+    document.getElementById('j-amount').value = '';
+    document.getElementById('j-note').value = '';
+
+    renderJournal();
+    // Redraw chart with updated actual data
+    if (_chart) refreshChart();
+    showToast(result === 'win' ? '✅ Win enregistré !' : '❌ Perte enregistrée');
+}
+
+function deleteJournalEntry(id) {
+    const entries = loadJournal().filter(e => e.id !== id);
+    saveJournal(entries);
+    renderJournal();
+    if (_chart) refreshChart();
+}
+
+function refreshChart() {
+    if (!_chart) return;
+    // Recalculate scale with updated actual data
+    const actualCaps = getActualCurve(_chart.startCap);
+    const allVals    = [..._chart.sampledPlan, ...actualCaps, _chart.target];
+    _chart.actualCaps = actualCaps;
+    _chart.maxCap     = Math.max(...allVals);
+    _chart.minCap     = Math.min(...allVals, _chart.startCap);
+    _chart.range      = _chart.maxCap - _chart.minCap || 1;
+    redrawChart(null, null);
+}
+
+function renderJournal() {
+    const entries = loadJournal();
+    const container = document.getElementById('journal-entries');
+    const empty     = document.getElementById('journal-empty');
+    const statsEl   = document.getElementById('journal-stats');
+
+    if (!entries.length) {
+        if (empty) empty.style.display = 'block';
+        if (statsEl) statsEl.style.display = 'none';
+        // Hide actual legend
+        const legEl = document.getElementById('legend-actual');
+        if (legEl) legEl.style.display = 'none';
+        container.innerHTML = '';
+        container.appendChild(document.getElementById('journal-empty') || Object.assign(document.createElement('div'), { id:'journal-empty', className:'journal-empty', textContent:'Aucun trade enregistré.' }));
+        return;
+    }
+
+    if (empty) empty.style.display = 'none';
+    if (statsEl) statsEl.style.display = 'grid';
+
+    // Stats
+    const wins   = entries.filter(e => e.result === 'win');
+    const losses = entries.filter(e => e.result === 'loss');
+    const totalWin  = wins.reduce((s, e) => s + e.amount, 0);
+    const totalLoss = losses.reduce((s, e) => s + e.amount, 0);
+    const netPnL = totalWin - totalLoss;
+    const wr = entries.length ? Math.round(wins.length / entries.length * 100) : 0;
+    const startCap = parseFloat(document.getElementById('p-capital').value) || 100;
+    const actualCap = startCap + netPnL;
+
+    if (statsEl) statsEl.innerHTML = `
+        <div class="jstat"><div class="jl">Trades</div><div class="jv">${entries.length}</div></div>
+        <div class="jstat"><div class="jl">Wins</div><div class="jv" style="color:var(--green)">${wins.length}</div></div>
+        <div class="jstat"><div class="jl">Losses</div><div class="jv" style="color:var(--red)">${losses.length}</div></div>
+        <div class="jstat"><div class="jl">Winrate</div><div class="jv" style="color:var(--blue)">${wr}%</div></div>
+        <div class="jstat"><div class="jl">Capital réel</div><div class="jv" style="color:${netPnL>=0?'var(--green)':'var(--red)'}">$${fmt(actualCap)}</div></div>
+    `;
+
+    // Entry list (newest first)
+    container.innerHTML = '';
+    const startCapVal = parseFloat(document.getElementById('p-capital').value) || 100;
+    let runningCap = startCapVal;
+    const rows = [...entries];
+
+    rows.forEach((e, i) => {
+        const capBefore = runningCap;
+        runningCap += (e.result === 'win' ? 1 : -1) * e.amount;
+
+        const div = document.createElement('div');
+        div.className = 'journal-entry';
+        div.innerHTML = `
+            <span class="je-num">#${i + 1}</span>
+            <span class="je-badge ${e.result}">${e.result === 'win' ? '✅ Win' : '❌ Loss'}</span>
+            <span class="je-amount ${e.result}">${e.result === 'win' ? '+' : '-'}$${fmt(e.amount)}</span>
+            <span class="je-amount" style="color:rgba(255,255,255,0.5);font-weight:500;font-size:.78rem;">→ $${fmt(runningCap)}</span>
+            <span class="je-note">${e.note || ''}</span>
+            <span class="je-date">${e.ts}</span>
+            <button class="je-del" onclick="deleteJournalEntry(${e.id})" title="Supprimer">✕</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+/* ══════════════════════════════════════
+   RULES
+══════════════════════════════════════ */
+function renderRules() {
+    const p = profile || PROFILES.day;
+    const sections = [
+        { key: 'trading', title: '📊 Trading',  color: 'var(--gold)' },
+        { key: 'risk',    title: '🛡️ Gestion du risque', color: 'var(--red)' },
+        { key: 'mental',  title: '🧠 Mental & Discipline', color: 'var(--purple)' },
+        { key: 'session', title: '🕐 Sessions', color: 'var(--blue)' }
+    ];
+
+    document.getElementById('rules-grid').innerHTML = sections.map(s => `
+        <div class="rule-card">
+            <h4 style="color:${s.color}">${s.title}</h4>
+            <ul>
+                ${p.rules[s.key].map(r => `<li>${r}</li>`).join('')}
+            </ul>
+        </div>
+    `).join('');
+}
+
+/* ══════════════════════════════════════
+   EXPORT CSV
+══════════════════════════════════════ */
+function exportCSV() {
+    const capital0 = parseFloat(document.getElementById('p-capital').value) || 100;
+    const target   = parseFloat(document.getElementById('p-target').value)  || 1000;
+    const tp = parseInt(document.getElementById('p-tp').value) || 20;
+    const rrRatio = getRRRatio();
+    const sl = Math.round(tp / rrRatio);
+
+    let csv = 'Trade,Capital avant,Lots,TP gain ($),SL risque ($),Capital après,Phase\n';
+    planData.forEach(row => {
+        csv += `${row.trade},${row.capital.toFixed(2)},${row.lot.toFixed(2)},${row.gain.toFixed(2)},${row.sl.toFixed(2)},${row.newCapital.toFixed(2)},${row.phase.name}\n`;
+    });
+
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = `plan-trading-${capital0}-${target}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✅ CSV téléchargé !');
+}
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+renderQuestion();
+updatePreview();
+</script>
+<script>
+/* ── NAV UNIQUE JS ── */
+(function() {
+  var burger = document.getElementById('burger');
+  var links  = document.getElementById('navLinks');
+  if (burger && links) {
+    burger.addEventListener('click', function(e){
+      e.stopPropagation();
+      links.classList.toggle('open');
+    });
+    document.addEventListener('click', function(e){
+      if (!e.target.closest('#mainNav')) {
+        links.classList.remove('open');
+        document.querySelectorAll('.nav-item-drop.mob-open').forEach(function(el){ el.classList.remove('mob-open'); });
+      }
+    });
+  }
+  /* Dropdown toggle (mobile only) */
+  document.querySelectorAll('.nav-item-drop > a').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if (window.innerWidth > 900) return;
+      e.preventDefault();
+      e.stopPropagation();
+      a.parentElement.classList.toggle('mob-open');
+    });
+  });
+  /* Close mobile menu when clicking a real link (not dropdown trigger) */
+  document.querySelectorAll('#navLinks li:not(.nav-item-drop) > a').forEach(function(a){
+    a.addEventListener('click', function(){ if (links) links.classList.remove('open'); });
+  });
+  /* Auto active link */
+  var currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  document.querySelectorAll('#navLinks a[href]').forEach(function(link){
+    var href = link.getAttribute('href').split('/').pop().toLowerCase();
+    if (href === currentPage && href !== '#' && href !== '') link.classList.add('active');
+  });
+})();
+</script>
+<script src="fa-access.js"></script>
+</body>
+</html>
