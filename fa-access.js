@@ -1,5 +1,10 @@
 /* ============================================================
-   fa-access.js — Forex Average · Système d'accès partagé v2
+   fa-access.js — Forex Average · Système d'accès partagé v3
+   ============================================================
+   Nouveauté v3 : détection automatique de la session Supabase.
+   Si l'utilisateur s'est connecté via Supabase Auth (login.html, etc.),
+   fa-access récupère sa session et la synchronise dans ses propres clés
+   localStorage. Plus besoin d'appeler FA.login() manuellement.
    ============================================================ */
 
 (function () {
@@ -16,6 +21,56 @@
   function isLogged() { return !!getUser() && !!localStorage.getItem(KEY_TOKEN); }
   function isVip()    { return isLogged() && getPlan() === 'vip'; }
 
+  /* ── Synchronisation depuis Supabase ──
+     Si l'utilisateur est connecté via Supabase Auth mais que les clés FA
+     ne sont pas encore posées, on les remplit à partir de la session SB. */
+  function syncFromSupabase() {
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (!k.startsWith('sb-') || !k.endsWith('-auth-token')) continue;
+        const raw = localStorage.getItem(k);
+        if (!raw) continue;
+        let sess;
+        try { sess = JSON.parse(raw); } catch { continue; }
+        if (!sess || !sess.access_token) continue;
+        // Vérif expiration (expires_at est en secondes UNIX dans Supabase)
+        if (sess.expires_at && sess.expires_at * 1000 < Date.now()) continue;
+
+        const user  = sess.user || {};
+        const email = user.email || '';
+        if (!email) continue;
+        const meta  = user.user_metadata || {};
+        const name  = meta.name || meta.full_name || meta.display_name || email.split('@')[0];
+
+        // Pose les clés FA si absentes (sans écraser un FA.login() existant)
+        if (!localStorage.getItem(KEY_USER))  localStorage.setItem(KEY_USER,  JSON.stringify({ email, name }));
+        if (!localStorage.getItem(KEY_TOKEN)) localStorage.setItem(KEY_TOKEN, sess.access_token);
+
+        // Plan (free par défaut, sauf si déjà posé)
+        if (!localStorage.getItem(KEY_PLAN)) localStorage.setItem(KEY_PLAN, 'free');
+        return true;
+      }
+    } catch (e) { /* silent */ }
+    return false;
+  }
+
+  /* ── Détection de session Supabase active (sans modif des clés FA) ── */
+  function hasSupabaseSession() {
+    try {
+      for (const k of Object.keys(localStorage)) {
+        if (!k.startsWith('sb-') || !k.endsWith('-auth-token')) continue;
+        const raw = localStorage.getItem(k);
+        if (!raw) continue;
+        let sess;
+        try { sess = JSON.parse(raw); } catch { continue; }
+        if (sess && sess.access_token) {
+          if (!sess.expires_at || sess.expires_at * 1000 > Date.now()) return true;
+        }
+      }
+    } catch (e) {}
+    return false;
+  }
+
   /* ── Login / Logout ── */
   window.FA = {
     login(email, name, plan) {
@@ -29,12 +84,21 @@
       localStorage.removeItem(KEY_USER);
       localStorage.removeItem(KEY_PLAN);
       localStorage.removeItem(KEY_TOKEN);
+      // Nettoyage Supabase aussi
+      try {
+        Object.keys(localStorage).forEach(k => {
+          if (k.startsWith('sb-') && k.endsWith('-auth-token')) localStorage.removeItem(k);
+        });
+      } catch (e) {}
       location.href = 'index.html';
     },
     isLogged,
     isVip,
     getUser,
-    getPlan
+    getPlan,
+    /* Helpers exposés en bonus */
+    syncFromSupabase,
+    hasSupabaseSession
   };
 
   /* ── Initialisation nav ── */
@@ -212,6 +276,9 @@
 
   /* ── Boot ── */
   function boot() {
+    // ⚡ NOUVEAU : sync Supabase → FA AVANT tout le reste
+    syncFromSupabase();
+
     injectStyles();
     checkAuthPage();
     initNav();
