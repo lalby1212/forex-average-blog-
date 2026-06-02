@@ -837,11 +837,101 @@ function renderNews(items, cat) {
 const ERRS = [{icon:'🔄',title:'Synchronisation en cours…',sub:'Nos flux se reconnectent.'},{icon:'📡',title:'Connexion aux marchés…',sub:'Réessayez dans quelques secondes.'},{icon:'⚡',title:'Mise à jour imminente',sub:'Les sources se rafraîchissent.'}];
 function showError(cat) { const m=ERRS[Math.floor(Math.random()*ERRS.length)]; document.getElementById('news-grid').innerHTML=`<div class="state-box"><span class="state-icon">${m.icon}</span><h3>${m.title}</h3><p>${m.sub}</p><button class="retry-btn" onclick="loadCategory('${cat}',true)">Actualiser les sources</button></div>`; }
 
+/* ─── TRADUCTION MULTI-PROVIDERS ───
+   1. Cache local (mémoire)
+   2. Cache Supabase (partagé entre TOUS les visiteurs — clé optimisation)
+   3. Cascade de 3 traducteurs : MyMemory → Lingva → LibreTranslate
+   En cas de rate limit sur l'un, on passe silencieusement au suivant.
+   Aucun message d'erreur visible côté user. */
+
+const TRANSLATE_PROVIDERS = [
+    // 1. MyMemory (avec clé email = 50k mots/jour)
+    async (text) => {
+        const res = await fetch(
+            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,400))}&langpair=en|fr&de=${encodeURIComponent(MM_KEY)}`,
+            { signal: AbortSignal.timeout(6000) }
+        );
+        const j = await res.json();
+        const t = j.responseData?.translatedText;
+        if (!t || t === text) return null;
+        const upper = t.toUpperCase();
+        if (upper.includes('MYMEMORY') || upper.includes('WARNING') ||
+            upper.includes('QUERY LENGTH') || upper.startsWith('PLEASE') ||
+            upper.includes('INVALID')) return null;
+        return t;
+    },
+    // 2. Lingva.ml (proxy Google Translate gratuit, sans clé)
+    async (text) => {
+        const res = await fetch(
+            `https://lingva.ml/api/v1/en/fr/${encodeURIComponent(text.slice(0,400))}`,
+            { signal: AbortSignal.timeout(6000) }
+        );
+        if (!res.ok) return null;
+        const j = await res.json();
+        const t = j.translation;
+        if (!t || t === text) return null;
+        return t;
+    },
+    // 3. LibreTranslate (instance communautaire)
+    async (text) => {
+        const res = await fetch('https://translate.argosopentech.com/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ q: text.slice(0,400), source: 'en', target: 'fr', format: 'text' }),
+            signal: AbortSignal.timeout(6000)
+        });
+        if (!res.ok) return null;
+        const j = await res.json();
+        const t = j.translatedText;
+        if (!t || t === text) return null;
+        return t;
+    }
+];
+
 async function translateText(text) {
-    if (!text||text.length<4) return text;
-    const k = text.slice(0,100); if (translationCache[k]) return translationCache[k];
-    try { const sb=getSB(); if(sb){const{data}=await sb.from('translations').select('translated_text').eq('source_text',text.slice(0,500)).eq('source_lang','en').eq('target_lang','fr').maybeSingle(); if(data?.translated_text){translationCache[k]=data.translated_text;return data.translated_text;}} } catch(e){}
-    try { const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,400))}&langpair=en|fr&de=${encodeURIComponent(MM_KEY)}`,{signal:AbortSignal.timeout(7000)}); const j=await res.json(); const t=j.responseData?.translatedText; if(t&&t!==text&&!t.toUpperCase().includes('MYMEMORY')){translationCache[k]=t; try{const sb=getSB();if(sb)await sb.from('translations').upsert({source_text:text.slice(0,500),translated_text:t,source_lang:'en',target_lang:'fr'},{onConflict:'source_text,source_lang,target_lang',ignoreDuplicates:true});}catch(e){} return t;} } catch(e){}
+    if (!text || text.length < 4) return text;
+    const k = text.slice(0, 100);
+
+    // 1. Cache local (en mémoire pour cette session)
+    if (translationCache[k]) return translationCache[k];
+
+    // 2. Cache Supabase — partagé entre TOUS les visiteurs
+    try {
+        const sb = getSB();
+        if (sb) {
+            const { data } = await sb.from('translations')
+                .select('translated_text')
+                .eq('source_text', text.slice(0,500))
+                .eq('source_lang', 'en')
+                .eq('target_lang', 'fr')
+                .maybeSingle();
+            if (data?.translated_text) {
+                translationCache[k] = data.translated_text;
+                return data.translated_text;
+            }
+        }
+    } catch (e) {}
+
+    // 3. Cascade providers — on essaye chacun jusqu'à ce qu'un marche
+    for (const provider of TRANSLATE_PROVIDERS) {
+        try {
+            const t = await provider(text);
+            if (t) {
+                translationCache[k] = t;
+                // Save to Supabase pour les prochains visiteurs (fire & forget)
+                try {
+                    const sb = getSB();
+                    if (sb) sb.from('translations').upsert(
+                        { source_text: text.slice(0,500), translated_text: t, source_lang: 'en', target_lang: 'fr' },
+                        { onConflict: 'source_text,source_lang,target_lang', ignoreDuplicates: true }
+                    );
+                } catch (e) {}
+                return t;
+            }
+        } catch (e) { /* provider failed, try next silently */ }
+    }
+
+    // Tous les providers ont échoué → on retourne l'original sans erreur visible
     return text;
 }
 async function translateVisibleCards() { const titles=document.querySelectorAll('#news-grid .card-title'); for(let i=0;i<titles.length;i+=5){const b=[...titles].slice(i,i+5);await Promise.all(b.map(async el=>{el.style.opacity='0.5';el.textContent=await translateText(el.textContent);el.style.opacity='1';}));} }
