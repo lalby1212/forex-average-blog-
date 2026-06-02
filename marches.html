@@ -797,7 +797,12 @@
 const SOURCES_LABELS = { forex:'FXStreet, Forexlive, DailyFX', crypto:'CoinTelegraph, Decrypt, BeInCrypto', or:'Kitco, Mining.com, BullionVault', petrole:'OilPrice, Rigzone', macro:'Reuters, MarketWatch, CNBC' };
 const newsCache = {}; let currentCat = 'forex'; let translationActive = false; let translationCache = {};
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co'; const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ'; const MM_KEY = 'bilaldo.rego@gmail.com';
-let _sb = null; function getSB() { if (!_sb && window.supabase) _sb = window.supabase.createClient(SB_URL, SB_KEY); return _sb; }
+/* Singleton Supabase client (partagé entre TOUS les scripts de la page → évite "Multiple GoTrueClient instances") */
+function getSB() {
+    if (window._faSB) return window._faSB;
+    if (window.supabase) window._faSB = window.supabase.createClient(SB_URL, SB_KEY);
+    return window._faSB || null;
+}
 
 function timeAgo(d) { const s=(Date.now()-new Date(d).getTime())/1000; if(!d||isNaN(s))return''; if(s<60)return"À l'instant"; if(s<3600)return`Il y a ${Math.floor(s/60)} min`; if(s<86400)return`Il y a ${Math.floor(s/3600)}h`; return`Il y a ${Math.floor(s/86400)}j`; }
 
@@ -978,13 +983,12 @@ loadCategory('forex');
         });
     });
 
-    const SB_URL='https://bpfpghlpdzevzyhalxov.supabase.co', SB_KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
     let isVIP=false, isLoggedIn=false;
 
     (async function init() {
         try {
-            if (!window.supabase) return applyPaywallState();
-            const sb=window.supabase.createClient(SB_URL,SB_KEY);
+            const sb = (typeof getSB === 'function') ? getSB() : null;
+            if (!sb) return applyPaywallState();
             const {data:{session}}=await sb.auth.getSession();
             if (session) {
                 isLoggedIn=true; document.getElementById('paywall-login-btn').style.display='none';
