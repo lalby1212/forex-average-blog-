@@ -6,6 +6,8 @@
     <title>Marchés | Actualités · Analyses · Screener · Calendrier | Forex Average</title>
     <meta name="description" content="Hub marchés Forex Average : actualités en temps réel, analyses trading, screener heatmap et calendrier économique.">
     <meta name="theme-color" content="#FFD700">
+    <!-- fa-access loaded early (defer) so it boots BEFORE inline scripts that depend on window.FA -->
+    <script src="fa-access.js" defer></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
@@ -848,6 +850,13 @@ function refreshCurrent() { const btn=document.getElementById('refresh-btn'); bt
 
 let gateApplied = false;
 function applyNewsGate(loggedIn) {
+    // Fallback : si fa-access n'est pas encore prêt, retente (max 1.5s).
+    if (!window.FA) {
+        if (!applyNewsGate._tries) applyNewsGate._tries = 0;
+        if (applyNewsGate._tries++ < 15) {
+            return setTimeout(() => applyNewsGate(loggedIn), 100);
+        }
+    }
     if (loggedIn || (window.FA && window.FA.isLogged())) return;
     const grid=document.getElementById('news-grid'); if(!grid)return;
     const cards=grid.querySelectorAll('.news-card'); if(cards.length<=3||gateApplied)return;
@@ -940,6 +949,5 @@ loadCategory('forex');
 })();
 </script>
 
-<script src="fa-access.js"></script>
 </body>
 </html>
