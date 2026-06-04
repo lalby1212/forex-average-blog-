@@ -906,7 +906,80 @@
             body { background: #fff; color: #000; }
             .card { border: 1px solid #ccc; background: #fff; }
         }
-    </style>
+    
+        /* ══ NAV DESIGN SYSTEM ══ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        /* Logo */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; }
+        .logo-forex { color:#ffffff; }
+        .logo-average { color:#FFD700; }
+        .logo-sub { font-size:0.45rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+        .logo:hover { opacity:0.85; }
+
+        /* Nav links */
+        .nav-links { display:flex; list-style:none; align-items:center; gap:0.15rem; margin:0; padding:0; }
+        .nav-links a { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.875rem; font-weight:500; padding:0.4rem 0.7rem; border-radius:6px; transition:color .2s, background .2s; white-space:nowrap; }
+        .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
+        .nav-links a.active { color:#FFD700; }
+        .nav-spacer { flex:1; }
+
+        /* Hamburger */
+        .hamburger { display:none; flex-direction:column; gap:5px; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); border-radius:6px; padding:8px; cursor:pointer; }
+        .hamburger span { display:block; width:20px; height:2px; background:#FFD700; border-radius:2px; transition:all .3s; }
+
+        /* Dropdown Communauté */
+        .nav-item-drop { position:relative; }
+        .nav-item-drop > a { display:flex; align-items:center; gap:0.3rem; }
+        .nav-chevron { width:12px; height:12px; transition:transform .2s; flex-shrink:0; }
+        .nav-item-drop:hover .nav-chevron { transform:rotate(180deg); }
+        .drop-panel { display:none; position:absolute; top:calc(100% + 8px); right:0; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.15); border-radius:12px; padding:0.5rem; min-width:220px; backdrop-filter:blur(20px); box-shadow:0 8px 32px rgba(0,0,0,0.6); z-index:200; }
+        .nav-item-drop:hover .drop-panel { display:block; }
+        .drop-link { display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0.75rem; border-radius:8px; text-decoration:none; transition:background .15s; }
+        .drop-link:hover { background:rgba(255,215,0,0.07); }
+        .drop-icon { width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
+        .drop-label { display:block; font-size:0.875rem; font-weight:600; color:#fff; }
+        .drop-desc { display:block; font-size:0.73rem; color:rgba(255,255,255,0.38); margin-top:1px; }
+        .drop-sep { height:1px; background:rgba(255,215,0,0.1); margin:0.3rem 0; }
+
+        /* Auth */
+        .nav-login-btn { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.85rem; font-weight:500; padding:0.4rem 0.8rem; border-radius:6px; border:1px solid rgba(255,215,0,0.2); transition:all .2s; margin-right:0.4rem; }
+        .nav-login-btn:hover { color:#fff; border-color:rgba(255,215,0,0.5); }
+        .nav-cta { display:inline-flex; align-items:center; background:#FFD700; color:#000; font-size:0.83rem; font-weight:800; padding:0.42rem 1rem; border-radius:50px; text-decoration:none; transition:background .2s; white-space:nowrap; }
+        .nav-cta:hover { background:#fff; }
+        .fa-avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-weight:800; font-size:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hamburger { display:flex; }
+            .nav-links { display:none; position:absolute; top:64px; left:0; right:0; background:rgba(7,7,7,0.99); border-bottom:1px solid rgba(255,215,0,0.12); flex-direction:column; padding:1rem; align-items:stretch; }
+            .nav-links.open { display:flex; }
+            .nav-links a { font-size:1rem; padding:0.65rem 0.5rem; }
+            .drop-panel { position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:8px; }
+            .nav-item-drop:hover .drop-panel { display:none; }
+            .nav-item-drop.open .drop-panel { display:block; }
+        }
+        /* ══ FIN NAV DESIGN SYSTEM ══ */
+        </style>
 
 <style>
     /* ════════════════════ NAV UNIQUE v3.0 ════════════════════ */
@@ -988,19 +1061,25 @@
 
 <nav id="mainNav">
   <div class="nav-container">
+
     <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
-      Forex Average
+      <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span>
       <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
     </a>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Accueil</a></li>
       <li><a href="marches.html">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
-      <li><a href="plan-trading.html" class="active">Créer mon plan</a></li>
       <li><a href="partenaires.html">Partenaires</a></li>
+
+      <!-- Communauté dropdown -->
       <li class="nav-item-drop">
-        <a href="#" role="button">
-          Communauté
+        <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
         <div class="drop-panel">
@@ -1009,7 +1088,7 @@
             <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
           </a>
           <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
-            <span class="drop-icon">📱</span>
+            <span class="drop-icon">✈️</span>
             <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
           </a>
           <div class="drop-sep"></div>
@@ -1019,25 +1098,24 @@
           </a>
         </div>
       </li>
+
       <div class="nav-spacer"></div>
-      <!-- Invité -->
+
+      <!-- Auth guest -->
       <li class="nav-auth-guest" style="display:none;list-style:none;">
         <a href="login.html" class="nav-login-btn">Connexion</a>
-        <a href="pricing.html" class="nav-cta">✦ VIP — 24.99€/mois</a>
+        <a href="pricing.html" class="nav-cta">✦ VIP</a>
       </li>
-      <!-- Connecté -->
+
+      <!-- Profil connecté -->
       <li class="nav-auth-user" style="display:none;list-style:none;">
-        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.75rem;border:1.5px solid rgba(255,215,0,0.2);border-radius:8px;cursor:pointer;">
-          <div class="fa-avatar">?</div>
-          <span class="fa-username" style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.85);">Profil</span>
-          <span class="fa-plan-badge badge-free" style="margin-left:0.25rem;">Gratuit</span>
-          <button class="fa-logout-btn" style="background:none;border:none;cursor:pointer;color:#ef4444;font-size:0.8rem;margin-left:0.5rem;font-family:inherit;" title="Déconnexion">✕</button>
+        <div id="nav-profile-wrap" style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.75rem;border:1.5px solid rgba(255,215,0,0.2);border-radius:8px;cursor:pointer;">
+          <div class="fa-avatar" id="nav-avatar">?</div>
+          <span id="nav-username" style="font-size:0.83rem;font-weight:600;color:#fff;"></span>
         </div>
       </li>
+
     </ul>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
   </div>
 </nav>
 
