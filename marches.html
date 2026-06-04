@@ -6,8 +6,6 @@
     <title>Marchés | Actualités · Analyses · Screener · Calendrier | Forex Average</title>
     <meta name="description" content="Hub marchés Forex Average : actualités en temps réel, analyses trading, screener heatmap et calendrier économique.">
     <meta name="theme-color" content="#FFD700">
-    <!-- fa-access loaded early (defer) so it boots BEFORE inline scripts that depend on window.FA -->
-    <script src="fa-access.js" defer></script>
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         :root {
@@ -291,7 +289,23 @@
             .mtab { padding:0.5rem 0.6rem; font-size:0.78rem; gap:0.3rem; }
             .screener-grid, .articles-grid { grid-template-columns:1fr; }
         }
-    </style>
+    
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.47rem !important; font-weight:700 !important; letter-spacing:1.6px !important; text-transform:uppercase !important; color:rgba(255,255,255,0.35) !important; -webkit-text-fill-color:rgba(255,255,255,0.35) !important; background:none !important; }
+        .logo:hover { opacity:0.85 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        </style>
 </head>
 <body>
 
@@ -299,8 +313,7 @@
 <nav id="mainNav">
   <div class="nav-container">
     <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
-      Forex Average
-      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+      <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span><span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Accueil</a></li>
@@ -797,12 +810,7 @@
 const SOURCES_LABELS = { forex:'FXStreet, Forexlive, DailyFX', crypto:'CoinTelegraph, Decrypt, BeInCrypto', or:'Kitco, Mining.com, BullionVault', petrole:'OilPrice, Rigzone', macro:'Reuters, MarketWatch, CNBC' };
 const newsCache = {}; let currentCat = 'forex'; let translationActive = false; let translationCache = {};
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co'; const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ'; const MM_KEY = 'bilaldo.rego@gmail.com';
-/* Singleton Supabase client (partagé entre TOUS les scripts de la page → évite "Multiple GoTrueClient instances") */
-function getSB() {
-    if (window._faSB) return window._faSB;
-    if (window.supabase) window._faSB = window.supabase.createClient(SB_URL, SB_KEY);
-    return window._faSB || null;
-}
+let _sb = null; function getSB() { if (!_sb && window.supabase) _sb = window.supabase.createClient(SB_URL, SB_KEY); return _sb; }
 
 function timeAgo(d) { const s=(Date.now()-new Date(d).getTime())/1000; if(!d||isNaN(s))return''; if(s<60)return"À l'instant"; if(s<3600)return`Il y a ${Math.floor(s/60)} min`; if(s<86400)return`Il y a ${Math.floor(s/3600)}h`; return`Il y a ${Math.floor(s/86400)}j`; }
 
@@ -842,115 +850,11 @@ function renderNews(items, cat) {
 const ERRS = [{icon:'🔄',title:'Synchronisation en cours…',sub:'Nos flux se reconnectent.'},{icon:'📡',title:'Connexion aux marchés…',sub:'Réessayez dans quelques secondes.'},{icon:'⚡',title:'Mise à jour imminente',sub:'Les sources se rafraîchissent.'}];
 function showError(cat) { const m=ERRS[Math.floor(Math.random()*ERRS.length)]; document.getElementById('news-grid').innerHTML=`<div class="state-box"><span class="state-icon">${m.icon}</span><h3>${m.title}</h3><p>${m.sub}</p><button class="retry-btn" onclick="loadCategory('${cat}',true)">Actualiser les sources</button></div>`; }
 
-/* ─── TRADUCTION MULTI-PROVIDERS ───
-   1. Cache local (mémoire)
-   2. Cache Supabase (partagé entre TOUS les visiteurs — clé optimisation)
-   3. Cascade de 3 traducteurs : MyMemory → Lingva → LibreTranslate
-   En cas de rate limit sur l'un, on passe silencieusement au suivant.
-   Aucun message d'erreur visible côté user. */
-
-const TRANSLATE_PROVIDERS = [
-    // 1. Google Translate (endpoint public gtx, sans clé, le plus fiable)
-    async (text) => {
-        const res = await fetch(
-            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(text.slice(0,800))}`,
-            { signal: AbortSignal.timeout(6000) }
-        );
-        if (!res.ok) return null;
-        const j = await res.json();
-        if (!Array.isArray(j) || !Array.isArray(j[0])) return null;
-        const t = j[0].map(seg => (seg && seg[0]) ? seg[0] : '').join('').trim();
-        if (!t || t === text) return null;
-        return t;
-    },
-    // 2. MyMemory (avec clé email = 50k mots/jour)
-    async (text) => {
-        const res = await fetch(
-            `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,400))}&langpair=en|fr&de=${encodeURIComponent(MM_KEY)}`,
-            { signal: AbortSignal.timeout(6000) }
-        );
-        if (!res.ok) return null;
-        const j = await res.json();
-        const t = j.responseData?.translatedText;
-        if (!t || t === text) return null;
-        const upper = t.toUpperCase();
-        if (upper.includes('MYMEMORY') || upper.includes('WARNING') ||
-            upper.includes('QUERY LENGTH') || upper.startsWith('PLEASE') ||
-            upper.includes('INVALID') || upper.includes('LIMIT')) return null;
-        return t;
-    },
-    // 3. Lingva.ml (proxy Google Translate, peut être down)
-    async (text) => {
-        const res = await fetch(
-            `https://lingva.ml/api/v1/en/fr/${encodeURIComponent(text.slice(0,400))}`,
-            { signal: AbortSignal.timeout(5000) }
-        );
-        if (!res.ok) return null;
-        const j = await res.json();
-        const t = j.translation;
-        if (!t || t === text) return null;
-        return t;
-    },
-    // 4. LibreTranslate (instance communautaire, last resort)
-    async (text) => {
-        const res = await fetch('https://translate.argosopentech.com/translate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ q: text.slice(0,400), source: 'en', target: 'fr', format: 'text' }),
-            signal: AbortSignal.timeout(5000)
-        });
-        if (!res.ok) return null;
-        const j = await res.json();
-        const t = j.translatedText;
-        if (!t || t === text) return null;
-        return t;
-    }
-];
-
 async function translateText(text) {
-    if (!text || text.length < 4) return text;
-    const k = text.slice(0, 100);
-
-    // 1. Cache local (en mémoire pour cette session)
-    if (translationCache[k]) return translationCache[k];
-
-    // 2. Cache Supabase — partagé entre TOUS les visiteurs
-    try {
-        const sb = getSB();
-        if (sb) {
-            const { data } = await sb.from('translations')
-                .select('translated_text')
-                .eq('source_text', text.slice(0,500))
-                .eq('source_lang', 'en')
-                .eq('target_lang', 'fr')
-                .maybeSingle();
-            if (data?.translated_text) {
-                translationCache[k] = data.translated_text;
-                return data.translated_text;
-            }
-        }
-    } catch (e) {}
-
-    // 3. Cascade providers — on essaye chacun jusqu'à ce qu'un marche
-    for (const provider of TRANSLATE_PROVIDERS) {
-        try {
-            const t = await provider(text);
-            if (t) {
-                translationCache[k] = t;
-                // Save to Supabase pour les prochains visiteurs (fire & forget)
-                try {
-                    const sb = getSB();
-                    if (sb) sb.from('translations').upsert(
-                        { source_text: text.slice(0,500), translated_text: t, source_lang: 'en', target_lang: 'fr' },
-                        { onConflict: 'source_text,source_lang,target_lang', ignoreDuplicates: true }
-                    );
-                } catch (e) {}
-                return t;
-            }
-        } catch (e) { /* provider failed, try next silently */ }
-    }
-
-    // Tous les providers ont échoué → on retourne l'original sans erreur visible
+    if (!text||text.length<4) return text;
+    const k = text.slice(0,100); if (translationCache[k]) return translationCache[k];
+    try { const sb=getSB(); if(sb){const{data}=await sb.from('translations').select('translated_text').eq('source_text',text.slice(0,500)).eq('source_lang','en').eq('target_lang','fr').maybeSingle(); if(data?.translated_text){translationCache[k]=data.translated_text;return data.translated_text;}} } catch(e){}
+    try { const res=await fetch(`https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0,400))}&langpair=en|fr&de=${encodeURIComponent(MM_KEY)}`,{signal:AbortSignal.timeout(7000)}); const j=await res.json(); const t=j.responseData?.translatedText; if(t&&t!==text&&!t.toUpperCase().includes('MYMEMORY')){translationCache[k]=t; try{const sb=getSB();if(sb)await sb.from('translations').upsert({source_text:text.slice(0,500),translated_text:t,source_lang:'en',target_lang:'fr'},{onConflict:'source_text,source_lang,target_lang',ignoreDuplicates:true});}catch(e){} return t;} } catch(e){}
     return text;
 }
 async function translateVisibleCards() { const titles=document.querySelectorAll('#news-grid .card-title'); for(let i=0;i<titles.length;i+=5){const b=[...titles].slice(i,i+5);await Promise.all(b.map(async el=>{el.style.opacity='0.5';el.textContent=await translateText(el.textContent);el.style.opacity='1';}));} }
@@ -959,13 +863,6 @@ function refreshCurrent() { const btn=document.getElementById('refresh-btn'); bt
 
 let gateApplied = false;
 function applyNewsGate(loggedIn) {
-    // Fallback : si fa-access n'est pas encore prêt, retente (max 1.5s).
-    if (!window.FA) {
-        if (!applyNewsGate._tries) applyNewsGate._tries = 0;
-        if (applyNewsGate._tries++ < 15) {
-            return setTimeout(() => applyNewsGate(loggedIn), 100);
-        }
-    }
     if (loggedIn || (window.FA && window.FA.isLogged())) return;
     const grid=document.getElementById('news-grid'); if(!grid)return;
     const cards=grid.querySelectorAll('.news-card'); if(cards.length<=3||gateApplied)return;
@@ -997,12 +894,13 @@ loadCategory('forex');
         });
     });
 
+    const SB_URL='https://bpfpghlpdzevzyhalxov.supabase.co', SB_KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
     let isVIP=false, isLoggedIn=false;
 
     (async function init() {
         try {
-            const sb = (typeof getSB === 'function') ? getSB() : null;
-            if (!sb) return applyPaywallState();
+            if (!window.supabase) return applyPaywallState();
+            const sb=window.supabase.createClient(SB_URL,SB_KEY);
             const {data:{session}}=await sb.auth.getSession();
             if (session) {
                 isLoggedIn=true; document.getElementById('paywall-login-btn').style.display='none';
@@ -1057,5 +955,6 @@ loadCategory('forex');
 })();
 </script>
 
+<script src="fa-access.js"></script>
 </body>
 </html>

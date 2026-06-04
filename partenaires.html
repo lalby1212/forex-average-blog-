@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Partenaires &amp; Brokers Certifiés | Forex Average</title>
-  <meta name="description" content="Partenaires officiels de Forex Average : TradingView, Binance, Gate.io pour l'analyse et la crypto. Deriv, Exness, Vantage pour le trading Forex. Comparatif et liens exclusifs.">
+  <title>Nos Partenaires Certifiés | Forex Average</title>
+  <meta name="description" content="Plateformes partenaires de Forex Average : TradingView pour analyser, Binance et Gate.io pour trader les cryptomonnaies. Outils et liens exclusifs.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://forexaverage.com/partenaires.html">
   <link rel="icon" href="/favicon.ico">
@@ -73,8 +73,14 @@
       display:flex; align-items:center; justify-content:space-between;
     }
 
-    .logo { font-weight:900; font-size:1.35rem; letter-spacing:-0.01em; text-transform:uppercase; text-decoration:none; background:linear-gradient(135deg,#FFD700,#FFC107); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; flex-shrink:0; line-height:1.1; }
-    .logo-sub { display:block; font-size:0.6rem; letter-spacing:1.5px; color:rgba(255,255,255,0.38); font-weight:500; margin-top:-4px; -webkit-text-fill-color:rgba(255,255,255,0.38); }
+    .logo { text-decoration:none; transition:opacity 0.2s; }
+    .logo:hover { opacity:0.8; }
+    .logo-sub { display:block; font-size:0.48rem; font-weight:700; letter-spacing:1.4px; margin-top:2px; text-transform:uppercase; -webkit-text-fill-color:rgba(255,215,0,0.55); color:rgba(255,215,0,0.55); background:none; -webkit-background-clip:unset; background-clip:unset; }
+    .logo-name {
+      font-size:1.15rem; font-weight:900;
+      letter-spacing:-0.01em; color:var(--white); display:block; line-height:1;
+    }
+    .logo-name span { color:var(--gold); }
     
 
     .nav-menu { display:flex; list-style:none; align-items:center; gap:2rem; }
@@ -384,36 +390,6 @@
     .broker-cta--gate { background:rgba(0,178,255,0.12); color:#00B2FF; border:1px solid rgba(0,178,255,0.35); }
     .broker-cta--gate:hover { background:rgba(0,178,255,0.2); transform:translateY(-2px); }
 
-    /* ── COMPARISON TABLE BROKERS ── */
-    .brokers-comparison {
-      margin-top:3rem; background:var(--g2);
-      border:1px solid var(--gold-b); border-radius:var(--rx);
-      padding:2rem;
-    }
-    .brokers-comparison__title {
-      color:var(--gold); font-size:1.4rem; font-weight:800;
-      margin-bottom:1.5rem;
-    }
-    .brokers-comparison__wrap { overflow-x:auto; }
-    .brokers-comparison__table {
-      width:100%; border-collapse:collapse; min-width:600px;
-    }
-    .brokers-comparison__table th,
-    .brokers-comparison__table td {
-      padding:0.9rem 1rem; text-align:left;
-      border-bottom:1px solid rgba(255,215,0,0.12);
-      font-size:0.88rem;
-    }
-    .brokers-comparison__table th {
-      background:rgba(255,215,0,0.08); color:var(--gold);
-      font-weight:800; text-transform:uppercase;
-      font-size:0.74rem; letter-spacing:0.06em;
-    }
-    .brokers-comparison__table td { color:var(--t2); }
-    .brokers-comparison__table tr:hover { background:rgba(255,215,0,0.04); }
-    .brokers-comparison__table .ok { color:var(--green); font-weight:800; }
-    .brokers-comparison__table .ko { color:var(--red); font-weight:800; }
-
     /* ── AVANTAGES ── */
     .avantages-grid {
       display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -604,17 +580,30 @@
                 display: block !important;
             }
         }
-</style>
+
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.47rem !important; font-weight:700 !important; letter-spacing:1.6px !important; text-transform:uppercase !important; color:rgba(255,255,255,0.35) !important; -webkit-text-fill-color:rgba(255,255,255,0.35) !important; background:none !important; }
+        .logo:hover { opacity:0.85 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        </style>
 </head>
 <body>
 
 <!-- Navigation -->
 <nav role="navigation" aria-label="Navigation principale">
   <div class="nav-container">
-    <a href="/" class="logo" aria-label="Forex Average — Accueil">
-      FOREX AVERAGE
-      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
-    </a>
+    <a href="index.html" class="logo"><span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span><span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span></a>
 
     <button class="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -662,7 +651,19 @@
       </li>
 
       <!-- ── Partenaires ── -->
-      <li><a href="partenaires.html" style="color:var(--gold); font-weight:700;">Partenaires</a></li>
+      <li class="nav-item-drop">
+        <a href="#" style="color:var(--gold); font-weight:700;">Partenaires <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+        <div class="drop-panel">
+          <a href="partenaires.html" class="drop-link" style="background:rgba(255,215,0,0.05);">
+            <span class="drop-icon" style="background:rgba(255,215,0,0.12);color:#FFD700;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+            <span><span class="drop-label" style="color:#FFD700;">Partenaires</span><span class="drop-desc">Nos partenaires officiels</span></span>
+          </a>
+          <a href="brokers.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="18" height="13" rx="2"></rect><polyline points="3 9 12 13 21 9"></polyline></svg></span>
+            <span><span class="drop-label">Brokers</span><span class="drop-desc">Courtiers recommandés</span></span>
+          </a>
+        </div>
+      </li>
 
       <!-- ── Communauté ── -->
       <li class="nav-item-drop">
@@ -714,8 +715,8 @@
 <section class="page-hero">
   <div class="container">
     <span class="eyebrow">Réseau Certifié Forex Average</span>
-    <h1 class="hero-title">Nos Partenaires<br>&amp; Brokers Certifiés</h1>
-    <p class="hero-sub">Plateformes d'analyse, exchanges crypto et brokers de trading sélectionnés par Forex Average. TradingView, Binance, Gate.io, Deriv, Exness et Vantage — chaque partenaire est choisi pour sa sécurité, sa transparence et ses conditions de marché.</p>
+    <h1 class="hero-title">Nos Plateformes<br>Partenaires</h1>
+    <p class="hero-sub">Analysez les marchés avec TradingView et tradez avec nos plateformes crypto certifiées — Binance &amp; Gate.io. Chaque partenaire est sélectionné pour sa sécurité et sa fiabilité.</p>
   </div>
 </section>
 
@@ -899,183 +900,6 @@
 
 <div class="divider"></div>
 
-<!-- SECTION BROKERS TRADING -->
-<section class="section" id="brokers">
-  <div class="container">
-    <h2 class="section-title">🏦 Brokers Trading Recommandés</h2>
-    <p class="section-desc">Sélection des meilleurs brokers pour Forex, Crypto et Commodities. Comparatif détaillé, avantages exclusifs et conditions de marché transparentes.</p>
-
-    <div class="brokers-grid">
-
-      <!-- DERIV -->
-      <div class="broker-card">
-        <div class="broker-card__badge">
-          <span class="reg-badge" style="color:#FF444F; background:rgba(255,68,79,0.12); border-color:rgba(255,68,79,0.3);">Synthétiques 24/7</span>
-        </div>
-        <div class="broker-card__header">
-          <div class="broker-logo" style="background:#FF444F; color:#fff; font-size:1.3rem;">🎯</div>
-          <div>
-            <div class="broker-card__name">Deriv</div>
-            <div class="broker-card__tagline">Plateforme Intuitive — Dérivés Synthétiques</div>
-          </div>
-        </div>
-        <div class="broker-card__body">
-          <div class="broker-stats">
-            <div class="broker-stat">
-              <div class="broker-stat__label">Dépôt Min</div>
-              <div class="broker-stat__val">$1</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Levier Max</div>
-              <div class="broker-stat__val">1000x</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Spread</div>
-              <div class="broker-stat__val">0.1-0.5</div>
-            </div>
-          </div>
-          <div class="broker-features">
-            <div class="broker-feature">Dérivés synthétiques disponibles 24h/24, 7j/7</div>
-            <div class="broker-feature">Spreads très serrés sur les paires majeures</div>
-            <div class="broker-feature">Aucun slippage — exécution garantie</div>
-            <div class="broker-feature">VIX et crypto inclus dans la plateforme</div>
-            <div class="broker-feature">Application mobile excellente · Support français 24/7</div>
-          </div>
-          <div class="broker-expertise">
-            <div class="broker-expertise__title">💡 Expertise Forex Average</div>
-            <p class="broker-expertise__text">Deriv est <strong style="color:var(--white);">notre choix pour le trading court terme et les dérivés synthétiques</strong>. Idéal pour le scalping, le VIX et les traders qui démarrent avec un petit capital.</p>
-          </div>
-          <a href="https://track.deriv.com/_HJtviuR1NCPlIy_Y1OLMQWNd7ZgqdRLk/1/" target="_blank" rel="noopener noreferrer sponsored" class="broker-cta" style="background:linear-gradient(135deg,#FF444F,#D63440);color:#fff;">
-            🚀 Rejoindre Deriv
-          </a>
-        </div>
-      </div>
-
-      <!-- EXNESS -->
-      <div class="broker-card">
-        <div class="broker-card__badge">
-          <span class="reg-badge">Régulé FCA</span>
-          <span class="reg-badge">ASIC · CySEC</span>
-        </div>
-        <div class="broker-card__header">
-          <div class="broker-logo" style="background:#FFC107; color:#000; font-size:1.3rem;">⚡</div>
-          <div>
-            <div class="broker-card__name">Exness</div>
-            <div class="broker-card__tagline">Leader Forex — Régulation Stricte</div>
-          </div>
-        </div>
-        <div class="broker-card__body">
-          <div class="broker-stats">
-            <div class="broker-stat">
-              <div class="broker-stat__label">Dépôt Min</div>
-              <div class="broker-stat__val">$1</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Levier Max</div>
-              <div class="broker-stat__val">400x</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Spread EURUSD</div>
-              <div class="broker-stat__val">0.0 pips</div>
-            </div>
-          </div>
-          <div class="broker-features">
-            <div class="broker-feature">Régulation FCA, ASIC et CySEC — sécurité maximale</div>
-            <div class="broker-feature">Exécution ultra-rapide · Latence sub-milliseconde</div>
-            <div class="broker-feature">Spreads dès 0.0 pip sur les majeures Forex</div>
-            <div class="broker-feature">Plateformes MT4 et MT5 natives · Bonus jusqu'à 1000$</div>
-            <div class="broker-feature">Support français réactif 24/7</div>
-          </div>
-          <div class="broker-expertise">
-            <div class="broker-expertise__title">💡 Expertise Forex Average</div>
-            <p class="broker-expertise__text">Exness est <strong style="color:var(--white);">le meilleur rapport sécurité/performance</strong> pour le Forex long terme. Le choix recommandé pour les traders qui veulent du sérieux et des conditions de pro.</p>
-          </div>
-          <a href="https://one.exnessonelink.com/a/c_t54wlxfd7m" target="_blank" rel="noopener noreferrer sponsored" class="broker-cta" style="background:linear-gradient(135deg,#FFD700,#FFA000);color:#000;">
-            ⚡ Rejoindre Exness
-          </a>
-        </div>
-      </div>
-
-      <!-- VANTAGE -->
-      <div class="broker-card">
-        <div class="broker-card__badge">
-          <span class="reg-badge" style="color:#00B2FF; background:rgba(0,178,255,0.1); border-color:rgba(0,178,255,0.3);">Régulé FSCA</span>
-        </div>
-        <div class="broker-card__header">
-          <div class="broker-logo" style="background:#00B2FF; color:#fff; font-size:1.3rem;">🌟</div>
-          <div>
-            <div class="broker-card__name">Vantage</div>
-            <div class="broker-card__tagline">Conditions Premium — Scalping &amp; Crypto</div>
-          </div>
-        </div>
-        <div class="broker-card__body">
-          <div class="broker-stats">
-            <div class="broker-stat">
-              <div class="broker-stat__label">Dépôt Min</div>
-              <div class="broker-stat__val">$100</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Levier Max</div>
-              <div class="broker-stat__val">500x</div>
-            </div>
-            <div class="broker-stat">
-              <div class="broker-stat__label">Spread EURUSD</div>
-              <div class="broker-stat__val">0.0 pips</div>
-            </div>
-          </div>
-          <div class="broker-features">
-            <div class="broker-feature">Spread EURUSD à 0.0 pips · Pas de commission cachée</div>
-            <div class="broker-feature">Plateformes MT4 et MT5 natives</div>
-            <div class="broker-feature">Crypto Spot + Futures inclus</div>
-            <div class="broker-feature">Régulation FSCA très stricte · Sécurité des fonds</div>
-            <div class="broker-feature">Support français 24/7 · Récupération de marge rapide</div>
-          </div>
-          <div class="broker-expertise">
-            <div class="broker-expertise__title">💡 Expertise Forex Average</div>
-            <p class="broker-expertise__text">Vantage est <strong style="color:var(--white);">le choix premium pour les scalpers</strong> et les traders crypto qui cherchent des conditions de marché institutionnelles avec spreads zéro.</p>
-          </div>
-          <a href="https://www.vantage-partner.com/ib-cpa-register/?url=ib&affid=26465933" target="_blank" rel="noopener noreferrer sponsored" class="broker-cta" style="background:linear-gradient(135deg,#00B2FF,#0080BF);color:#fff;">
-            🌟 Rejoindre Vantage
-          </a>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- COMPARISON TABLE -->
-    <div class="brokers-comparison">
-      <h3 class="brokers-comparison__title">📊 Tableau Comparatif</h3>
-      <div class="brokers-comparison__wrap">
-        <table class="brokers-comparison__table">
-          <thead>
-            <tr>
-              <th>Caractéristique</th>
-              <th>Deriv</th>
-              <th>Exness</th>
-              <th>Vantage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>Dépôt Minimum</strong></td><td>$1</td><td>$1</td><td>$100</td></tr>
-            <tr><td><strong>Levier Forex</strong></td><td>1000x</td><td>400x</td><td>500x</td></tr>
-            <tr><td><strong>Spread EURUSD</strong></td><td>0.1-0.5 pips</td><td>0.0 pips</td><td>0.0 pips</td></tr>
-            <tr><td><strong>Plateforme</strong></td><td>Propriétaire</td><td>MT4 / MT5</td><td>MT4 / MT5</td></tr>
-            <tr><td><strong>Dérivés Synthétiques</strong></td><td class="ok">✓</td><td class="ko">✗</td><td class="ko">✗</td></tr>
-            <tr><td><strong>Crypto Futures</strong></td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-            <tr><td><strong>Support Français</strong></td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-            <tr><td><strong>Régulation FCA</strong></td><td class="ok">✓</td><td class="ok">✓</td><td class="ko">✗</td></tr>
-            <tr><td><strong>Bonus Disponible</strong></td><td class="ok">✓</td><td class="ok">✓</td><td class="ok">✓</td></tr>
-            <tr><td><strong>Meilleur pour</strong></td><td>VIX · Synthétiques</td><td>Sérénité · Forex</td><td>Scalping · Crypto</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<div class="divider"></div>
-
 <!-- POURQUOI NOS PARTENAIRES -->
 <section class="section" id="avantages">
   <div class="container">
@@ -1251,9 +1075,7 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
-
-<!-- Forex Average — Auth & Access -->
-<script src="fa-access.js"></script>
-
+</body>
+</html>
 </body>
 </html>

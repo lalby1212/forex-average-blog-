@@ -215,7 +215,30 @@
             .form-grid-2 { grid-template-columns:1fr; }
             .form-group.full { grid-column:span 1; }
         }
-    </style>
+    
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.47rem !important; font-weight:700 !important; letter-spacing:1.6px !important; text-transform:uppercase !important; color:rgba(255,255,255,0.35) !important; -webkit-text-fill-color:rgba(255,255,255,0.35) !important; background:none !important; }
+        .logo:hover { opacity:0.85 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: topbar-logo override ── */
+        .topbar-logo { display:flex; flex-direction:column; text-decoration:none; line-height:1; gap:3px; }
+        .topbar-logo .logo-main { font-weight:900; font-size:1.25rem; letter-spacing:-0.01em; text-transform:uppercase; }
+        .topbar-logo .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .topbar-logo .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        </style>
 </head>
 <body>
 
@@ -223,7 +246,7 @@
 <header class="topbar">
     <div class="topbar-left">
         <button class="sidebar-toggle" onclick="toggleSidebar()"><span></span><span></span><span></span></button>
-        <a href="index.html" class="topbar-logo">FOREX AVERAGE<span class="topbar-logo-sub">ESPACE MEMBRE</span></a>
+        <a href="index.html" class="topbar-logo"><span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span><span class="topbar-logo-sub">ESPACE MEMBRE</span></a>
     </div>
     <div class="topbar-right">
         <span class="plan-badge free" id="topbar-plan">GRATUIT</span>

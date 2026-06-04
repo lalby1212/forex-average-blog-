@@ -1,918 +1,1008 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard | Forex Average</title>
-<meta name="theme-color" content="#FFD700">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  :root {
-    --gold:#FFD700; --gold-2:#FFA500; --gold-soft:rgba(255,215,0,0.1); --gold-b:rgba(255,215,0,0.2);
-    --black:#000; --g0:#050505; --g1:#0a0a0a; --g2:#111; --g3:#1a1a1a;
-    --white:#fff; --t2:rgba(255,255,255,0.65); --t3:rgba(255,255,255,0.4); --t4:rgba(255,255,255,0.2);
-    --green:#22c55e; --green-soft:rgba(34,197,94,0.12);
-    --red:#ef4444; --red-soft:rgba(239,68,68,0.12);
-    --blue:#3b82f6; --r:10px; --rl:14px;
-  }
-  html { scroll-behavior:smooth; }
-  body { font-family:'Inter',sans-serif; background:var(--g0); color:#fff; line-height:1.5; overflow-x:hidden; }
-  body::before {
-    content:''; position:fixed; inset:0;
-    background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
-    background-size:60px 60px; pointer-events:none; z-index:0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Forex Average</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="theme-color" content="#FFD700">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #FFD700;
+            --gold-dim: #FFC107;
+            --gold-glow: rgba(255,215,0,0.18);
+            --dark: #000000;
+            --dark2: #0b0b0b;
+            --dark3: #111111;
+            --card: rgba(18,18,18,0.92);
+            --card2: rgba(22,22,22,0.85);
+            --border: rgba(255,215,0,0.18);
+            --border-strong: rgba(255,215,0,0.38);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.65);
+            --text-faint: rgba(255,255,255,0.38);
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #3b82f6;
+            --purple: #8b5cf6;
+            --orange: #f97316;
+            --sidebar-w: 240px;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 10% 10%, rgba(255,215,0,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 90% 90%, rgba(255,193,7,0.03) 0%, transparent 60%);
+        }
+        body::after {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: linear-gradient(rgba(255,215,0,0.012) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,215,0,0.012) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
 
-  /* TOP BAR */
-  .topbar {
-    position:sticky; top:0; z-index:100; height:56px;
-    background:rgba(7,7,7,0.96); backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--gold-b);
-    display:flex; align-items:center; padding:0 1.5rem; gap:1rem;
-  }
-  .topbar-burger { display:none; background:none; border:none; cursor:pointer; padding:0.4rem; }
-  .topbar-burger span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; margin:5px 0; }
-  .topbar-logo {
-    font-weight:900; font-size:1.05rem; letter-spacing:-0.01em; text-transform:uppercase;
-    text-decoration:none; line-height:1;
-    background:linear-gradient(135deg,#FFD700,#FFC107);
-    -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-  }
-  .topbar-logo-sub {
-    display:block; font-size:0.55rem; letter-spacing:1.4px; color:rgba(255,255,255,0.38);
-    font-weight:500; margin-top:1px; -webkit-text-fill-color:rgba(255,255,255,0.38);
-  }
-  .topbar-spacer { flex:1; }
-  .topbar-vip {
-    background:linear-gradient(135deg,#FFD700,#FFA000); color:#000;
-    padding:0.42rem 1rem; border-radius:8px; font-weight:800; font-size:0.78rem;
-    text-decoration:none; box-shadow:0 2px 12px rgba(255,215,0,0.25);
-  }
-  .topbar-avatar {
-    width:34px; height:34px; border-radius:50%;
-    background:linear-gradient(135deg,#FFD700,#FFA000); color:#000;
-    font-weight:800; font-size:0.85rem;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-  }
+        /* ─── TOPBAR ─── */
+        .topbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+            height: 60px;
+            background: rgba(4,4,4,0.97);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 1.5rem;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 1rem; }
+        .sidebar-toggle {
+            background: none; border: none; cursor: pointer; padding: 6px;
+            color: var(--text-muted); display: flex; flex-direction: column; gap: 4px;
+        }
+        .sidebar-toggle span { width: 18px; height: 1.5px; background: currentColor; display: block; border-radius: 2px; }
+        .topbar-logo {
+            font-weight: 900; font-size: 1.1rem; text-transform: uppercase;
+            text-decoration: none; letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #FFD700, #FFC107);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .topbar-logo-sub { font-size: 0.5rem; letter-spacing: 1.5px; color: var(--text-faint); display: block; margin-top: -4px; -webkit-text-fill-color: var(--text-faint); }
 
-  /* LAYOUT */
-  .layout { display:grid; grid-template-columns:240px 1fr; min-height:calc(100vh - 56px); position:relative; z-index:1; }
+        .topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+        .plan-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.3rem 0.8rem; border-radius: 100px;
+            font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px;
+        }
+        .plan-badge.free { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text-muted); }
+        .plan-badge.vip { background: rgba(255,215,0,0.12); border: 1px solid rgba(255,215,0,0.3); color: var(--gold); }
 
-  /* SIDEBAR */
-  .sidebar {
-    background:rgba(8,8,8,0.85); border-right:1px solid rgba(255,255,255,0.04);
-    padding:1.4rem 0.85rem; position:sticky; top:56px; height:calc(100vh - 56px); overflow-y:auto;
-  }
-  .sidebar::-webkit-scrollbar { width:4px; }
-  .sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.08); border-radius:2px; }
-  .sidebar-section { margin-bottom:1.5rem; }
-  .sidebar-label {
-    font-size:0.65rem; font-weight:800; letter-spacing:0.12em;
-    color:rgba(255,255,255,0.32); text-transform:uppercase; padding:0 0.85rem 0.6rem;
-  }
-  .nav-item {
-    position:relative; display:flex; align-items:center; gap:0.7rem;
-    padding:0.65rem 0.85rem; margin-bottom:0.2rem;
-    border-radius:9px; color:rgba(255,255,255,0.72);
-    text-decoration:none; font-size:0.88rem; font-weight:500;
-    transition:background 0.15s, color 0.15s;
-  }
-  .nav-item:hover { background:rgba(255,255,255,0.04); color:#fff; }
-  .nav-item.active { background:rgba(255,215,0,0.1); color:var(--gold); font-weight:700; }
-  .nav-item.active::before {
-    content:''; position:absolute; left:0; width:3px; height:24px;
-    background:var(--gold); border-radius:0 3px 3px 0;
-  }
-  .nav-icon { width:18px; height:18px; flex-shrink:0; }
-  .nav-item.featured {
-    background:linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,165,0,0.04));
-    border:1px solid rgba(255,215,0,0.2); color:var(--gold); font-weight:700; margin-top:0.4rem;
-  }
-  .nav-item.featured:hover { background:linear-gradient(135deg, rgba(255,215,0,0.14), rgba(255,165,0,0.08)); }
+        .topbar-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 0.85rem; color: #000;
+            cursor: pointer; border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .topbar-avatar:hover { border-color: rgba(255,215,0,0.4); }
 
-  /* MAIN */
-  .main { padding:1.75rem 2rem 4rem; overflow-x:hidden; }
-  .page-header {
-    display:flex; align-items:flex-end; justify-content:space-between;
-    margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;
-  }
-  .page-greeting { font-size:0.78rem; color:var(--gold); font-weight:600; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem; }
-  .page-title { font-size:2.1rem; font-weight:800; letter-spacing:-0.02em; line-height:1.1; }
-  .page-title span { color:var(--gold); }
-  .page-sub { font-size:0.88rem; color:var(--t2); margin-top:0.4rem; }
-  .period-tabs {
-    display:flex; gap:0.3rem; background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:0.3rem;
-  }
-  .period-tab {
-    padding:0.42rem 0.95rem; font-size:0.78rem; font-weight:600; color:var(--t2);
-    cursor:pointer; border:none; background:transparent; border-radius:7px;
-    transition:all 0.15s; font-family:inherit;
-  }
-  .period-tab:hover { color:#fff; }
-  .period-tab.active { background:var(--gold); color:#000; font-weight:700; }
+        /* ─── LAYOUT ─── */
+        .layout {
+            display: flex;
+            padding-top: 60px;
+            min-height: 100vh;
+        }
 
-  /* DEMO BANNER */
-  .demo-banner {
-    background:linear-gradient(90deg, rgba(255,215,0,0.08), transparent);
-    border:1px solid rgba(255,215,0,0.18); border-radius:var(--r);
-    padding:0.9rem 1.2rem; margin-bottom:1.5rem;
-    display:flex; align-items:center; gap:0.9rem; font-size:0.86rem;
-  }
-  .demo-banner-icon { font-size:1.2rem; }
-  .demo-banner-text { flex:1; color:var(--t2); }
-  .demo-banner-text strong { color:var(--gold); }
-  .demo-banner-cta {
-    background:var(--gold); color:#000; padding:0.45rem 0.95rem;
-    border-radius:7px; font-weight:700; font-size:0.78rem;
-    text-decoration:none; white-space:nowrap;
-  }
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            position: fixed; top: 60px; left: 0; bottom: 0;
+            width: var(--sidebar-w);
+            background: rgba(6,6,6,0.97);
+            border-right: 1px solid var(--border);
+            display: flex; flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+            overflow-y: auto;
+        }
+        .sidebar.collapsed { transform: translateX(-100%); }
 
-  /* KPI HERO */
-  .kpi-row { display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
-  .kpi-card {
-    background:linear-gradient(135deg, var(--g1), var(--g2));
-    border:1px solid rgba(255,255,255,0.06); border-radius:var(--rl);
-    padding:1.4rem 1.5rem; position:relative; overflow:hidden;
-    transition:border-color 0.2s;
-  }
-  .kpi-card:hover { border-color:rgba(255,215,0,0.2); }
-  .kpi-card.hero {
-    background:linear-gradient(135deg, rgba(255,215,0,0.06) 0%, var(--g1) 60%, var(--g2) 100%);
-    border:1px solid rgba(255,215,0,0.18);
-  }
-  .kpi-card.hero::before {
-    content:''; position:absolute; top:0; left:0; right:0; height:2px;
-    background:linear-gradient(90deg, var(--gold), transparent);
-  }
-  .kpi-label {
-    font-size:0.7rem; font-weight:700; letter-spacing:0.12em;
-    text-transform:uppercase; color:rgba(255,255,255,0.5); margin-bottom:0.7rem;
-  }
-  .kpi-value { font-size:2.1rem; font-weight:800; line-height:1; letter-spacing:-0.02em; }
-  .kpi-card.hero .kpi-value { font-size:2.6rem; }
-  .kpi-value.green { color:var(--green); }
-  .kpi-value.red { color:var(--red); }
-  .kpi-value.gold { color:var(--gold); }
-  .kpi-value.neutral { color:var(--t2); }
-  .kpi-delta {
-    display:inline-flex; align-items:center; gap:0.3rem; margin-top:0.6rem;
-    padding:0.25rem 0.6rem; font-size:0.75rem; font-weight:700; border-radius:6px;
-  }
-  .kpi-delta.up { background:var(--green-soft); color:var(--green); }
-  .kpi-delta.down { background:var(--red-soft); color:var(--red); }
-  .kpi-sub { font-size:0.74rem; color:var(--t3); margin-top:0.4rem; }
-  .kpi-progress { margin-top:0.8rem; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
-  .kpi-progress-bar { height:100%; background:linear-gradient(90deg, var(--gold), #FFC107); border-radius:2px; transition:width 0.6s; }
+        .sidebar-section { padding: 1.2rem 0.8rem 0.5rem; }
+        .sidebar-section-label {
+            font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--text-faint); font-weight: 700;
+            padding: 0 0.6rem; margin-bottom: 0.4rem;
+        }
 
-  /* CHART CARD */
-  .card {
-    background:linear-gradient(135deg, var(--g1), var(--g2));
-    border:1px solid rgba(255,255,255,0.06); border-radius:var(--rl);
-    padding:1.4rem; margin-bottom:1.5rem;
-  }
-  .card-header {
-    display:flex; align-items:flex-start; justify-content:space-between;
-    margin-bottom:1.2rem; gap:1rem; flex-wrap:wrap;
-  }
-  .card-title { font-size:1.05rem; font-weight:700; color:#fff; }
-  .card-sub { font-size:0.8rem; color:var(--t3); margin-top:0.2rem; }
-  .card-badge {
-    display:inline-flex; align-items:center; gap:0.4rem;
-    font-size:0.72rem; font-weight:700; padding:0.3rem 0.7rem;
-    border-radius:6px; background:var(--green-soft); color:var(--green);
-  }
-  .card-badge.gold { background:var(--gold-soft); color:var(--gold); }
-  .card-badge.red { background:var(--red-soft); color:var(--red); }
-  .card-link { color:var(--gold); text-decoration:none; font-size:0.82rem; font-weight:700; }
-  .chart-canvas-wrap { position:relative; width:100%; }
-  .equity-chart { height:320px; }
-  .bar-chart { height:260px; }
-  .donut-chart { height:260px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.65rem 0.8rem; border-radius: 8px;
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500;
+            transition: all 0.15s; position: relative;
+            border: none; background: none; cursor: pointer; width: 100%; text-align: left;
+            font-family: inherit;
+        }
+        .nav-item:hover { background: rgba(255,215,0,0.05); color: #fff; }
+        .nav-item.active { background: rgba(255,215,0,0.08); color: var(--gold); font-weight: 600; }
+        .nav-item.active::before {
+            content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+            width: 2px; background: var(--gold); border-radius: 0 2px 2px 0;
+        }
+        .nav-icon { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.7; }
+        .nav-item.active .nav-icon, .nav-item:hover .nav-icon { opacity: 1; }
+        .nav-badge {
+            margin-left: auto; background: var(--gold); color: #000;
+            font-size: 0.65rem; font-weight: 800; padding: 1px 6px; border-radius: 100px;
+        }
+        .nav-lock {
+            margin-left: auto; font-size: 0.7rem; opacity: 0.4;
+        }
 
-  /* MINI CARDS */
-  .mini-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
-  .mini-card { background:var(--g1); border:1px solid rgba(255,255,255,0.05); border-radius:var(--r); padding:1rem 1.2rem; }
-  .mini-icon {
-    width:32px; height:32px; border-radius:8px;
-    background:rgba(255,215,0,0.1); color:var(--gold);
-    display:flex; align-items:center; justify-content:center;
-    margin-bottom:0.7rem; font-size:0.95rem;
-  }
-  .mini-icon.green { background:var(--green-soft); color:var(--green); }
-  .mini-icon.red { background:var(--red-soft); color:var(--red); }
-  .mini-icon.blue { background:rgba(59,130,246,0.12); color:var(--blue); }
-  .mini-label {
-    font-size:0.66rem; font-weight:700; letter-spacing:0.1em;
-    text-transform:uppercase; color:var(--t3); margin-bottom:0.3rem;
-  }
-  .mini-value { font-size:1.35rem; font-weight:800; line-height:1; letter-spacing:-0.01em; }
-  .mini-value.green { color:var(--green); }
-  .mini-value.red { color:var(--red); }
-  .mini-value.neutral { color:var(--t2); }
-  .mini-sub { font-size:0.72rem; color:var(--t3); margin-top:0.4rem; }
+        .sidebar-divider { height: 1px; background: var(--border); margin: 0.5rem 1rem; }
 
-  /* TWO COL */
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
-  .two-col-asym { display:grid; grid-template-columns:1.2fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+        .sidebar-bottom {
+            margin-top: auto; padding: 1rem 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+        .sidebar-user {
+            display: flex; align-items: center; gap: 0.7rem;
+            padding: 0.6rem; border-radius: 8px;
+            transition: background 0.15s; cursor: pointer;
+        }
+        .sidebar-user:hover { background: rgba(255,255,255,0.04); }
+        .sidebar-user-info { min-width: 0; }
+        .sidebar-user-name { font-size: 0.85rem; font-weight: 600; truncate: true; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-plan { font-size: 0.72rem; color: var(--text-faint); }
+        .sidebar-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--gold), var(--gold-dim)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem; color: #000; flex-shrink: 0; }
 
-  /* TRADE LIST */
-  .trade-list { display:flex; flex-direction:column; gap:0.5rem; }
-  .trade-row {
-    display:grid; grid-template-columns:auto 1fr auto;
-    gap:0.8rem; align-items:center; padding:0.75rem 0.95rem;
-    background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.04);
-    border-radius:8px;
-  }
-  .trade-row:hover { background:rgba(255,255,255,0.04); }
-  .trade-dot { width:8px; height:8px; border-radius:50%; }
-  .trade-dot.win { background:var(--green); box-shadow:0 0 8px rgba(34,197,94,0.5); }
-  .trade-dot.lose { background:var(--red); box-shadow:0 0 8px rgba(239,68,68,0.5); }
-  .trade-info { display:flex; flex-direction:column; gap:0.15rem; min-width:0; }
-  .trade-title { font-size:0.88rem; font-weight:700; }
-  .trade-meta { font-size:0.72rem; color:var(--t3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .trade-amt { font-weight:800; font-size:0.95rem; min-width:90px; text-align:right; }
-  .trade-amt.win { color:var(--green); }
-  .trade-amt.lose { color:var(--red); }
+        /* ─── MAIN CONTENT ─── */
+        .main {
+            flex: 1;
+            margin-left: var(--sidebar-w);
+            padding: 2rem 2.5rem;
+            position: relative; z-index: 1;
+            transition: margin-left 0.3s;
+        }
+        .main.expanded { margin-left: 0; }
 
-  /* WEEKDAY BREAKDOWN */
-  .wd-grid { display:grid; grid-template-columns:repeat(7, 1fr); gap:0.55rem; margin-top:0.5rem; }
-  .wd-cell {
-    background:var(--g1); border:1px solid rgba(255,255,255,0.05);
-    border-radius:10px; padding:1rem 0.5rem; text-align:center;
-    transition:transform 0.15s, border-color 0.15s;
-  }
-  .wd-cell:hover { transform:translateY(-2px); border-color:rgba(255,215,0,0.3); }
-  .wd-day { font-size:0.7rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--t3); margin-bottom:0.5rem; }
-  .wd-pnl { font-size:1.05rem; font-weight:800; line-height:1; margin-bottom:0.3rem; letter-spacing:-0.01em; }
-  .wd-pnl.green { color:var(--green); }
-  .wd-pnl.red { color:var(--red); }
-  .wd-pnl.zero { color:var(--t3); }
-  .wd-count { font-size:0.72rem; color:var(--t3); }
-  .wd-bar { margin-top:0.5rem; height:3px; border-radius:2px; background:rgba(255,255,255,0.06); overflow:hidden; }
-  .wd-bar-fill { height:100%; transition:width 0.5s; }
-  .wd-bar-fill.green { background:var(--green); }
-  .wd-bar-fill.red { background:var(--red); }
+        /* ─── PAGE HEADER ─── */
+        .page-header { margin-bottom: 2rem; }
+        .page-greeting { font-size: 0.82rem; color: var(--text-faint); margin-bottom: 0.3rem; }
+        .page-title { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
 
-  /* EMPTY STATE */
-  .empty {
-    background:linear-gradient(135deg, var(--g1), var(--g2));
-    border:1px dashed rgba(255,215,0,0.25); border-radius:var(--rl);
-    padding:3.5rem 2rem; text-align:center; margin-bottom:1.5rem;
-  }
-  .empty-icon { font-size:3rem; margin-bottom:1rem; }
-  .empty-title { font-size:1.4rem; font-weight:800; margin-bottom:0.5rem; }
-  .empty-sub { color:var(--t2); margin-bottom:1.5rem; max-width:480px; margin-left:auto; margin-right:auto; }
-  .empty-cta {
-    display:inline-block; background:var(--gold); color:#000;
-    padding:0.85rem 1.5rem; border-radius:9px; font-weight:800;
-    text-decoration:none; transition:transform 0.15s;
-  }
-  .empty-cta:hover { transform:translateY(-2px); }
+        /* ─── UPGRADE BANNER ─── */
+        .upgrade-banner {
+            background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.04));
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .upgrade-banner-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .upgrade-banner-text { flex: 1; min-width: 200px; }
+        .upgrade-banner-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+        .upgrade-banner-sub { font-size: 0.82rem; color: var(--text-muted); }
+        .btn-upgrade {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: #000; font-weight: 800; font-size: 0.85rem;
+            padding: 0.6rem 1.4rem; border-radius: 8px; border: none;
+            cursor: pointer; text-decoration: none; display: inline-flex;
+            align-items: center; gap: 0.4rem; white-space: nowrap;
+            transition: opacity 0.2s, transform 0.2s; font-family: inherit;
+        }
+        .btn-upgrade:hover { opacity: 0.9; transform: translateY(-1px); }
 
-  /* RESPONSIVE */
-  @media(max-width:1100px){
-    .kpi-row { grid-template-columns:1fr 1fr; }
-    .mini-grid { grid-template-columns:1fr 1fr; }
-    .two-col, .two-col-asym { grid-template-columns:1fr; }
-  }
-  @media(max-width:768px){
-    .layout { grid-template-columns:1fr; }
-    .sidebar { position:fixed; top:56px; left:-260px; width:240px; transition:left 0.25s; z-index:200; background:rgba(5,5,5,0.98); }
-    .sidebar.open { left:0; }
-    .topbar-burger { display:block; }
-    .main { padding:1rem 1.2rem 3rem; }
-    .page-title { font-size:1.6rem; }
-    .kpi-row { grid-template-columns:1fr; }
-    .mini-grid { grid-template-columns:1fr 1fr; }
-    .kpi-card.hero .kpi-value { font-size:2rem; }
-    .wd-grid { grid-template-columns:repeat(4,1fr); }
-  }
-</style>
+        /* ─── STATS GRID ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem 1.4rem;
+            position: relative; overflow: hidden;
+        }
+        .stat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.15), transparent);
+        }
+        .stat-label { font-size: 0.72rem; color: var(--text-faint); letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 1.8rem; font-weight: 800; line-height: 1; margin-bottom: 0.3rem; }
+        .stat-value.gold { background: linear-gradient(135deg, #FFD700, #FFC107); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-value.green { color: var(--green); }
+        .stat-value.red { color: var(--red); }
+        .stat-sub { font-size: 0.78rem; color: var(--text-faint); }
+        .stat-icon { position: absolute; top: 1rem; right: 1rem; opacity: 0.12; font-size: 1.8rem; }
+
+        /* ─── DASHBOARD GRID ─── */
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .dash-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        /* ─── CARD ─── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: rgba(255,215,0,0.22); }
+        .card-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 1.4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-title { font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .card-body { padding: 1.4rem; }
+        .card-link {
+            font-size: 0.78rem; color: var(--gold);
+            text-decoration: none; font-weight: 600;
+            display: flex; align-items: center; gap: 0.3rem;
+            transition: opacity 0.2s;
+        }
+        .card-link:hover { opacity: 0.75; }
+
+        /* ─── QUICK ACTIONS ─── */
+        .quick-actions {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;
+        }
+        .quick-action {
+            display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+            padding: 1.2rem 0.8rem; border-radius: 10px;
+            background: var(--dark3); border: 1px solid var(--border);
+            text-decoration: none; color: var(--text-muted);
+            font-size: 0.78rem; font-weight: 600; text-align: center;
+            transition: all 0.2s;
+        }
+        .quick-action:hover { background: rgba(255,215,0,0.06); border-color: rgba(255,215,0,0.25); color: #fff; }
+        .quick-action-icon { font-size: 1.4rem; }
+        .quick-action.locked { opacity: 0.5; cursor: not-allowed; }
+        .quick-action.locked:hover { background: var(--dark3); border-color: var(--border); color: var(--text-muted); }
+
+        /* ─── RECENT TRADES TABLE ─── */
+        .mini-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+        .mini-table th { padding: 0.4rem 0.6rem; text-align: left; font-size: 0.68rem; color: var(--text-faint); letter-spacing: 0.6px; text-transform: uppercase; font-weight: 600; border-bottom: 1px solid var(--border); }
+        .mini-table td { padding: 0.65rem 0.6rem; border-bottom: 1px solid rgba(255,255,255,0.03); color: var(--text-muted); }
+        .mini-table tr:last-child td { border-bottom: none; }
+        .mini-table tbody tr:hover td { background: rgba(255,255,255,0.015); }
+
+        .badge-buy { display: inline-flex; align-items: center; gap: 2px; padding: 0.15rem 0.5rem; border-radius: 100px; font-size: 0.68rem; font-weight: 700; background: rgba(34,197,94,0.12); color: var(--green); }
+        .badge-sell { display: inline-flex; align-items: center; gap: 2px; padding: 0.15rem 0.5rem; border-radius: 100px; font-size: 0.68rem; font-weight: 700; background: rgba(239,68,68,0.12); color: var(--red); }
+        .result-pos { color: var(--green); font-weight: 600; }
+        .result-neg { color: var(--red); font-weight: 600; }
+
+        /* ─── JOURNAL RECENT ─── */
+        .journal-item {
+            display: flex; align-items: flex-start; gap: 0.8rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .journal-item:last-child { border-bottom: none; }
+        .journal-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+        }
+        .journal-dot.win { background: var(--green); }
+        .journal-dot.loss { background: var(--red); }
+        .journal-dot.be { background: var(--text-faint); }
+        .journal-symbol { font-weight: 700; font-size: 0.85rem; }
+        .journal-meta { font-size: 0.75rem; color: var(--text-faint); margin-top: 2px; }
+        .journal-result { margin-left: auto; font-weight: 700; font-size: 0.88rem; flex-shrink: 0; }
+
+        /* ─── VIP SECTION ─── */
+        .vip-section { display: none; }
+        .vip-section.show { display: block; }
+
+        .vip-card {
+            background: linear-gradient(135deg, rgba(255,215,0,0.08), rgba(255,215,0,0.03));
+            border: 1px solid rgba(255,215,0,0.22);
+            border-radius: 14px; padding: 1.4rem;
+        }
+        .vip-card-title {
+            font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--gold); font-weight: 700; margin-bottom: 0.8rem;
+            display: flex; align-items: center; gap: 0.4rem;
+        }
+
+        .webinar-card {
+            display: flex; align-items: center; gap: 1rem;
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            border-radius: 10px; padding: 0.9rem 1rem; margin-bottom: 0.8rem;
+            text-decoration: none; color: inherit; transition: border-color 0.2s;
+        }
+        .webinar-card:hover { border-color: rgba(255,215,0,0.25); }
+        .webinar-date {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: #000; border-radius: 8px; padding: 0.3rem 0.6rem;
+            text-align: center; min-width: 44px; flex-shrink: 0;
+        }
+        .webinar-day { font-size: 1.1rem; font-weight: 900; line-height: 1; }
+        .webinar-month { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px; }
+        .webinar-info { flex: 1; }
+        .webinar-name { font-size: 0.88rem; font-weight: 600; }
+        .webinar-time { font-size: 0.75rem; color: var(--text-faint); margin-top: 1px; }
+
+        .tg-btn {
+            display: flex; align-items: center; gap: 0.7rem;
+            background: rgba(0,136,204,0.1); border: 1px solid rgba(0,136,204,0.25);
+            border-radius: 10px; padding: 0.85rem 1rem;
+            text-decoration: none; color: #39b8e0;
+            font-size: 0.88rem; font-weight: 600;
+            transition: all 0.2s;
+        }
+        .tg-btn:hover { background: rgba(0,136,204,0.15); border-color: rgba(0,136,204,0.4); }
+
+        /* ─── PERFORMANCE MINI ─── */
+        .perf-row {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.03);
+            font-size: 0.84rem;
+        }
+        .perf-row:last-child { border-bottom: none; }
+        .perf-label { color: var(--text-muted); }
+        .perf-val { font-weight: 700; }
+        .perf-bar-wrap { width: 80px; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; }
+        .perf-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--green), #16a34a); }
+
+        /* ─── EMPTY STATE ─── */
+        .empty-sm { text-align: center; padding: 2rem 1rem; color: var(--text-faint); font-size: 0.84rem; }
+        .empty-sm .empty-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.4; }
+
+        /* ─── TOAST ─── */
+        .toast {
+            position: fixed; bottom: 1.5rem; right: 1.5rem;
+            background: rgba(20,20,20,0.97); border: 1px solid var(--border-strong);
+            border-radius: 10px; padding: 0.8rem 1.2rem;
+            font-size: 0.84rem; font-weight: 500; z-index: 9999;
+            transform: translateY(80px); opacity: 0; transition: all 0.3s;
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { color: var(--green); }
+        .toast.error { color: var(--red); }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1100px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .dash-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 1.5rem 1rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .quick-actions { grid-template-columns: repeat(2, 1fr); }
+            .dash-grid-3 { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .main { padding: 1rem 0.8rem; }
+        }
+    
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.47rem !important; font-weight:700 !important; letter-spacing:1.6px !important; text-transform:uppercase !important; color:rgba(255,255,255,0.35) !important; -webkit-text-fill-color:rgba(255,255,255,0.35) !important; background:none !important; }
+        .logo:hover { opacity:0.85 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: topbar-logo override ── */
+        .topbar-logo { display:flex; flex-direction:column; text-decoration:none; line-height:1; gap:3px; }
+        .topbar-logo .logo-main { font-weight:900; font-size:1.25rem; letter-spacing:-0.01em; text-transform:uppercase; }
+        .topbar-logo .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .topbar-logo .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
+<!-- ─── TOPBAR ─── -->
 <header class="topbar">
-  <button class="topbar-burger" id="topbarBurger" aria-label="Menu"><span></span><span></span><span></span></button>
-  <a href="/" class="topbar-logo" aria-label="Forex Average — Accueil">
-    FOREX AVERAGE<span class="topbar-logo-sub">ESPACE MEMBRE</span>
-  </a>
-  <div class="topbar-spacer"></div>
-  <a href="pricing.html" class="topbar-vip">✦ VIP</a>
-  <div class="topbar-avatar" id="topbarAvatar" title="Profil">?</div>
+    <div class="topbar-left">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <a href="index.html" class="topbar-logo">
+            FOREX AVERAGE
+            <span class="topbar-logo-sub">ESPACE MEMBRE</span>
+        </a>
+    </div>
+    <div class="topbar-right">
+        <span class="plan-badge free" id="topbar-plan">GRATUIT</span>
+        <div class="topbar-avatar" id="topbar-avatar" title="Mon compte">?</div>
+    </div>
 </header>
 
-<!-- LAYOUT -->
+<!-- ─── LAYOUT ─── -->
 <div class="layout">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+    <!-- ─── SIDEBAR ─── -->
+    <aside class="sidebar" id="sidebar">
 
-    <div class="sidebar-section">
-      <div class="sidebar-label">Mon Trading</div>
-      <a href="dashboard.html" class="nav-item active">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        Dashboard
-      </a>
-      <a href="track-record.html" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Track Record
-      </a>
-      <a href="journal-lab.html" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-        Journal de trading
-      </a>
-      <a href="plan-trading.html" class="nav-item featured">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-        Créer mon plan
-      </a>
-    </div>
+        <div class="sidebar-section">
+            <div class="sidebar-section-label">Navigation</div>
+            <a href="dashboard.html" class="nav-item active">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect></svg>
+                Dashboard
+            </a>
+            <a href="journal.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                Journal de trading
+            </a>
+            <a href="track-record.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Track Record
+            </a>
+        </div>
 
-    <div class="sidebar-section">
-      <div class="sidebar-label">Plateforme</div>
-      <a href="/" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Accueil
-      </a>
-      <a href="marches.html" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Marché
-      </a>
-      <a href="graphique.html" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/></svg>
-        Outils
-      </a>
-      <a href="partenaires.html" class="nav-item">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Partenaires
-      </a>
-    </div>
+        <div class="sidebar-divider"></div>
 
-  </aside>
+        <div class="sidebar-section">
+            <div class="sidebar-section-label">Outils</div>
+            <a href="analyses.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                Analyses
+            </a>
+        <a href="actualites.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Actualités
+        </a>
+            <a href="graphique.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Graphiques Live
+            </a>
+            <a href="calculateurs-trading.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="8" y1="10" x2="10" y2="10"></line><line x1="14" y1="10" x2="16" y2="10"></line></svg>
+                Calculateurs
+            </a>
+            <a href="screener.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line></svg>
+                Screener
+            </a>
+            <a href="calendrier-economique.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Calendrier
+            </a>
+            <a href="fondamentaux.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                Analyse Macro
+            </a>
+        </div>
 
-  <!-- MAIN -->
-  <main class="main" id="mainContent">
-    <!-- Tout est injecté en JS -->
-  </main>
+        <div class="sidebar-divider"></div>
 
+        <div class="sidebar-section">
+            <div class="sidebar-section-label">VIP</div>
+            <a href="#" class="nav-item" id="nav-signals" onclick="checkVIP(event,'signaux')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Signaux Telegram
+                <span class="nav-lock" id="lock-signals">🔒</span>
+            </a>
+            <a href="#" class="nav-item" id="nav-webinar" onclick="checkVIP(event,'webinaire')">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                Webinaire
+                <span class="nav-lock" id="lock-webinar">🔒</span>
+            </a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-user" onclick="signOut()">
+                <div class="sidebar-avatar" id="sidebar-avatar">?</div>
+                <div class="sidebar-user-info">
+                    <div class="sidebar-user-name" id="sidebar-name">Chargement…</div>
+                    <div class="sidebar-user-plan" id="sidebar-plan">Plan Gratuit</div>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-faint);flex-shrink:0;" title="Déconnexion"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN ─── -->
+    <main class="main" id="main-content">
+
+        <!-- Page header -->
+        <div class="page-header">
+            <div class="page-greeting" id="greeting">Bonjour 👋</div>
+            <h1 class="page-title" id="page-title">Mon Dashboard</h1>
+        </div>
+
+        <!-- Upgrade banner (free users) -->
+        <div class="upgrade-banner" id="upgrade-banner" style="display:none;">
+            <div class="upgrade-banner-icon">✦</div>
+            <div class="upgrade-banner-text">
+                <div class="upgrade-banner-title">Passez VIP — Accédez à tous les signaux, analyses et webinaires</div>
+                <div class="upgrade-banner-sub">Signaux Telegram en temps réel · IA sur graphiques · Analyses premium · 24.99€/mois</div>
+            </div>
+            <a href="pricing.html" class="btn-upgrade">Voir les offres →</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-label">Total Trades</div>
+                <div class="stat-value gold" id="stat-trades">0</div>
+                <div class="stat-sub">Track record</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-label">Win Rate</div>
+                <div class="stat-value" id="stat-wr" style="color:var(--text-muted);">—</div>
+                <div class="stat-sub">Trades gagnants</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-label">Total R</div>
+                <div class="stat-value green" id="stat-r">+0R</div>
+                <div class="stat-sub">Résultat cumulé</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📓</div>
+                <div class="stat-label">Entrées Journal</div>
+                <div class="stat-value gold" id="stat-journal">0</div>
+                <div class="stat-sub">Trades analysés</div>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="card" style="margin-bottom:1.5rem;">
+            <div class="card-header">
+                <div class="card-title">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    Actions rapides
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="quick-actions">
+                    <a href="journal.html?action=new" class="quick-action">
+                        <div class="quick-action-icon">✍️</div>
+                        <span>Nouveau trade</span>
+                    </a>
+                    <a href="track-record.html" class="quick-action">
+                        <div class="quick-action-icon">🏆</div>
+                        <span>Track Record</span>
+                    </a>
+                    <a href="analyses.html" class="quick-action">
+                        <div class="quick-action-icon">📊</div>
+                        <span>Analyses</span>
+                    </a>
+                    <a href="graphique.html" class="quick-action">
+                        <div class="quick-action-icon">📉</div>
+                        <span>Graphiques</span>
+                    </a>
+                    <a href="calculateurs-trading.html" class="quick-action">
+                        <div class="quick-action-icon">🧮</div>
+                        <span>Calculateurs</span>
+                    </a>
+                    <a href="pricing.html" class="quick-action" id="qa-vip" style="display:none;">
+                        <div class="quick-action-icon">✦</div>
+                        <span>Passer VIP</span>
+                    </a>
+                    <a href="#" class="quick-action" id="qa-signals" onclick="checkVIP(event,'signaux')" style="display:none;">
+                        <div class="quick-action-icon">⚡</div>
+                        <span>Signaux</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid principale -->
+        <div class="dash-grid">
+
+            <!-- Derniers trades track record -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        Track Record récent
+                    </div>
+                    <a href="track-record.html" class="card-link">Voir tout →</a>
+                </div>
+                <div class="card-body" style="padding:0.8rem 0;">
+                    <div id="recent-trades-wrap">
+                        <div class="empty-sm"><div class="empty-icon">📈</div>Aucun trade enregistré</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Derniers journaux -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Journal récent
+                    </div>
+                    <a href="journal.html" class="card-link">Voir tout →</a>
+                </div>
+                <div class="card-body" style="padding:0.5rem 1rem;">
+                    <div id="recent-journal-wrap">
+                        <div class="empty-sm"><div class="empty-icon">📓</div>Aucune entrée journal</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Performance par setup -->
+        <div class="dash-grid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        Performance par setup
+                    </div>
+                    <a href="journal.html#stats" class="card-link">Détail →</a>
+                </div>
+                <div class="card-body" style="padding:0.5rem 1rem;">
+                    <div id="perf-setup-wrap">
+                        <div class="empty-sm"><div class="empty-icon">🎯</div>Ajoutez des trades dans le journal</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIP Card ou Statistiques discipline -->
+            <div id="vip-dashboard-card">
+                <!-- Pour VIP -->
+                <div class="vip-section card vip-card" id="vip-features-card" style="border:1px solid rgba(255,215,0,0.22);">
+                    <div class="card-header" style="border-bottom:1px solid rgba(255,215,0,0.1);">
+                        <div class="card-title" style="color:var(--gold);">✦ Espace VIP</div>
+                    </div>
+                    <div class="card-body" style="padding:1rem;">
+
+                        <div style="font-size:0.72rem;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin-bottom:0.6rem;">Prochain webinaire</div>
+                        <a href="#" class="webinar-card">
+                            <div class="webinar-date">
+                                <div class="webinar-day" id="webinar-day">—</div>
+                                <div class="webinar-month" id="webinar-month">—</div>
+                            </div>
+                            <div class="webinar-info">
+                                <div class="webinar-name">Analyse des marchés + plan d'exécution</div>
+                                <div class="webinar-time" id="webinar-time">Chaque vendredi · 20h00 (Paris)</div>
+                            </div>
+                        </a>
+
+                        <div style="font-size:0.72rem;color:var(--text-faint);letter-spacing:1px;text-transform:uppercase;font-weight:700;margin:1rem 0 0.6rem;">Canal Telegram privé</div>
+                        <a href="https://t.me/forexaverage_vip" target="_blank" rel="noopener" class="tg-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.29c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.931z"/></svg>
+                            Rejoindre le canal VIP
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Pour Free -->
+                <div class="card" id="free-upgrade-card">
+                    <div class="card-header">
+                        <div class="card-title">✦ Passez VIP</div>
+                    </div>
+                    <div class="card-body">
+                        <div style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;margin-bottom:1.2rem;">
+                            Débloquez les signaux Telegram en temps réel, les analyses premium détaillées, le graphique IA et les webinaires hebdomadaires.
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.4rem;">
+                            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.84rem;color:var(--text-muted);">
+                                <span style="color:var(--green);font-size:0.9rem;">✓</span> Signaux Telegram en temps réel
+                            </div>
+                            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.84rem;color:var(--text-muted);">
+                                <span style="color:var(--green);font-size:0.9rem;">✓</span> Graphique + IA intégrée
+                            </div>
+                            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.84rem;color:var(--text-muted);">
+                                <span style="color:var(--green);font-size:0.9rem;">✓</span> Analyses premium complètes
+                            </div>
+                            <div style="display:flex;align-items:center;gap:0.6rem;font-size:0.84rem;color:var(--text-muted);">
+                                <span style="color:var(--green);font-size:0.9rem;">✓</span> Webinaire hebdomadaire
+                            </div>
+                        </div>
+                        <a href="pricing.html" class="btn-upgrade" style="width:100%;justify-content:center;padding:0.85rem;">
+                            Voir les tarifs VIP — dès 24.99€/mois
+                        </a>
+                        <div style="text-align:center;font-size:0.72rem;color:var(--text-faint);margin-top:0.8rem;">Paiement Stripe & Crypto · Sans engagement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
 </div>
 
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- OVERLAY mobile -->
+<div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;backdrop-filter:blur(2px);" onclick="closeSidebar()"></div>
+
+<!-- ─── SCRIPTS ─── -->
 <script>
-"use strict";
+const SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ════════════════════ DATA ACCESS ════════════════════
-function loadPlan() {
-  try { return JSON.parse(localStorage.getItem('fa_active_plan') || 'null'); }
-  catch(e) { return null; }
-}
-function loadJournal(plan) {
-  if (!plan) return [];
-  const key = `fa_journal_${plan.capital0}_${plan.target}`;
-  try { return JSON.parse(localStorage.getItem(key) || '[]'); }
-  catch(e) { return []; }
-}
+let currentUser = null;
+let userPlan = 'free'; // 'free' | 'vip'
 
-// ════════════════════ INIT ════════════════════
-let plan = loadPlan();
-let allTrades = loadJournal(plan);
-let currentPeriod = 90; // jours
-
-// ════════════════════ FILTERING ════════════════════
-function getFilteredTrades(period) {
-  if (period === 'all') return allTrades;
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - period);
-  return allTrades.filter(t => new Date(t.date) >= cutoff);
+/* ── TOAST ── */
+function showToast(msg, type='success') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.className = `toast show ${type}`;
+    setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// ════════════════════ METRICS ════════════════════
-function computeMetrics(trades) {
-  const n = trades.length;
-  const wins = trades.filter(t => t.result === 'win');
-  const losses = trades.filter(t => t.result === 'loss');
-  const sumWins = wins.reduce((s,t) => s + t.amount, 0);
-  const sumLosses = losses.reduce((s,t) => s + t.amount, 0);
-  const netGain = sumWins - sumLosses;
-  const capital = plan.capital0 + (allTrades.filter(t=>t.result==='win').reduce((s,t)=>s+t.amount,0)
-                 - allTrades.filter(t=>t.result==='loss').reduce((s,t)=>s+t.amount,0));
-  const targetProgress = Math.min(100, Math.max(0, (capital - plan.capital0)/(plan.target - plan.capital0) * 100));
-  const winRate = n ? Math.round(wins.length / n * 100) : 0;
-  const avgWin = wins.length ? sumWins / wins.length : 0;
-  const avgLoss = losses.length ? sumLosses / losses.length : 0;
-  const pf = sumLosses > 0 ? sumWins / sumLosses : (sumWins > 0 ? Infinity : 0);
-  const bestTrade = wins.length ? Math.max(...wins.map(t=>t.amount)) : 0;
-  const worstTrade = losses.length ? -Math.max(...losses.map(t=>t.amount)) : 0;
-  const bestTradeObj = wins.find(t => t.amount === bestTrade);
-  const worstTradeObj = losses.find(t => t.amount === -worstTrade);
-
-  // Streak (dernière série consécutive)
-  let streakResult = null, streakCount = 0;
-  const sorted = [...trades].sort((a,b) => b.id - a.id);
-  for (const t of sorted) {
-    if (streakResult === null) { streakResult = t.result; streakCount = 1; }
-    else if (t.result === streakResult) streakCount++;
-    else break;
-  }
-
-  // Drawdown max (% par rapport au pic d'équité)
-  const sortedAsc = [...trades].sort((a,b) => a.id - b.id);
-  let cap = plan.capital0, peak = plan.capital0, maxDD = 0;
-  for (const t of sortedAsc) {
-    cap += (t.result === 'win' ? 1 : -1) * t.amount;
-    if (cap > peak) peak = cap;
-    const dd = peak > 0 ? (peak - cap) / peak * 100 : 0;
-    if (dd > maxDD) maxDD = dd;
-  }
-
-  return {
-    n, wins, losses, sumWins, sumLosses, netGain, capital, targetProgress,
-    winRate, avgWin, avgLoss, pf, bestTrade, worstTrade, bestTradeObj, worstTradeObj,
-    streakResult, streakCount, maxDD
-  };
+/* ── SIDEBAR ── */
+function toggleSidebar() {
+    const s = document.getElementById('sidebar');
+    const m = document.getElementById('main-content');
+    const o = document.getElementById('sidebar-overlay');
+    if (window.innerWidth <= 900) {
+        s.classList.toggle('open');
+        o.style.display = s.classList.contains('open') ? 'block' : 'none';
+    } else {
+        s.classList.toggle('collapsed');
+        m.classList.toggle('expanded');
+    }
+}
+function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebar-overlay').style.display = 'none';
 }
 
-// ════════════════════ FORMATTERS ════════════════════
-const fmtEUR = v => Math.round(v).toLocaleString('fr-FR') + ' €';
-const fmtEURsign = v => (v >= 0 ? '+' : '') + Math.round(v).toLocaleString('fr-FR') + ' €';
-const fmtPct = v => v.toFixed(1) + '%';
-
-// ════════════════════ RENDER ════════════════════
-function renderEmptyNoPlan() {
-  const av = localStorage.getItem('fa_user_initial') || 'B';
-  document.getElementById('topbarAvatar').textContent = av.toUpperCase();
-  document.getElementById('mainContent').innerHTML = `
-    <div class="page-header">
-      <div>
-        <div class="page-greeting">Bonjour 👋</div>
-        <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">Suivi en temps réel de tes performances</div>
-      </div>
-    </div>
-    <div class="empty">
-      <div class="empty-icon">🎯</div>
-      <div class="empty-title">Commence par créer ton plan de trading</div>
-      <div class="empty-sub">Un plan définit ton capital de départ, ton objectif et ta gestion du risque. Une fois créé, le dashboard suivra automatiquement chaque trade que tu enregistres dans le journal.</div>
-      <a href="plan-trading.html" class="empty-cta">Créer mon plan →</a>
-    </div>
-    <div class="empty" style="border-style:solid;border-color:rgba(255,255,255,0.06);">
-      <div style="font-size:0.85rem;color:var(--t3);max-width:520px;margin:0 auto;line-height:1.7;">
-        <strong style="color:var(--gold);">Comment ça marche</strong><br><br>
-        1. Tu crées ton <strong style="color:#fff;">plan de trading</strong> (capital, objectif, % de risque)<br>
-        2. Tu enregistres chaque trade dans le <strong style="color:#fff;">journal</strong> (win/loss + montant)<br>
-        3. Le dashboard calcule tout automatiquement : courbe d'équité, win rate, drawdown, streak, P&L mensuel…
-      </div>
-    </div>
-  `;
+/* ── CHECK VIP ── */
+function checkVIP(e, feature) {
+    e.preventDefault();
+    if (userPlan === 'vip') {
+        if (feature === 'signaux') window.open('https://t.me/forexaverage_vip', '_blank');
+    } else {
+        showToast('🔒 Fonctionnalité réservée aux membres VIP', 'error');
+        setTimeout(() => { window.location.href = 'pricing.html'; }, 1500);
+    }
 }
 
-function renderEmptyNoTrades() {
-  const av = localStorage.getItem('fa_user_initial') || (plan.name ? plan.name[0] : 'B');
-  document.getElementById('topbarAvatar').textContent = av.toUpperCase();
-  document.getElementById('mainContent').innerHTML = `
-    <div class="page-header">
-      <div>
-        <div class="page-greeting">Bonjour 👋</div>
-        <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">${plan.name || 'Plan en cours'} · Capital initial ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
-      </div>
-    </div>
-
-    <!-- KPIs vides -->
-    <div class="kpi-row">
-      <div class="kpi-card hero">
-        <div class="kpi-label">Capital actuel</div>
-        <div class="kpi-value gold">${fmtEUR(plan.capital0)}</div>
-        <div class="kpi-sub" style="margin-top:0.8rem;">En attente de tes premiers trades</div>
-        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:0%;"></div></div>
-        <div class="kpi-sub">Objectif ${fmtEUR(plan.target)} · 0% atteint</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Gain net</div>
-        <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">0 trade enregistré</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Win Rate</div>
-        <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">Aucun résultat</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Profit Factor</div>
-        <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">Σ gains / Σ pertes</div>
-      </div>
-    </div>
-
-    <div class="empty">
-      <div class="empty-icon">📝</div>
-      <div class="empty-title">Enregistre ton premier trade</div>
-      <div class="empty-sub">Dès que tu cliqueras "Win" ou "Loss" dans ton journal, ce dashboard se remplira : courbe d'équité, performance par jour, streak, drawdown… tout sera tracé automatiquement.</div>
-      <a href="journal-lab.html" class="empty-cta">Aller au journal →</a>
-    </div>
-  `;
+/* ── GREETING ── */
+function getGreeting() {
+    const h = new Date().getHours();
+    if (h < 12) return 'Bonjour 🌅';
+    if (h < 18) return 'Bon après-midi 📊';
+    return 'Bonsoir 🌙';
 }
 
-function render() {
-  // Empty state 1 : pas de plan
-  if (!plan) { renderEmptyNoPlan(); return; }
-  // Empty state 2 : plan mais aucun trade
-  if (allTrades.length === 0) { renderEmptyNoTrades(); return; }
+/* ── NEXT WEBINAR DATE ── */
+function getNextFriday() {
+    const now = new Date();
+    const day = now.getDay(); // 0=dim, 5=ven
+    const diff = (5 - day + 7) % 7 || 7;
+    const next = new Date(now);
+    next.setDate(now.getDate() + diff);
+    return next;
+}
 
-  const trades = getFilteredTrades(currentPeriod);
-  const m = computeMetrics(trades);
-  const mAll = computeMetrics(allTrades);
+/* ── APPLY PLAN UI ── */
+function applyPlan(plan) {
+    userPlan = plan;
+    const isVIP = plan === 'vip';
 
-  // Avatar initial
-  const av = localStorage.getItem('fa_user_initial') || (plan.name ? plan.name[0] : 'B');
-  document.getElementById('topbarAvatar').textContent = av.toUpperCase();
+    // Topbar badge
+    const badge = document.getElementById('topbar-plan');
+    badge.textContent = isVIP ? '✦ VIP' : 'GRATUIT';
+    badge.className = `plan-badge ${isVIP ? 'vip' : 'free'}`;
 
-  // Build the page
-  const main = document.getElementById('mainContent');
-  main.innerHTML = `
-    <div class="page-header">
-      <div>
-        <div class="page-greeting">Bonjour 👋</div>
-        <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">${plan.name || 'Plan en cours'} · Capital initial ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
-      </div>
-      <div class="period-tabs" id="periodTabs">
-        <button class="period-tab ${currentPeriod===7?'active':''}" data-p="7">7j</button>
-        <button class="period-tab ${currentPeriod===30?'active':''}" data-p="30">30j</button>
-        <button class="period-tab ${currentPeriod===90?'active':''}" data-p="90">90j</button>
-        <button class="period-tab ${currentPeriod===365?'active':''}" data-p="365">1an</button>
-        <button class="period-tab ${currentPeriod==='all'?'active':''}" data-p="all">All</button>
-      </div>
-    </div>
+    // Sidebar plan
+    document.getElementById('sidebar-plan').textContent = isVIP ? '✦ Plan VIP' : 'Plan Gratuit';
 
-    <!-- HERO KPI -->
-    <div class="kpi-row">
-      <div class="kpi-card hero">
-        <div class="kpi-label">Capital actuel</div>
-        <div class="kpi-value gold">${fmtEUR(mAll.capital)}</div>
-        <div class="kpi-delta ${mAll.netGain>=0?'up':'down'}">
-          ${mAll.netGain>=0?'▲':'▼'} ${fmtEURsign(mAll.netGain)} depuis le début
-        </div>
-        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:${mAll.targetProgress}%;"></div></div>
-        <div class="kpi-sub">Objectif ${fmtEUR(plan.target)} · ${mAll.targetProgress.toFixed(0)}% atteint</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Gain net</div>
-        <div class="kpi-value ${m.netGain>=0?'green':'red'}">${fmtEURsign(m.netGain)}</div>
-        <div class="kpi-sub">${m.n} trade${m.n>1?'s':''} sur la période</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Win Rate</div>
-        <div class="kpi-value ${m.winRate>=50?'gold':'neutral'}">${m.n?m.winRate+'%':'—'}</div>
-        <div class="kpi-sub">${m.wins.length} W / ${m.losses.length} L</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Profit Factor</div>
-        <div class="kpi-value ${m.pf>=1.5?'green':(m.pf>=1?'gold':'red')}">${m.pf===Infinity?'∞':(m.pf?m.pf.toFixed(2):'—')}</div>
-        <div class="kpi-sub">Σ gains / Σ pertes</div>
-      </div>
-    </div>
-
-    <!-- EQUITY CURVE -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">📈 Courbe d'équité</div>
-          <div class="card-sub">Évolution de ton capital trade par trade</div>
-        </div>
-        <div class="card-badge ${mAll.netGain>=0?'':'red'}">${mAll.netGain>=0?'▲':'▼'} ${(mAll.netGain/plan.capital0*100).toFixed(1)}%</div>
-      </div>
-      <div class="chart-canvas-wrap equity-chart">
-        <canvas id="equityChart"></canvas>
-      </div>
-    </div>
-
-    <!-- MINI STATS -->
-    <div class="mini-grid">
-      <div class="mini-card">
-        <div class="mini-icon ${m.streakResult==='win'?'green':(m.streakResult==='loss'?'red':'')}">${m.streakResult==='win'?'🔥':(m.streakResult==='loss'?'❄️':'⚡')}</div>
-        <div class="mini-label">Streak</div>
-        <div class="mini-value ${m.streakResult==='win'?'green':(m.streakResult==='loss'?'red':'neutral')}">${m.streakCount}</div>
-        <div class="mini-sub">${m.streakResult==='win'?'gains consécutifs':(m.streakResult==='loss'?'pertes consécutives':'—')}</div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-icon green">↗</div>
-        <div class="mini-label">Best Trade</div>
-        <div class="mini-value green">${m.bestTrade?fmtEURsign(m.bestTrade):'—'}</div>
-        <div class="mini-sub">${m.bestTradeObj?new Date(m.bestTradeObj.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}):'—'}</div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-icon red">↘</div>
-        <div class="mini-label">Worst Trade</div>
-        <div class="mini-value red">${m.worstTrade?fmtEURsign(m.worstTrade):'—'}</div>
-        <div class="mini-sub">${m.worstTradeObj?new Date(m.worstTradeObj.date).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'}):'—'}</div>
-      </div>
-      <div class="mini-card">
-        <div class="mini-icon blue">📉</div>
-        <div class="mini-label">Drawdown max</div>
-        <div class="mini-value ${m.maxDD>10?'red':'neutral'}">−${m.maxDD.toFixed(1)}%</div>
-        <div class="mini-sub">Pic-creux max</div>
-      </div>
-    </div>
-
-    <!-- TWO COL : Daily P&L + W/L Donut -->
-    <div class="two-col-asym">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">📊 P&L journalier</div>
-            <div class="card-sub">Gain (vert) / perte (rouge) par jour</div>
-          </div>
-        </div>
-        <div class="chart-canvas-wrap bar-chart">
-          <canvas id="dailyChart"></canvas>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">🎰 Win / Loss</div>
-            <div class="card-sub">Répartition sur la période</div>
-          </div>
-        </div>
-        <div class="chart-canvas-wrap donut-chart">
-          <canvas id="distChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- TWO COL : Monthly + Recent Trades -->
-    <div class="two-col">
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">📅 P&L mensuel</div>
-            <div class="card-sub">Tous les mois (depuis le début)</div>
-          </div>
-        </div>
-        <div class="chart-canvas-wrap bar-chart">
-          <canvas id="monthlyChart"></canvas>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">⚡ Derniers trades</div>
-            <div class="card-sub">5 dernières entrées du Journal</div>
-          </div>
-          <a href="journal-lab.html" class="card-link">Tout voir →</a>
-        </div>
-        <div class="trade-list" id="tradeList"></div>
-      </div>
-    </div>
-
-    <!-- WEEKDAY -->
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">🗓️ Performance par jour de semaine</div>
-          <div class="card-sub">Sur quel jour tu performes le mieux</div>
-        </div>
-        <div class="card-badge gold">Identifie tes meilleurs jours</div>
-      </div>
-      <div class="wd-grid" id="weekdayGrid"></div>
-    </div>
-  `;
-
-  // Bind period tabs
-  document.querySelectorAll('.period-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const v = btn.dataset.p;
-      currentPeriod = (v === 'all') ? 'all' : parseInt(v);
-      render();
+    // Locks
+    ['signals','webinar'].forEach(k => {
+        const lock = document.getElementById(`lock-${k}`);
+        if (lock) lock.style.display = isVIP ? 'none' : '';
     });
-  });
 
-  // Render lists + charts after DOM is in place
-  renderTradeList(trades);
-  renderWeekdayGrid(trades);
-  renderEquityChart();
-  renderDailyChart(trades);
-  renderMonthlyChart();
-  renderDistChart(m);
+    // Upgrade banner
+    document.getElementById('upgrade-banner').style.display = isVIP ? 'none' : 'flex';
+
+    // Quick actions
+    document.getElementById('qa-vip').style.display = isVIP ? 'none' : 'flex';
+    document.getElementById('qa-signals').style.display = isVIP ? 'flex' : 'none';
+
+    // VIP card vs free upgrade card
+    document.getElementById('vip-features-card').style.display = isVIP ? '' : 'none';
+    document.getElementById('free-upgrade-card').style.display = isVIP ? 'none' : '';
 }
 
-// ════════════════════ TRADE LIST ════════════════════
-function renderTradeList(trades) {
-  const recent = [...trades].sort((a,b) => b.id - a.id).slice(0,5);
-  const el = document.getElementById('tradeList');
-  if (recent.length === 0) {
-    el.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--t3);font-size:0.85rem;">Aucun trade sur cette période</div>`;
-    return;
-  }
-  el.innerHTML = recent.map(t => {
-    const dateStr = new Date(t.date).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' });
-    const win = t.result === 'win';
-    return `
-      <div class="trade-row">
-        <div class="trade-dot ${win?'win':'lose'}"></div>
-        <div class="trade-info">
-          <div class="trade-title">${dateStr} · ${win?'Gain':'Perte'}</div>
-          <div class="trade-meta">${t.note || 'Pas de note'}</div>
-        </div>
-        <div class="trade-amt ${win?'win':'lose'}">${win?'+':'−'}${Math.round(t.amount).toLocaleString('fr-FR')} €</div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ════════════════════ WEEKDAY GRID ════════════════════
-function renderWeekdayGrid(trades) {
-  const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  const stats = [{p:0,c:0},{p:0,c:0},{p:0,c:0},{p:0,c:0},{p:0,c:0},{p:0,c:0},{p:0,c:0}];
-  for (const t of trades) {
-    const d = new Date(t.date);
-    let idx = d.getDay() - 1; if (idx < 0) idx = 6; // Mon=0...Sun=6
-    stats[idx].p += (t.result==='win'?1:-1) * t.amount;
-    stats[idx].c += 1;
-  }
-  const maxAbs = Math.max(...stats.map(s=>Math.abs(s.p)), 1);
-  const el = document.getElementById('weekdayGrid');
-  el.innerHTML = days.map((d,i) => {
-    const s = stats[i];
-    const cls = s.p > 0 ? 'green' : (s.p < 0 ? 'red' : 'zero');
-    const barW = Math.abs(s.p) / maxAbs * 100;
-    return `
-      <div class="wd-cell">
-        <div class="wd-day">${d}</div>
-        <div class="wd-pnl ${cls}">${s.p===0?'—':fmtEURsign(s.p)}</div>
-        <div class="wd-count">${s.c} trade${s.c>1?'s':''}</div>
-        <div class="wd-bar"><div class="wd-bar-fill ${cls}" style="width:${barW}%;"></div></div>
-      </div>
-    `;
-  }).join('');
-}
-
-// ════════════════════ CHART DEFAULTS ════════════════════
-Chart.defaults.color = 'rgba(255,255,255,0.55)';
-Chart.defaults.font.family = "'Inter', sans-serif";
-Chart.defaults.font.size = 11;
-Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(10,10,10,0.95)';
-Chart.defaults.plugins.tooltip.borderColor = 'rgba(255,215,0,0.3)';
-Chart.defaults.plugins.tooltip.borderWidth = 1;
-Chart.defaults.plugins.tooltip.titleColor = '#FFD700';
-Chart.defaults.plugins.tooltip.bodyColor = '#fff';
-Chart.defaults.plugins.tooltip.padding = 12;
-Chart.defaults.plugins.tooltip.cornerRadius = 8;
-
-let _equity, _daily, _monthly, _dist;
-
-// ════════════════════ EQUITY CHART ════════════════════
-function renderEquityChart() {
-  const sorted = [...allTrades].sort((a,b)=>a.id - b.id);
-  const labels = ['Départ'];
-  const data = [plan.capital0];
-  let cap = plan.capital0;
-  for (const t of sorted) {
-    cap += (t.result === 'win' ? 1 : -1) * t.amount;
-    labels.push(new Date(t.date).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }));
-    data.push(Math.round(cap));
-  }
-  // Objectif théorique linéaire
-  const objectiveData = labels.map((_, i) => Math.round(plan.capital0 + (i/(labels.length-1||1)) * (plan.target - plan.capital0)));
-
-  const ctx = document.getElementById('equityChart').getContext('2d');
-  const grad = ctx.createLinearGradient(0,0,0,320);
-  grad.addColorStop(0,'rgba(255,215,0,0.28)');
-  grad.addColorStop(1,'rgba(255,215,0,0)');
-
-  if (_equity) _equity.destroy();
-  _equity = new Chart(ctx, {
-    type:'line',
-    data:{
-      labels,
-      datasets:[
-        { label:'Capital', data, borderColor:'#FFD700', backgroundColor:grad, borderWidth:2.5, tension:0.3, fill:true, pointRadius:0, pointHoverRadius:5 },
-        { label:'Objectif', data:objectiveData, borderColor:'rgba(255,255,255,0.25)', borderWidth:1.5, borderDash:[6,6], pointRadius:0, fill:false }
-      ]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      interaction:{ intersect:false, mode:'index' },
-      scales:{
-        x:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ maxRotation:0, autoSkip:true, maxTicksLimit:8 } },
-        y:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ callback:v => v.toLocaleString('fr-FR')+' €' } }
-      },
-      plugins:{
-        legend:{ position:'top', align:'end', labels:{ boxWidth:8, padding:14, usePointStyle:true } },
-        tooltip:{ callbacks:{ label:c => c.dataset.label+': '+c.parsed.y.toLocaleString('fr-FR')+' €' } }
-      }
+/* ── LOAD USER ── */
+async function loadUser() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) {
+        window.location.href = 'login.html?redirect=dashboard';
+        return;
     }
-  });
+    currentUser = session.user;
+
+    // Profil
+    const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
+    const username = profile?.username || currentUser.email?.split('@')[0] || 'Trader';
+    const initial  = username.charAt(0).toUpperCase();
+
+    document.getElementById('greeting').textContent = getGreeting();
+    document.getElementById('page-title').textContent = `Bonjour, ${username} 👋`;
+    document.getElementById('topbar-avatar').textContent = initial;
+    document.getElementById('sidebar-avatar').textContent = initial;
+    document.getElementById('sidebar-name').textContent = username;
+
+    // Webinar
+    const nextFri = getNextFriday();
+    document.getElementById('webinar-day').textContent = nextFri.getDate();
+    document.getElementById('webinar-month').textContent = nextFri.toLocaleDateString('fr-FR', { month: 'short' }).toUpperCase();
+
+    // Plan
+    const { data: sub } = await sb.from('subscriptions')
+        .select('plan, status, expires_at')
+        .eq('user_id', currentUser.id)
+        .eq('status', 'active')
+        .maybeSingle();
+
+    const isVIP = sub && sub.plan === 'vip' && new Date(sub.expires_at) > new Date();
+    applyPlan(isVIP ? 'vip' : 'free');
+
+    // Data
+    await Promise.all([loadTrackRecord(), loadJournal()]);
 }
 
-// ════════════════════ DAILY CHART ════════════════════
-function renderDailyChart(trades) {
-  const daily = {};
-  for (const t of trades) {
-    const d = t.date;
-    if (!daily[d]) daily[d] = 0;
-    daily[d] += (t.result === 'win' ? 1 : -1) * t.amount;
-  }
-  const sorted = Object.keys(daily).sort();
-  const labels = sorted.map(d => new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}));
-  const data = sorted.map(d => Math.round(daily[d]));
-  if (_daily) _daily.destroy();
-  _daily = new Chart(document.getElementById('dailyChart'), {
-    type:'bar',
-    data:{
-      labels,
-      datasets:[{
-        data,
-        backgroundColor: data.map(v => v>=0 ? 'rgba(34,197,94,0.85)' : 'rgba(239,68,68,0.85)'),
-        borderRadius:6, borderSkipped:false
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      scales:{
-        x:{ grid:{ display:false }, ticks:{ autoSkip:true, maxTicksLimit:10, maxRotation:0 } },
-        y:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ callback:v => v.toLocaleString('fr-FR')+' €' } }
-      },
-      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:c => c.parsed.y.toLocaleString('fr-FR')+' €' } } }
+/* ── TRACK RECORD ── */
+async function loadTrackRecord() {
+    const { data: trades, count } = await sb.from('trades')
+        .select('*', { count: 'exact' })
+        .eq('user_id', currentUser.id)
+        .order('trade_date', { ascending: false })
+        .limit(5);
+
+    const total = count || 0;
+    const wins  = (trades || []).filter(t => parseFloat(t.result) > 0).length;
+    // total wins across all trades
+    const { data: allTrades } = await sb.from('trades').select('result').eq('user_id', currentUser.id);
+    const all = allTrades || [];
+    const totalWins = all.filter(t => parseFloat(t.result) > 0).length;
+    const totalR    = all.reduce((s, t) => s + parseFloat(t.result || 0), 0);
+    const wr        = all.length > 0 ? Math.round(totalWins / all.length * 100) : null;
+
+    document.getElementById('stat-trades').textContent = all.length;
+    const wrEl = document.getElementById('stat-wr');
+    wrEl.textContent = wr !== null ? `${wr}%` : '—';
+    wrEl.className = `stat-value ${wr >= 50 ? 'green' : wr !== null ? 'red' : ''}`;
+
+    const rEl = document.getElementById('stat-r');
+    rEl.textContent = (totalR >= 0 ? '+' : '') + totalR.toFixed(2) + 'R';
+    rEl.className = `stat-value ${totalR >= 0 ? 'green' : 'red'}`;
+
+    // Table
+    const wrap = document.getElementById('recent-trades-wrap');
+    if (!trades || trades.length === 0) {
+        wrap.innerHTML = `<div class="empty-sm"><div class="empty-icon">📈</div>Aucun trade enregistré<br><a href="track-record.html" style="color:var(--gold);font-size:0.8rem;margin-top:0.5rem;display:inline-block;">+ Ajouter mon premier trade</a></div>`;
+        return;
     }
-  });
+    wrap.innerHTML = `<table class="mini-table">
+        <thead><tr><th>Symbole</th><th>Dir.</th><th>Résultat</th><th>Date</th></tr></thead>
+        <tbody>${trades.map(t => {
+            const r = parseFloat(t.result || 0);
+            const cls = r > 0 ? 'result-pos' : r < 0 ? 'result-neg' : '';
+            const rStr = (r > 0 ? '+' : '') + r.toFixed(2) + 'R';
+            const d = t.trade_date ? new Date(t.trade_date).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }) : '—';
+            const dir = t.direction === 'BUY' ? '<span class="badge-buy">▲ BUY</span>' : '<span class="badge-sell">▼ SELL</span>';
+            return `<tr><td style="font-weight:700;">${t.symbol || '—'}</td><td>${dir}</td><td class="${cls}">${rStr}</td><td>${d}</td></tr>`;
+        }).join('')}</tbody>
+    </table>`;
 }
 
-// ════════════════════ MONTHLY CHART ════════════════════
-function renderMonthlyChart() {
-  const monthly = {};
-  for (const t of allTrades) {
-    const d = new Date(t.date);
-    const k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    if (!monthly[k]) monthly[k] = 0;
-    monthly[k] += (t.result === 'win' ? 1 : -1) * t.amount;
-  }
-  const sorted = Object.keys(monthly).sort();
-  const labels = sorted.map(k => {
-    const [y,m] = k.split('-');
-    const names = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
-    return names[parseInt(m)-1]+' '+y.slice(2);
-  });
-  const data = sorted.map(k => Math.round(monthly[k]));
-  if (_monthly) _monthly.destroy();
-  _monthly = new Chart(document.getElementById('monthlyChart'), {
-    type:'bar',
-    data:{
-      labels,
-      datasets:[{
-        data,
-        backgroundColor: data.map(v => v>=0 ? 'rgba(34,197,94,0.85)' : 'rgba(239,68,68,0.85)'),
-        borderRadius:8, borderSkipped:false
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      scales:{
-        x:{ grid:{ display:false } },
-        y:{ grid:{ color:'rgba(255,255,255,0.04)' }, ticks:{ callback:v => v.toLocaleString('fr-FR')+' €' } }
-      },
-      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:c => c.parsed.y.toLocaleString('fr-FR')+' €' } } }
+/* ── JOURNAL ── */
+async function loadJournal() {
+    const { data: entries, count } = await sb.from('journal_entries')
+        .select('*', { count: 'exact' })
+        .eq('user_id', currentUser.id)
+        .order('entry_date', { ascending: false })
+        .limit(4);
+
+    document.getElementById('stat-journal').textContent = count || 0;
+
+    const wrap = document.getElementById('recent-journal-wrap');
+    if (!entries || entries.length === 0) {
+        wrap.innerHTML = `<div class="empty-sm"><div class="empty-icon">📓</div>Aucune entrée<br><a href="journal.html?action=new" style="color:var(--gold);font-size:0.8rem;margin-top:0.5rem;display:inline-block;">+ Première entrée</a></div>`;
+    } else {
+        wrap.innerHTML = entries.map(e => {
+            const r = parseFloat(e.result_r || 0);
+            const dotCls = r > 0 ? 'win' : r < 0 ? 'loss' : 'be';
+            const rCls   = r > 0 ? 'result-pos' : r < 0 ? 'result-neg' : '';
+            const rStr   = (r > 0 ? '+' : '') + r.toFixed(2) + 'R';
+            const d = e.entry_date ? new Date(e.entry_date).toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }) : '—';
+            const setup = e.setup_tag || '';
+            return `<div class="journal-item">
+                <div class="journal-dot ${dotCls}"></div>
+                <div>
+                    <div class="journal-symbol">${e.symbol || '—'} <span style="color:var(--text-faint);font-weight:400;font-size:0.75rem;">${e.timeframe || ''}</span></div>
+                    <div class="journal-meta">${setup} · ${d}</div>
+                </div>
+                <div class="journal-result ${rCls}">${rStr}</div>
+            </div>`;
+        }).join('');
     }
-  });
-}
 
-// ════════════════════ DIST CHART ════════════════════
-function renderDistChart(m) {
-  if (_dist) _dist.destroy();
-  _dist = new Chart(document.getElementById('distChart'), {
-    type:'doughnut',
-    data:{
-      labels:['Wins','Losses'],
-      datasets:[{
-        data:[m.wins.length, m.losses.length],
-        backgroundColor:['rgba(34,197,94,0.85)','rgba(239,68,68,0.85)'],
-        borderColor:'rgba(10,10,10,1)', borderWidth:3
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false, cutout:'68%',
-      plugins:{
-        legend:{ position:'bottom', labels:{ boxWidth:10, padding:14, usePointStyle:true } },
-        tooltip:{ callbacks:{ label:c => c.label+': '+c.parsed+' ('+(c.parsed/m.n*100).toFixed(0)+'%)' } }
-      }
+    // Stats par setup
+    const { data: allEntries } = await sb.from('journal_entries').select('setup_tag, result_r').eq('user_id', currentUser.id);
+    const perfWrap = document.getElementById('perf-setup-wrap');
+    if (!allEntries || allEntries.length === 0) {
+        perfWrap.innerHTML = `<div class="empty-sm"><div class="empty-icon">🎯</div>Ajoutez des trades dans le journal</div>`;
+        return;
     }
-  });
+    // Grouper par setup
+    const bySetup = {};
+    allEntries.forEach(e => {
+        const k = e.setup_tag || 'Autre';
+        if (!bySetup[k]) bySetup[k] = { wins: 0, total: 0 };
+        bySetup[k].total++;
+        if (parseFloat(e.result_r) > 0) bySetup[k].wins++;
+    });
+    perfWrap.innerHTML = Object.entries(bySetup)
+        .sort((a,b) => b[1].total - a[1].total)
+        .slice(0, 5)
+        .map(([setup, data]) => {
+            const wr = Math.round(data.wins / data.total * 100);
+            return `<div class="perf-row">
+                <div class="perf-label">${setup}</div>
+                <div style="display:flex;align-items:center;gap:0.8rem;">
+                    <div class="perf-bar-wrap"><div class="perf-bar" style="width:${wr}%"></div></div>
+                    <div class="perf-val" style="color:${wr>=50?'var(--green)':'var(--red)'}">${wr}%</div>
+                </div>
+            </div>`;
+        }).join('');
 }
 
-// ════════════════════ SIDEBAR TOGGLE ════════════════════
-document.getElementById('topbarBurger').addEventListener('click', () => {
-  document.getElementById('sidebar').classList.toggle('open');
-});
+/* ── SIGN OUT ── */
+async function signOut() {
+    if (!confirm('Se déconnecter ?')) return;
+    await sb.auth.signOut();
+    window.location.href = 'index.html';
+}
 
-// ════════════════════ GO ════════════════════
-render();
+/* ── INIT ── */
+loadUser();
 </script>
-
+<script>
+/* Guard : redirection login si non-connecté */
+(async function() {
+  try {
+    var res = await sb.auth.getSession();
+    if (!res.data || !res.data.session) {
+      window.location.href = 'login.html?redirect=dashboard.html';
+    }
+  } catch(e) {
+    window.location.href = 'login.html?redirect=dashboard.html';
+  }
+})();
+</script>
 </body>
 </html>
