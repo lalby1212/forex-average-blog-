@@ -35,8 +35,7 @@
         /* NAV */
         #mainNav { position:sticky; top:0; z-index:1000; background:rgba(7,7,7,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,215,0,0.14); height:62px; }
         .nav-container { max-width:1380px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; height:100%; }
-        .logo { font-weight:900; font-size:1.35rem; letter-spacing:-0.01em; text-transform:uppercase; text-decoration:none; color:#FFD700; flex-shrink:0; line-height:1.1; }
-        .logo-sub { display:block; font-size:0.6rem; letter-spacing:1.5px; color:rgba(255,215,0,0.6); font-weight:600; margin-top:-2px; }
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; }
         .nav-links-wrap { display:flex; align-items:center; list-style:none; height:100%; margin:0 0 0 2rem; padding:0; flex:1; }
         .nav-item > a { display:flex; align-items:center; height:62px; padding:0 0.9rem; color:rgba(255,255,255,0.72); font-size:0.875rem; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s; border-bottom:2px solid transparent; }
         .nav-item > a:hover, .nav-item > a.nav-active { color:#FFD700; }
@@ -295,8 +294,6 @@
         .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
         .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
         .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
-        .logo-sub { display:block !important; font-size:0.47rem !important; font-weight:700 !important; letter-spacing:1.6px !important; text-transform:uppercase !important; color:rgba(255,255,255,0.35) !important; -webkit-text-fill-color:rgba(255,255,255,0.35) !important; background:none !important; }
-        .logo:hover { opacity:0.85 !important; }
         /* ── DS: nav telegram ── */
         .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
         .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
@@ -306,6 +303,14 @@
         .nav-container { justify-content:space-between !important; }
         .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
         
+                /* ── LOGO ── */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; -webkit-text-fill-color:unset !important; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; display:block; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.45rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.3) !important; -webkit-text-fill-color:rgba(255,255,255,0.3) !important; }
+        .logo:hover { opacity:0.85; }
+
         /* ══ NAV DESIGN SYSTEM ══ */
         nav {
             position: sticky;
@@ -332,8 +337,6 @@
         .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; }
         .logo-forex { color:#ffffff; }
         .logo-average { color:#FFD700; }
-        .logo-sub { font-size:0.45rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
-        .logo:hover { opacity:0.85; }
 
         /* Nav links */
         .nav-links { display:flex; list-style:none; align-items:center; gap:0.15rem; margin:0; padding:0; }
