@@ -7,7 +7,6 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta name="theme-color" content="#FFD700">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -249,6 +248,10 @@
         <a href="index.html" class="topbar-logo"><span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span><span class="topbar-logo-sub">ESPACE MEMBRE</span></a>
     </div>
     <div class="topbar-right">
+    <div class="nav-auth-user nav-item-drop" style="display:none;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);">
+      <div class="fa-avatar">?</div>
+      <span class="fa-username" style="font-size:0.83rem;font-weight:600;color:#fff;white-space:nowrap;"></span>
+    </div>
         <span class="plan-badge free" id="topbar-plan">GRATUIT</span>
         <div class="topbar-avatar" id="topbar-avatar">?</div>
     </div>
@@ -593,10 +596,8 @@
 <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;" onclick="closeSidebar()"></div>
 
 <script>
-const SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* ── JOURNAL DE TRADING — localStorage + fa-access.js ── */
 
 let currentUser = null;
 let userPlan = 'free';
@@ -606,6 +607,17 @@ let selectedSetup = '';
 let selectedEmotion = '';
 let followedPlan = null;
 let currentRating = 0;
+
+/* ── STORAGE HELPERS ── */
+function storageKey() {
+    return 'fa_journal_' + (currentUser?.email || 'guest');
+}
+function loadFromStorage() {
+    try { return JSON.parse(localStorage.getItem(storageKey()) || '[]'); } catch { return []; }
+}
+function saveToStorage(entries) {
+    localStorage.setItem(storageKey(), JSON.stringify(entries));
+}
 
 /* ── TOAST ── */
 function showToast(msg, type='success') {
@@ -689,7 +701,7 @@ function populateForm(e) {
     document.getElementById('j-pre-note').value = e.pre_note||'';
     document.getElementById('j-post-note').value = e.post_note||'';
     if (e.setup_tag) { selectedSetup=e.setup_tag; document.querySelectorAll('.setup-tag').forEach(t=>{ if(t.dataset.val===e.setup_tag) t.classList.add('selected'); }); }
-    if (e.emotion) { selectedEmotion=e.emotion; document.querySelectorAll('.emotion-btn').forEach(b=>{ if(b.getAttribute('onclick').includes(e.emotion)) b.classList.add('selected'); }); }
+    if (e.emotion) { selectedEmotion=e.emotion; document.querySelectorAll('.emotion-btn').forEach(b=>{ if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(e.emotion)) b.classList.add('selected'); }); }
     if (e.followed_plan!=null) { followedPlan=e.followed_plan; document.querySelectorAll('.bool-btn').forEach(b=>{ if((e.followed_plan&&b.classList.contains('yes'))||(!e.followed_plan&&b.classList.contains('no'))) b.classList.add('selected'); }); }
     if (e.rating) setRating(e.rating);
 }
@@ -697,26 +709,23 @@ function populateForm(e) {
 /* ── FORM SELECTORS ── */
 function toggleSetup(el) {
     document.querySelectorAll('.setup-tag').forEach(t=>t.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedSetup = el.dataset.val;
+    el.classList.add('selected'); selectedSetup = el.dataset.val;
 }
 function selectEmotion(el, emotion) {
     document.querySelectorAll('.emotion-btn').forEach(b=>b.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedEmotion = emotion;
+    el.classList.add('selected'); selectedEmotion = emotion;
 }
 function setBool(el, val) {
     document.querySelectorAll('.bool-btn').forEach(b=>b.classList.remove('selected'));
-    el.classList.add('selected');
-    followedPlan = val === 'yes';
+    el.classList.add('selected'); followedPlan = val === 'yes';
 }
 function setRating(r) {
     currentRating = r;
     document.querySelectorAll('.star-btn').forEach((b,i) => b.classList.toggle('active', i < r));
 }
 
-/* ── SAVE ENTRY ── */
-async function saveEntry() {
+/* ── SAVE ENTRY (localStorage) ── */
+function saveEntry() {
     const symbol = document.getElementById('j-symbol').value.trim().toUpperCase();
     const dir    = document.getElementById('j-dir').value;
     const result = parseFloat(document.getElementById('j-result').value);
@@ -724,7 +733,7 @@ async function saveEntry() {
 
     if (!symbol) return showAlert('Symbole requis.');
     if (isNaN(result)) return showAlert('Résultat (R) requis.');
-    if (!eDate) return showAlert('Date d\'entrée requise.');
+    if (!eDate) return showAlert("Date d'entrée requise.");
 
     const btn = document.getElementById('drawer-submit');
     const spinner = document.getElementById('drawer-spinner');
@@ -732,9 +741,9 @@ async function saveEntry() {
     spinner.style.display = 'block'; btn.disabled = true;
 
     const payload = {
-        user_id: currentUser.id,
-        symbol,
-        direction: dir,
+        id: editingId || ('entry_' + Date.now()),
+        user_email: currentUser.email,
+        symbol, direction: dir,
         timeframe: document.getElementById('j-tf').value || null,
         setup_tag: selectedSetup || null,
         entry_price: parseFloat(document.getElementById('j-entry').value) || null,
@@ -751,20 +760,22 @@ async function saveEntry() {
         rating: currentRating || null
     };
 
-    let error;
+    let entries = loadFromStorage();
     if (editingId) {
-        ({ error } = await sb.from('journal_entries').update(payload).eq('id', editingId).eq('user_id', currentUser.id));
+        entries = entries.map(e => e.id === editingId ? payload : e);
     } else {
-        ({ error } = await sb.from('journal_entries').insert(payload));
+        entries.unshift(payload);
     }
+    saveToStorage(entries);
+    allEntries = entries;
 
     document.getElementById('drawer-btn-text').style.display = 'block';
     spinner.style.display = 'none'; btn.disabled = false;
 
-    if (error) { showAlert(error.message); return; }
     closeDrawer();
     showToast(editingId ? '✅ Trade modifié' : `✅ Trade ${symbol} enregistré !`);
-    await loadEntries();
+    filterEntries();
+    renderStats();
 }
 
 function showAlert(msg) {
@@ -773,12 +784,8 @@ function showAlert(msg) {
 }
 
 /* ── LOAD ENTRIES ── */
-async function loadEntries() {
-    const { data } = await sb.from('journal_entries')
-        .select('*')
-        .eq('user_id', currentUser.id)
-        .order('entry_date', { ascending: false });
-    allEntries = data || [];
+function loadEntries() {
+    allEntries = loadFromStorage();
     filterEntries();
     renderStats();
 }
@@ -788,7 +795,6 @@ function filterEntries() {
     const setup  = document.getElementById('filter-setup').value;
     const result = document.getElementById('filter-result').value;
     const plan   = document.getElementById('filter-plan').value;
-
     let filtered = [...allEntries];
     if (setup) filtered = filtered.filter(e => e.setup_tag === setup);
     if (result === 'win')  filtered = filtered.filter(e => parseFloat(e.result_r) > 0);
@@ -796,7 +802,6 @@ function filterEntries() {
     if (result === 'be')   filtered = filtered.filter(e => parseFloat(e.result_r) === 0);
     if (plan === 'true')   filtered = filtered.filter(e => e.followed_plan === true);
     if (plan === 'false')  filtered = filtered.filter(e => e.followed_plan === false);
-
     document.getElementById('filter-count').textContent = `${filtered.length} entrée(s)`;
     renderTable(filtered);
 }
@@ -820,7 +825,8 @@ function renderTable(entries) {
         const emo = e.emotion === 'Calme' ? '😌' : e.emotion === 'Confiant' ? '💪' : e.emotion === 'Stressé' ? '😰' : e.emotion === 'FOMO' ? '😱' : e.emotion === 'Impatient' ? '⏰' : '—';
         const rr = (e.entry_price && e.stop_loss && e.take_profit) ?
             (Math.abs(e.take_profit - e.entry_price) / Math.abs(e.entry_price - e.stop_loss)).toFixed(1) + ':1' : '—';
-        return `<tr onclick="openDrawer(${JSON.stringify(e).replace(/"/g,'&quot;')})">
+        const eJson = JSON.stringify(e).replace(/\/g,'\\').replace(/'/g,"\'");
+        return `<tr onclick="openDrawer(JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(e))}')))">
             <td style="white-space:nowrap;color:var(--text-faint);">${d}</td>
             <td style="font-weight:700;">${e.symbol}</td>
             <td>${setup}</td>
@@ -839,10 +845,10 @@ function renderTable(entries) {
 }
 
 /* ── DELETE ── */
-async function deleteEntry(id) {
+function deleteEntry(id) {
     if (!confirm('Supprimer cette entrée ?')) return;
-    await sb.from('journal_entries').delete().eq('id', id).eq('user_id', currentUser.id);
     allEntries = allEntries.filter(e => e.id !== id);
+    saveToStorage(allEntries);
     filterEntries();
     renderStats();
     showToast('Entrée supprimée.');
@@ -906,53 +912,50 @@ function renderGroupStats(id, data) {
 }
 
 /* ── SIGN OUT ── */
-async function signOut() {
+function signOut() {
     if (!confirm('Se déconnecter ?')) return;
-    await sb.auth.signOut();
-    window.location.href = 'index.html';
+    if (window.FA) window.FA.logout();
+    else window.location.href = 'index.html';
 }
 
 /* ── INIT ── */
-(async function init() {
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) { window.location.href = 'login.html?redirect=journal'; return; }
-    currentUser = session.user;
+(function init() {
+    // Auth via FA (localStorage)
+    const user = window.FA ? window.FA.getUser() : null;
+    const logged = window.FA ? window.FA.isLogged() : false;
 
-    const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).maybeSingle();
-    const username = profile?.username || currentUser.email?.split('@')[0] || 'Trader';
+    if (!logged || !user) {
+        window.location.href = 'login.html?redirect=journal.html';
+        return;
+    }
+
+    currentUser = { email: user.email, id: user.email };
+    userPlan = window.FA ? window.FA.getPlan() : 'free';
+
+    const username = user.name || user.email.split('@')[0];
     const initial  = username.charAt(0).toUpperCase();
-    document.getElementById('topbar-avatar').textContent = initial;
-    document.getElementById('sidebar-avatar').textContent = initial;
-    document.getElementById('sidebar-name').textContent = username;
 
-    const { data: sub } = await sb.from('subscriptions').select('plan,status,expires_at').eq('user_id', currentUser.id).eq('status','active').maybeSingle();
-    const isVIP = sub && sub.plan === 'vip' && new Date(sub.expires_at) > new Date();
-    userPlan = isVIP ? 'vip' : 'free';
+    const avatarEl = document.getElementById('topbar-avatar');
+    if (avatarEl) avatarEl.textContent = initial;
+    const sidebarAvatar = document.getElementById('sidebar-avatar');
+    if (sidebarAvatar) sidebarAvatar.textContent = initial;
+    const sidebarName = document.getElementById('sidebar-name');
+    if (sidebarName) sidebarName.textContent = username;
 
+    const isVIP = userPlan === 'vip';
     const badge = document.getElementById('topbar-plan');
-    badge.textContent = isVIP ? '✦ VIP' : 'GRATUIT';
-    badge.className = `plan-badge ${isVIP ? 'vip' : 'free'}`;
-    document.getElementById('sidebar-plan').textContent = isVIP ? '✦ Plan VIP' : 'Plan Gratuit';
-    if (isVIP) document.getElementById('lock-signals').style.display = 'none';
+    if (badge) { badge.textContent = isVIP ? '✦ VIP' : 'GRATUIT'; badge.className = `plan-badge ${isVIP ? 'vip' : 'free'}`; }
+    const sidebarPlan = document.getElementById('sidebar-plan');
+    if (sidebarPlan) sidebarPlan.textContent = isVIP ? '✦ Plan VIP' : 'Plan Gratuit';
+    const lockSignals = document.getElementById('lock-signals');
+    if (isVIP && lockSignals) lockSignals.style.display = 'none';
 
-    // URL param ?action=new
     if (new URLSearchParams(location.search).get('action') === 'new') openDrawer();
 
-    await loadEntries();
+    loadEntries();
 })();
+
 </script>
-<script>
-/* Guard : redirection login si non-connecté */
-(async function() {
-  try {
-    var res = await sb.auth.getSession();
-    if (!res.data || !res.data.session) {
-      window.location.href = 'login.html?redirect=journal.html';
-    }
-  } catch(e) {
-    window.location.href = 'login.html?redirect=journal.html';
-  }
-})();
-</script>
+<script src="fa-access.js"></script>
 </body>
 </html>

@@ -1170,24 +1170,33 @@
             </li>
 
             <!-- ── Auth ── -->
-            <li class="nav-auth-guest" style="list-style:none;"><a href="login.html" class="nav-login-btn" style="text-decoration:none;color:var(--text-muted);font-size:0.88rem;font-weight:500;padding:0.5rem 0.8rem;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;">Connexion</a></li>
-            <li class="nav-auth-guest" style="list-style:none;"><a href="pricing.html" class="nav-cta">✦ VIP</a></li>
+                  <!-- Auth guest -->
+      <li class="nav-auth-guest" style="display:none;list-style:none;">
+        <a href="login.html" class="nav-login-btn">Connexion</a>
+        <a href="pricing.html" class="nav-cta">✦ VIP</a>
+      </li>
 
-            <!-- ── Profil connecté ── -->
-            <li id="nav-user-profile" class="nav-profile">
-                <div class="nav-avatar-btn">
-                    <div class="nav-avatar" id="nav-avatar-initials">?</div>
-                    <span id="nav-username-display">Mon compte</span>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </div>
-                <div class="nav-profile-drop">
-                    <a href="dashboard.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
-                    <a href="journal.html"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>Mon journal</a>
-                    <div class="drop-sep-sm"></div>
-                    <button class="logout-btn" onclick="if(window.faAuth)window.faAuth.signOut()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Déconnexion</button>
-                </div>
-            </li>
-        </ul>
+      <!-- Profil connecté -->
+      <li class="nav-auth-user nav-item-drop" style="display:none;list-style:none;">
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);transition:all .2s;">
+          <div class="fa-avatar">?</div>
+          <span class="fa-username" style="font-size:0.83rem;font-weight:600;color:#fff;white-space:nowrap;"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="journal.html" class="drop-link">
+            <span class="drop-icon">📓</span>
+            <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
+            <span class="drop-icon">🚪</span>
+            <span><span class="drop-label">Déconnexion</span></span>
+          </a>
+        </div>
+      </li>
+
+    </ul>
     </div>
 </nav>
 
@@ -2150,5 +2159,6 @@ window.addEventListener('load', async () => {
 <script src="newsletter.js"></script>
 <script src="__mc-validate.js"></script>
 
+  <script src="fa-access.js"></script>
 </body>
 </html>

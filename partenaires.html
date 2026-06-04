@@ -718,17 +718,29 @@
 
       <div class="nav-spacer"></div>
 
-      <!-- Auth guest -->
+            <!-- Auth guest -->
       <li class="nav-auth-guest" style="display:none;list-style:none;">
         <a href="login.html" class="nav-login-btn">Connexion</a>
         <a href="pricing.html" class="nav-cta">✦ VIP</a>
       </li>
 
       <!-- Profil connecté -->
-      <li class="nav-auth-user" style="display:none;list-style:none;">
-        <div id="nav-profile-wrap" style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.75rem;border:1.5px solid rgba(255,215,0,0.2);border-radius:8px;cursor:pointer;">
-          <div class="fa-avatar" id="nav-avatar">?</div>
-          <span id="nav-username" style="font-size:0.83rem;font-weight:600;color:#fff;"></span>
+      <li class="nav-auth-user nav-item-drop" style="display:none;list-style:none;">
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);transition:all .2s;">
+          <div class="fa-avatar">?</div>
+          <span class="fa-username" style="font-size:0.83rem;font-weight:600;color:#fff;white-space:nowrap;"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="journal.html" class="drop-link">
+            <span class="drop-icon">📓</span>
+            <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
+            <span class="drop-icon">🚪</span>
+            <span><span class="drop-label">Déconnexion</span></span>
+          </a>
         </div>
       </li>
 
@@ -1102,7 +1114,9 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
+  <script src="fa-access.js"></script>
 </body>
 </html>
+  <script src="fa-access.js"></script>
 </body>
 </html>
