@@ -368,11 +368,11 @@
 
         <!-- Success screen -->
         <div class="success-screen" id="success-screen">
-            <div class="success-icon">✉️</div>
-            <h2 class="success-title">Vérifiez votre email !</h2>
+            <div class="success-icon">🎉</div>
+            <h2 class="success-title">Compte créé !</h2>
             <p class="success-text">
-                Un email de confirmation a été envoyé à <strong id="success-email" style="color:#fff;"></strong>.<br><br>
-                Cliquez sur le lien dans l'email pour activer votre compte et accéder à vos outils.
+                Bienvenue <strong id="success-email" style="color:#fff;"></strong> ! Votre compte est prêt.<br><br>
+                Redirection vers vos marchés…
             </p>
             <a href="login.html" class="btn-check-email">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
@@ -387,17 +387,18 @@
     </div>
 </div>
 
-<!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+// ── Comptes localStorage ──
+function getAccounts(){try{return JSON.parse(localStorage.getItem('fa_accounts')||'[]');}catch{return[];}}
+function saveAccounts(a){localStorage.setItem('fa_accounts',JSON.stringify(a));}
 
 // ── Redirect si déjà connecté ──
-sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) window.location.href = 'dashboard.html';
+document.addEventListener('DOMContentLoaded',function(){
+    if(window.FA&&window.FA.isLogged()) window.location.href='marches.html';
 });
+
+// ── Redirect si déjà connecté ──
+
 
 // ── Toggle password visibility ──
 function togglePw(id, btn) {
@@ -449,33 +450,22 @@ document.getElementById('pseudo').addEventListener('input', function() {
     statusEl.className = 'pseudo-status checking';
     statusEl.textContent = 'Vérification…';
 
-    pseudoTimer = setTimeout(async function() {
-        try {
-            var { data, error } = await sb
-                .from('profiles')
-                .select('username')
-                .eq('username', val)
-                .maybeSingle();
-
-            if (error) { statusEl.className = 'pseudo-status'; statusEl.textContent = ''; return; }
-
-            if (data) {
-                pseudoAvailable = false;
-                statusEl.className = 'pseudo-status taken';
-                statusEl.textContent = '✕ Ce pseudo est déjà pris';
-                document.getElementById('pseudo').classList.add('error');
-            } else {
-                pseudoAvailable = true;
-                statusEl.className = 'pseudo-status available';
-                statusEl.textContent = '✓ Pseudo disponible';
-                document.getElementById('pseudo').classList.remove('error');
-                document.getElementById('pseudo').classList.add('success');
-            }
-        } catch(e) {
-            statusEl.className = 'pseudo-status';
-            statusEl.textContent = '';
+    pseudoTimer = setTimeout(function() {
+        var accounts = getAccounts();
+        var taken = accounts.some(function(a){ return a.name.toLowerCase() === val.toLowerCase(); });
+        if(taken){
+            pseudoAvailable = false;
+            statusEl.className = 'pseudo-status taken';
+            statusEl.textContent = '✕ Ce pseudo est déjà pris';
+            document.getElementById('pseudo').classList.add('error');
+        } else {
+            pseudoAvailable = true;
+            statusEl.className = 'pseudo-status available';
+            statusEl.textContent = '✓ Pseudo disponible';
+            document.getElementById('pseudo').classList.remove('error');
+            document.getElementById('pseudo').classList.add('success');
         }
-    }, 600);
+    }, 400);
 });
 
 // ── Validation helpers ──
@@ -545,42 +535,30 @@ async function register() {
     btnText.textContent = 'Création en cours…';
     spinner.style.display = 'block';
 
-    try {
-        // ── Vérification unicité en double (sécurité côté serveur) ──
-        var { data: existing } = await sb
-            .from('profiles')
-            .select('username')
-            .eq('username', pseudo)
-            .maybeSingle();
+    // Vérif email unique
+    var accounts = getAccounts();
+    var emailExists = accounts.some(function(a){ return a.email.toLowerCase() === email.toLowerCase(); });
+    if(emailExists){
+        showAlert('Cet email est déjà utilisé. <a href="login.html" style="color:var(--gold);">Connectez-vous</a>');
+        btn.disabled=false; btnText.textContent='Créer mon compte gratuit'; spinner.style.display='none';
+        return;
+    }
 
-        if (existing) {
-            throw new Error('Ce pseudo est déjà utilisé. Veuillez en choisir un autre.');
-        }
+    // Créer le compte en localStorage
+    accounts.push({ email:email, name:pseudo, password:password, plan:'free', createdAt:Date.now() });
+    saveAccounts(accounts);
 
-        // ── Création du compte Supabase Auth ──
-        // IMPORTANT : la clé doit être "username" pour que le trigger SQL
-        // (raw_user_meta_data->>'username') crée correctement le profil.
-        var { data, error } = await sb.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                data: { username: pseudo },
-                emailRedirectTo: 'https://forexaverage.com/dashboard.html'
-            }
-        });
+    // Connecter directement (sans reload)
+    var token = btoa(email+':'+Date.now());
+    localStorage.setItem('fa_user', JSON.stringify({email:email, name:pseudo}));
+    localStorage.setItem('fa_plan', 'free');
+    localStorage.setItem('fa_token', token);
 
-        if (error) throw error;
-
-        // ── Afficher l'écran de succès ──
-        document.getElementById('success-email').textContent = email;
-        document.getElementById('register-form-section').style.display = 'none';
-        document.getElementById('success-screen').classList.add('show');
-
-    } catch (err) {
-        var msg = err.message || 'Une erreur est survenue.';
-        if (msg.includes('already registered') || msg.includes('User already registered')) {
-            showAlert('Cet email est déjà utilisé. <a href="login.html" style="color:var(--gold);">Connectez-vous</a>');
-        } else if (msg.includes('Password should be')) {
+    // Écran succès → redirect
+    document.getElementById('success-email').textContent = pseudo;
+    document.getElementById('register-form-section').style.display = 'none';
+    document.getElementById('success-screen').classList.add('show');
+    setTimeout(function(){ window.location.href = 'marches.html'; }, 1800); else if (msg.includes('Password should be')) {
             showAlert('Le mot de passe doit contenir au moins 8 caractères.');
         } else {
             showAlert(msg);

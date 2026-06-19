@@ -1090,6 +1090,20 @@
 </style>
 </head>
 <body>
+<!-- ── Auth Guard ── -->
+<script>
+(function(){
+  try{
+    var u=localStorage.getItem('fa_user');
+    var t=localStorage.getItem('fa_token');
+    if(!u||!t){
+      var page=location.pathname.split('/').pop()||'';
+      window.location.replace('login.html'+(page?'?redirect='+encodeURIComponent(page):''));
+    }
+  }catch(e){}
+})();
+</script>
+<!-- ── End Auth Guard ── -->
 
 <nav id="mainNav">
   <div class="nav-container">
