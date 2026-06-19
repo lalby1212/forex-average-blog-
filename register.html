@@ -397,8 +397,6 @@ document.addEventListener('DOMContentLoaded',function(){
     if(window.FA&&window.FA.isLogged()) window.location.href='marches.html';
 });
 
-// ── Redirect si déjà connecté ──
-
 
 // ── Toggle password visibility ──
 function togglePw(id, btn) {
@@ -558,15 +556,7 @@ async function register() {
     document.getElementById('success-email').textContent = pseudo;
     document.getElementById('register-form-section').style.display = 'none';
     document.getElementById('success-screen').classList.add('show');
-    setTimeout(function(){ window.location.href = 'marches.html'; }, 1800); else if (msg.includes('Password should be')) {
-            showAlert('Le mot de passe doit contenir au moins 8 caractères.');
-        } else {
-            showAlert(msg);
-        }
-        btn.disabled = false;
-        btnText.textContent = 'Créer mon compte gratuit';
-        spinner.style.display = 'none';
-    }
+        setTimeout(function(){ window.location.href = 'marches.html'; }, 1800);
 }
 
 // ── Enter key submit ──
@@ -587,5 +577,6 @@ document.addEventListener('keydown', function(e) {
     });
 });
 </script>
+<script src="fa-access.js"></script>
 </body>
 </html>
