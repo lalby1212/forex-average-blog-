@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marchés | Actualités · Analyses · Screener · Calendrier | Forex Average</title>
+    <title>Marchés | Actualités · Analyses · Screener | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/marches.html">
     <meta name="description" content="Hub marchés Forex Average : actualités en temps réel, analyses trading, screener heatmap et calendrier économique.">
     <meta name="theme-color" content="#FFD700">
     <style>
@@ -430,6 +431,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Marchés | Forex Average">
+  <meta property="og:description" content="Hub marchés Forex Average : actualités en temps réel, analyses trading, screener heatmap et calendrier économique.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -493,9 +502,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -646,7 +663,7 @@
                 </div>
             </a>
 
-            <a href="gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="true">
+            <a href="gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(220,38,38,0.06));">GBP/JPY</div>
                 <div class="article-body">
@@ -658,7 +675,7 @@
                 </div>
             </a>
 
-            <a href="brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="true">
+            <a href="brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(249,115,22,0.16),rgba(234,88,12,0.08));">BRENT</div>
                 <div class="article-body">
@@ -705,7 +722,7 @@
                 </div>
             </a>
 
-            <a href="article/strategie/ma-strategie-long-only.html" class="article-card" data-category="strategie" data-vip="true">
+            <a href="article/stratégie/ma-strategie-long-only.html" class="article-card" data-category="strategie" data-vip="true">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(59,130,246,0.08));">STRATÉGIE</div>
                 <div class="article-body">
@@ -731,9 +748,8 @@
                 <div class="screener-widget">
                     <div class="tradingview-widget-container" style="height:550px;">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
-                        {"currencies":["EUR","GBP","JPY","CHF","CAD","AUD","NZD","USD"],"isTransparent":true,"colorTheme":"dark","locale":"fr","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"width":"100%","height":550}
-                        </script>
+                        <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js">{"currencies":["EUR","GBP","JPY","CHF","CAD","AUD","NZD","USD"],"isTransparent":true,"colorTheme":"dark","locale":"fr","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"width":"100%","height":550}
+                        </script</script>
                     </div>
                 </div>
             </div>
@@ -744,9 +760,8 @@
                 <div class="screener-widget">
                     <div class="tradingview-widget-container" style="height:550px;">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
-                        {"dataSource":"crypto_coins","blockSize":"market_cap_calc","blockColor":"change","locale":"fr","colorTheme":"dark","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"isTransparent":true,"width":"100%","height":550}
-                        </script>
+                        <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js">{"dataSource":"crypto_coins","blockSize":"market_cap_calc","blockColor":"change","locale":"fr","colorTheme":"dark","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"isTransparent":true,"width":"100%","height":550}
+                        </script</script>
                     </div>
                 </div>
             </div>
@@ -757,9 +772,8 @@
                 <div class="screener-widget">
                     <div class="tradingview-widget-container" style="height:600px;">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
-                        {"exchanges":[],"dataSource":"SPX500","grouping":"sector","blockSize":"market_cap_calc","blockColor":"change","locale":"fr","colorTheme":"dark","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"isTransparent":true,"width":"100%","height":600}
-                        </script>
+                        <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js">{"exchanges":[],"dataSource":"SPX500","grouping":"sector","blockSize":"market_cap_calc","blockColor":"change","locale":"fr","colorTheme":"dark","hasTopBar":false,"isZoomEnabled":true,"hasSymbolTooltip":true,"isTransparent":true,"width":"100%","height":600}
+                        </script</script>
                     </div>
                 </div>
             </div>
@@ -770,9 +784,8 @@
                 <div class="screener-widget">
                     <div class="tradingview-widget-container" style="height:660px;">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                        {"colorTheme":"dark","dateRange":"1M","showChart":true,"locale":"fr","isTransparent":true,"showSymbolLogo":true,"width":"100%","height":660,"tabs":[{"title":"Métaux 🥇","symbols":[{"s":"TVC:GOLD","d":"Or"},{"s":"TVC:SILVER","d":"Argent"},{"s":"TVC:COPPER","d":"Cuivre"},{"s":"TVC:PLATINUM","d":"Platine"},{"s":"TVC:PALLADIUM","d":"Palladium"}]},{"title":"Énergie ⛽","symbols":[{"s":"TVC:USOIL","d":"WTI"},{"s":"TVC:UKOIL","d":"Brent"},{"s":"TVC:NATGASUSD","d":"Gaz Naturel"}]},{"title":"Agriculture 🌾","symbols":[{"s":"TVC:WHEAT","d":"Blé"},{"s":"TVC:CORN","d":"Maïs"},{"s":"TVC:SOYBN","d":"Soja"},{"s":"TVC:COFFEE","d":"Café"},{"s":"TVC:SUGAR","d":"Sucre"},{"s":"TVC:COCOA","d":"Cacao"}]}]}
-                        </script>
+                        <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js">{"colorTheme":"dark","dateRange":"1M","showChart":true,"locale":"fr","isTransparent":true,"showSymbolLogo":true,"width":"100%","height":660,"tabs":[{"title":"Métaux 🥇","symbols":[{"s":"TVC:GOLD","d":"Or"},{"s":"TVC:SILVER","d":"Argent"},{"s":"TVC:COPPER","d":"Cuivre"},{"s":"TVC:PLATINUM","d":"Platine"},{"s":"TVC:PALLADIUM","d":"Palladium"}]},{"title":"Énergie ⛽","symbols":[{"s":"TVC:USOIL","d":"WTI"},{"s":"TVC:UKOIL","d":"Brent"},{"s":"TVC:NATGASUSD","d":"Gaz Naturel"}]},{"title":"Agriculture 🌾","symbols":[{"s":"TVC:WHEAT","d":"Blé"},{"s":"TVC:CORN","d":"Maïs"},{"s":"TVC:SOYBN","d":"Soja"},{"s":"TVC:COFFEE","d":"Café"},{"s":"TVC:SUGAR","d":"Sucre"},{"s":"TVC:COCOA","d":"Cacao"}]}]}
+                        </script</script>
                     </div>
                 </div>
             </div>
@@ -846,9 +859,8 @@
             <div class="eco-cal-widget">
                 <div class="tradingview-widget-container" style="height:750px;">
                     <div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
-                    {"colorTheme":"dark","isTransparent":true,"locale":"fr","width":"100%","height":750,"importanceFilter":"-1,0,1","countryFilter":"us,eu,gb,jp,cn,ca,au,ch,de,fr,it,es,nz"}
-                    </script>
+                    <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-events.js">{"colorTheme":"dark","isTransparent":true,"locale":"fr","width":"100%","height":750,"importanceFilter":"-1,0,1","countryFilter":"us,eu,gb,jp,cn,ca,au,ch,de,fr,it,es,nz"}
+                    </script</script>
                 </div>
             </div>
         </div>
@@ -866,7 +878,7 @@
         <a href="fondamentaux.html">Fondamentaux</a>
         <a href="feed.html">Feed</a>
         <a href="plan-trading.html">Plan de Trading</a>
-        <a href="journal-lab.html">Trading Lab</a>
+        <a href="journal.html">Trading Lab</a>
         <a href="calculateurs-trading.html">Calculateurs</a>
         <a href="brokers.html">Brokers</a>
         <a href="pricing.html">VIP</a>
@@ -899,7 +911,6 @@
 </div>
 
 <!-- SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <script>
 /* NAV UNIQUE */
@@ -1045,19 +1056,49 @@ loadCategory('forex');
 
     (async function init() {
         try {
-            if (!window.supabase) return applyPaywallState();
-            const sb=window.supabase.createClient(SB_URL,SB_KEY);
-            const {data:{session}}=await sb.auth.getSession();
-            if (session) {
-                isLoggedIn=true; document.getElementById('paywall-login-btn').style.display='none';
-                const {data:sub}=await sb.from('subscriptions').select('plan,status,expires_at').eq('user_id',session.user.id).eq('status','active').maybeSingle();
-                isVIP=sub&&sub.plan==='vip'&&new Date(sub.expires_at)>new Date();
+            // ── Auth FA ──
+            if (window.FA) {
+                isLoggedIn = window.FA.isLogged();
+                isVIP = window.FA.isVip();
+                if (isLoggedIn) {
+                    var loginBtn = document.getElementById('paywall-login-btn');
+                    if (loginBtn) loginBtn.style.display = 'none';
+                }
             }
         } catch(e) {}
         applyPaywallState();
     })();
 
+    function openPaywall(title) {
+        var modal = document.getElementById('paywall-modal');
+        if (!modal) {
+            // Créer modal à la volée si absent
+            modal = document.createElement('div');
+            modal.id = 'paywall-modal';
+            modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;padding:1rem;';
+            modal.innerHTML = '<div style="background:#1a1a1a;border:1px solid rgba(255,215,0,.3);border-radius:16px;padding:2rem;max-width:420px;width:100%;text-align:center;">'
+                + '<div style="font-size:2rem;margin-bottom:.75rem;">🔒</div>'
+                + '<div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:.5rem;">' + (title||'Contenu VIP') + '</div>'
+                + '<p style="font-size:.85rem;color:#aaa;margin-bottom:1.25rem;">Cette analyse est réservée aux membres VIP.</p>'
+                + '<a href="pricing.html" style="display:block;padding:.75rem 1.5rem;background:linear-gradient(135deg,#FFD700,#FFC107);color:#000;font-weight:700;border-radius:8px;text-decoration:none;margin-bottom:.75rem;">✦ Passer VIP</a>'
+                + '<button onclick="this.closest('#paywall-modal').remove()" style="background:none;border:none;color:#666;font-size:.82rem;cursor:pointer;">Fermer</button>'
+                + '</div>';
+            document.body.appendChild(modal);
+            modal.addEventListener('click', function(e){ if(e.target===modal) modal.remove(); });
+        } else {
+            modal.classList.add('open');
+        }
+    }
+
     function applyPaywallState() {
+        /* Articles gratuits */
+        document.querySelectorAll('.article-card[data-vip="false"]').forEach(card=>{
+            const overlay = card.querySelector('.lock-overlay');
+            if (overlay) overlay.remove();
+            const b = card.querySelector('.vip-badge');
+            if (b){ b.style.background='rgba(34,197,94,0.15)'; b.style.color='#22c55e'; b.textContent='✓ GRATUIT'; }
+        });
+        /* Articles VIP */
         document.querySelectorAll('.article-card[data-vip="true"]').forEach(card=>{
             if (isVIP) {
                 card.querySelector('.lock-overlay')?.remove();
@@ -1102,5 +1143,44 @@ loadCategory('forex');
 </script>
 
 <script src="fa-access.js"></script>
+
+<script>
+/* ── TradingView Lazy Loader ── */
+(function(){
+  'use strict';
+  // Tous les widgets TradingView non encore chargés
+  function lazyLoadTV() {
+    var widgets = document.querySelectorAll('.tradingview-widget-container:not([data-tv-loaded])');
+    if (!widgets.length) return;
+    
+    var io = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        var container = entry.target;
+        obs.unobserve(container);
+        container.setAttribute('data-tv-loaded', '1');
+        
+        // Réactiver les scripts TradingView désactivés
+        container.querySelectorAll('script[data-tv-src]').forEach(function(tmpl) {
+          var s = document.createElement('script');
+          s.src = tmpl.getAttribute('data-tv-src');
+          s.async = true;
+          s.textContent = tmpl.textContent;
+          tmpl.parentNode.replaceChild(s, tmpl);
+        });
+      });
+    }, { rootMargin: '200px' });
+    
+    widgets.forEach(function(w) { io.observe(w); });
+  }
+  
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lazyLoadTV);
+  } else {
+    lazyLoadTV();
+  }
+})();
+</script>
+
 </body>
 </html>

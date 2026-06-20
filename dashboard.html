@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   :root {
@@ -484,12 +484,29 @@ function renderEmptyNoPlan() {
       <div class="empty-sub">Un plan définit ton capital de départ, ton objectif et ta gestion du risque. Une fois créé, le dashboard suivra automatiquement chaque trade que tu enregistres dans le journal.</div>
       <a href="plan-trading.html" class="empty-cta">Créer mon plan →</a>
     </div>
-    <div class="empty" style="border-style:solid;border-color:rgba(255,255,255,0.06);">
-      <div style="font-size:0.85rem;color:var(--t3);max-width:520px;margin:0 auto;line-height:1.7;">
-        <strong style="color:var(--gold);">Comment ça marche</strong><br><br>
-        1. Tu crées ton <strong style="color:#fff;">plan de trading</strong> (capital, objectif, % de risque)<br>
-        2. Tu enregistres chaque trade dans le <strong style="color:#fff;">journal</strong> (win/loss + montant)<br>
-        3. Le dashboard calcule tout automatiquement : courbe d'équité, win rate, drawdown, streak, P&L mensuel…
+
+    <!-- Checklist d'activation -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:0.5rem;">
+      <div style="background:var(--card);border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:1.25rem;">
+        <div style="font-size:1.4rem;margin-bottom:0.5rem;">📋</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.4rem;">Étape 1</div>
+        <div style="font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem;">Crée ton plan</div>
+        <div style="font-size:0.78rem;color:var(--t3);margin-bottom:0.8rem;">Capital, objectif et % de risque par trade.</div>
+        <a href="plan-trading.html" style="font-size:0.8rem;color:var(--gold);text-decoration:none;font-weight:600;">Démarrer →</a>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <div style="font-size:1.4rem;margin-bottom:0.5rem;">📝</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.4rem;">Étape 2</div>
+        <div style="font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem;">Log tes trades</div>
+        <div style="font-size:0.78rem;color:var(--t3);margin-bottom:0.8rem;">Enregistre chaque entrée dans le journal.</div>
+        <a href="journal.html" style="font-size:0.8rem;color:var(--t3);text-decoration:none;font-weight:600;">Journal →</a>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;">
+        <div style="font-size:1.4rem;margin-bottom:0.5rem;">📊</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:0.4rem;">Étape 3</div>
+        <div style="font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:0.3rem;">Analyse les marchés</div>
+        <div style="font-size:0.78rem;color:var(--t3);margin-bottom:0.8rem;">Consulte les analyses et fondamentaux.</div>
+        <a href="analyses.html" style="font-size:0.8rem;color:var(--t3);text-decoration:none;font-weight:600;">Analyses →</a>
       </div>
     </div>
   `;
@@ -539,6 +556,12 @@ function renderEmptyNoTrades() {
       <div class="empty-title">Enregistre ton premier trade</div>
       <div class="empty-sub">Dès que tu cliqueras "Win" ou "Loss" dans ton journal, ce dashboard se remplira : courbe d'équité, performance par jour, streak, drawdown… tout sera tracé automatiquement.</div>
       <a href="journal.html" class="empty-cta">Aller au journal →</a>
+    </div>
+    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem;">
+      <a href="analyses.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">📰 Analyses</a>
+      <a href="marches.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">📈 Marchés</a>
+      <a href="track-record.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">🏆 Track Record</a>
+      <a href="plan-trading.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">🎯 Mon Plan</a>
     </div>
   `;
 }
@@ -691,7 +714,10 @@ function render() {
             <div class="card-title">⚡ Derniers trades</div>
             <div class="card-sub">5 dernières entrées du Journal</div>
           </div>
-          <a href="journal.html" class="card-link">Tout voir →</a>
+          <div style="display:flex;gap:0.75rem;align-items:center;">
+            <a href="analyses.html" class="card-link" style="color:var(--t3);">Analyses →</a>
+            <a href="journal.html" class="card-link">Tout voir →</a>
+          </div>
         </div>
         <div class="trade-list" id="tradeList"></div>
       </div>

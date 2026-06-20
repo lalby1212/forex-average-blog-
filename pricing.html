@@ -567,6 +567,15 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://forexaverage.com/pricing.html">
+  <meta property="og:title" content="Tarifs VIP | Forex Average — Signaux & Analyses Premium">
+  <meta property="og:description" content="Abonnez-vous à Forex Average VIP. Signaux de trading, graphiques IA, analyses Forex/Crypto/Or. Plans mensuel, trimestriel et annuel.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 
@@ -616,9 +625,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -652,6 +669,9 @@
 </div>
 
 <main>
+<div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:0.9rem 1.25rem;margin-bottom:2rem;text-align:center;font-size:0.85rem;color:#FFD700;">
+    ⚡ Paiement en cours d'intégration · En attendant, <a href="https://t.me/forexaverageanalyse" target="_blank" style="color:#fff;font-weight:700;text-decoration:underline;">contactez-nous sur Telegram</a> pour accéder au VIP immédiatement.
+</div>
 
 <!-- ── PLANS ── -->
 <section class="plans-section">
@@ -678,7 +698,7 @@
                 <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tous les outils gratuits inclus</li>
             </ul>
             <div class="pay-buttons">
-                <a href="#stripe-monthly" class="btn-stripe">
+                <a href="#" onclick="alert('Paiement en cours d\'intégration. Contactez-nous sur Telegram pour accéder au VIP dès maintenant.');return false;" class="btn-stripe" style="opacity:0.7;cursor:not-allowed;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Payer par carte — Stripe
                 </a>
@@ -711,7 +731,7 @@
                 <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 mois d'accès continu garanti</li>
             </ul>
             <div class="pay-buttons">
-                <a href="#stripe-quarterly" class="btn-stripe">
+                <a href="#" onclick="alert('Paiement en cours d\'intégration. Contactez-nous sur Telegram pour accéder au VIP dès maintenant.');return false;" class="btn-stripe" style="opacity:0.7;cursor:not-allowed;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Payer par carte — Stripe
                 </a>
@@ -747,7 +767,7 @@
                 <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Meilleur rapport qualité/prix</li>
             </ul>
             <div class="pay-buttons">
-                <a href="#stripe-yearly" class="btn-stripe">
+                <a href="#" onclick="alert('Paiement en cours d\'intégration. Contactez-nous sur Telegram pour accéder au VIP dès maintenant.');return false;" class="btn-stripe" style="opacity:0.7;cursor:not-allowed;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Payer par carte — Stripe
                 </a>
@@ -796,7 +816,7 @@
                 </tr>
                 <tr>
                     <td>Graphiques Live TradingView</td>
-                    <td><span class="check-yes">✓</span></td>
+                    <td><span class="check-no">✗</span></td>
                     <td><span class="check-yes">✓</span></td>
                 </tr>
                 <tr>
@@ -973,34 +993,6 @@ function setPeriod(period) {
 </script>
 <script src="chatbot.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-// ── NAV AUTH ──
-(function(){
-  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-  if (!window.supabase) return;
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function updateNavAuth(user){
-    var guestItems  = document.querySelectorAll('.nav-auth-guest');
-    var userProfile = document.getElementById('nav-user-profile');
-    if (!userProfile) return;
-    if (user){
-      guestItems.forEach(function(el){ el.style.display = 'none'; });
-      userProfile.classList.add('visible');
-      var username = (user.user_metadata && user.user_metadata.username) || (user.email ? user.email.split('@')[0] : '?');
-      document.getElementById('nav-username-display').textContent = username;
-      document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
-    } else {
-      guestItems.forEach(function(el){ el.style.display = ''; });
-      userProfile.classList.remove('visible');
-    }
-  }
-  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
-  sb.auth.getSession().then(function(r){ if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
-  sb.auth.onAuthStateChange(function(_e, session){ updateNavAuth(session ? session.user : null); });
-})();
-</script>
 
 <script>
 /* ── NAV HAMBURGER — singleton ── */

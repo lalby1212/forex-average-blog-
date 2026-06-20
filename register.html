@@ -258,6 +258,14 @@
             nav { padding: 0 1.2rem; }
         }
     </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Créer un compte | Forex Average">
+  <meta property="og:description" content="Créez votre compte gratuit Forex Average et accédez au journal, calculateurs et outils pro.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 
@@ -394,7 +402,7 @@ function saveAccounts(a){localStorage.setItem('fa_accounts',JSON.stringify(a));}
 
 // ── Redirect si déjà connecté ──
 document.addEventListener('DOMContentLoaded',function(){
-    if(window.FA&&window.FA.isLogged()) window.location.href='marches.html';
+    if(window.FA&&window.FA.isLogged()) window.location.href='dashboard.html';
 });
 
 
@@ -556,7 +564,7 @@ async function register() {
     document.getElementById('success-email').textContent = pseudo;
     document.getElementById('register-form-section').style.display = 'none';
     document.getElementById('success-screen').classList.add('show');
-        setTimeout(function(){ window.location.href = 'marches.html'; }, 1800);
+        setTimeout(function(){ window.location.href = 'dashboard.html'; }, 1800);
 }
 
 // ── Enter key submit ──

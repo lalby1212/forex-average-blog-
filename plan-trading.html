@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎯 Créer mon plan de trading | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/plan-trading.html">
     <meta name="description" content="Créez votre plan de trading personnalisé. Définissez votre capital, objectif, et obtenez un plan jour par jour avec calcul de lots automatique.">
     <meta name="theme-color" content="#FFD700">
 
@@ -1088,6 +1089,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Créer mon plan de trading | Forex Average">
+  <meta property="og:description" content="Créez votre plan de trading personnalisé. Capital, objectif, calcul de lots automatique.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -1151,9 +1160,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -1474,7 +1491,7 @@
             <button class="btn btn-secondary" onclick="goToStep2()">← Modifier les paramètres</button>
             <div class="btn-group">
                 <button class="btn btn-secondary" onclick="exportCSV()">⬇️ CSV</button>
-                <a href="journal-lab.html" class="btn btn-primary" style="text-decoration:none;">📓 Ouvrir mon Trading Lab →</a>
+                <a href="journal.html" class="btn btn-primary" style="text-decoration:none;">📓 Ouvrir mon Trading Lab →</a>
             </div>
         </div>
 
@@ -1878,7 +1895,7 @@ function renderPlan(meta) {
     document.getElementById('plan-header-name').textContent =
         `${profile ? profile.icon + ' ' + profile.name + ' · ' : ''}${instLabel} · $${capital0} → $${target.toLocaleString()}`;
 
-    // ── Sauvegarder le plan actif pour journal-lab.html ──
+    // ── Sauvegarder le plan actif pour journal.html ──
     localStorage.setItem('fa_active_plan', JSON.stringify({
         capital0,
         target,

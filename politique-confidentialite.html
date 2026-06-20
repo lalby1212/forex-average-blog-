@@ -254,6 +254,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Politique de Confidentialité | Forex Average">
+  <meta property="og:description" content="Politique de confidentialité et protection des données personnelles de Forex Average, conforme au RGPD.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 
@@ -303,9 +311,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -380,8 +396,8 @@
     <div class="legal-sep"></div>
 
     <h2>3. Sous-traitants et transferts de données</h2>
-    <h3>Supabase (authentification & base de données)</h3>
-    <p>Supabase Inc. héberge la base de données dans la région EU (Frankfurt, Allemagne). Les données sont soumises au RGPD. DPA disponible sur <a href="https://supabase.com/privacy" target="_blank" rel="noopener">supabase.com/privacy</a>.</p>
+    <h3>Système d'authentification</h3>
+    <p>L'authentification est gérée localement sur votre appareil via le stockage du navigateur (localStorage). Aucune donnée d'identification n'est transmise à un serveur tiers.</p>
 
     <h3>Stripe (paiements)</h3>
     <p>Stripe Inc. est certifié PCI-DSS niveau 1. Forex Average ne stocke jamais vos coordonnées bancaires. Politique de confidentialité Stripe : <a href="https://stripe.com/fr/privacy" target="_blank" rel="noopener">stripe.com/fr/privacy</a>.</p>
@@ -399,7 +415,7 @@
     <h2>4. Cookies et traceurs</h2>
     <h3>Cookies strictement nécessaires (pas de consentement requis)</h3>
     <ul>
-        <li><strong>sb-access-token</strong> / <strong>sb-refresh-token</strong> — session d'authentification Supabase. Expiration : 7 jours (refresh token) / 1 heure (access token).</li>
+
     </ul>
     <h3>Cookies tiers (TradingView)</h3>
     <p>Les widgets TradingView peuvent déposer des cookies de fonctionnement nécessaires à l'affichage des graphiques. Ces cookies sont gérés par TradingView Inc. et soumis à leur propre politique.</p>
@@ -427,7 +443,7 @@
     <h2>6. Sécurité des données</h2>
     <p>Nous mettons en œuvre les mesures techniques et organisationnelles suivantes pour protéger vos données :</p>
     <ul>
-        <li>Chiffrement des mots de passe (bcrypt via Supabase Auth) ;</li>
+        <li>Hachage des mots de passe (algorithme SHA-256 via le navigateur) ;</li>
         <li>Communication chiffrée HTTPS/TLS 1.3 ;</li>
         <li>Row Level Security (RLS) en base de données — chaque utilisateur n'accède qu'à ses propres données ;</li>
         <li>Authentification sécurisée par JWT avec rotation des tokens ;</li>
@@ -468,8 +484,6 @@
     </div>
     <div class="f-copy">© 2026 Forex Average — Tous droits réservés.</div>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function () {
   var btn = document.querySelector('.hamburger'), menu = document.querySelector('.nav-menu');
@@ -480,21 +494,7 @@
   document.querySelectorAll('.nav-item-drop > a').forEach(function(link){ link.addEventListener('click', function(e){ if (window.innerWidth > 900) return; e.preventDefault(); e.stopPropagation(); var p = this.parentElement, w = p.classList.contains('open'); document.querySelectorAll('.nav-item-drop').forEach(function(el){ el.classList.remove('open'); }); if (!w) p.classList.add('open'); }); });
   var nav = document.querySelector('nav'); if (nav){ window.addEventListener('scroll', function(){ nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive:true }); }
 })();
-(function(){
-  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-  if (!window.supabase) return;
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function updateNavAuth(user){
-    var g = document.querySelectorAll('.nav-auth-guest'), p = document.getElementById('nav-user-profile');
-    if (!p) return;
-    if (user){ g.forEach(function(el){ el.style.display='none'; }); p.classList.add('visible'); var u=(user.user_metadata&&user.user_metadata.username)||(user.email?user.email.split('@')[0]:'?'); document.getElementById('nav-username-display').textContent=u; document.getElementById('nav-avatar-initials').textContent=u.charAt(0).toUpperCase(); }
-    else { g.forEach(function(el){ el.style.display=''; }); p.classList.remove('visible'); }
-  }
-  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
-  sb.auth.getSession().then(function(r){ if (r.data&&r.data.session) updateNavAuth(r.data.session.user); });
-  sb.auth.onAuthStateChange(function(_e,session){ updateNavAuth(session?session.user:null); });
-})();
+
 </script>
 
 <script>

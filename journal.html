@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Journal de Trading | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/journal.html">
+  <meta name="description" content="Suivez et analysez vos trades dans le journal de trading Forex Average. Statistiques, win rate, ratio gain/perte.">
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <meta name="theme-color" content="#FFD700">
@@ -238,8 +240,29 @@
         .nav-container { justify-content:space-between !important; }
         .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
         </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Journal de Trading | Forex Average">
+  <meta property="og:description" content="Suivez et analysez vos trades. Statistiques, win rate, ratio gain/perte.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
+<!-- ── Auth Guard ── -->
+<script>
+(function(){
+  try{
+    var u=localStorage.getItem('fa_user');
+    var t=localStorage.getItem('fa_token');
+    if(!u||!t){
+      var page=location.pathname.split('/').pop()||'journal.html';
+      location.replace('login.html?redirect='+encodeURIComponent(page));
+    }
+  }catch(e){}
+})();
+</script>
 
 <!-- ── TOPBAR ── -->
 <header class="topbar">

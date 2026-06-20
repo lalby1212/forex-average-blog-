@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyses Forex, Crypto & Matières Premières | Forex Average</title>
-    <meta name="description" content="Analyses professionnelles Forex, Crypto et Matières Premières. Setups avec niveaux d'entrée, stop loss et take profit. Contexte géopolitique intégré.">
+    <meta name="description" content="Analyses professionnelles Forex, Crypto et Matières Premières. Setups avec niveaux d'entrée, stop-loss et take-profit. Mis à jour régulièrement.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://forexaverage.com/analyses/">
+    <link rel="canonical" href="https://forexaverage.com/analyses.html">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <meta name="theme-color" content="#FFD700">
@@ -1423,6 +1423,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Analyses Forex, Crypto & Matières Premières | Forex Average">
+  <meta property="og:description" content="Setups professionnels avec niveaux d'entrée, stop-loss et take-profit. Forex, Crypto, Or, Pétrole.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -1486,9 +1494,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -1612,7 +1628,7 @@
             </a>
 
             <!-- GBP/JPY — VIP -->
-            <a href="gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="true">
+            <a href="gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(220,38,38,0.06));">GBP/JPY</div>
                 <div class="article-body">
@@ -1638,7 +1654,7 @@
             </a>
 
             <!-- BRENT OIL — VIP -->
-            <a href="brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="true">
+            <a href="brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(249,115,22,0.16),rgba(234,88,12,0.08));">BRENT</div>
                 <div class="article-body">
@@ -1907,140 +1923,91 @@ filterBtns.forEach(btn => {
 </div>
 
 <!-- Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ── Supabase init ──
-const SUPABASE_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SUPABASE_ANON = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
-let isVIP = false;
-let isLoggedIn = false;
+// ── Paywall analyses — FA Auth ──
+let isVIP      = window.FA ? window.FA.isVip()    : false;
+let isLoggedIn = window.FA ? window.FA.isLogged()  : false;
 
-// ── Check session & VIP status on load ──
-(async function initPaywall() {
-    try {
-        const { data: { session } } = await sb.auth.getSession();
-
-        if (session) {
-            isLoggedIn = true;
-            // Hide "Se connecter" button — user is already logged in
-            document.getElementById('paywall-login-btn').style.display = 'none';
-            // Nav: show Tarifs only
-            // Check VIP subscription
-            const { data: sub } = await sb
-                .from('subscriptions')
-                .select('plan, status, expires_at')
-                .eq('user_id', session.user.id)
-                .eq('status', 'active')
-                .maybeSingle();
-
-            isVIP = sub && sub.plan === 'vip' && new Date(sub.expires_at) > new Date();
-        }
-
-        // Nav: show login + register when not logged in
-        if (!session) {
-
-        }
-
-        // Apply lock state to VIP articles for non-VIP users
-        applyPaywallState();
-
-    } catch(e) {
-        // Fail gracefully — show lock on all VIP articles
-        applyPaywallState();
-    }
-})();
-
-function applyPaywallState() {
-    const vipCards = document.querySelectorAll('.article-card[data-vip="true"]');
-
-    vipCards.forEach(card => {
-        if (isVIP) {
-            // VIP user — remove lock overlay, show normally
-            const overlay = card.querySelector('.lock-overlay');
-            if (overlay) overlay.remove();
-            const badge = card.querySelector('.vip-badge');
-            if (badge) {
-                badge.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-                badge.textContent = '✓ VIP';
-            }
-            // Restore level-pill visibility
-            const levels = card.querySelector('.article-levels');
-            if (levels) levels.style.filter = 'none';
-        } else {
-            // Non-VIP — add locked class and intercept navigation
-            card.classList.add('locked');
-            card.addEventListener('click', function(e) {
-                e.preventDefault();
-                openPaywall(this.querySelector('.article-title')?.textContent || 'Cette analyse');
-            });
-        }
-    });
+// Masquer le bouton "Se connecter" si déjà connecté
+if (isLoggedIn) {
+  var loginBtn = document.getElementById('paywall-login-btn');
+  if (loginBtn) loginBtn.style.display = 'none';
 }
 
-// ── Paywall Modal ──
-function openPaywall(articleTitle) {
-    const modal = document.getElementById('paywall-modal');
-    const nameEl = document.getElementById('paywall-article-name');
-    if (nameEl) nameEl.textContent = articleTitle;
+// Appliquer le paywall immédiatement
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', applyPaywallState);
+} else {
+  applyPaywallState();
+}
 
-    // Update CTA button: if logged in (but free), show "Passer VIP"
-    const loginBtn = document.getElementById('paywall-login-btn');
-    if (isLoggedIn && loginBtn) {
-        loginBtn.style.display = 'none';
+function applyPaywallState() {
+  /* ── Articles gratuits : nettoyer badge/overlay ── */
+  document.querySelectorAll('.article-card[data-vip="false"]').forEach(function(card) {
+    var overlay = card.querySelector('.lock-overlay');
+    if (overlay) overlay.remove();
+    var badge = card.querySelector('.vip-badge');
+    if (badge) {
+      badge.style.background = 'rgba(34,197,94,0.15)';
+      badge.style.color = '#22c55e';
+      badge.style.borderColor = 'rgba(34,197,94,0.3)';
+      badge.textContent = '✓ GRATUIT';
     }
+  });
 
+  /* ── Articles VIP : locker ou débloquer ── */
+  var vipCards = document.querySelectorAll('.article-card[data-vip="true"]');
+  vipCards.forEach(function(card) {
+    if (isVIP) {
+      var overlay = card.querySelector('.lock-overlay');
+      if (overlay) overlay.remove();
+      var badge = card.querySelector('.vip-badge');
+      if (badge) { badge.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)'; badge.textContent = '✓ VIP'; }
+      var levels = card.querySelector('.article-levels');
+      if (levels) levels.style.filter = 'none';
+    } else {
+      card.classList.add('locked');
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        var title = (this.querySelector('.article-title') || {}).textContent || 'Cette analyse';
+        openPaywall(title);
+      });
+    }
+  });
+}
+
+function openPaywall(articleTitle) {
+  var modal = document.getElementById('paywall-modal');
+  var nameEl = document.getElementById('paywall-article-name');
+  if (nameEl) nameEl.textContent = articleTitle;
+  var loginBtn = document.getElementById('paywall-login-btn');
+  if (isLoggedIn && loginBtn) loginBtn.style.display = 'none';
+  if (modal) {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // Close on backdrop click
     modal.addEventListener('click', function(e) {
-        if (e.target === modal) closePaywall();
+      if (e.target === modal) closePaywall();
     }, { once: true });
+  }
 }
 
 function closePaywall() {
-    document.getElementById('paywall-modal').classList.remove('open');
-    document.body.style.overflow = '';
+  var modal = document.getElementById('paywall-modal');
+  if (modal) modal.classList.remove('open');
+  document.body.style.overflow = '';
 }
 
-// Close on Escape
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closePaywall();
+  if (e.key === 'Escape') closePaywall();
 });
+
 </script>
 
-<script src="../newsletter.js"></script>
+
 <script src="/chatbot.js"></script>
 
-<script>
-// ── NAV AUTH ──
-(function(){
-  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-  if (!window.supabase) return;
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function updateNavAuth(user){
-    var guestItems  = document.querySelectorAll('.nav-auth-guest');
-    var userProfile = document.getElementById('nav-user-profile');
-    if (!userProfile) return;
-    if (user){
-      guestItems.forEach(function(el){ el.style.display = 'none'; });
-      userProfile.classList.add('visible');
-      var username = (user.user_metadata && user.user_metadata.username) || (user.email ? user.email.split('@')[0] : '?');
-      document.getElementById('nav-username-display').textContent = username;
-      document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
-    } else {
-      guestItems.forEach(function(el){ el.style.display = ''; });
-      userProfile.classList.remove('visible');
-    }
-  }
-  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
-  sb.auth.getSession().then(function(r){ if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
-  sb.auth.onAuthStateChange(function(_e, session){ updateNavAuth(session ? session.user : null); });
-})();
-</script>
+
 
 <script>
 /* ── NAV HAMBURGER — singleton ── */

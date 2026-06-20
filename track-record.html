@@ -10,12 +10,8 @@
     <link rel="canonical" href="https://forexaverage.com/track-record.html">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Track Record Traders – Forex Average">
-    <meta property="og:description" content="Créez votre track record gratuit et partagez vos performances de trading.">
-    <meta property="og:type" content="website">
 
     <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         /* ─── VARIABLES ─── */
@@ -805,6 +801,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <!-- OG Tags -->
+  <meta property="og:title" content="Track Record Traders — Forex Average">
+  <meta property="og:description" content="Créez votre track record gratuit et partagez vos performances de trading.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -868,9 +872,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -1256,624 +1268,102 @@
 </footer>
 
 <!-- ═══ JAVASCRIPT ═══ -->
-<script>
-/* ─── SUPABASE INIT ─── */
-const SUPABASE_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SUPABASE_KEY  = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const { createClient } = supabase;
-const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-/* ─── GLOBALS ─── */
-let currentUser = null;
-let myTrades = [];
-
-/* ─── NAV AUTH STATE ─── */
-function updateNavAuth(user) {
-    const guestItems  = document.querySelectorAll('.nav-auth-guest');
-    const userProfile = document.getElementById('nav-user-profile');
-    if (!userProfile) return;
-    if (user) {
-        guestItems.forEach(el => el.style.display = 'none');
-        userProfile.classList.add('visible');
-        const username = user.user_metadata?.username || user.email?.split('@')[0] || '?';
-        document.getElementById('nav-username-display').textContent = username;
-        document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
-    } else {
-        guestItems.forEach(el => el.style.display = '');
-        userProfile.classList.remove('visible');
-    }
-}
-
-async function navSignOut() {
-    await sb.auth.signOut();
-    updateNavAuth(null);
-}
-
-// Vérifier la session au chargement
-sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) updateNavAuth(session.user);
-});
-sb.auth.onAuthStateChange((_event, session) => {
-    updateNavAuth(session?.user || null);
-});
-
-/* ─── NAV HAMBURGER ─── */
-(function () {
-    var btn  = document.querySelector('.hamburger');
-    var menu = document.querySelector('.nav-menu');
-    if (!btn || !menu) return;
-    function openMenu()  { menu.classList.add('active'); btn.classList.add('active'); btn.setAttribute('aria-expanded','true'); }
-    function closeMenu() { menu.classList.remove('active'); btn.classList.remove('active'); btn.setAttribute('aria-expanded','false'); document.querySelectorAll('.nav-item-drop, .nav-profile').forEach(el=>el.classList.remove('open')); }
-    btn.addEventListener('click', function(e) { e.stopPropagation(); menu.classList.contains('active') ? closeMenu() : openMenu(); });
-    document.querySelectorAll('.nav-item-drop > a').forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            if (window.innerWidth > 900) return;
-            e.preventDefault(); e.stopPropagation();
-            var parent = this.parentElement;
-            var wasOpen = parent.classList.contains('open');
-            document.querySelectorAll('.nav-item-drop').forEach(function(el) { el.classList.remove('open'); });
-            if (!wasOpen) parent.classList.add('open');
-        });
-    });
-    // Profil mobile toggle
-    var profileBtn = document.querySelector('.nav-avatar-btn');
-    if (profileBtn) {
-        profileBtn.addEventListener('click', function(e) {
-            if (window.innerWidth > 900) return;
-            e.stopPropagation();
-            var profile = document.querySelector('.nav-profile');
-            if (profile) profile.classList.toggle('open');
-        });
-    }
-    menu.querySelectorAll('a').forEach(function(link) {
-        if (link.parentElement.classList.contains('nav-item-drop')) return;
-        if (link.closest('.nav-profile-drop')) return;
-        link.addEventListener('click', function() { closeMenu(); });
-    });
-    var nav = document.querySelector('nav');
-    window.addEventListener('scroll', function() { if (nav) nav.classList.toggle('scrolled', window.pageYOffset > 60); }, { passive: true });
-    window.addEventListener('resize', function() { if (window.innerWidth > 900) closeMenu(); });
-})();
-
-/* ─── TOAST ─── */
-function showToast(msg, type='success') {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = `toast show ${type}`;
-    setTimeout(() => t.classList.remove('show'), 3500);
-}
-
-/* ─── MODAL ─── */
-function openModal(tab='register') {
-    document.getElementById('auth-modal').classList.add('open');
-    switchTab(tab);
-    clearAlerts();
-}
-function closeModal() { document.getElementById('auth-modal').classList.remove('open'); }
-function clearAlerts() {
-    document.getElementById('auth-alert').classList.remove('show');
-    document.getElementById('auth-success').classList.remove('show');
-}
-function showError(msg) {
-    const el = document.getElementById('auth-alert');
-    el.textContent = msg; el.classList.add('show');
-    document.getElementById('auth-success').classList.remove('show');
-}
-function showSuccess(msg) {
-    const el = document.getElementById('auth-success');
-    el.textContent = msg; el.classList.add('show');
-    document.getElementById('auth-alert').classList.remove('show');
-}
-
-document.getElementById('auth-modal').addEventListener('click', e => {
-    if (e.target === document.getElementById('auth-modal')) closeModal();
-});
-
-function switchTab(tab) {
-    const isReg = tab === 'register';
-    document.getElementById('tab-register').classList.toggle('active', isReg);
-    document.getElementById('tab-login').classList.toggle('active', !isReg);
-    document.getElementById('form-register').style.display = isReg ? '' : 'none';
-    document.getElementById('form-login').style.display   = isReg ? 'none' : '';
-    document.getElementById('modal-title').textContent = isReg ? 'Créer un compte' : 'Connexion';
-    document.getElementById('modal-sub').textContent   = isReg ? 'Gratuit · Aucune CB requise' : 'Reprenez là où vous étiez';
-    clearAlerts();
-}
-
-/* ─── AUTH ─── */
-async function doRegister() {
-    const username = document.getElementById('reg-username').value.trim();
-    const email    = document.getElementById('reg-email').value.trim();
-    const password = document.getElementById('reg-password').value;
-
-    if (!username) return showError('Veuillez choisir un pseudo.');
-    if (!/^[a-zA-Z0-9_\-\.]{3,30}$/.test(username)) return showError('Pseudo invalide (3-30 caractères, lettres/chiffres/_).');
-    if (!email) return showError('Email requis.');
-    if (password.length < 6) return showError('Mot de passe trop court (min. 6 caractères).');
-
-    const btn = document.getElementById('btn-register');
-    btn.innerHTML = '<span class="spinner"></span> Création…';
-    btn.disabled = true;
-    clearAlerts();
-
-    try {
-        // Vérifier si le username est déjà pris
-        const { data: existing } = await sb.from('profiles').select('id').eq('username', username).maybeSingle();
-        if (existing) { showError('Ce pseudo est déjà utilisé.'); return; }
-
-        const { data, error } = await sb.auth.signUp({ email, password, options: { data: { username } } });
-        if (error) throw error;
-
-        if (data.user && !data.session) {
-            showSuccess('✅ Vérifiez votre email pour confirmer votre compte !');
-        } else if (data.session) {
-            await createProfile(data.user, username);
-            closeModal();
-            await loadUserData();
-        }
-    } catch(e) {
-        showError(e.message || 'Erreur lors de l\'inscription.');
-    } finally {
-        btn.innerHTML = 'Créer mon profil gratuit';
-        btn.disabled = false;
-    }
-}
-
-async function doLogin() {
-    const email    = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    if (!email || !password) return showError('Email et mot de passe requis.');
-
-    const btn = document.getElementById('btn-login');
-    btn.innerHTML = '<span class="spinner"></span> Connexion…';
-    btn.disabled = true;
-    clearAlerts();
-
-    try {
-        const { data, error } = await sb.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        closeModal();
-        await loadUserData();
-    } catch(e) {
-        showError(e.message || 'Email ou mot de passe incorrect.');
-    } finally {
-        btn.innerHTML = 'Se connecter';
-        btn.disabled = false;
-    }
-}
-
-async function signOut() {
-    await sb.auth.signOut();
-    currentUser = null;
-    myTrades = [];
-    showSection('leaderboard');
-    showToast('Déconnecté avec succès.');
-}
-
-async function createProfile(user, username) {
-    await sb.from('profiles').upsert({
-        id: user.id,
-        username,
-        email: user.email,
-        created_at: new Date().toISOString()
-    });
-}
-
-/* ─── VIEWS ─── */
-function showSection(name) {
-    document.getElementById('leaderboard-section').style.display = name === 'leaderboard' ? 'block' : 'none';
-    document.getElementById('dashboard').style.display           = name === 'dashboard'   ? 'block' : 'none';
-    document.getElementById('public-profile').style.display      = name === 'public'      ? 'block' : 'none';
-}
-
-/* ─── LOAD USER ─── */
-async function loadUserData() {
-    const userRes = await sb.auth.getUser();
-    const user = userRes?.data?.user || null;
-    if (!user) return;
-    currentUser = user;
-
-    // Charger le profil
-    let { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
-
-    if (!profile) {
-        // Créer un profil si absent (pas de boucle infinie — un seul essai)
-        const username = user.user_metadata?.username || user.email.split('@')[0];
-        const { error: upsertErr } = await sb.from('profiles').upsert({
-            id: user.id,
-            username,
-            email: user.email,
-            created_at: new Date().toISOString()
-        });
-        if (!upsertErr) {
-            const { data: newProfile } = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
-            profile = newProfile;
-        }
-        if (!profile) {
-            // Profil introuvable même après création — afficher dashboard minimal
-            showSection('dashboard');
-            document.getElementById('dash-username').textContent = username;
-            document.getElementById('my-name-big').textContent   = username;
-            document.getElementById('my-handle-big').textContent = '@' + username;
-            document.getElementById('my-avatar-big').textContent = username.charAt(0).toUpperCase();
-            return;
-        }
-    }
-
-    // Afficher le dashboard
-    showSection('dashboard');
-    const username = profile.username || 'Trader';
-    const initial  = username.charAt(0).toUpperCase();
-
-    document.getElementById('dash-username').textContent   = username;
-    document.getElementById('my-avatar-big').textContent   = initial;
-    document.getElementById('my-name-big').textContent     = username;
-    document.getElementById('my-handle-big').textContent   = '@' + username;
-    document.getElementById('my-public-url').value         = `${location.origin}${location.pathname}?user=${username}`;
-
-    // Charger les trades
-    const { data: trades } = await sb.from('trades')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('trade_date', { ascending: false });
-
-    myTrades = trades || [];
-    renderMyTrades();
-    updateMyStats();
-    updateMyRank();
-}
-
-/* ─── STATS ─── */
-function updateMyStats() {
-    const total = myTrades.length;
-    const wins  = myTrades.filter(t => parseFloat(t.result) > 0).length;
-    const losses= myTrades.filter(t => parseFloat(t.result) < 0).length;
-    const be    = myTrades.filter(t => parseFloat(t.result) === 0).length;
-    const totalR= myTrades.reduce((s, t) => s + parseFloat(t.result||0), 0);
-    const wr    = total > 0 ? Math.round(wins/total*100) : 0;
-    const best  = total > 0 ? Math.max(...myTrades.map(t=>parseFloat(t.result||0))) : 0;
-
-    // Série en cours
-    let streak = 0, streakType = null;
-    for (const t of myTrades) {
-        const r = parseFloat(t.result);
-        const tp = r > 0 ? 'W' : r < 0 ? 'L' : 'B';
-        if (streakType === null) streakType = tp;
-        if (tp === streakType) streak++;
-        else break;
-    }
-
-    document.getElementById('my-total').textContent   = total;
-    document.getElementById('my-winrate').textContent = total > 0 ? `${wr}%` : '—';
-    document.getElementById('my-totalr').textContent  = (totalR >= 0 ? '+' : '') + totalR.toFixed(2) + 'R';
-    document.getElementById('my-totalr').style.color  = totalR >= 0 ? 'var(--green)' : 'var(--red)';
-    document.getElementById('my-best').textContent    = total > 0 ? `+${best.toFixed(2)}R` : '—';
-    document.getElementById('pc-wins').textContent    = wins;
-    document.getElementById('pc-losses').textContent  = losses;
-    document.getElementById('pc-breakeven').textContent = be;
-    document.getElementById('pc-streak').textContent  = `${streak > 0 ? (streakType === 'W' ? '🟢' : streakType === 'L' ? '🔴' : '⚪') : ''}${streak}`;
-    document.getElementById('trades-count').textContent = `${total} trade${total !== 1 ? 's' : ''}`;
-}
-
-async function updateMyRank() {
-    const { data } = await sb.from('profiles').select('id, username').limit(100);
-    if (!data) return;
-    // On récupère un classement simplifié
-    // Le vrai rang sera calculé server-side idéalement
-    const badge = document.getElementById('my-rank-badge');
-    badge.style.display = 'block';
-}
-
-/* ─── RENDER TRADES ─── */
-function renderMyTrades() {
-    const tbody = document.getElementById('trades-tbody');
-    if (!myTrades.length) {
-        tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">📈</div><div class="empty-title">Aucun trade enregistré</div><div class="empty-sub">Ajoutez votre premier trade ci-dessus</div></div></td></tr>`;
-        return;
-    }
-    tbody.innerHTML = myTrades.map(t => {
-        const res = parseFloat(t.result || 0);
-        const resClass = res > 0 ? 'result-pos' : res < 0 ? 'result-neg' : '';
-        const resStr = (res > 0 ? '+' : '') + res.toFixed(2) + 'R';
-        const dir = t.direction === 'BUY'
-            ? '<span class="badge-buy">▲ BUY</span>'
-            : '<span class="badge-sell">▼ SELL</span>';
-        const dateStr = t.trade_date ? new Date(t.trade_date).toLocaleDateString('fr-FR') : '—';
-        return `<tr>
-            <td><strong>${t.symbol || '—'}</strong></td>
-            <td>${dir}</td>
-            <td>${t.entry_price || '—'}</td>
-            <td>${t.exit_price || '—'}</td>
-            <td class="${resClass}">${resStr}</td>
-            <td>${dateStr}</td>
-            <td style="color:var(--text-muted);font-size:0.8rem;">${t.note || ''}</td>
-            <td><button class="btn-del" onclick="deleteTrade('${t.id}')" title="Supprimer">✕</button></td>
-        </tr>`;
-    }).join('');
-}
-
-/* ─── ADD TRADE ─── */
-async function addTrade() {
-    if (!currentUser) return openModal();
-
-    const symbol = document.getElementById('t-symbol').value.trim().toUpperCase();
-    const dir    = document.getElementById('t-dir').value;
-    const entry  = parseFloat(document.getElementById('t-entry').value);
-    const exit   = parseFloat(document.getElementById('t-exit').value);
-    const result = parseFloat(document.getElementById('t-result').value);
-    const date   = document.getElementById('t-date').value;
-    const note   = document.getElementById('t-note').value.trim();
-
-    if (!symbol) return showToast('Symbole requis', 'error');
-    if (isNaN(result)) return showToast('Résultat requis (en R)', 'error');
-    if (!date) return showToast('Date requise', 'error');
-
-    const btn = document.getElementById('btn-add-trade');
-    btn.innerHTML = '<span class="spinner"></span> Enregistrement…';
-    btn.disabled = true;
-
-    const { data, error } = await sb.from('trades').insert({
-        user_id: currentUser.id,
-        symbol,
-        direction: dir,
-        entry_price: isNaN(entry) ? null : entry,
-        exit_price:  isNaN(exit)  ? null : exit,
-        result,
-        trade_date: date,
-        note: note || null
-    }).select().single();
-
-    btn.innerHTML = 'Enregistrer le trade';
-    btn.disabled = false;
-
-    if (error) { showToast('Erreur: ' + error.message, 'error'); return; }
-
-    myTrades.unshift(data);
-    renderMyTrades();
-    updateMyStats();
-
-    // Réinitialiser le formulaire
-    document.getElementById('t-symbol').value = '';
-    document.getElementById('t-entry').value  = '';
-    document.getElementById('t-exit').value   = '';
-    document.getElementById('t-result').value = '';
-    document.getElementById('t-note').value   = '';
-
-    showToast(`✅ Trade ${symbol} enregistré !`);
-
-    // Mettre à jour les stats du profil dans Supabase
-    await updateProfileStats();
-}
-
-async function deleteTrade(id) {
-    if (!confirm('Supprimer ce trade ?')) return;
-    const { error } = await sb.from('trades').delete().eq('id', id).eq('user_id', currentUser.id);
-    if (error) { showToast('Erreur: ' + error.message, 'error'); return; }
-    myTrades = myTrades.filter(t => t.id !== id);
-    renderMyTrades();
-    updateMyStats();
-    await updateProfileStats();
-    showToast('Trade supprimé.');
-}
-
-async function updateProfileStats() {
-    const total = myTrades.length;
-    const wins  = myTrades.filter(t => parseFloat(t.result) > 0).length;
-    const totalR= myTrades.reduce((s,t) => s + parseFloat(t.result||0), 0);
-    const wr    = total > 0 ? Math.round(wins/total*100) : 0;
-
-    await sb.from('profiles').update({
-        total_trades: total,
-        win_rate: wr,
-        total_r: parseFloat(totalR.toFixed(2)),
-        updated_at: new Date().toISOString()
-    }).eq('id', currentUser.id);
-}
-
-/* ─── COPY LINK ─── */
-function copyProfileLink() {
-    if (!currentUser) return;
-    const url = document.getElementById('my-public-url').value;
-    if (!url) return;
-    navigator.clipboard.writeText(url).then(() => showToast('🔗 Lien copié dans le presse-papier !'));
-}
-
-/* ─── LEADERBOARD ─── */
-async function loadLeaderboard() {
-    const { data, error } = await sb.from('profiles')
-        .select('id, username, total_trades, win_rate, total_r, created_at')
-        .gt('total_trades', 0)
-        .order('win_rate', { ascending: false })
-        .order('total_r', { ascending: false })
-        .limit(20);
-
-    const tbody = document.getElementById('lb-body');
-    if (error || !data || data.length === 0) {
-        tbody.innerHTML = `<div class="empty-state">
-            <div class="empty-icon">🏆</div>
-            <div class="empty-title">Le classement est vide pour l'instant</div>
-            <div class="empty-sub">Soyez le premier à créer votre track record !</div>
-        </div>`;
-        return;
-    }
-
-    tbody.innerHTML = data.map((p, i) => {
-        const rankClass = i===0 ? 'top1' : i===1 ? 'top2' : i===2 ? 'top3' : '';
-        const rankEmoji = i===0 ? '🥇' : i===1 ? '🥈' : i===2 ? '🥉' : `${i+1}`;
-        const initial   = (p.username||'?').charAt(0).toUpperCase();
-        const wr        = p.win_rate != null ? `${p.win_rate}%` : '—';
-        const r         = p.total_r  != null ? (p.total_r >= 0 ? '+' : '') + p.total_r.toFixed(2) + 'R' : '—';
-        const rClass    = p.total_r  > 0 ? 'pos' : p.total_r < 0 ? 'neg' : 'neu';
-        const wrFill    = p.win_rate != null ? Math.max(0, Math.min(100, p.win_rate)) : 0;
-        const since     = p.created_at ? new Date(p.created_at).toLocaleDateString('fr-FR', {month:'short', year:'numeric'}) : '—';
-
-        return `<a class="lb-row" href="track-record.html?user=${encodeURIComponent(p.username)}" title="Voir le profil de ${p.username}">
-            <div class="lb-rank ${rankClass}">${rankEmoji}</div>
-            <div class="lb-user">
-                <div class="lb-avatar">${initial}</div>
-                <div>
-                    <div class="lb-name">${p.username || 'Trader'}</div>
-                    <div class="lb-since">${since}</div>
-                </div>
-            </div>
-            <div>
-                <div class="lb-val">${wr}</div>
-                <div class="winrate-bar"><div class="winrate-fill" style="width:${wrFill}%"></div></div>
-            </div>
-            <div class="lb-val">${p.total_trades || 0} trades</div>
-            <div class="lb-val ${rClass}">${r}</div>
-            <div class="lb-val neu">${since}</div>
-        </a>`;
-    }).join('');
-}
-
-/* ─── GLOBAL STATS ─── */
-async function loadGlobalStats() {
-    const { count: traders } = await sb.from('profiles').select('*', { count: 'exact', head: true });
-    const { count: trades  } = await sb.from('trades').select('*', { count: 'exact', head: true });
-    const { data: wr        } = await sb.from('profiles').select('win_rate').gt('total_trades', 0);
-    const { data: symbols   } = await sb.from('trades').select('symbol');
-
-    const avgWR = wr && wr.length > 0
-        ? Math.round(wr.reduce((s,p) => s+(p.win_rate||0), 0)/wr.length) + '%'
-        : '—';
-    const uniqueSymbols = symbols ? new Set(symbols.map(s=>s.symbol)).size : 0;
-
-    document.getElementById('gs-traders').textContent = traders || 0;
-    document.getElementById('gs-trades').textContent  = trades  || 0;
-    document.getElementById('gs-winrate').textContent = avgWR;
-    document.getElementById('gs-symbols').textContent = uniqueSymbols;
-}
-
-/* ─── PUBLIC PROFILE ─── */
-async function loadPublicProfile(username) {
-    showSection('public');
-
-    const { data: profile, error } = await sb.from('profiles')
-        .select('*')
-        .eq('username', username)
-        .maybeSingle();
-
-    if (error || !profile) {
-        document.getElementById('pub-name').textContent  = 'Profil introuvable';
-        document.getElementById('pub-handle').textContent = '@' + username;
-        return;
-    }
-
-    const initial = (profile.username||'?').charAt(0).toUpperCase();
-    document.getElementById('pub-avatar').textContent   = initial;
-    document.getElementById('pub-name').textContent     = profile.username || '—';
-    document.getElementById('pub-handle').textContent   = '@' + profile.username;
-    document.getElementById('pub-username-title').textContent = profile.username;
-
-    // Trades
-    const { data: trades } = await sb.from('trades')
-        .select('*')
-        .eq('user_id', profile.id)
-        .order('trade_date', { ascending: false });
-
-    const ts  = trades || [];
-    const total = ts.length;
-    const wins  = ts.filter(t => parseFloat(t.result) > 0).length;
-    const losses= ts.filter(t => parseFloat(t.result) < 0).length;
-    const totalR= ts.reduce((s,t) => s+parseFloat(t.result||0), 0);
-    const wr    = total > 0 ? Math.round(wins/total*100) : 0;
-
-    document.getElementById('pub-trades').textContent   = total;
-    document.getElementById('pub-winrate').textContent  = total > 0 ? `${wr}%` : '—';
-    document.getElementById('pub-wins').textContent     = wins;
-    document.getElementById('pub-losses').textContent   = losses;
-    document.getElementById('pub-totalr').textContent   = (totalR>=0?'+':'') + totalR.toFixed(2) + 'R';
-    document.getElementById('pub-totalr').style.color   = totalR>=0 ? 'var(--green)' : 'var(--red)';
-    document.getElementById('pub-count').textContent    = `${total} trade${total!==1?'s':''}`;
-
-    document.title = `Track Record de ${profile.username} – Forex Average`;
-
-    if (!ts.length) {
-        document.getElementById('pub-tbody').innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">Aucun trade public pour ce trader</div></div></td></tr>`;
-        return;
-    }
-    document.getElementById('pub-tbody').innerHTML = ts.map(t => {
-        const res = parseFloat(t.result||0);
-        const resClass = res>0?'result-pos':res<0?'result-neg':'';
-        const resStr = (res>0?'+':'') + res.toFixed(2) + 'R';
-        const dir = t.direction==='BUY' ? '<span class="badge-buy">▲ BUY</span>' : '<span class="badge-sell">▼ SELL</span>';
-        const dateStr = t.trade_date ? new Date(t.trade_date).toLocaleDateString('fr-FR') : '—';
-        return `<tr>
-            <td><strong>${t.symbol||'—'}</strong></td>
-            <td>${dir}</td>
-            <td>${t.entry_price||'—'}</td>
-            <td>${t.exit_price||'—'}</td>
-            <td class="${resClass}">${resStr}</td>
-            <td>${dateStr}</td>
-            <td style="color:var(--text-muted);font-size:0.8rem;">${t.note||''}</td>
-        </tr>`;
-    }).join('');
-}
-
-/* ─── DATE DEFAULT ─── */
-document.getElementById('t-date').valueAsDate = new Date();
-
-/* ─── INIT ─── */
-(async function init() {
-    // Profil public demandé ?
-    const params  = new URLSearchParams(location.search);
-    const pubUser = params.get('user');
-
-    if (pubUser) {
-        try { await loadPublicProfile(pubUser); } catch(e) { console.warn(e); }
-        try { await loadGlobalStats();           } catch(e) { console.warn(e); }
-        return;
-    }
-
-    // 1. Vérifier la session EN PREMIER (avant tout appel réseau qui pourrait planter)
-    let session = null;
-    try {
-        const res = await sb.auth.getSession();
-        session = res.data?.session || null;
-    } catch(e) { console.warn('[Auth] getSession failed:', e); }
-
-    // 2. Si connecté → aller directement au dashboard
-    if (session) {
-        try {
-            await loadUserData();
-        } catch(e) {
-            console.error('[Auth] loadUserData failed:', e);
-            // En cas d'erreur, afficher le leaderboard public avec les boutons hero
-            showSection('leaderboard');
-        }
-        // Charger stats globales en arrière-plan
-        Promise.all([loadLeaderboard(), loadGlobalStats()]).catch(() => {});
-    } else {
-        // Pas de session → afficher le leaderboard public
-        try { await Promise.all([loadLeaderboard(), loadGlobalStats()]); } catch(e) { console.warn(e); }
-    }
-
-    // 3. Écouter les changements d'auth (connexion depuis la modal)
-    sb.auth.onAuthStateChange(async (event, sess) => {
-        if (event === 'SIGNED_IN' && sess) {
-            try { await loadUserData(); } catch(e) { console.error(e); }
-        } else if (event === 'SIGNED_OUT') {
-            currentUser = null;
-            showSection('leaderboard');
-        }
-    });
-})();
-</script>
-<script>
-/* Guard : redirection login si non-connecté */
-(async function() {
-  try {
-    var res = await sb.auth.getSession();
-    if (!res.data || !res.data.session) {
-      window.location.href = 'login.html?redirect=track-record.html';
-    }
-  } catch(e) {
-    window.location.href = 'login.html?redirect=track-record.html';
-  }
-})();
-</script>
+<!-- Guard FA déjà présent en haut de page -->
 
 <script src="fa-access.js"></script>
+
+<script>
+/* ── Track Record — FA Data Loader ── */
+(function(){
+  var fa = window.FA;
+  var user = fa ? fa.getUser() : null;
+  if(!user){ return; }
+
+  var email = user.email;
+  var KEY = 'fa_journal_' + email;
+  var raw = localStorage.getItem(KEY);
+  var trades = [];
+  try{ trades = JSON.parse(raw) || []; }catch(e){}
+
+  /* ─ Stats globales ─ */
+  function calcStats(arr){
+    var wins=0, losses=0, be=0, streak=0, curStreak=0, lastWin=null;
+    var totalR=0, bestR=-Infinity;
+    arr.forEach(function(t){
+      var r = parseFloat(t.result_r||t.result||0);
+      totalR += r;
+      if(r > bestR) bestR = r;
+      if(r > 0){ wins++; if(lastWin===true) curStreak++; else curStreak=1; }
+      else if(r < 0){ losses++; curStreak=0; }
+      else{ be++; }
+      if(curStreak > streak) streak = curStreak;
+      lastWin = r > 0;
+    });
+    var total = arr.length;
+    return {
+      total: total,
+      wins: wins,
+      losses: losses,
+      be: be,
+      winRate: total ? Math.round(wins/total*100) : 0,
+      totalR: totalR.toFixed(2),
+      bestR: bestR === -Infinity ? '—' : bestR.toFixed(2),
+      streak: streak
+    };
+  }
+
+  var s = calcStats(trades);
+
+  /* ─ Remplir les KPIs ─ */
+  function setEl(id, val){ var el=document.getElementById(id); if(el) el.textContent=val; }
+  setEl('my-total', s.total);
+  setEl('my-winrate', s.winRate + '%');
+  setEl('my-totalr', (s.totalR > 0 ? '+' : '') + s.totalR + 'R');
+  setEl('my-best', s.bestR === '—' ? '—' : '+' + s.bestR + 'R');
+  setEl('pc-wins', s.wins);
+  setEl('pc-losses', s.losses);
+  setEl('pc-breakeven', s.be);
+  setEl('pc-streak', s.streak);
+  setEl('dash-username', user.name || user.email);
+  setEl('gs-trades', s.total);
+  setEl('gs-winrate', s.winRate + '%');
+
+  /* ─ Remplir le tableau de trades ─ */
+  var tbody = document.getElementById('trades-tbody');
+  if(!tbody) return;
+  if(!trades.length){
+    tbody.innerHTML = '<tr><td colspan="8"><div class="empty-state"><p>Aucun trade enregistré.</p><a href="journal.html" style="color:var(--gold)">→ Aller au journal</a></div></td></tr>';
+    return;
+  }
+  var rows = trades.slice().reverse().map(function(t, i){
+    var r = parseFloat(t.result_r||t.result||0);
+    var cls = r > 0 ? 'result-win' : r < 0 ? 'result-loss' : 'result-be';
+    var label = r > 0 ? 'WIN' : r < 0 ? 'LOSS' : 'BE';
+    var date = t.exit_date||t.entry_date||'';
+    if(date && date.length > 10) date = date.substring(0,10);
+    return '<tr>'
+      + '<td><strong>'+(t.symbol||'—')+'</strong></td>'
+      + '<td>'+(t.direction||'—')+'</td>'
+      + '<td>'+(t.entry||t.entry_price||'—')+'</td>'
+      + '<td>'+(t.exit||t.exit_price||'—')+'</td>'
+      + '<td class="'+cls+'">'+(r>0?'+':'')+r.toFixed(2)+'R <span class="badge '+cls+'">'+label+'</span></td>'
+      + '<td>'+(date||'—')+'</td>'
+      + '<td>'+(t.note||'')+'</td>'
+      + '<td><button onclick="deleteTrade('+i+')" class="btn-del" title="Supprimer">✕</button></td>'
+      + '</tr>';
+  }).join('');
+  tbody.innerHTML = rows;
+
+  /* ─ Suppression depuis track-record ─ */
+  window.deleteTrade = function(displayIdx){
+    var idx = trades.length - 1 - displayIdx;
+    trades.splice(idx, 1);
+    localStorage.setItem(KEY, JSON.stringify(trades));
+    location.reload();
+  };
+
+})();
+</script>
 </body>
 </html>

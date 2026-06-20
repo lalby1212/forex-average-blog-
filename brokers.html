@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🏦 Brokers Recommandés | Deriv, Exness, Vantage | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/brokers.html">
     <meta name="description" content="Brokers trading recommandés. Deriv, Exness, Vantage. Comparatif, avantages, affiliations. Choix du trader pro.">
     <meta name="theme-color" content="#FFD700">
     
@@ -583,6 +584,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Brokers Recommandés | Deriv, Exness, Vantage | Forex Average">
+  <meta property="og:description" content="Brokers trading recommandés. Deriv, Exness, Vantage. Comparatif, avantages, affiliations.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -646,9 +655,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -932,35 +949,6 @@ function toggleDetails(broker) {
 
 <script src="/chatbot.js"></script>
 
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-// ── NAV AUTH ──
-(function(){
-  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-  if (!window.supabase) return;
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function updateNavAuth(user){
-    var guestItems  = document.querySelectorAll('.nav-auth-guest');
-    var userProfile = document.getElementById('nav-user-profile');
-    if (!userProfile) return;
-    if (user){
-      guestItems.forEach(function(el){ el.style.display = 'none'; });
-      userProfile.classList.add('visible');
-      var username = (user.user_metadata && user.user_metadata.username) || (user.email ? user.email.split('@')[0] : '?');
-      document.getElementById('nav-username-display').textContent = username;
-      document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
-    } else {
-      guestItems.forEach(function(el){ el.style.display = ''; });
-      userProfile.classList.remove('visible');
-    }
-  }
-  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
-  sb.auth.getSession().then(function(r){ if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
-  sb.auth.onAuthStateChange(function(_e, session){ updateNavAuth(session ? session.user : null); });
-})();
-</script>
 
 <script>
 /* ── NAV HAMBURGER — singleton ── */

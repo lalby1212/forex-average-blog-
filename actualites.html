@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📰 Actualités Marchés | Forex, Crypto, Or, Pétrole | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/actualites.html">
   <meta name="description" content="Actualités trading en temps réel. Forex, Crypto, Or, Pétrole, Indices. Agrégation des meilleures sources mondiales : FXStreet, CoinTelegraph, Kitco, Reuters.">
   <meta name="theme-color" content="#FFD700">
 
@@ -423,6 +424,14 @@
 /* ══ END NAV v3 ══ */
 
 </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Actualités Marchés | Forex, Crypto, Or, Pétrole | Forex Average">
+  <meta property="og:description" content="Actualités trading en temps réel. Forex, Crypto, Or, Pétrole, Indices. Meilleures sources mondiales.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 
 <body>
@@ -487,9 +496,17 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -576,23 +593,48 @@
   <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
 </footer>
 
-<!-- Supabase (cache traductions) -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
-<!-- ═══ LOGIQUE RSS — via Vercel /api/news ═══ -->
+
+<!-- ═══ LOGIQUE RSS — via rss2json.com (GitHub Pages compatible) ═══ -->
 <script>
 /* ─────────────────────────────────────────────────────
-   Toutes les requêtes RSS passent par /api/news (Vercel
-   serverless) — zéro proxy CORS, zéro blocage file://.
+   RSS direct via rss2json.com — compatible GitHub Pages
+   Pas de backend requis, CORS natif, cache 15 min.
    ───────────────────────────────────────────────────── */
 
 const SOURCES_LABELS = {
   forex:   'FXStreet, Forexlive, DailyFX',
-  crypto:  'CoinTelegraph, Decrypt, BeInCrypto',
-  or:      'Kitco, Mining.com, BullionVault',
-  petrole: 'OilPrice, Rigzone',
-  macro:   'Reuters, MarketWatch, CNBC'
+  crypto:  'CoinTelegraph, BeInCrypto, Decrypt',
+  or:      'Kitco, BullionVault',
+  petrole: 'OilPrice',
+  macro:   'MarketWatch, Investing.com'
 };
+
+/* ── Flux RSS par catégorie ── */
+const RSS_SOURCES = {
+  forex:   [
+    { url: 'https://www.fxstreet.com/rss/news',                       name: 'FXStreet'   },
+    { url: 'https://www.forexlive.com/feed/news',                     name: 'Forexlive'  },
+    { url: 'https://www.dailyfx.com/feeds/forex-rate-news',           name: 'DailyFX'    },
+  ],
+  crypto:  [
+    { url: 'https://cointelegraph.com/rss',                           name: 'CoinTelegraph' },
+    { url: 'https://beincrypto.com/feed/',                            name: 'BeInCrypto'    },
+  ],
+  or:      [
+    { url: 'https://www.kitco.com/rss/kitco-gold-news.xml',           name: 'Kitco'      },
+    { url: 'https://www.bullionvault.com/gold-news/rss.do',           name: 'BullionVault'},
+  ],
+  petrole: [
+    { url: 'https://oilprice.com/rss/main',                           name: 'OilPrice'   },
+  ],
+  macro:   [
+    { url: 'https://feeds.marketwatch.com/marketwatch/topstories/',   name: 'MarketWatch'},
+    { url: 'https://www.investing.com/rss/news_25.rss',               name: 'Investing'  },
+  ],
+};
+
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=10&rss_url=';
 
 const cache = {};
 let currentCat = 'forex';
@@ -623,7 +665,25 @@ function skeletonHTML() {
     </div>`).join('');
 }
 
-/* ─── Load catégorie via API serverless ─── */
+/* ─── Fetch un flux RSS via rss2json ─── */
+async function fetchFeed(feedUrl, sourceName) {
+  const res = await fetch(RSS2JSON_API + encodeURIComponent(feedUrl), {
+    signal: AbortSignal.timeout(10000)
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const data = await res.json();
+  if (data.status !== 'ok') throw new Error('rss2json: ' + (data.message || 'erreur'));
+  return (data.items || []).map(item => ({
+    title:   item.title  || '',
+    link:    item.link   || item.guid || '#',
+    date:    item.pubDate || '',
+    source:  sourceName,
+    summary: (item.description || item.content || '')
+               .replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim().slice(0, 300),
+  }));
+}
+
+/* ─── Load catégorie via RSS direct ─── */
 async function loadCategory(cat, force = false) {
   // Cache client 15 min
   if (!force && cache[cat] && (Date.now() - cache[cat].time < 15 * 60 * 1000)) {
@@ -634,18 +694,26 @@ async function loadCategory(cat, force = false) {
   document.getElementById('news-grid').innerHTML = skeletonHTML();
   document.getElementById('sources-display').textContent = SOURCES_LABELS[cat] || '';
 
+  const feeds = RSS_SOURCES[cat] || [];
   try {
-    const res  = await fetch(`/api/news?category=${cat}`, { signal: AbortSignal.timeout(15000) });
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    if (!data.items?.length) throw new Error('Aucun article reçu');
+    const results = await Promise.allSettled(
+      feeds.map(f => fetchFeed(f.url, f.name))
+    );
+    const items = results
+      .filter(r => r.status === 'fulfilled')
+      .flatMap(r => r.value)
+      .filter(i => i.title && i.link)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 20);
 
-    cache[cat] = { time: Date.now(), items: data.items };
+    if (!items.length) throw new Error('Aucun article reçu');
+
+    cache[cat] = { time: Date.now(), items };
     const countEl = document.getElementById('count-' + cat);
-    if (countEl) countEl.textContent = data.items.length;
-    renderNews(data.items, cat);
+    if (countEl) countEl.textContent = items.length;
+    renderNews(items, cat);
   } catch(e) {
-    console.warn('[FA] /api/news failed:', e.message);
+    console.warn('[FA] RSS fetch failed:', e.message);
     showError(cat);
   }
 }
@@ -723,30 +791,7 @@ function getSB() {
 
 
 // ── NAV AUTH ──
-(function(){
-  var SUPABASE_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-  var SUPABASE_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-  if (!window.supabase) return;
-  var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  function updateNavAuth(user){
-    var guestItems  = document.querySelectorAll('.nav-auth-guest');
-    var userProfile = document.getElementById('nav-user-profile');
-    if (!userProfile) return;
-    if (user){
-      guestItems.forEach(function(el){ el.style.display = 'none'; });
-      userProfile.classList.add('visible');
-      var username = (user.user_metadata && user.user_metadata.username) || (user.email ? user.email.split('@')[0] : '?');
-      document.getElementById('nav-username-display').textContent = username;
-      document.getElementById('nav-avatar-initials').textContent  = username.charAt(0).toUpperCase();
-    } else {
-      guestItems.forEach(function(el){ el.style.display = ''; });
-      userProfile.classList.remove('visible');
-    }
-  }
-  window.navSignOut = async function(){ await sb.auth.signOut(); updateNavAuth(null); };
-  sb.auth.getSession().then(function(r){ if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
-  sb.auth.onAuthStateChange(function(_e, session){ updateNavAuth(session ? session.user : null); });
-})();
+/* Nav auth géré par fa-access.js */
 
 let translationActive = false;
 let translationCache  = {}; // cache mémoire (session)
@@ -758,25 +803,7 @@ async function translateText(text) {
   /* 1. Cache mémoire */
   if (translationCache[memKey]) return translationCache[memKey];
 
-  /* 2. Cache Supabase DB */
-  try {
-    const sb = getSB();
-    if (sb) {
-      const { data } = await sb
-        .from('translations')
-        .select('translated_text')
-        .eq('source_text',  text.slice(0, 500))
-        .eq('source_lang', 'en')
-        .eq('target_lang', 'fr')
-        .maybeSingle();
-      if (data?.translated_text) {
-        translationCache[memKey] = data.translated_text;
-        return data.translated_text;
-      }
-    }
-  } catch(e) { /* silencieux */ }
-
-  /* 3. MyMemory API (avec email key pour 50k chars/jour) */
+  /* 2. MyMemory API (50k chars/jour avec email key) */
   try {
     const res = await fetch(
       `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.slice(0, 400))}&langpair=en|fr&de=${encodeURIComponent(MYMEMORY_KEY)}`,
@@ -793,22 +820,6 @@ async function translateText(text) {
 
     if (isValid) {
       translationCache[memKey] = translated;
-
-      /* 4. Stocker en Supabase (pour tous les visiteurs futurs) */
-      try {
-        const sb = getSB();
-        if (sb) {
-          await sb.from('translations').upsert(
-            {
-              source_text:     text.slice(0, 500),
-              translated_text: translated,
-              source_lang:     'en',
-              target_lang:     'fr'
-            },
-            { onConflict: 'source_text,source_lang,target_lang', ignoreDuplicates: true }
-          );
-        }
-      } catch(e) { /* silencieux */ }
 
       return translated;
     }
