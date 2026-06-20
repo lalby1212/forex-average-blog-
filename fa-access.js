@@ -21,6 +21,16 @@
   function isLogged() { return !!getUser() && !!localStorage.getItem(KEY_TOKEN); }
   function isVip()    { return isLogged() && getPlan() === 'vip'; }
 
+  /* ── Activation VIP (appelé par webhook Stripe ou manuellement) ──
+     FA.setPlan('vip')  → active le VIP
+     FA.setPlan('free') → repasse en gratuit                         */
+  function setPlan(plan) {
+    if (!isLogged()) return false;
+    localStorage.setItem(KEY_PLAN, plan);
+    if (typeof initNav === 'function') initNav();
+    return true;
+  }
+
   /* ── Synchronisation depuis Supabase ──
      Si l'utilisateur est connecté via Supabase Auth mais que les clés FA
      ne sont pas encore posées, on les remplit à partir de la session SB. */
@@ -98,7 +108,8 @@
     getPlan,
     /* Helpers exposés en bonus */
     syncFromSupabase,
-    hasSupabaseSession
+    hasSupabaseSession,
+    setPlan
   };
 
   /* ── Initialisation nav ── */
@@ -109,12 +120,12 @@
 
     /* Boutons invité */
     document.querySelectorAll('.nav-auth-guest').forEach(el => {
-      el.style.display = logged ? 'none' : '';
+      el.style.display = logged ? 'none' : 'flex';
     });
 
     /* Zone profil */
     document.querySelectorAll('.nav-auth-user').forEach(el => {
-      el.style.display = logged ? '' : 'none';
+      el.style.display = logged ? 'flex' : 'none';
     });
 
     if (logged && user) {
