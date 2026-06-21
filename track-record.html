@@ -1349,7 +1349,7 @@
       + '<td>'+(t.exit||t.exit_price||'—')+'</td>'
       + '<td class="'+cls+'">'+(r>0?'+':'')+r.toFixed(2)+'R <span class="badge '+cls+'">'+label+'</span></td>'
       + '<td>'+(date||'—')+'</td>'
-      + '<td>'+(t.note||'')+'</td>'
+      + '<td>'+(t.post_note||t.pre_note||'')+'</td>'
       + '<td><button onclick="deleteTrade('+i+')" class="btn-del" title="Supprimer">✕</button></td>'
       + '</tr>';
   }).join('');
