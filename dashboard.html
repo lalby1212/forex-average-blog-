@@ -46,6 +46,9 @@
     font-weight:500; margin-top:1px; -webkit-text-fill-color:rgba(255,255,255,0.38);
   }
   .topbar-spacer { flex:1; }
+  .currency-toggle{display:flex;gap:3px;align-items:center;}
+  .curr-btn{background:transparent;border:1px solid var(--gold-b);color:var(--text-faint);border-radius:6px;padding:3px 9px;font-size:0.72rem;cursor:pointer;transition:all 0.18s;font-family:inherit;}
+  .curr-btn.active{background:var(--gold);color:#000;font-weight:700;border-color:var(--gold);}
   .topbar-vip {
     background:linear-gradient(135deg,#FFD700,#FFA000); color:#000;
     padding:0.42rem 1rem; border-radius:8px; font-weight:800; font-size:0.78rem;
@@ -315,6 +318,10 @@
     <span class="topbar-logo-sub">ESPACE MEMBRE</span>
   </a>
   <div class="topbar-spacer"></div>
+  <div class="currency-toggle" id="currencyToggle">
+    <button id="btn-eur" class="curr-btn" onclick="setCurrency('EUR')">€ EUR</button>
+    <button id="btn-usd" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
+  </div>
   <a href="pricing.html" class="topbar-vip">✦ VIP</a>
   <div class="topbar-avatar" id="topbarAvatar" title="Profil">?</div>
 </header>
@@ -383,27 +390,38 @@ function loadPlan() {
   catch(e) { return null; }
 }
 function loadJournal() {
-  // Lire depuis fa_journal_[email] (format journal.html)
+  // Lire depuis fa_journal_[email] — format journal.html
   try {
     var user = JSON.parse(localStorage.getItem('fa_user') || 'null');
     var email = user ? user.email : 'guest';
     var raw = JSON.parse(localStorage.getItem('fa_journal_' + email) || '[]');
-    // Normaliser le format : journal.html utilise profit_loss/notes, dashboard attend amount/note
+    // Convertir result_r (R-multiple) en win/loss et en montant €
+    var activePlan = JSON.parse(localStorage.getItem('fa_active_plan') || 'null');
+    var capital0   = activePlan && activePlan.capital0 ? activePlan.capital0 : 0;
+    var riskPct    = activePlan && activePlan.risk     ? activePlan.risk     : 1;
+    var riskAmt    = capital0 * riskPct / 100; // montant risqué par trade
     return raw.map(function(e){
+      var rVal   = parseFloat(e.result_r || 0);
+      var result = rVal > 0 ? 'win' : rVal < 0 ? 'loss' : 'be';
+      // Montant en € = |R| * montant risqué (ou risque du trade si renseigné)
+      var tradeRisk = e.risk_percent && capital0 ? capital0 * e.risk_percent / 100 : riskAmt;
+      var amount    = Math.abs(rVal) * (tradeRisk || 50); // 50€ par défaut si plan absent
       return {
-        id: e.id || e.date,
-        date: e.date || new Date().toISOString().slice(0,10),
-        result: e.result || (parseFloat(e.profit_loss||0) >= 0 ? 'win' : 'loss'),
-        amount: Math.abs(parseFloat(e.profit_loss || e.amount || 0)),
-        note: e.notes || e.note || ''
+        id:       e.id || e.entry_date || Date.now().toString(),
+        date:     e.entry_date || e.exit_date || new Date().toISOString().slice(0,10),
+        result:   result,
+        amount:   amount,
+        result_r: rVal,
+        note:     e.post_note || e.pre_note || ''
       };
-    }).filter(function(e){ return e.amount > 0 || e.result; });
-  } catch(e) { return []; }
+    });
+  } catch(err) { return []; }
 }
 
 // ════════════════════ INIT ════════════════════
 let plan = loadPlan();
 let allTrades = loadJournal();
+initCurrencyToggle();
 let currentPeriod = 90; // jours
 
 // ════════════════════ FILTERING ════════════════════
@@ -461,9 +479,28 @@ function computeMetrics(trades) {
 }
 
 // ════════════════════ FORMATTERS ════════════════════
-const fmtEUR = v => Math.round(v).toLocaleString('fr-FR') + ' €';
-const fmtEURsign = v => (v >= 0 ? '+' : '') + Math.round(v).toLocaleString('fr-FR') + ' €';
+function getCurSym() { return (localStorage.getItem('fa_currency')||'EUR')==='USD' ? '$' : '€'; }
+function fmtEUR(v) { var s=getCurSym(); return Math.round(v).toLocaleString('fr-FR') + '\u00a0' + s; }
+function fmtEURsign(v) { var s=getCurSym(); return (v>=0?'+':'')+Math.round(v).toLocaleString('fr-FR')+'\u00a0'+s; }
 const fmtPct = v => v.toFixed(1) + '%';
+
+function setCurrency(cur) {
+  localStorage.setItem('fa_currency', cur);
+  document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
+  var btn = document.getElementById('btn-' + cur.toLowerCase());
+  if (btn) btn.classList.add('active');
+  // Re-render
+  var main = document.getElementById('mainContent');
+  if (main) main.innerHTML = '';
+  if (!plan) { renderEmptyNoPlan(); }
+  else if (!allTrades.length) { renderEmptyNoTrades(); }
+  else { render(); }
+}
+function initCurrencyToggle() {
+  var cur = localStorage.getItem('fa_currency') || 'EUR';
+  var btn = document.getElementById('btn-' + cur.toLowerCase());
+  if (btn) btn.classList.add('active');
+}
 
 // ════════════════════ RENDER ════════════════════
 function renderEmptyNoPlan() {

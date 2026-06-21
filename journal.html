@@ -618,6 +618,7 @@
 <!-- OVERLAY sidebar mobile -->
 <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;" onclick="closeSidebar()"></div>
 
+<script src="fa-access.js"></script>
 <script>
 
 /* ── JOURNAL DE TRADING — localStorage + fa-access.js ── */
@@ -848,7 +849,6 @@ function renderTable(entries) {
         const emo = e.emotion === 'Calme' ? '😌' : e.emotion === 'Confiant' ? '💪' : e.emotion === 'Stressé' ? '😰' : e.emotion === 'FOMO' ? '😱' : e.emotion === 'Impatient' ? '⏰' : '—';
         const rr = (e.entry_price && e.stop_loss && e.take_profit) ?
             (Math.abs(e.take_profit - e.entry_price) / Math.abs(e.entry_price - e.stop_loss)).toFixed(1) + ':1' : '—';
-        const eJson = JSON.stringify(e).replace(/\/g,'\\').replace(/'/g,"\'");
         return `<tr onclick="openDrawer(JSON.parse(decodeURIComponent('${encodeURIComponent(JSON.stringify(e))}')))">
             <td style="white-space:nowrap;color:var(--text-faint);">${d}</td>
             <td style="font-weight:700;">${e.symbol}</td>
@@ -943,9 +943,11 @@ function signOut() {
 
 /* ── INIT ── */
 (function init() {
-    // Auth via FA (localStorage)
-    const user = window.FA ? window.FA.getUser() : null;
-    const logged = window.FA ? window.FA.isLogged() : false;
+    // Auth via FA (chargé juste avant ce script)
+    const _rawUser = localStorage.getItem('fa_user');
+    const _token   = localStorage.getItem('fa_token');
+    const user     = _rawUser ? JSON.parse(_rawUser) : null;
+    const logged   = !!(user && _token);
 
     if (!logged || !user) {
         window.location.href = 'login.html?redirect=journal.html';
@@ -953,7 +955,7 @@ function signOut() {
     }
 
     currentUser = { email: user.email, id: user.email };
-    userPlan = window.FA ? window.FA.getPlan() : 'free';
+    userPlan = localStorage.getItem('fa_plan') || 'free';
 
     const username = user.name || user.email.split('@')[0];
     const initial  = username.charAt(0).toUpperCase();
@@ -979,6 +981,5 @@ function signOut() {
 })();
 
 </script>
-<script src="fa-access.js"></script>
 </body>
 </html>
