@@ -1242,16 +1242,25 @@
         <div class="card">
             <div class="card-title">⚙️ Paramètres de votre plan</div>
 
+            <!-- Sélecteur devise -->
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:1.2rem;padding:0.75rem 1rem;background:rgba(255,215,0,0.06);border:1px solid var(--gold-b);border-radius:10px;">
+                <span style="color:var(--text-faint);font-size:0.85rem;">💱 Devise du compte :</span>
+                <div style="display:flex;gap:6px;">
+                    <button id="pt-eur" class="pt-cur-btn" onclick="ptSetCurrency('EUR')">€ EUR</button>
+                    <button id="pt-usd" class="pt-cur-btn" onclick="ptSetCurrency('USD')">$ USD</button>
+                </div>
+            </div>
+
             <div class="form-grid">
 
                 <div class="form-group">
-                    <label class="form-label">💰 Capital de départ ($)</label>
+                    <label class="form-label">💰 Capital de départ (<span class="cur-lbl">$</span>)</label>
                     <input type="number" class="form-input" id="p-capital" value="100" min="1" step="1" oninput="updatePreview()">
                     <div class="form-hint">Montant disponible pour trader</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">🎯 Capital objectif ($)</label>
+                    <label class="form-label">🎯 Capital objectif (<span class="cur-lbl">$</span>)</label>
                     <input type="number" class="form-input" id="p-target" value="1000" min="1" step="1" oninput="updatePreview()">
                     <div class="form-hint">Objectif à atteindre</div>
                 </div>
@@ -1281,7 +1290,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">📊 Valeur pip par lot ($)</label>
+                    <label class="form-label">📊 Valeur pip par lot (<span class="cur-lbl">$</span>)</label>
                     <input type="number" class="form-input" id="p-pipval" value="10" min="0.01" step="0.01" oninput="updatePreview()">
                     <div class="form-hint">Ex: EUR/USD = 10, XAU/USD = 1, V75 = 1</div>
                 </div>
@@ -1457,7 +1466,7 @@
                         </select>
                     </div>
                     <div class="form-group" style="max-width:120px;">
-                        <label class="form-label">Gain / Perte ($)</label>
+                        <label class="form-label">Gain / Perte (<span class="cur-lbl">$</span>)</label>
                         <input type="number" class="form-input" id="j-amount" placeholder="Ex: 12.50" min="0" step="0.01">
                     </div>
                     <div class="form-group">
@@ -1769,6 +1778,20 @@ function setInstrumentPipVal() {
         document.getElementById('p-pipval').value = v;
     }
     updatePreview();
+}
+
+function ptSetCurrency(cur) {
+    localStorage.setItem('fa_currency', cur);
+    // Mettre à jour les boutons
+    document.querySelectorAll('.pt-cur-btn').forEach(function(b){ b.classList.remove('active'); });
+    var btn = document.getElementById('pt-'+cur.toLowerCase());
+    if(btn) btn.classList.add('active');
+    var sym = cur==='USD' ? '$' : '€';
+    document.querySelectorAll('.cur-lbl').forEach(function(el){ el.textContent=sym; });
+}
+function ptInitCurrency() {
+    var cur = localStorage.getItem('fa_currency') || 'EUR';
+    ptSetCurrency(cur);
 }
 
 function updatePreview() {
@@ -2465,7 +2488,7 @@ function exportCSV() {
     const rrRatio = getRRRatio();
     const sl = Math.round(tp / rrRatio);
 
-    let csv = 'Trade,Capital avant,Lots,TP gain ($),SL risque ($),Capital après,Phase\n';
+    let csv = 'Trade,Capital avant,Lots,TP gain (' + (localStorage.getItem('fa_currency')||'EUR') + '),SL risque (' + (localStorage.getItem('fa_currency')||'EUR') + '),Capital après,Phase\n';
     planData.forEach(row => {
         csv += `${row.trade},${row.capital.toFixed(2)},${row.lot.toFixed(2)},${row.gain.toFixed(2)},${row.sl.toFixed(2)},${row.newCapital.toFixed(2)},${row.phase.name}\n`;
     });
@@ -2534,6 +2557,8 @@ updatePreview();
   });
 })();
 </script>
-<script src="fa-access.js"></script>
+<script src="fa-access.js">
+ptInitCurrency();
+</script>
 </body>
 </html>
