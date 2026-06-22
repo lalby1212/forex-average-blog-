@@ -322,8 +322,49 @@
     document.head.appendChild(s);
   }
 
+  /* ── Rafraîchissement auto du token Supabase ──
+     Évite que les pages utilisent un access_token expiré (erreur "JWT expired").
+     Si le token est expiré (ou < 2 min de marge), on le renouvelle via le
+     refresh_token, puis on réécrit la session dans localStorage. */
+  async function refreshSessionIfNeeded() {
+    try {
+      let sbKey = null;
+      for (const k of Object.keys(localStorage)) {
+        if (k.startsWith('sb-') && k.endsWith('-auth-token')) { sbKey = k; break; }
+      }
+      if (!sbKey) return;
+      let sess = null;
+      try { sess = JSON.parse(localStorage.getItem(sbKey)); } catch { return; }
+      if (!sess || !sess.refresh_token) return;
+
+      const expMs = sess.expires_at ? sess.expires_at * 1000 : 0;
+      if (expMs && expMs > Date.now() + 120000) return; // encore valide → rien à faire
+
+      const rr = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', {
+        method: 'POST',
+        headers: { 'apikey': SB_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: sess.refresh_token })
+      });
+      if (!rr.ok) return;
+      const ns = await rr.json();
+      if (ns && ns.access_token) {
+        sess.access_token  = ns.access_token;
+        sess.refresh_token = ns.refresh_token || sess.refresh_token;
+        sess.expires_at    = ns.expires_at || (Math.floor(Date.now() / 1000) + (ns.expires_in || 3600));
+        sess.expires_in    = ns.expires_in || sess.expires_in;
+        if (ns.user) sess.user = ns.user;
+        localStorage.setItem(sbKey, JSON.stringify(sess));
+        // Synchroniser aussi la clé FA si déjà posée
+        if (localStorage.getItem(KEY_TOKEN)) localStorage.setItem(KEY_TOKEN, ns.access_token);
+      }
+    } catch (e) { /* silent */ }
+  }
+
   /* ── Boot ── */
-  function boot() {
+  async function boot() {
+    // ⚡ Rafraîchir le token s'il est expiré (AVANT tout contrôle d'accès)
+    await refreshSessionIfNeeded();
+
     // ⚡ Sync Supabase → FA (identité + token)
     const sbResult = syncFromSupabase();
 
