@@ -7,7 +7,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#FFD700;--dark:#080808;--card:#0f0f0f;--card2:#141414;
+  --gold:#FFD700;--dark:#080808;--card:#0f0f0f;
   --border:rgba(255,215,0,0.12);--text:#e8e8e8;--muted:rgba(255,255,255,0.45);
   --green:#22c55e;--red:#ef4444;--orange:#f97316;
 }
@@ -43,6 +43,7 @@ html,body{background:var(--dark);color:var(--text);
 .sdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;}
 .sdot.loading{background:var(--gold);animation:pulse 1s infinite;}
 .sdot.ok{background:var(--green);}
+.sdot.warn{background:var(--orange);}
 .sdot.err{background:var(--red);}
 .score-main{display:grid;grid-template-columns:130px 1fr;gap:1.75rem;
   background:var(--card);border:1px solid var(--border);border-radius:16px;
@@ -63,13 +64,14 @@ html,body{background:var(--dark);color:var(--text);
 .bias-bull{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25);}
 .bias-bear{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
 .bias-neut{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.1);}
-.score-meta{font-size:.78rem;color:var(--muted);line-height:1.6;}
+.score-meta{font-size:.78rem;color:var(--muted);line-height:1.7;}
 .score-meta strong{color:#fff;}
-.data-quality{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;
-  padding:.22rem .65rem;border-radius:6px;margin-top:.4rem;}
+.dq{display:inline-flex;align-items:center;gap:.3rem;font-size:.7rem;
+  padding:.18rem .55rem;border-radius:5px;margin-top:.3rem;}
 .dq-high{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
-.dq-med{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.2);}
-.dq-low{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);}
+.dq-med {background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.2);}
+.dq-low {background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2);}
+.dq-bad {background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);}
 .criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
 @media(max-width:540px){.criteria-grid{grid-template-columns:1fr;}}
 .crit-card{background:var(--card);border:1px solid rgba(255,255,255,.06);
@@ -77,11 +79,10 @@ html,body{background:var(--dark);color:var(--text);
 .crit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
 .crit-name{font-size:.74rem;font-weight:600;color:var(--muted);}
 .crit-val{font-size:.86rem;font-weight:900;}
-.crit-desc{font-size:.67rem;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
+.crit-sub{font-size:.65rem;color:rgba(255,255,255,.25);margin-bottom:.5rem;}
 .crit-track{height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
 .crit-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
-.crit-range{display:flex;justify-content:space-between;font-size:.6rem;
-  color:rgba(255,255,255,.2);margin-top:.22rem;}
+.crit-range{display:flex;justify-content:space-between;font-size:.6rem;color:rgba(255,255,255,.18);margin-top:.22rem;}
 .text-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
 @media(max-width:540px){.text-grid{grid-template-columns:1fr;}}
 .text-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:.9rem 1rem;}
@@ -90,15 +91,14 @@ html,body{background:var(--dark);color:var(--text);
   color:rgba(255,215,0,.5);margin-bottom:.4rem;}
 .text-inp{width:100%;background:transparent;border:none;color:var(--text);
   font-size:.82rem;font-family:inherit;outline:none;resize:none;line-height:1.55;min-height:56px;}
-.text-inp::placeholder{color:rgba(255,255,255,.2);}
 .sources-card{background:var(--card);border:1px solid rgba(255,255,255,.06);
   border-radius:11px;padding:.9rem 1rem;margin-bottom:1.25rem;display:none;}
 .src-lbl{font-size:.62rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
   color:rgba(255,255,255,.25);margin-bottom:.6rem;}
 .src-list{display:flex;flex-wrap:wrap;gap:.4rem;}
 .src-tag{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
-  color:rgba(255,255,255,.35);font-size:.71rem;padding:.22rem .6rem;border-radius:6px;transition:.3s;}
-.src-tag.ok{border-color:rgba(34,197,94,.25);color:rgba(34,197,94,.65);}
+  color:rgba(255,255,255,.35);font-size:.71rem;padding:.22rem .55rem;border-radius:6px;transition:.3s;}
+.src-tag.ok  {border-color:rgba(34,197,94,.3);color:rgba(34,197,94,.7);}
 .src-tag.fail{border-color:rgba(239,68,68,.2);color:rgba(239,68,68,.4);}
 .src-count{font-size:.72rem;color:var(--muted);margin-top:.5rem;}
 .publish-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
@@ -117,39 +117,41 @@ html,body{background:var(--dark);color:var(--text);
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{background:#22c55e;color:#000;}
 .toast.err{background:#ef4444;color:#fff;}
-/* Manual adj */
-#manualAdj{display:none;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15);border-radius:11px;padding:1rem 1.1rem;margin-bottom:.85rem;}
-.man-lbl{font-size:.63rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,215,0,.5);margin-bottom:.85rem;}
+#manualAdj{display:none;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15);
+  border-radius:11px;padding:1rem 1.1rem;margin-bottom:.85rem;}
+.man-lbl{font-size:.63rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
+  color:rgba(255,215,0,.5);margin-bottom:.85rem;}
 #manualSliders{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
-input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer;}
-#btnManual{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.75rem;padding:.35rem .85rem;border-radius:6px;cursor:pointer;margin-bottom:1rem;}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;
+  background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;
+  border-radius:50%;background:var(--gold);cursor:pointer;}
+#btnManual{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--muted);
+  font-size:.75rem;padding:.35rem .85rem;border-radius:6px;cursor:pointer;margin-bottom:1rem;}
 </style>
 </head>
 <body>
 
 <script>
 (function(){
-  try {
-    var u = localStorage.getItem('fa_user');
-    var t = localStorage.getItem('fa_token');
-    if (u && t) return;
-    for (var k in localStorage) {
-      if (k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0) {
-        var s = null;
-        try { s = JSON.parse(localStorage.getItem(k)); } catch(e){}
-        if (s && s.access_token && (!s.expires_at || s.expires_at * 1000 > Date.now())) return;
+  try{
+    var u=localStorage.getItem('fa_user'),t=localStorage.getItem('fa_token');
+    if(u&&t)return;
+    for(var k in localStorage){
+      if(k.indexOf('sb-')===0&&k.indexOf('-auth-token')>0){
+        var s=null;try{s=JSON.parse(localStorage.getItem(k));}catch(e){}
+        if(s&&s.access_token&&(!s.expires_at||s.expires_at*1000>Date.now()))return;
       }
     }
     window.location.replace('login.html?redirect=admin-scores.html');
-  } catch(e){}
+  }catch(e){}
 })();
 </script>
 
 <div class="page">
   <div class="page-badge"><span class="dot"></span> Intelligence Temps Réel</div>
   <h1 class="page-title">🔬 Radar de <span>Marché</span></h1>
-  <p class="page-sub">Analyse automatique par instrument — filtrage des actualités mondiales sur chaque actif, 5 critères indépendants.</p>
+  <p class="page-sub">Analyse automatique par instrument — agrégation multi-sources, 5 critères indépendants, filtrage ciblé.</p>
 
   <div class="selector-row" id="catPills">
     <button class="cat-pill active" data-cat="forex">💱 Forex</button>
@@ -225,14 +227,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   RADAR DE MARCHÉ — Moteur d\'analyse v2
-   Filtrage par instrument + 5 critères indépendants
-   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   RADAR DE MARCHÉ v3 — Multi-proxy + filtrage intelligent
+   ═══════════════════════════════════════════════════════ */
 
-const SB_URL     = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SB_KEY     = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const ALLORIGINS = 'https://api.allorigins.win/raw?url=';
+const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+
+/* Chaîne de proxies CORS — essayés dans l\'ordre jusqu\'au premier succès */
+const PROXIES = [
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
+  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
+  function(u){ return 'https://thingproxy.freeboard.io/fetch/' + u; }
+];
 
 /* ── Instruments ── */
 const INSTRUMENTS = {
@@ -245,143 +253,131 @@ const INSTRUMENTS = {
   indice:    ['S&P 500','NASDAQ','DAX','CAC 40','Nikkei','FTSE 100']
 };
 
-/* ── Mots-clés par instrument (pour filtrer les articles pertinents) ── */
-const INSTR_ALIASES = {
-  'EUR/USD':     ['eur/usd','eurusd','euro dollar','euro usd','eur usd','european currency','ecb rate','ecb decision'],
-  'GBP/USD':     ['gbp/usd','gbpusd','cable','pound dollar','sterling dollar','sterling usd','bank of england rate','boe rate'],
-  'USD/JPY':     ['usd/jpy','usdjpy','dollar yen','dollar jpy','greenback yen','boj rate','bank of japan rate','japanese yen'],
-  'USD/CHF':     ['usd/chf','usdchf','dollar franc','swiss franc dollar','snb rate','swiss national bank'],
-  'AUD/USD':     ['aud/usd','audusd','aussie dollar','australian dollar','rba rate','reserve bank australia'],
-  'NZD/USD':     ['nzd/usd','nzdusd','kiwi dollar','new zealand dollar','rbnz rate'],
-  'USD/CAD':     ['usd/cad','usdcad','loonie','canadian dollar','bank of canada rate','boc rate','oil cad'],
-  'EUR/GBP':     ['eur/gbp','eurgbp','euro pound','euro sterling'],
-  'EUR/JPY':     ['eur/jpy','eurjpy','euro yen'],
-  'EUR/CHF':     ['eur/chf','eurchf','euro franc'],
-  'EUR/AUD':     ['eur/aud','euraud','euro aussie'],
-  'EUR/CAD':     ['eur/cad','eurcad','euro loonie'],
-  'GBP/JPY':     ['gbp/jpy','gbpjpy','pound yen','sterling yen'],
-  'GBP/CHF':     ['gbp/chf','gbpchf','pound franc'],
-  'GBP/AUD':     ['gbp/aud','gbpaud','pound aussie'],
-  'GBP/CAD':     ['gbp/cad','gbpcad','pound loonie'],
-  'AUD/JPY':     ['aud/jpy','audjpy','aussie yen'],
-  'AUD/CHF':     ['aud/chf','audchf'],
-  'AUD/CAD':     ['aud/cad','audcad'],
-  'NZD/JPY':     ['nzd/jpy','nzdjpy','kiwi yen'],
-  'CAD/JPY':     ['cad/jpy','cadjpy','loonie yen'],
-  'CHF/JPY':     ['chf/jpy','chfjpy','franc yen'],
-  'XAU/USD':     ['gold','xau/usd','xauusd','gold price','gold rally','gold sell','precious metal','bullion'],
-  'XAG/USD':     ['silver','xag/usd','xagusd','silver price','precious metal silver'],
-  'Platinum':    ['platinum','platinum price'],
-  'Copper':      ['copper','copper price','industrial metal copper'],
-  'Palladium':   ['palladium','palladium price'],
-  'Brent Oil':   ['brent','brent oil','brent crude','opec brent'],
-  'WTI Oil':     ['wti','wti oil','crude oil','oil price','opec','petroleum'],
-  'Natural Gas': ['natural gas','nat gas','lng','gas price'],
-  'BTC/USD':     ['bitcoin','btc','btcusd','btc/usd','crypto bitcoin'],
-  'ETH/USD':     ['ethereum','eth','ethusd','eth/usd','ether'],
-  'SOL/USD':     ['solana','sol','solusd'],
-  'BNB/USD':     ['binance coin','bnb','binance'],
-  'XRP/USD':     ['xrp','ripple','xrp price'],
-  'ADA/USD':     ['cardano','ada','ada price'],
-  'DOGE/USD':    ['dogecoin','doge','doge price'],
-  'AVAX/USD':    ['avalanche','avax'],
-  'DOT/USD':     ['polkadot','dot polkadot'],
-  'MATIC/USD':   ['polygon','matic'],
-  'LTC/USD':     ['litecoin','ltc'],
-  'LINK/USD':    ['chainlink','link chainlink'],
-  'S&P 500':     ['s&p 500','sp500','s&p500','s&p index','spx','us stocks','wall street','dow jones'],
-  'NASDAQ':      ['nasdaq','tech stocks','nasdaq 100','ndx','technology index'],
-  'DAX':         ['dax','german stocks','frankfurt','german index','deutsche boerse'],
-  'CAC 40':      ['cac 40','cac40','french stocks','paris bourse'],
-  'Nikkei':      ['nikkei','japanese stocks','topix','japan index','tokyo stocks'],
-  'FTSE 100':    ['ftse','ftse 100','london stocks','uk index','uk stocks']
+/* ── Alias par instrument (termes courts, fréquents dans les articles) ── */
+const ALIASES = {
+  'EUR/USD':['euro','eur/usd','eurusd','ecb','european central bank','eurozone','eu economy'],
+  'GBP/USD':['sterling','pound','gbp/usd','gbpusd','cable','bank of england','boe'],
+  'USD/JPY':['yen','jpy','usd/jpy','usdjpy','bank of japan','boj','nikkei'],
+  'USD/CHF':['franc','chf','usd/chf','usdchf','swiss','snb'],
+  'AUD/USD':['aussie','aud/usd','audusd','rba','australia','australian dollar'],
+  'NZD/USD':['kiwi','nzd/usd','nzdusd','rbnz','new zealand'],
+  'USD/CAD':['loonie','cad','usd/cad','usdcad','bank of canada','boc','canadian'],
+  'EUR/GBP':['eur/gbp','eurgbp','euro pound'],
+  'EUR/JPY':['eur/jpy','eurjpy','euro yen'],
+  'EUR/CHF':['eur/chf','eurchf','euro franc'],
+  'EUR/AUD':['eur/aud','euraud'],
+  'EUR/CAD':['eur/cad','eurcad'],
+  'GBP/JPY':['gbp/jpy','gbpjpy','pound yen','sterling yen'],
+  'GBP/CHF':['gbp/chf','gbpchf'],
+  'GBP/AUD':['gbp/aud','gbpaud'],
+  'GBP/CAD':['gbp/cad','gbpcad'],
+  'AUD/JPY':['aud/jpy','audjpy','aussie yen'],
+  'AUD/CHF':['aud/chf','audchf'],
+  'AUD/CAD':['aud/cad','audcad'],
+  'NZD/JPY':['nzd/jpy','nzdjpy'],
+  'CAD/JPY':['cad/jpy','cadjpy'],
+  'CHF/JPY':['chf/jpy','chfjpy'],
+  'XAU/USD':['gold','xau','bullion','precious metal','xauusd'],
+  'XAG/USD':['silver','xag','xagusd'],
+  'Platinum':['platinum'],
+  'Copper':['copper','industrial metal'],
+  'Palladium':['palladium'],
+  'Brent Oil':['brent','brent crude','opec'],
+  'WTI Oil':['wti','crude oil','oil price','petroleum'],
+  'Natural Gas':['natural gas','lng','gas price'],
+  'BTC/USD':['bitcoin','btc','crypto'],
+  'ETH/USD':['ethereum','eth','ether'],
+  'SOL/USD':['solana','sol'],
+  'BNB/USD':['binance','bnb'],
+  'XRP/USD':['xrp','ripple'],
+  'ADA/USD':['cardano','ada'],
+  'DOGE/USD':['dogecoin','doge'],
+  'AVAX/USD':['avalanche','avax'],
+  'DOT/USD':['polkadot','dot'],
+  'MATIC/USD':['polygon','matic'],
+  'LTC/USD':['litecoin','ltc'],
+  'LINK/USD':['chainlink','link'],
+  'S&P 500':['s&p','spx','wall street','us stocks','equity','dow'],
+  'NASDAQ':['nasdaq','tech stocks','ndx'],
+  'DAX':['dax','german stocks','frankfurt'],
+  'CAC 40':['cac','french stocks','paris'],
+  'Nikkei':['nikkei','japan stocks','topix'],
+  'FTSE 100':['ftse','london stocks','uk stocks']
 };
 
-/* ── Mots-clés par critère (INDÉPENDANTS) ── */
-const CK = {
-  /* TENDANCE : direction du prix, signaux techniques directionnels */
-  tendance: {
-    bull: ['uptrend','bullish trend','higher highs','higher lows','buy signal','long signal',
-           'breakout above','price above','new high','multi-week high','multi-month high',
-           'above resistance','cleared resistance','upside target','bullish structure'],
-    bear: ['downtrend','bearish trend','lower highs','lower lows','sell signal','short signal',
-           'breakdown below','price below','new low','multi-week low','multi-month low',
-           'below support','broke support','downside target','bearish structure'],
-    neg:  ['no trend','range-bound','sideways','consolidating','choppy']
-  },
-  /* MOMENTUM : vitesse et accélération du mouvement */
-  momentum: {
-    bull: ['gaining momentum','accelerating','rsi above 60','rsi overbought','macd bullish cross',
-           'bullish momentum','buying pressure','volume surge','strong buying','momentum building',
-           'positive divergence','breaking higher','follow-through','rally extending'],
-    bear: ['losing momentum','decelerating','rsi below 40','rsi oversold','macd bearish cross',
-           'bearish momentum','selling pressure','volume spike down','strong selling','momentum fading',
-           'negative divergence','breaking lower','fading rally','momentum exhausted'],
-    neg:  ['momentum stalling','no momentum','flat momentum','neutral rsi']
-  },
-  /* VOLATILITÉ : intensité et risque de marché (indépendant de la direction) */
-  volatilite: {
-    high: ['volatile','spike','whipsaw','erratic','risk-off','vix spike','vix rising',
-           'gap up','gap down','sharp move','wild swings','heightened volatility',
-           'uncertainty','flash crash','panic','fear index'],
-    low:  ['calm','low volatility','tight range','narrow range','low vix','vix falling',
-           'range-bound','stable','orderly','quiet market','consolidation phase']
-  },
-  /* FONDAMENTAUX : données macro, banques centrales, économie */
-  fondamentaux: {
-    bull: ['beat expectations','above forecast','strong gdp','gdp beat','strong nfp','nfp beat',
-           'rate hike','hawkish','tighter policy','higher rates','inflation controlled',
-           'strong employment','jobs growth','consumer confidence high','pmi above 50',
-           'trade surplus','current account surplus','fiscal stimulus'],
-    bear: ['missed expectations','below forecast','weak gdp','gdp miss','weak nfp','nfp miss',
-           'rate cut','dovish','looser policy','lower rates','inflation surging','stagflation',
-           'rising unemployment','job losses','consumer confidence low','pmi below 50',
-           'trade deficit','fiscal deficit','recession risk','recession fears'],
-    neg:  ['as expected','in line','unchanged','no surprise','priced in']
-  },
-  /* SENTIMENT : positionnement, flux institutionnels, COT */
-  sentiment: {
-    bull: ['net long','institutional buying','retail bearish','contrarian buy','risk-on',
-           'bullish sentiment','optimism','fund buying','positioning bullish','cot net long',
-           'short squeeze','speculative long','inflows','capital inflows'],
-    bear: ['net short','institutional selling','retail bullish','contrarian sell','risk-off',
-           'bearish sentiment','pessimism','fund selling','positioning bearish','cot net short',
-           'long liquidation','speculative short','outflows','capital outflows'],
-    neg:  ['neutral positioning','mixed sentiment','unclear positioning']
-  }
-};
-
-/* ── Feeds RSS — large spectre, toutes catégories ── */
-const ALL_FEEDS = [
-  { url:'https://www.forexlive.com/feed/news',            name:'ForexLive'    },
-  { url:'https://www.fxstreet.com/rss/news',              name:'FXStreet'     },
-  { url:'https://www.dailyfx.com/feeds/forex-rate-news',  name:'DailyFX'      },
-  { url:'https://www.kitco.com/rss/kitco-gold-news.xml',  name:'Kitco'        },
-  { url:'https://oilprice.com/rss/main',                  name:'OilPrice'     },
-  { url:'https://cointelegraph.com/rss',                  name:'CoinTelegraph' },
-  { url:'https://beincrypto.com/feed/',                   name:'BeInCrypto'   },
-  { url:'https://feeds.reuters.com/reuters/businessNews', name:'Reuters'      },
-  { url:'https://www.investing.com/rss/news.rss',         name:'Investing.com' }
+/* ── Feeds RSS — large spectre ── */
+const FEEDS = [
+  {url:'https://www.forexlive.com/feed/news',            name:'ForexLive'},
+  {url:'https://www.fxstreet.com/rss/news',              name:'FXStreet'},
+  {url:'https://www.dailyfx.com/feeds/forex-rate-news',  name:'DailyFX'},
+  {url:'https://www.kitco.com/rss/kitco-gold-news.xml',  name:'Kitco'},
+  {url:'https://oilprice.com/rss/main',                  name:'OilPrice'},
+  {url:'https://cointelegraph.com/rss',                  name:'CoinTelegraph'},
+  {url:'https://beincrypto.com/feed/',                   name:'BeInCrypto'},
+  {url:'https://www.investing.com/rss/news.rss',         name:'Investing.com'},
+  {url:'https://feeds.content.dowjones.io/public/rss/mw_topstories', name:'MarketWatch'},
+  {url:'https://www.cnbc.com/id/100003114/device/rss/rss.html', name:'CNBC'}
 ];
 
-/* ═══════════════ MOTEUR D\'ANALYSE ═══════════════ */
+/* ── Mots-clés par critère ── */
+const CK = {
+  tendance:{
+    bull:['uptrend','bullish trend','higher high','buy signal','breakout above','above resistance',
+          'new high','cleared resistance','bullish structure','upside target','long signal',
+          'price above','reclaimed','gained ground','advances','rallied','bounced'],
+    bear:['downtrend','bearish trend','lower low','sell signal','breakdown below','below support',
+          'new low','broke support','bearish structure','downside target','short signal',
+          'price below','gave up','lost ground','declines','tumbled','collapsed'],
+    neg:['range-bound','sideways','choppy','no trend','consolidating']
+  },
+  momentum:{
+    bull:['rsi above','momentum building','buying pressure','accelerating','macd bullish',
+          'positive divergence','volume surge','follow-through','gaining momentum','breakout confirmed',
+          'strong buying','bullish momentum'],
+    bear:['rsi below','momentum fading','selling pressure','decelerating','macd bearish',
+          'negative divergence','volume spike down','failed rally','losing momentum','breakdown confirmed',
+          'strong selling','bearish momentum'],
+    neg:['momentum stalling','neutral rsi','flat momentum']
+  },
+  volatilite:{
+    high:['volatile','spike','whipsaw','vix','gap','sharp move','wild','erratic',
+          'uncertainty','flash','panic','heightened','surge in volatility'],
+    low:['calm','low volatility','tight range','narrow range','stable','orderly','quiet']
+  },
+  fondamentaux:{
+    bull:['beat','above forecast','beat expectations','strong gdp','rate hike','hawkish',
+          'strong employment','nfp beat','pmi above','trade surplus','stimulus','better than expected',
+          'solid growth','above consensus'],
+    bear:['miss','below forecast','missed expectations','weak gdp','rate cut','dovish',
+          'rising unemployment','nfp miss','pmi below','trade deficit','recession','worse than expected',
+          'stagflation','below consensus'],
+    neg:['as expected','in line','unchanged','priced in','no surprise']
+  },
+  sentiment:{
+    bull:['net long','institutional buying','risk-on','bullish sentiment','short squeeze',
+          'speculative long','inflows','fund buying','optimism','cot long','retail short'],
+    bear:['net short','institutional selling','risk-off','bearish sentiment','long liquidation',
+          'speculative short','outflows','fund selling','pessimism','cot short','retail long'],
+    neg:['mixed sentiment','neutral positioning','unclear']
+  }
+};
 
 let currentCat = 'forex';
 let lastScores  = null;
 
-/* Construction du select */
-function buildSelect(cat) {
+/* ── Select ── */
+function buildSelect(cat){
   var sel = document.getElementById('instrSel');
   sel.innerHTML = INSTRUMENTS[cat].map(function(i){
-    return '<option value="' + i + '">' + i + '</option>';
+    return '<option value="'+i+'">'+i+'</option>';
   }).join('');
 }
 buildSelect('forex');
 
-document.getElementById('catPills').addEventListener('click', function(e) {
+document.getElementById('catPills').addEventListener('click',function(e){
   var pill = e.target.closest('.cat-pill');
-  if (!pill) return;
-  document.querySelectorAll('.cat-pill').forEach(function(p){ p.classList.remove('active'); });
+  if(!pill) return;
+  document.querySelectorAll('.cat-pill').forEach(function(p){p.classList.remove('active');});
   pill.classList.add('active');
   currentCat = pill.dataset.cat;
   buildSelect(currentCat);
@@ -390,224 +386,212 @@ document.getElementById('catPills').addEventListener('click', function(e) {
 document.getElementById('instrSel').addEventListener('change', resetUI);
 
 /* ── Parse RSS XML ── */
-function parseRSS(xmlStr) {
-  try {
+function parseRSS(xmlStr){
+  try{
     var parser = new DOMParser();
-    var doc    = parser.parseFromString(xmlStr, 'text/xml');
+    var doc    = parser.parseFromString(xmlStr,'text/xml');
     var items  = Array.from(doc.querySelectorAll('item, entry'));
-    return items.map(function(item) {
-      var title = item.querySelector('title');
-      var desc  = item.querySelector('description, summary, content');
-      return ((title ? title.textContent : '') + ' ' + (desc ? desc.textContent : '')).toLowerCase();
+    return items.map(function(item){
+      var t = item.querySelector('title');
+      var d = item.querySelector('description,summary,content');
+      return ((t?t.textContent:'') + ' ' + (d?d.textContent:'')).toLowerCase().replace(/<[^>]*>/g,' ');
     });
-  } catch(e) { return []; }
+  }catch(e){return [];}
 }
 
-/* ── Fetch un feed ── */
-async function fetchFeed(feedObj) {
-  try {
-    var ctrl  = new AbortController();
-    var timer = setTimeout(function(){ ctrl.abort(); }, 9000);
-    var r     = await fetch(ALLORIGINS + encodeURIComponent(feedObj.url), { signal: ctrl.signal });
-    clearTimeout(timer);
-    if (!r.ok) return { name: feedObj.name, articles: [], ok: false };
-    var xml      = await r.text();
-    var articles = parseRSS(xml);
-    return { name: feedObj.name, articles: articles, ok: articles.length > 0 };
-  } catch(e) {
-    return { name: feedObj.name, articles: [], ok: false };
+/* ── Fetch avec chaîne de proxy (essai séquentiel) ── */
+async function fetchFeedRobust(feedObj){
+  for(var pi = 0; pi < PROXIES.length; pi++){
+    try{
+      var url   = PROXIES[pi](feedObj.url);
+      var ctrl  = new AbortController();
+      var timer = setTimeout(function(){ctrl.abort();}, 8000);
+      var r     = await fetch(url, {signal: ctrl.signal});
+      clearTimeout(timer);
+      if(!r.ok) continue;
+      var xml   = await r.text();
+      /* Vérifier que c\'est du RSS valide et pas une page d\'erreur */
+      if(xml.length < 100 || (!xml.includes('<item') && !xml.includes('<entry'))) continue;
+      var articles = parseRSS(xml);
+      if(articles.length > 0){
+        return {name: feedObj.name, articles: articles, ok: true, proxy: pi};
+      }
+    }catch(e){}
   }
+  return {name: feedObj.name, articles: [], ok: false, proxy: -1};
 }
 
-/* ── Filtrage par instrument ── */
-function filterByInstrument(articles, instrument) {
-  var aliases = INSTR_ALIASES[instrument];
-  if (!aliases || aliases.length === 0) {
-    /* Fallback : utiliser le nom brut */
-    var raw = instrument.toLowerCase();
-    return articles.filter(function(txt){ return txt.includes(raw); });
-  }
-  return articles.filter(function(txt) {
-    return aliases.some(function(alias){ return txt.includes(alias); });
+/* ── Filtrage par instrument (avec fallback) ── */
+function filterArticles(allArticles, instrument){
+  var aliases = ALIASES[instrument] || [instrument.toLowerCase()];
+  var matched = allArticles.filter(function(txt){
+    return aliases.some(function(alias){ return txt.indexOf(alias) !== -1; });
   });
+  return matched;
 }
 
-/* ── Comptage de mots-clés avec gestion de la négation ── */
-function countKW(text, words) {
+/* ── Comptage mots-clés avec gestion négation ── */
+function countKW(text, words){
   var count = 0;
-  words.forEach(function(w) {
+  words.forEach(function(w){
     var idx = 0;
-    while ((idx = text.indexOf(w, idx)) !== -1) {
-      /* Vérifier si précédé de "not","no","without","failed to","didn\'t" dans les 30 chars */
-      var before = text.substring(Math.max(0, idx - 30), idx);
-      var negated = /\b(not|no|without|failed to|didn\'t|doesn\'t|won\'t|unable to|contrary to|despite)\s*\w*\s*$/.test(before);
-      if (!negated) count++;
+    while((idx = text.indexOf(w, idx)) !== -1){
+      var before = text.substring(Math.max(0, idx-25), idx);
+      if(!/\b(not|no |without |failed|didn|won\'t|unable|despite)\w*\s*$/.test(before)) count++;
       idx += w.length;
     }
   });
   return count;
 }
+function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
 
-function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
+/* ── 5 critères indépendants ── */
+function computeScores(text){
+  /* Tendance */
+  var tB = countKW(text, CK.tendance.bull);
+  var tBr= countKW(text, CK.tendance.bear);
+  var tN = countKW(text, CK.tendance.neg);
+  var tNet= tB - tBr - Math.round(tN*0.4);
+  var tTot= tB + tBr + 1;
+  var tendance = clamp(Math.round((tNet/tTot)*30), -25, 25);
 
-/* ── Calcul des 5 critères indépendants ── */
-function computeScores(filteredText) {
-  var t  = filteredText;
+  /* Momentum */
+  var mB = countKW(text, CK.momentum.bull);
+  var mBr= countKW(text, CK.momentum.bear);
+  var mN = countKW(text, CK.momentum.neg);
+  var mNet= mB - mBr - Math.round(mN*0.4);
+  var mTot= mB + mBr + 1;
+  var momentum = clamp(Math.round((mNet/mTot)*24), -20, 20);
 
-  /* 1. TENDANCE — signaux techniques directionnels */
-  var tBull = countKW(t, CK.tendance.bull);
-  var tBear = countKW(t, CK.tendance.bear);
-  var tNeg  = countKW(t, CK.tendance.neg);
-  var tNet  = tBull - tBear - Math.round(tNeg * 0.5);
-  var tTot  = tBull + tBear + 1;
-  var tendance = clamp(Math.round((tNet / tTot) * 30), -25, 25);
+  /* Volatilité */
+  var vH = countKW(text, CK.volatilite.high);
+  var vL = countKW(text, CK.volatilite.low);
+  var volatilite = clamp(Math.round(((vH*1.2 - vL*0.5)/(vH+vL+1))*15 + 4), 0, 15);
 
-  /* 2. MOMENTUM — vitesse du mouvement, oscillateurs */
-  var mBull = countKW(t, CK.momentum.bull);
-  var mBear = countKW(t, CK.momentum.bear);
-  var mNeg  = countKW(t, CK.momentum.neg);
-  var mNet  = mBull - mBear - Math.round(mNeg * 0.5);
-  var mTot  = mBull + mBear + 1;
-  var momentum = clamp(Math.round((mNet / mTot) * 25), -20, 20);
+  /* Fondamentaux */
+  var fB = countKW(text, CK.fondamentaux.bull);
+  var fBr= countKW(text, CK.fondamentaux.bear);
+  var fN = countKW(text, CK.fondamentaux.neg);
+  var fNet= fB - fBr - Math.round(fN*0.3);
+  var fTot= fB + fBr + 1;
+  var fBoost = Math.min(fB+fBr, 12)/12;
+  var fondamentaux = clamp(Math.round((fNet/fTot)*32*(0.5+fBoost*0.5)), -25, 25);
 
-  /* 3. VOLATILITÉ — intensité (0 = calme, +15 = extrême) */
-  var vHigh = countKW(t, CK.volatilite.high);
-  var vLow  = countKW(t, CK.volatilite.low);
-  var vBase = clamp(Math.round(((vHigh - vLow * 0.3) / (vHigh + vLow + 1)) * 18), 0, 15);
-  /* Plancher à 3 si on a des articles pertinents */
-  var volatilite = filteredText.length > 100 ? Math.max(3, vBase) : vBase;
+  /* Sentiment */
+  var sB = countKW(text, CK.sentiment.bull);
+  var sBr= countKW(text, CK.sentiment.bear);
+  var sN = countKW(text, CK.sentiment.neg);
+  var sNet= sB - sBr - Math.round(sN*0.4);
+  var sTot= sB + sBr + 1;
+  var sentiment_score = clamp(Math.round((sNet/sTot)*18), -15, 15);
 
-  /* 4. FONDAMENTAUX — données macro, banques centrales */
-  var fBull = countKW(t, CK.fondamentaux.bull);
-  var fBear = countKW(t, CK.fondamentaux.bear);
-  var fNeg  = countKW(t, CK.fondamentaux.neg);
-  var fNet  = fBull - fBear - Math.round(fNeg * 0.3);
-  var fTot  = fBull + fBear + 1;
-  /* Fondamentaux = formule différente : pondéré par la présence de macro */
-  var fRaw     = Math.round((fNet / fTot) * 32);
-  var fBoost   = Math.min(fBull + fBear, 10) / 10; /* Plus il y a de données, plus c\'est fiable */
-  var fondamentaux = clamp(Math.round(fRaw * (0.5 + fBoost * 0.5)), -25, 25);
-
-  /* 5. SENTIMENT — positionnement, flux, COT */
-  var sBull = countKW(t, CK.sentiment.bull);
-  var sBear = countKW(t, CK.sentiment.bear);
-  var sNeg  = countKW(t, CK.sentiment.neg);
-  var sNet  = sBull - sBear - Math.round(sNeg * 0.5);
-  var sTot  = sBull + sBear + 1;
-  /* Sentiment = formule contrarian légère : fort retail bull → souvent baissier */
-  var sentiment_score = clamp(Math.round((sNet / sTot) * 18), -15, 15);
-
-  /* Score global (-100/+100) */
-  var score_sentiment = clamp(tendance + momentum + fondamentaux + sentiment_score - Math.round(volatilite * 0.3), -100, 100);
+  var score_sentiment = clamp(tendance+momentum+fondamentaux+sentiment_score - Math.round(volatilite*0.2), -100,100);
 
   return {
     tendance, momentum, volatilite, fondamentaux, sentiment_score, score_sentiment,
-    bull: tBull + mBull + fBull + sBull,
-    bear: tBear + mBear + fBear + sBear,
-    detail: { tBull, tBear, mBull, mBear, fBull, fBear, sBull, sBear, vHigh, vLow }
+    bull: tB+mB+fB+sB, bear: tBr+mBr+fBr+sBr,
+    d:{tB,tBr,mB,mBr,fB,fBr,sB,sBr,vH,vL}
   };
 }
 
-/* ── Génération des textes automatiques ── */
-function autoContext(sc, instr, articleCount) {
-  var dir  = sc.tendance > 8 ? 'clairement haussière' : sc.tendance > 2 ? 'légèrement haussière' :
-             sc.tendance < -8 ? 'clairement baissière' : sc.tendance < -2 ? 'légèrement baissière' : 'neutre';
-  var mom  = sc.momentum > 6 ? 'fort et en accélération' : sc.momentum > 0 ? 'modéré' :
-             sc.momentum < -6 ? 'négatif et en accélération' : sc.momentum < 0 ? 'en perte de vitesse' : 'neutre';
-  var fund = sc.fondamentaux > 8 ? 'solides et favorables' : sc.fondamentaux > 0 ? 'légèrement positifs' :
-             sc.fondamentaux < -8 ? 'négatifs et pesants' : sc.fondamentaux < 0 ? 'légèrement défavorables' : 'mitigés';
-  var vol  = sc.volatilite > 10 ? 'très élevée' : sc.volatilite > 6 ? 'élevée' : sc.volatilite > 3 ? 'modérée' : 'faible';
-
-  return instr + ' — Analyse basée sur ' + articleCount + ' articles filtrés. ' +
-    'La dynamique de tendance est ' + dir + '. ' +
-    'Le momentum est ' + mom + '. ' +
-    'Fondamentaux ' + fund + '. Volatilité ' + vol + '. ' +
-    'Signaux directionnels : ' + sc.detail.tBull + ' haussiers vs ' + sc.detail.tBear + ' baissiers. ' +
-    'Données macro : ' + sc.detail.fBull + ' positives vs ' + sc.detail.fBear + ' négatives.';
+/* ── Textes auto ── */
+function autoContext(sc, instr, n, fallback){
+  var dir = sc.tendance>8?'clairement haussière':sc.tendance>2?'légèrement haussière':
+            sc.tendance<-8?'clairement baissière':sc.tendance<-2?'légèrement baissière':'neutre';
+  var vol = sc.volatilite>10?'très élevée':sc.volatilite>6?'élevée':sc.volatilite>3?'modérée':'faible';
+  var fund= sc.fondamentaux>8?'solides':sc.fondamentaux>0?'légèrement positifs':
+            sc.fondamentaux<-8?'négatifs':'mitigés';
+  var mom = sc.momentum>6?'fort et en accélération':sc.momentum>0?'modéré':
+            sc.momentum<-6?'négatif et en accélération':sc.momentum<0?'en perte de vitesse':'neutre';
+  var src = fallback ? ' (analyse sectorielle — filtrage élargi)' : '';
+  return instr+' — '+n+' articles analysés'+src+'. Tendance '+dir+', momentum '+mom+
+    '. Fondamentaux '+fund+'. Volatilité '+vol+
+    '. Signaux : '+sc.d.tB+' haussiers vs '+sc.d.tBr+' baissiers.';
+}
+function autoDecision(sc){
+  var t = sc.tendance+sc.momentum+sc.fondamentaux+sc.sentiment_score;
+  if(t>=35) return 'Biais ACHETEUR FORT — Chercher des entrées LONG sur repli en direction de tendance';
+  if(t>=15) return 'Biais haussier — Privilégier les entrées LONG sur supports confirmés';
+  if(t<=-35)return 'Biais VENDEUR FORT — Chercher des entrées SHORT sur rebond en direction de tendance';
+  if(t<=-15)return 'Biais baissier — Privilégier les entrées SHORT sur résistances confirmées';
+  return 'Neutre — Attendre un signal directionnel clair avant de s\'engager';
+}
+function autoLimite(sc){
+  if(sc.volatilite>10) return 'Volatilité élevée : élargir les stops, réduire le sizing. Risque whipsaw important.';
+  if(sc.volatilite>5)  return 'Volatilité modérée : stops standards, surveiller les publications macro imminentes.';
+  return 'Faible volatilité : attendre les cassures confirmées en clôture, éviter les faux breakouts.';
 }
 
-function autoDecision(sc) {
-  var total = sc.tendance + sc.momentum + sc.fondamentaux + sc.sentiment_score;
-  if (total >= 35)  return 'Biais ACHETEUR FORT — Chercher des configurations LONG sur repli en direction de tendance';
-  if (total >= 15)  return 'Biais haussier — Privilégier les entrées LONG sur supports, confirmer avec le momentum';
-  if (total <= -35) return 'Biais VENDEUR FORT — Chercher des configurations SHORT sur rebond en direction de tendance';
-  if (total <= -15) return 'Biais baissier — Privilégier les entrées SHORT sur résistances, confirmer avec le momentum';
-  return 'Biais NEUTRE — Pas de signal directionnel clair, attendre une cassure décisive avant de s\'engager';
-}
-
-function autoLimite(sc) {
-  if (sc.volatilite > 10) return 'Volatilité élevée : élargir les stops, réduire le sizing. Risque de whipsaw important.';
-  if (sc.volatilite > 6)  return 'Volatilité modérée : stops normaux, surveiller les publications macro en cours.';
-  return 'Faible volatilité : attention aux faux cassures, privilégier les breakouts confirmés en clôture.';
-}
-
-/* ── Run principal ── */
-async function runAnalysis() {
+/* ── ANALYSE PRINCIPALE ── */
+async function runAnalysis(){
   var instr = document.getElementById('instrSel').value;
-  if (!instr) return;
+  if(!instr) return;
 
-  setStatus('loading', 'Collecte des actualités mondiales…');
+  setStatus('loading','Collecte des flux d\'actualités…');
   document.getElementById('btnAnalyze').disabled = true;
   document.getElementById('btnPub').disabled = true;
   renderSkeleton();
 
-  /* Afficher tous les feeds */
   var srcCard = document.getElementById('srcCard');
-  var srcList = document.getElementById('srcList');
   srcCard.style.display = 'block';
-  srcList.innerHTML = ALL_FEEDS.map(function(f, i){
-    return '<span class="src-tag" id="src' + i + '">' + f.name + '</span>';
+  document.getElementById('srcList').innerHTML = FEEDS.map(function(f,i){
+    return '<span class="src-tag" id="src'+i+'">'+f.name+'</span>';
   }).join('');
 
-  setStatus('loading', 'Récupération des flux en cours…');
-
-  /* Fetch tous les feeds en parallèle */
-  var results = await Promise.all(ALL_FEEDS.map(function(f, i) {
-    return fetchFeed(f).then(function(r) {
-      var el = document.getElementById('src' + i);
-      if (el) el.className = 'src-tag ' + (r.ok ? 'ok' : 'fail');
+  /* Fetch tous les feeds en parallèle avec fallback proxy */
+  var results = await Promise.all(FEEDS.map(function(f,i){
+    return fetchFeedRobust(f).then(function(r){
+      var el = document.getElementById('src'+i);
+      if(el) el.className='src-tag '+(r.ok?'ok':'fail');
       return r;
     });
   }));
 
-  var totalArticles = 0;
-  results.forEach(function(r){ totalArticles += r.articles.length; });
-  var activeSources = results.filter(function(r){ return r.ok; }).length;
-
-  setStatus('loading', 'Filtrage des articles sur ' + instr + '…');
-
-  /* Filtrer par instrument */
   var allArticles = [];
   results.forEach(function(r){ allArticles = allArticles.concat(r.articles); });
-  var filteredArticles = filterByInstrument(allArticles, instr);
-  var filteredText     = filteredArticles.join(' ');
-  var articleCount     = filteredArticles.length;
+  var activeSrc = results.filter(function(r){return r.ok;}).length;
+  var totalArt  = allArticles.length;
+
+  setStatus('loading','Filtrage sur '+instr+' ('+totalArt+' articles collectés)…');
+
+  /* Filtrage par instrument */
+  var filtered = filterArticles(allArticles, instr);
+  var useFallback = false;
+
+  /* Si 0 résultats spécifiques → utiliser tous les articles de la catégorie */
+  if(filtered.length === 0 && totalArt > 0){
+    filtered    = allArticles;
+    useFallback = true;
+  }
+
+  var text       = filtered.join(' ');
+  var artCount   = filtered.length;
 
   document.getElementById('srcCount').textContent =
-    totalArticles + ' articles collectés · ' + articleCount + ' concernant ' + instr +
-    ' · ' + activeSources + '/' + ALL_FEEDS.length + ' sources actives';
+    totalArt+' articles collectés · '+
+    (useFallback ? 'filtrage élargi (secteur)' : artCount+' articles sur '+instr)+
+    ' · '+activeSrc+'/'+FEEDS.length+' sources actives';
 
-  /* Calculer les scores */
-  var sc = computeScores(filteredText);
-  lastScores = Object.assign({}, sc, { instrument: instr, categorie: currentCat, articleCount: articleCount });
+  /* Calcul */
+  var sc = computeScores(text);
+  lastScores = Object.assign({}, sc, {instrument:instr, categorie:currentCat, articleCount:artCount, fallback:useFallback});
 
-  /* Render */
   renderRing(sc);
-  renderInfo(sc, instr, articleCount);
+  renderInfo(sc, instr, artCount, useFallback);
   renderCriteria(sc);
 
-  document.getElementById('tContexte').value = autoContext(sc, instr, articleCount);
+  document.getElementById('tContexte').value = autoContext(sc, instr, artCount, useFallback);
   document.getElementById('tDecision').value = autoDecision(sc);
   document.getElementById('tLimite').value   = autoLimite(sc);
 
-  var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
+  var total = sc.tendance+sc.momentum+sc.volatilite+sc.fondamentaux+sc.sentiment_score;
 
-  if (activeSources === 0) {
-    setStatus('err', 'Sources indisponibles — affinez manuellement');
-  } else if (articleCount < 3) {
-    setStatus('err', articleCount + ' article(s) filtré(s) sur ' + instr + ' — données insuffisantes, affinez manuellement');
+  if(activeSrc === 0){
+    setStatus('err','Aucune source accessible — vérifiez votre connexion');
+  } else if(useFallback){
+    setStatus('warn',artCount+' articles (secteur) · Score brut '+(total>=0?'+':'')+total+' · '+new Date().toLocaleTimeString('fr-FR'));
   } else {
-    setStatus('ok', articleCount + ' articles sur ' + instr + ' · Score brut ' + (total >= 0 ? '+' : '') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
+    setStatus('ok',artCount+' articles sur '+instr+' · Score '+(total>=0?'+':'')+total+' · '+new Date().toLocaleTimeString('fr-FR'));
   }
 
   document.getElementById('btnAnalyze').disabled = false;
@@ -615,231 +599,200 @@ async function runAnalysis() {
 }
 
 /* ── Render ── */
-function renderRing(sc) {
-  var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
-  var pct   = Math.max(0, Math.min(100, Math.round(((total + 100) / 200) * 100)));
-  var circ  = 2 * Math.PI * 50;
-  var dash  = circ - (pct / 100) * circ;
-  var color = pct >= 65 ? '#22c55e' : pct >= 47 ? '#FFD700' : pct >= 32 ? '#f97316' : '#ef4444';
-  document.getElementById('ringNum').textContent = (total >= 0 ? '+' : '') + total;
-  document.getElementById('ringNum').style.color  = color;
+function renderRing(sc){
+  var total = sc.tendance+sc.momentum+sc.volatilite+sc.fondamentaux+sc.sentiment_score;
+  var pct   = Math.max(0,Math.min(100,Math.round(((total+100)/200)*100)));
+  var circ  = 2*Math.PI*50;
+  var dash  = circ-(pct/100)*circ;
+  var color = pct>=65?'#22c55e':pct>=47?'#FFD700':pct>=32?'#f97316':'#ef4444';
+  document.getElementById('ringNum').textContent = (total>=0?'+':'')+total;
+  document.getElementById('ringNum').style.color = color;
   document.getElementById('ringBar').style.stroke = color;
   document.getElementById('ringBar').setAttribute('stroke-dashoffset', dash.toFixed(1));
 }
 
-function renderInfo(sc, instr, articleCount) {
-  var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
-  var pct   = Math.max(0, Math.min(100, Math.round(((total + 100) / 200) * 100)));
+function renderInfo(sc, instr, n, fallback){
+  var total = sc.tendance+sc.momentum+sc.volatilite+sc.fondamentaux+sc.sentiment_score;
+  var pct   = Math.max(0,Math.min(100,Math.round(((total+100)/200)*100)));
   document.getElementById('scoreInstr').textContent = instr;
 
   var biasLabel, biasCls;
-  if      (pct >= 68) { biasLabel = '📈 Haussier fort';          biasCls = 'bias-bull'; }
-  else if (pct >= 55) { biasLabel = '↗ Légèrement haussier';    biasCls = 'bias-bull'; }
-  else if (pct >= 44) { biasLabel = '↔ Neutre';                 biasCls = 'bias-neut'; }
-  else if (pct >= 30) { biasLabel = '↘ Légèrement baissier';   biasCls = 'bias-bear'; }
-  else                { biasLabel = '📉 Baissier fort';          biasCls = 'bias-bear'; }
+  if     (pct>=68){biasLabel='📈 Haussier fort';         biasCls='bias-bull';}
+  else if(pct>=55){biasLabel='↗ Légèrement haussier';   biasCls='bias-bull';}
+  else if(pct>=44){biasLabel='↔ Neutre';                biasCls='bias-neut';}
+  else if(pct>=30){biasLabel='↘ Légèrement baissier';  biasCls='bias-bear';}
+  else            {biasLabel='📉 Baissier fort';         biasCls='bias-bear';}
 
   var biasEl = document.getElementById('scoreBias');
   biasEl.textContent = biasLabel;
-  biasEl.className   = 'score-bias ' + biasCls;
+  biasEl.className   = 'score-bias '+biasCls;
 
-  /* Indicateur qualité données */
-  var dqClass, dqLabel;
-  if (articleCount >= 10)     { dqClass = 'dq-high'; dqLabel = '● Données solides (' + articleCount + ' articles)'; }
-  else if (articleCount >= 3) { dqClass = 'dq-med';  dqLabel = '◐ Données limitées (' + articleCount + ' articles)'; }
-  else                        { dqClass = 'dq-low';  dqLabel = '○ Données insuffisantes (' + articleCount + ' articles)'; }
+  var dqCls, dqTxt;
+  if(fallback){          dqCls='dq-low'; dqTxt='⚠ Analyse sectorielle ('+n+' art.)';}
+  else if(n>=12){        dqCls='dq-high';dqTxt='● Signal fort ('+n+' articles)';}
+  else if(n>=5) {        dqCls='dq-med'; dqTxt='◐ Signal modéré ('+n+' articles)';}
+  else if(n>=2) {        dqCls='dq-low'; dqTxt='◌ Données limitées ('+n+' art.)';}
+  else          {        dqCls='dq-bad'; dqTxt='○ Insuffisant — affiner manuellement';}
 
   document.getElementById('scoreMeta').innerHTML =
-    '<strong>' + sc.bull + '</strong> signaux haussiers · <strong>' + sc.bear + '</strong> baissiers<br>' +
-    '<span class="data-quality ' + dqClass + '">' + dqLabel + '</span>';
+    '<strong>'+sc.bull+'</strong> signaux haussiers · <strong>'+sc.bear+'</strong> baissiers<br>'+
+    '<span class="dq '+dqCls+'">'+dqTxt+'</span>';
 }
 
-function renderCriteria(sc) {
-  var items = [
-    { name:'Tendance',     key:'tendance',        max:25, signed:true,
-      desc:'Signaux directionnels : ' + (sc.detail ? sc.detail.tBull + '↑ ' + sc.detail.tBear + '↓' : '') },
-    { name:'Momentum',     key:'momentum',        max:20, signed:true,
-      desc:'Oscillateurs & vitesse : ' + (sc.detail ? sc.detail.mBull + '↑ ' + sc.detail.mBear + '↓' : '') },
-    { name:'Volatilité',   key:'volatilite',      max:15, signed:false,
-      desc:'Intensité marché : ' + (sc.detail ? sc.detail.vHigh + ' signaux élevés' : '') },
-    { name:'Fondamentaux', key:'fondamentaux',    max:25, signed:true,
-      desc:'Macro & banques centrales : ' + (sc.detail ? sc.detail.fBull + '↑ ' + sc.detail.fBear + '↓' : '') },
-    { name:'Sentiment',    key:'sentiment_score', max:15, signed:true,
-      desc:'Positionnement & flux : ' + (sc.detail ? sc.detail.sBull + '↑ ' + sc.detail.sBear + '↓' : '') }
+function renderCriteria(sc){
+  var items=[
+    {name:'Tendance',    key:'tendance',       max:25,signed:true, sub:sc.d.tB+'↑ '+sc.d.tBr+'↓ signaux directionnels'},
+    {name:'Momentum',   key:'momentum',       max:20,signed:true, sub:sc.d.mB+'↑ '+sc.d.mBr+'↓ vitesse & oscillateurs'},
+    {name:'Volatilité', key:'volatilite',     max:15,signed:false,sub:sc.d.vH+' signaux élevés / '+sc.d.vL+' calme'},
+    {name:'Fondamentaux',key:'fondamentaux',  max:25,signed:true, sub:sc.d.fB+'↑ '+sc.d.fBr+'↓ données macro'},
+    {name:'Sentiment',  key:'sentiment_score',max:15,signed:true, sub:sc.d.sB+'↑ '+sc.d.sBr+'↓ positionnement'}
   ];
-  document.getElementById('criteriaGrid').innerHTML = items.map(function(it) {
-    var val   = sc[it.key] || 0;
-    var pct   = it.signed ? Math.round(((val + it.max) / (it.max * 2)) * 100) : Math.round((val / it.max) * 100);
-    var color = val > 0 ? '#22c55e' : val < 0 ? '#ef4444' : 'rgba(255,255,255,.25)';
-    var sign  = (it.signed && val >= 0) ? '+' : '';
-    var mn    = it.signed ? ('-' + it.max) : '0';
-    return '<div class="crit-card">' +
-      '<div class="crit-top">' +
-        '<span class="crit-name">' + it.name + '</span>' +
-        '<span class="crit-val" style="color:' + color + '">' + sign + val +
-          ' <span style="font-size:.6rem;color:rgba(255,255,255,.3);font-weight:400">/' + it.max + '</span></span>' +
-      '</div>' +
-      '<div class="crit-desc">' + it.desc + '</div>' +
-      '<div class="crit-track"><div class="crit-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
-      '<div class="crit-range"><span>' + mn + '</span><span>0</span><span>+' + it.max + '</span></div>' +
+  document.getElementById('criteriaGrid').innerHTML = items.map(function(it){
+    var val  = sc[it.key]||0;
+    var pct  = it.signed?Math.round(((val+it.max)/(it.max*2))*100):Math.round((val/it.max)*100);
+    var col  = val>0?'#22c55e':val<0?'#ef4444':'rgba(255,255,255,.25)';
+    var sign = (it.signed&&val>=0)?'+':'';
+    var mn   = it.signed?('-'+it.max):'0';
+    return '<div class="crit-card">'+
+      '<div class="crit-top">'+
+        '<span class="crit-name">'+it.name+'</span>'+
+        '<span class="crit-val" style="color:'+col+'">'+sign+val+
+          ' <span style="font-size:.6rem;color:rgba(255,255,255,.25);font-weight:400">/'+it.max+'</span></span>'+
+      '</div>'+
+      '<div class="crit-sub">'+it.sub+'</div>'+
+      '<div class="crit-track"><div class="crit-fill" style="width:'+pct+'%;background:'+col+'"></div></div>'+
+      '<div class="crit-range"><span>'+mn+'</span><span>0</span><span>+'+it.max+'</span></div>'+
     '</div>';
   }).join('');
 }
 
-function renderSkeleton() {
-  document.getElementById('criteriaGrid').innerHTML = [1,2,3,4,5].map(function(){
-    return '<div class="crit-card"><div class="crit-top">' +
-      '<div class="skel" style="width:80px;height:11px"></div>' +
-      '<div class="skel" style="width:38px;height:11px"></div></div>' +
+function renderSkeleton(){
+  document.getElementById('criteriaGrid').innerHTML=[1,2,3,4,5].map(function(){
+    return '<div class="crit-card"><div class="crit-top">'+
+      '<div class="skel" style="width:80px;height:11px"></div>'+
+      '<div class="skel" style="width:38px;height:11px"></div></div>'+
       '<div class="crit-track"><div class="skel" style="height:4px;width:100%"></div></div></div>';
   }).join('');
 }
 
-function resetUI() {
-  document.getElementById('ringNum').textContent = '—';
-  document.getElementById('ringNum').style.color = 'rgba(255,255,255,.2)';
-  document.getElementById('ringBar').style.stroke = '#333';
+function resetUI(){
+  document.getElementById('ringNum').textContent='—';
+  document.getElementById('ringNum').style.color='rgba(255,255,255,.2)';
+  document.getElementById('ringBar').style.stroke='#333';
   document.getElementById('ringBar').setAttribute('stroke-dashoffset','314.2');
-  document.getElementById('scoreInstr').textContent = document.getElementById('instrSel').value || 'Aucun instrument';
-  document.getElementById('scoreBias').textContent  = 'En attente…';
-  document.getElementById('scoreBias').className    = 'score-bias bias-neut';
-  document.getElementById('scoreMeta').innerHTML    = 'Cliquez sur <strong>Analyser</strong>.';
-  document.getElementById('criteriaGrid').innerHTML = '';
-  document.getElementById('srcCard').style.display  = 'none';
-  document.getElementById('btnPub').disabled = true;
-  document.getElementById('tContexte').value = '';
-  document.getElementById('tDecision').value = '';
-  document.getElementById('tLimite').value   = '';
-  setStatus('', 'Sélectionnez un instrument et cliquez sur Analyser');
-  lastScores = null;
+  document.getElementById('scoreInstr').textContent=document.getElementById('instrSel').value||'Aucun instrument';
+  document.getElementById('scoreBias').textContent='En attente…';
+  document.getElementById('scoreBias').className='score-bias bias-neut';
+  document.getElementById('scoreMeta').innerHTML='Cliquez sur <strong>Analyser</strong>.';
+  document.getElementById('criteriaGrid').innerHTML='';
+  document.getElementById('srcCard').style.display='none';
+  document.getElementById('btnPub').disabled=true;
+  ['tContexte','tDecision','tLimite'].forEach(function(id){document.getElementById(id).value='';});
+  setStatus('','Sélectionnez un instrument et cliquez sur Analyser');
+  lastScores=null;
 }
 
-/* ── Ajustement manuel ── */
-var manualActive = false;
-
-function buildManualSliders() {
-  var items = [
-    { name:'Tendance',     key:'tendance',        min:-25, max:25 },
-    { name:'Momentum',     key:'momentum',        min:-20, max:20 },
-    { name:'Volatilité',   key:'volatilite',      min:0,   max:15 },
-    { name:'Fondamentaux', key:'fondamentaux',    min:-25, max:25 },
-    { name:'Sentiment',    key:'sentiment_score', min:-15, max:15 }
+/* ── Sliders manuels ── */
+var manualActive=false;
+function buildManualSliders(){
+  var items=[
+    {name:'Tendance',    key:'tendance',       min:-25,max:25},
+    {name:'Momentum',   key:'momentum',       min:-20,max:20},
+    {name:'Volatilité', key:'volatilite',     min:0,  max:15},
+    {name:'Fondamentaux',key:'fondamentaux',  min:-25,max:25},
+    {name:'Sentiment',  key:'sentiment_score',min:-15,max:15}
   ];
-  var vals = lastScores || {};
-  document.getElementById('manualSliders').innerHTML = items.map(function(it) {
-    var v = vals[it.key] || 0;
-    return '<div><label style="font-size:.73rem;color:rgba(255,255,255,.45);display:flex;justify-content:space-between;margin-bottom:.3rem;">' +
-      it.name + '<strong id="mv-' + it.key + '" style="color:#FFD700">' + (v >= 0 ? '+' : '') + v + '</strong></label>' +
-      '<input type="range" min="' + it.min + '" max="' + it.max + '" value="' + v + '" ' +
-      'oninput="updateManual(\'' + it.key + '\',this.value,' + it.min + ')" ' +
-      'onchange="applyManual()"></div>';
+  var vals=lastScores||{};
+  document.getElementById('manualSliders').innerHTML=items.map(function(it){
+    var v=vals[it.key]||0;
+    return '<div><label style="font-size:.73rem;color:rgba(255,255,255,.45);display:flex;justify-content:space-between;margin-bottom:.3rem;">'+
+      it.name+'<strong id="mv-'+it.key+'" style="color:#FFD700">'+(v>=0?'+':'')+v+'</strong></label>'+
+      '<input type="range" min="'+it.min+'" max="'+it.max+'" value="'+v+'" '+
+      'oninput="updateManual(\''+it.key+'\',this.value,'+it.min+')" onchange="applyManual()"></div>';
   }).join('');
 }
-
-function updateManual(key, val, mn) {
-  var v = parseInt(val);
-  document.getElementById('mv-' + key).textContent = (v >= 0 && mn < 0 ? '+' : '') + v;
-  if (!lastScores) lastScores = {};
-  lastScores[key] = v;
+function updateManual(key,val,mn){
+  var v=parseInt(val);
+  document.getElementById('mv-'+key).textContent=(v>=0&&mn<0?'+':'')+v;
+  if(!lastScores) lastScores={};
+  lastScores[key]=v;
 }
-
-function applyManual() {
-  if (!lastScores) return;
+function applyManual(){
+  if(!lastScores) return;
   renderRing(lastScores);
-  renderInfo(lastScores, lastScores.instrument || document.getElementById('instrSel').value, lastScores.articleCount || 0);
+  renderInfo(lastScores,lastScores.instrument||document.getElementById('instrSel').value,lastScores.articleCount||0,lastScores.fallback||false);
   renderCriteria(lastScores);
 }
-
-function toggleManual() {
-  var div = document.getElementById('manualAdj');
-  var btn = document.getElementById('btnManual');
-  manualActive = !manualActive;
-  if (manualActive) {
+function toggleManual(){
+  var div=document.getElementById('manualAdj');
+  var btn=document.getElementById('btnManual');
+  manualActive=!manualActive;
+  if(manualActive){
     buildManualSliders();
-    div.style.display = 'block';
-    btn.textContent   = '✕ Fermer l\'affinage';
-    document.getElementById('btnPub').disabled = false;
-    if (!lastScores) {
-      lastScores = { tendance:0, momentum:0, volatilite:5, fondamentaux:0,
-                     sentiment_score:0, score_sentiment:0, bull:0, bear:0, articleCount:0,
-                     detail:{ tBull:0,tBear:0,mBull:0,mBear:0,fBull:0,fBear:0,sBull:0,sBear:0,vHigh:0,vLow:0 },
-                     instrument: document.getElementById('instrSel').value, categorie: currentCat };
+    div.style.display='block';
+    btn.textContent='✕ Fermer l\'affinage';
+    document.getElementById('btnPub').disabled=false;
+    if(!lastScores){
+      lastScores={tendance:0,momentum:0,volatilite:5,fondamentaux:0,sentiment_score:0,
+                  score_sentiment:0,bull:0,bear:0,articleCount:0,fallback:false,
+                  d:{tB:0,tBr:0,mB:0,mBr:0,fB:0,fBr:0,sB:0,sBr:0,vH:0,vL:0},
+                  instrument:document.getElementById('instrSel').value,categorie:currentCat};
       renderRing(lastScores);
-      renderInfo(lastScores, lastScores.instrument, 0);
+      renderInfo(lastScores,lastScores.instrument,0,false);
       renderCriteria(lastScores);
     }
-  } else {
-    div.style.display = 'none';
-    btn.textContent   = '⚙️ Affiner manuellement';
+  }else{
+    div.style.display='none';
+    btn.textContent='⚙️ Affiner manuellement';
   }
 }
 
-/* ── Publication Supabase ── */
-function getToken() {
-  var fa = localStorage.getItem('fa_token');
-  if (fa) return fa;
-  for (var k in localStorage) {
-    if (k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0) {
-      try {
-        var s = JSON.parse(localStorage.getItem(k));
-        if (s && s.access_token) return s.access_token;
-      } catch(e){}
+/* ── Publication ── */
+function getToken(){
+  var fa=localStorage.getItem('fa_token');
+  if(fa) return fa;
+  for(var k in localStorage){
+    if(k.indexOf('sb-')===0&&k.indexOf('-auth-token')>0){
+      try{var s=JSON.parse(localStorage.getItem(k));if(s&&s.access_token)return s.access_token;}catch(e){}
     }
   }
   return null;
 }
-
-async function publishScore() {
-  if (!lastScores) return;
-  var token = getToken();
-  if (!token) { showToast('Session expirée — reconnectez-vous', 'err'); return; }
-
-  var btn = document.getElementById('btnPub');
-  btn.disabled = true; btn.textContent = '⏳ Publication…';
-
-  var payload = {
-    instrument:      lastScores.instrument,
-    categorie:       lastScores.categorie,
-    tendance:        lastScores.tendance,
-    momentum:        lastScores.momentum,
-    volatilite:      lastScores.volatilite,
-    fondamentaux:    lastScores.fondamentaux,
-    sentiment_score: lastScores.sentiment_score,
-    score_sentiment: lastScores.score_sentiment,
-    contexte:        document.getElementById('tContexte').value.trim(),
-    decision:        document.getElementById('tDecision').value.trim(),
-    limite:          document.getElementById('tLimite').value.trim(),
-    updated_at:      new Date().toISOString()
+async function publishScore(){
+  if(!lastScores) return;
+  var token=getToken();
+  if(!token){showToast('Session expirée — reconnectez-vous','err');return;}
+  var btn=document.getElementById('btnPub');
+  btn.disabled=true;btn.textContent='⏳ Publication…';
+  var payload={
+    instrument:lastScores.instrument,categorie:lastScores.categorie,
+    tendance:lastScores.tendance,momentum:lastScores.momentum,volatilite:lastScores.volatilite,
+    fondamentaux:lastScores.fondamentaux,sentiment_score:lastScores.sentiment_score,
+    score_sentiment:lastScores.score_sentiment,
+    contexte:document.getElementById('tContexte').value.trim(),
+    decision:document.getElementById('tDecision').value.trim(),
+    limite:document.getElementById('tLimite').value.trim(),
+    updated_at:new Date().toISOString()
   };
-
-  try {
-    var res = await fetch(
-      SB_URL + '/rest/v1/market_scores?instrument=eq.' + encodeURIComponent(lastScores.instrument),
-      { method: 'PATCH',
-        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token,
-                   'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-        body: JSON.stringify(payload) }
-    );
-    if (res.status === 204 || res.ok) {
-      showToast('✅ Publié — ' + lastScores.instrument, 'ok');
-    } else {
-      showToast('Erreur lors de la publication', 'err');
-    }
-  } catch(e) { showToast('Erreur réseau', 'err'); }
-
-  btn.disabled = false;
-  btn.innerHTML = '📡 Publier l\'analyse';
+  try{
+    var res=await fetch(SB_URL+'/rest/v1/market_scores?instrument=eq.'+encodeURIComponent(lastScores.instrument),
+      {method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
+       'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
+    if(res.status===204||res.ok) showToast('✅ Publié — '+lastScores.instrument,'ok');
+    else showToast('Erreur lors de la publication','err');
+  }catch(e){showToast('Erreur réseau','err');}
+  btn.disabled=false;btn.innerHTML='📡 Publier l\'analyse';
 }
 
 /* ── Helpers ── */
-function setStatus(type, txt) {
-  document.getElementById('sdot').className = 'sdot' + (type ? ' ' + type : '');
-  document.getElementById('statusTxt').textContent = txt;
+function setStatus(type,txt){
+  document.getElementById('sdot').className='sdot'+(type?' '+type:'');
+  document.getElementById('statusTxt').textContent=txt;
 }
-function showToast(msg, type) {
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + type + ' show';
-  setTimeout(function(){ t.classList.remove('show'); }, 3500);
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type+' show';
+  setTimeout(function(){t.classList.remove('show');},3500);
 }
 </script>
 </body>
