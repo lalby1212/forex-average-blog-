@@ -14,7 +14,6 @@
 html,body{background:var(--dark);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh;}
 .page{max-width:1000px;margin:0 auto;padding:2rem 1.5rem 4rem;}
-
 .page-badge{display:inline-flex;align-items:center;gap:.4rem;
   background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);
   color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:1px;
@@ -24,14 +23,12 @@ html,body{background:var(--dark);color:var(--text);
 .page-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:.35rem;}
 .page-title span{color:var(--gold);}
 .page-sub{color:var(--muted);font-size:.85rem;line-height:1.5;margin-bottom:1.75rem;}
-
 .selector-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:.75rem;}
 .cat-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
   color:var(--muted);padding:.38rem .8rem;border-radius:99px;font-size:.76rem;
   cursor:pointer;transition:.15s;font-weight:500;white-space:nowrap;}
 .cat-pill:hover{border-color:rgba(255,215,0,.3);color:rgba(255,215,0,.7);}
 .cat-pill.active{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.3);color:var(--gold);font-weight:700;}
-
 .instr-row{display:flex;gap:.6rem;align-items:center;margin-bottom:1.25rem;flex-wrap:wrap;}
 .instr-select{background:#141414;border:1px solid var(--border);color:var(--text);
   padding:.55rem 1rem;border-radius:8px;font-size:.88rem;min-width:160px;outline:none;cursor:pointer;}
@@ -41,15 +38,12 @@ html,body{background:var(--dark);color:var(--text);
   cursor:pointer;transition:.15s;white-space:nowrap;}
 .btn-analyze:hover{opacity:.9;}
 .btn-analyze:disabled{opacity:.45;cursor:not-allowed;}
-
 .status-bar{display:flex;align-items:center;gap:.5rem;font-size:.75rem;
   color:var(--muted);margin-bottom:1.25rem;min-height:18px;}
 .sdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;}
 .sdot.loading{background:var(--gold);animation:pulse 1s infinite;}
 .sdot.ok{background:var(--green);}
 .sdot.err{background:var(--red);}
-
-/* Score card */
 .score-main{display:grid;grid-template-columns:130px 1fr;gap:1.75rem;
   background:var(--card);border:1px solid var(--border);border-radius:16px;
   padding:1.75rem;margin-bottom:1rem;align-items:center;}
@@ -71,21 +65,23 @@ html,body{background:var(--dark);color:var(--text);
 .bias-neut{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.1);}
 .score-meta{font-size:.78rem;color:var(--muted);line-height:1.6;}
 .score-meta strong{color:#fff;}
-
-/* Critères */
+.data-quality{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;
+  padding:.22rem .65rem;border-radius:6px;margin-top:.4rem;}
+.dq-high{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.dq-med{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.2);}
+.dq-low{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2);}
 .criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
 @media(max-width:540px){.criteria-grid{grid-template-columns:1fr;}}
 .crit-card{background:var(--card);border:1px solid rgba(255,255,255,.06);
   border-radius:11px;padding:.9rem 1rem;}
-.crit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;}
+.crit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;}
 .crit-name{font-size:.74rem;font-weight:600;color:var(--muted);}
 .crit-val{font-size:.86rem;font-weight:900;}
+.crit-desc{font-size:.67rem;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
 .crit-track{height:4px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
 .crit-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
 .crit-range{display:flex;justify-content:space-between;font-size:.6rem;
   color:rgba(255,255,255,.2);margin-top:.22rem;}
-
-/* Textes */
 .text-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1rem;}
 @media(max-width:540px){.text-grid{grid-template-columns:1fr;}}
 .text-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:.9rem 1rem;}
@@ -95,8 +91,6 @@ html,body{background:var(--dark);color:var(--text);
 .text-inp{width:100%;background:transparent;border:none;color:var(--text);
   font-size:.82rem;font-family:inherit;outline:none;resize:none;line-height:1.55;min-height:56px;}
 .text-inp::placeholder{color:rgba(255,255,255,.2);}
-
-/* Sources */
 .sources-card{background:var(--card);border:1px solid rgba(255,255,255,.06);
   border-radius:11px;padding:.9rem 1rem;margin-bottom:1.25rem;display:none;}
 .src-lbl{font-size:.62rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;
@@ -107,8 +101,6 @@ html,body{background:var(--dark);color:var(--text);
 .src-tag.ok{border-color:rgba(34,197,94,.25);color:rgba(34,197,94,.65);}
 .src-tag.fail{border-color:rgba(239,68,68,.2);color:rgba(239,68,68,.4);}
 .src-count{font-size:.72rem;color:var(--muted);margin-top:.5rem;}
-
-/* Publish */
 .publish-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
 .btn-pub{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;border:none;
   padding:.75rem 1.8rem;border-radius:9px;font-weight:900;font-size:.88rem;
@@ -116,29 +108,32 @@ html,body{background:var(--dark);color:var(--text);
 .btn-pub:hover{opacity:.9;transform:translateY(-1px);}
 .btn-pub:disabled{opacity:.45;cursor:not-allowed;transform:none;}
 .pub-hint{font-size:.77rem;color:var(--muted);}
-
 .skel{background:linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%);
   background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:6px;}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-
 .toast{position:fixed;bottom:1.5rem;right:1.5rem;padding:.75rem 1.3rem;
   border-radius:10px;font-weight:700;font-size:.85rem;z-index:9999;
   transform:translateY(16px);opacity:0;transition:.25s;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{background:#22c55e;color:#000;}
 .toast.err{background:#ef4444;color:#fff;}
+/* Manual adj */
+#manualAdj{display:none;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15);border-radius:11px;padding:1rem 1.1rem;margin-bottom:.85rem;}
+.man-lbl{font-size:.63rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,215,0,.5);margin-bottom:.85rem;}
+#manualSliders{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--gold);cursor:pointer;}
+#btnManual{background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.75rem;padding:.35rem .85rem;border-radius:6px;cursor:pointer;margin-bottom:1rem;}
 </style>
 </head>
 <body>
 
-<!-- Auth guard : accepte FA token OU session Supabase -->
 <script>
 (function(){
   try {
     var u = localStorage.getItem('fa_user');
     var t = localStorage.getItem('fa_token');
-    if (u && t) return; // FA session OK
-    // Chercher session Supabase
+    if (u && t) return;
     for (var k in localStorage) {
       if (k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0) {
         var s = null;
@@ -154,29 +149,25 @@ html,body{background:var(--dark);color:var(--text);
 <div class="page">
   <div class="page-badge"><span class="dot"></span> Intelligence Temps Réel</div>
   <h1 class="page-title">🔬 Radar de <span>Marché</span></h1>
-  <p class="page-sub">Scores générés automatiquement à partir des actualités financières mondiales.<br>Affinez si besoin et publiez pour vos membres en un clic.</p>
+  <p class="page-sub">Analyse automatique par instrument — filtrage des actualités mondiales sur chaque actif, 5 critères indépendants.</p>
 
-  <!-- Catégorie -->
   <div class="selector-row" id="catPills">
     <button class="cat-pill active" data-cat="forex">💱 Forex</button>
-    <button class="cat-pill" data-cat="commodity">🥇 Commodities</button>
+    <button class="cat-pill" data-cat="commodity">🥇 Commodités</button>
     <button class="cat-pill" data-cat="crypto">₿ Crypto</button>
     <button class="cat-pill" data-cat="indice">📈 Indices</button>
   </div>
 
-  <!-- Instrument + bouton -->
   <div class="instr-row">
     <select class="instr-select" id="instrSel"></select>
     <button class="btn-analyze" id="btnAnalyze" onclick="runAnalysis()">⚡ Analyser</button>
   </div>
 
-  <!-- Status -->
   <div class="status-bar">
     <div class="sdot" id="sdot"></div>
     <span id="statusTxt">Sélectionnez un instrument et cliquez sur Analyser</span>
   </div>
 
-  <!-- Score ring + info -->
   <div class="score-main">
     <div class="ring-wrap">
       <svg viewBox="0 0 120 120" width="120" height="120">
@@ -196,10 +187,8 @@ html,body{background:var(--dark);color:var(--text);
     </div>
   </div>
 
-  <!-- 5 critères -->
   <div class="criteria-grid" id="criteriaGrid"></div>
 
-  <!-- Textes -->
   <div class="text-grid">
     <div class="text-card full">
       <div class="text-lbl">Contexte Fondamental</div>
@@ -211,27 +200,24 @@ html,body{background:var(--dark);color:var(--text);
     </div>
     <div class="text-card">
       <div class="text-lbl">Limite / Invalidation</div>
-      <textarea class="text-inp" id="tLimite" rows="3" placeholder="Scénario d'invalidation…"></textarea>
+      <textarea class="text-inp" id="tLimite" rows="3" placeholder="Scénario d\'invalidation…"></textarea>
     </div>
   </div>
 
-  <!-- Ajustement manuel -->
-  <div id="manualAdj" style="display:none;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15);border-radius:11px;padding:1rem 1.1rem;margin-bottom:.85rem;">
-    <div style="font-size:.63rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,215,0,.5);margin-bottom:.85rem;">Ajustement Manuel</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;" id="manualSliders"></div>
+  <div id="manualAdj">
+    <div class="man-lbl">Affinage Manuel</div>
+    <div id="manualSliders"></div>
   </div>
-  <button id="btnManual" onclick="toggleManual()" style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.75rem;padding:.35rem .85rem;border-radius:6px;cursor:pointer;margin-bottom:1rem;">⚙️ Ajuster manuellement</button>
+  <button id="btnManual" onclick="toggleManual()">⚙️ Affiner manuellement</button>
 
-  <!-- Sources -->
   <div class="sources-card" id="srcCard">
     <div class="src-lbl">Sources analysées</div>
     <div class="src-list" id="srcList"></div>
     <div class="src-count" id="srcCount"></div>
   </div>
 
-  <!-- Publier -->
   <div class="publish-row">
-    <button class="btn-pub" id="btnPub" onclick="publishScore()" disabled>📡 Publier l'analyse</button>
+    <button class="btn-pub" id="btnPub" onclick="publishScore()" disabled>📡 Publier l\'analyse</button>
     <span class="pub-hint">Visible immédiatement par tous vos membres.</span>
   </div>
 </div>
@@ -239,12 +225,16 @@ html,body{background:var(--dark);color:var(--text);
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── Config ── */
-const SB_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
-const SB_KEY  = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-/* allorigins.win : pas de rate-limit, retourne le XML brut */
+/* ═══════════════════════════════════════════════════════════
+   RADAR DE MARCHÉ — Moteur d\'analyse v2
+   Filtrage par instrument + 5 critères indépendants
+   ═══════════════════════════════════════════════════════════ */
+
+const SB_URL     = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SB_KEY     = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 const ALLORIGINS = 'https://api.allorigins.win/raw?url=';
 
+/* ── Instruments ── */
 const INSTRUMENTS = {
   forex:     ['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','NZD/USD','USD/CAD',
               'EUR/GBP','EUR/JPY','EUR/CHF','EUR/AUD','EUR/CAD','GBP/JPY','GBP/CHF',
@@ -255,49 +245,136 @@ const INSTRUMENTS = {
   indice:    ['S&P 500','NASDAQ','DAX','CAC 40','Nikkei','FTSE 100']
 };
 
-const FEEDS = {
-  forex:     [
-    { url:'https://www.forexlive.com/feed/news',           name:'ForexLive' },
-    { url:'https://www.fxstreet.com/rss/news',             name:'FXStreet'  },
-    { url:'https://www.dailyfx.com/feeds/forex-rate-news', name:'DailyFX'   }
-  ],
-  commodity: [
-    { url:'https://www.kitco.com/rss/kitco-gold-news.xml', name:'Kitco'      },
-    { url:'https://oilprice.com/rss/main',                 name:'OilPrice'   },
-    { url:'https://www.bullionvault.com/gold-news/rss.do', name:'BullionVault'}
-  ],
-  crypto:    [
-    { url:'https://cointelegraph.com/rss',                 name:'CoinTelegraph'},
-    { url:'https://beincrypto.com/feed/',                  name:'BeInCrypto'  }
-  ],
-  indice:    [
-    { url:'https://www.forexlive.com/feed/news',           name:'ForexLive' },
-    { url:'https://www.fxstreet.com/rss/news',             name:'FXStreet'  }
-  ]
+/* ── Mots-clés par instrument (pour filtrer les articles pertinents) ── */
+const INSTR_ALIASES = {
+  'EUR/USD':     ['eur/usd','eurusd','euro dollar','euro usd','eur usd','european currency','ecb rate','ecb decision'],
+  'GBP/USD':     ['gbp/usd','gbpusd','cable','pound dollar','sterling dollar','sterling usd','bank of england rate','boe rate'],
+  'USD/JPY':     ['usd/jpy','usdjpy','dollar yen','dollar jpy','greenback yen','boj rate','bank of japan rate','japanese yen'],
+  'USD/CHF':     ['usd/chf','usdchf','dollar franc','swiss franc dollar','snb rate','swiss national bank'],
+  'AUD/USD':     ['aud/usd','audusd','aussie dollar','australian dollar','rba rate','reserve bank australia'],
+  'NZD/USD':     ['nzd/usd','nzdusd','kiwi dollar','new zealand dollar','rbnz rate'],
+  'USD/CAD':     ['usd/cad','usdcad','loonie','canadian dollar','bank of canada rate','boc rate','oil cad'],
+  'EUR/GBP':     ['eur/gbp','eurgbp','euro pound','euro sterling'],
+  'EUR/JPY':     ['eur/jpy','eurjpy','euro yen'],
+  'EUR/CHF':     ['eur/chf','eurchf','euro franc'],
+  'EUR/AUD':     ['eur/aud','euraud','euro aussie'],
+  'EUR/CAD':     ['eur/cad','eurcad','euro loonie'],
+  'GBP/JPY':     ['gbp/jpy','gbpjpy','pound yen','sterling yen'],
+  'GBP/CHF':     ['gbp/chf','gbpchf','pound franc'],
+  'GBP/AUD':     ['gbp/aud','gbpaud','pound aussie'],
+  'GBP/CAD':     ['gbp/cad','gbpcad','pound loonie'],
+  'AUD/JPY':     ['aud/jpy','audjpy','aussie yen'],
+  'AUD/CHF':     ['aud/chf','audchf'],
+  'AUD/CAD':     ['aud/cad','audcad'],
+  'NZD/JPY':     ['nzd/jpy','nzdjpy','kiwi yen'],
+  'CAD/JPY':     ['cad/jpy','cadjpy','loonie yen'],
+  'CHF/JPY':     ['chf/jpy','chfjpy','franc yen'],
+  'XAU/USD':     ['gold','xau/usd','xauusd','gold price','gold rally','gold sell','precious metal','bullion'],
+  'XAG/USD':     ['silver','xag/usd','xagusd','silver price','precious metal silver'],
+  'Platinum':    ['platinum','platinum price'],
+  'Copper':      ['copper','copper price','industrial metal copper'],
+  'Palladium':   ['palladium','palladium price'],
+  'Brent Oil':   ['brent','brent oil','brent crude','opec brent'],
+  'WTI Oil':     ['wti','wti oil','crude oil','oil price','opec','petroleum'],
+  'Natural Gas': ['natural gas','nat gas','lng','gas price'],
+  'BTC/USD':     ['bitcoin','btc','btcusd','btc/usd','crypto bitcoin'],
+  'ETH/USD':     ['ethereum','eth','ethusd','eth/usd','ether'],
+  'SOL/USD':     ['solana','sol','solusd'],
+  'BNB/USD':     ['binance coin','bnb','binance'],
+  'XRP/USD':     ['xrp','ripple','xrp price'],
+  'ADA/USD':     ['cardano','ada','ada price'],
+  'DOGE/USD':    ['dogecoin','doge','doge price'],
+  'AVAX/USD':    ['avalanche','avax'],
+  'DOT/USD':     ['polkadot','dot polkadot'],
+  'MATIC/USD':   ['polygon','matic'],
+  'LTC/USD':     ['litecoin','ltc'],
+  'LINK/USD':    ['chainlink','link chainlink'],
+  'S&P 500':     ['s&p 500','sp500','s&p500','s&p index','spx','us stocks','wall street','dow jones'],
+  'NASDAQ':      ['nasdaq','tech stocks','nasdaq 100','ndx','technology index'],
+  'DAX':         ['dax','german stocks','frankfurt','german index','deutsche boerse'],
+  'CAC 40':      ['cac 40','cac40','french stocks','paris bourse'],
+  'Nikkei':      ['nikkei','japanese stocks','topix','japan index','tokyo stocks'],
+  'FTSE 100':    ['ftse','ftse 100','london stocks','uk index','uk stocks']
 };
 
-const KW = {
-  bull: ['bullish','rally','surge','gains','rises','strong','upside','buy','breakout',
-         'positive','growth','beat','optimism','recovery','above expectations','hawkish ecb',
-         'rate hike ecb','support','higher','climb'],
-  bear: ['bearish','fall','drop','decline','weak','downside','sell','breakdown','negative',
-         'recession','miss','pessimism','below expectations','hawkish fed','rate hike fed',
-         'resistance','lower','slide','tumble'],
-  trend:       ['trend','uptrend','downtrend','direction','sustained','persistent'],
-  momentum:    ['accelerat','momentum','overbought','oversold','rsi','macd','divergence'],
-  volatility:  ['volatile','volatility','uncertainty','swing','spike','whipsaw','vix','gap'],
-  fundamental: ['gdp','cpi','inflation','unemployment','nfp','fomc','ecb','fed','boe','boj',
-                'rate decision','central bank','interest rate','monetary policy','pmi','trade balance'],
-  sentiment:   ['sentiment','positioning','net long','net short','cot','retail','institutional']
+/* ── Mots-clés par critère (INDÉPENDANTS) ── */
+const CK = {
+  /* TENDANCE : direction du prix, signaux techniques directionnels */
+  tendance: {
+    bull: ['uptrend','bullish trend','higher highs','higher lows','buy signal','long signal',
+           'breakout above','price above','new high','multi-week high','multi-month high',
+           'above resistance','cleared resistance','upside target','bullish structure'],
+    bear: ['downtrend','bearish trend','lower highs','lower lows','sell signal','short signal',
+           'breakdown below','price below','new low','multi-week low','multi-month low',
+           'below support','broke support','downside target','bearish structure'],
+    neg:  ['no trend','range-bound','sideways','consolidating','choppy']
+  },
+  /* MOMENTUM : vitesse et accélération du mouvement */
+  momentum: {
+    bull: ['gaining momentum','accelerating','rsi above 60','rsi overbought','macd bullish cross',
+           'bullish momentum','buying pressure','volume surge','strong buying','momentum building',
+           'positive divergence','breaking higher','follow-through','rally extending'],
+    bear: ['losing momentum','decelerating','rsi below 40','rsi oversold','macd bearish cross',
+           'bearish momentum','selling pressure','volume spike down','strong selling','momentum fading',
+           'negative divergence','breaking lower','fading rally','momentum exhausted'],
+    neg:  ['momentum stalling','no momentum','flat momentum','neutral rsi']
+  },
+  /* VOLATILITÉ : intensité et risque de marché (indépendant de la direction) */
+  volatilite: {
+    high: ['volatile','spike','whipsaw','erratic','risk-off','vix spike','vix rising',
+           'gap up','gap down','sharp move','wild swings','heightened volatility',
+           'uncertainty','flash crash','panic','fear index'],
+    low:  ['calm','low volatility','tight range','narrow range','low vix','vix falling',
+           'range-bound','stable','orderly','quiet market','consolidation phase']
+  },
+  /* FONDAMENTAUX : données macro, banques centrales, économie */
+  fondamentaux: {
+    bull: ['beat expectations','above forecast','strong gdp','gdp beat','strong nfp','nfp beat',
+           'rate hike','hawkish','tighter policy','higher rates','inflation controlled',
+           'strong employment','jobs growth','consumer confidence high','pmi above 50',
+           'trade surplus','current account surplus','fiscal stimulus'],
+    bear: ['missed expectations','below forecast','weak gdp','gdp miss','weak nfp','nfp miss',
+           'rate cut','dovish','looser policy','lower rates','inflation surging','stagflation',
+           'rising unemployment','job losses','consumer confidence low','pmi below 50',
+           'trade deficit','fiscal deficit','recession risk','recession fears'],
+    neg:  ['as expected','in line','unchanged','no surprise','priced in']
+  },
+  /* SENTIMENT : positionnement, flux institutionnels, COT */
+  sentiment: {
+    bull: ['net long','institutional buying','retail bearish','contrarian buy','risk-on',
+           'bullish sentiment','optimism','fund buying','positioning bullish','cot net long',
+           'short squeeze','speculative long','inflows','capital inflows'],
+    bear: ['net short','institutional selling','retail bullish','contrarian sell','risk-off',
+           'bearish sentiment','pessimism','fund selling','positioning bearish','cot net short',
+           'long liquidation','speculative short','outflows','capital outflows'],
+    neg:  ['neutral positioning','mixed sentiment','unclear positioning']
+  }
 };
+
+/* ── Feeds RSS — large spectre, toutes catégories ── */
+const ALL_FEEDS = [
+  { url:'https://www.forexlive.com/feed/news',            name:'ForexLive'    },
+  { url:'https://www.fxstreet.com/rss/news',              name:'FXStreet'     },
+  { url:'https://www.dailyfx.com/feeds/forex-rate-news',  name:'DailyFX'      },
+  { url:'https://www.kitco.com/rss/kitco-gold-news.xml',  name:'Kitco'        },
+  { url:'https://oilprice.com/rss/main',                  name:'OilPrice'     },
+  { url:'https://cointelegraph.com/rss',                  name:'CoinTelegraph' },
+  { url:'https://beincrypto.com/feed/',                   name:'BeInCrypto'   },
+  { url:'https://feeds.reuters.com/reuters/businessNews', name:'Reuters'      },
+  { url:'https://www.investing.com/rss/news.rss',         name:'Investing.com' }
+];
+
+/* ═══════════════ MOTEUR D\'ANALYSE ═══════════════ */
 
 let currentCat = 'forex';
 let lastScores  = null;
 
-/* ── Select ── */
+/* Construction du select */
 function buildSelect(cat) {
-  const sel = document.getElementById('instrSel');
-  sel.innerHTML = INSTRUMENTS[cat].map(i => '<option value="'+i+'">'+i+'</option>').join('');
+  var sel = document.getElementById('instrSel');
+  sel.innerHTML = INSTRUMENTS[cat].map(function(i){
+    return '<option value="' + i + '">' + i + '</option>';
+  }).join('');
 }
 buildSelect('forex');
 
@@ -310,132 +387,229 @@ document.getElementById('catPills').addEventListener('click', function(e) {
   buildSelect(currentCat);
   resetUI();
 });
-
 document.getElementById('instrSel').addEventListener('change', resetUI);
 
-/* ── Fetch RSS ── */
-/* Parse XML RSS avec DOMParser */
-  function parseRSS(xmlStr) {
-    try {
-      var parser = new DOMParser();
-      var doc    = parser.parseFromString(xmlStr, 'text/xml');
-      var items  = Array.from(doc.querySelectorAll('item, entry'));
-      var texts  = items.map(function(item) {
-        var title = item.querySelector('title');
-        var desc  = item.querySelector('description, summary, content');
-        return (title ? title.textContent : '') + ' ' + (desc ? desc.textContent : '');
-      });
-      return { ok: items.length > 0, count: items.length, text: texts.join(' ').toLowerCase() };
-    } catch(e) { return { ok: false, count: 0, text: '' }; }
-  }
-
-  async function fetchFeed(feedObj) {
-    try {
-      var ctrl = new AbortController();
-      var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
-      var r = await fetch(ALLORIGINS + encodeURIComponent(feedObj.url), { signal: ctrl.signal });
-      clearTimeout(timer);
-      if (!r.ok) return { name: feedObj.name, text: '', ok: false, count: 0 };
-      var xml    = await r.text();
-      var parsed = parseRSS(xml);
-      return { name: feedObj.name, text: parsed.text, ok: parsed.ok, count: parsed.count };
-    } catch(e) {
-      return { name: feedObj.name, text: '', ok: false, count: 0 };
-    }
-  }
-
-/* ── Score computation ── */
-function countKW(text, words) {
-  return words.reduce(function(n, w){ return n + (text.split(w).length - 1); }, 0);
+/* ── Parse RSS XML ── */
+function parseRSS(xmlStr) {
+  try {
+    var parser = new DOMParser();
+    var doc    = parser.parseFromString(xmlStr, 'text/xml');
+    var items  = Array.from(doc.querySelectorAll('item, entry'));
+    return items.map(function(item) {
+      var title = item.querySelector('title');
+      var desc  = item.querySelector('description, summary, content');
+      return ((title ? title.textContent : '') + ' ' + (desc ? desc.textContent : '')).toLowerCase();
+    });
+  } catch(e) { return []; }
 }
+
+/* ── Fetch un feed ── */
+async function fetchFeed(feedObj) {
+  try {
+    var ctrl  = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 9000);
+    var r     = await fetch(ALLORIGINS + encodeURIComponent(feedObj.url), { signal: ctrl.signal });
+    clearTimeout(timer);
+    if (!r.ok) return { name: feedObj.name, articles: [], ok: false };
+    var xml      = await r.text();
+    var articles = parseRSS(xml);
+    return { name: feedObj.name, articles: articles, ok: articles.length > 0 };
+  } catch(e) {
+    return { name: feedObj.name, articles: [], ok: false };
+  }
+}
+
+/* ── Filtrage par instrument ── */
+function filterByInstrument(articles, instrument) {
+  var aliases = INSTR_ALIASES[instrument];
+  if (!aliases || aliases.length === 0) {
+    /* Fallback : utiliser le nom brut */
+    var raw = instrument.toLowerCase();
+    return articles.filter(function(txt){ return txt.includes(raw); });
+  }
+  return articles.filter(function(txt) {
+    return aliases.some(function(alias){ return txt.includes(alias); });
+  });
+}
+
+/* ── Comptage de mots-clés avec gestion de la négation ── */
+function countKW(text, words) {
+  var count = 0;
+  words.forEach(function(w) {
+    var idx = 0;
+    while ((idx = text.indexOf(w, idx)) !== -1) {
+      /* Vérifier si précédé de "not","no","without","failed to","didn\'t" dans les 30 chars */
+      var before = text.substring(Math.max(0, idx - 30), idx);
+      var negated = /\b(not|no|without|failed to|didn\'t|doesn\'t|won\'t|unable to|contrary to|despite)\s*\w*\s*$/.test(before);
+      if (!negated) count++;
+      idx += w.length;
+    }
+  });
+  return count;
+}
+
 function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
 
-function computeScores(text) {
-  var bull = countKW(text, KW.bull);
-  var bear = countKW(text, KW.bear);
-  var net  = bull - bear;
-  var tot  = bull + bear + 1;
-  var vol  = countKW(text, KW.volatility);
-  var fund = countKW(text, KW.fundamental);
+/* ── Calcul des 5 critères indépendants ── */
+function computeScores(filteredText) {
+  var t  = filteredText;
 
-  var tendance     = clamp(Math.round((net / tot) * 30),  -25, 25);
-  var momentum     = clamp(Math.round((net / tot) * 22),  -20, 20);
-  var volatilite   = clamp(Math.round((vol / (tot+1)) * 60), 0, 15);
-  var fondamentaux = clamp(Math.round(((fund>0?net:0) / (tot+1)) * 35), -25, 25);
-  var sentiment_s  = clamp(Math.round((net / (tot+1)) * 22), -15, 15);
-  var score_sent   = clamp(Math.round(net / (tot+1) * 120), -100, 100);
+  /* 1. TENDANCE — signaux techniques directionnels */
+  var tBull = countKW(t, CK.tendance.bull);
+  var tBear = countKW(t, CK.tendance.bear);
+  var tNeg  = countKW(t, CK.tendance.neg);
+  var tNet  = tBull - tBear - Math.round(tNeg * 0.5);
+  var tTot  = tBull + tBear + 1;
+  var tendance = clamp(Math.round((tNet / tTot) * 30), -25, 25);
 
-  return { tendance:tendance, momentum:momentum, volatilite:volatilite,
-           fondamentaux:fondamentaux, sentiment_score:sentiment_s,
-           score_sentiment:score_sent, bull:bull, bear:bear };
+  /* 2. MOMENTUM — vitesse du mouvement, oscillateurs */
+  var mBull = countKW(t, CK.momentum.bull);
+  var mBear = countKW(t, CK.momentum.bear);
+  var mNeg  = countKW(t, CK.momentum.neg);
+  var mNet  = mBull - mBear - Math.round(mNeg * 0.5);
+  var mTot  = mBull + mBear + 1;
+  var momentum = clamp(Math.round((mNet / mTot) * 25), -20, 20);
+
+  /* 3. VOLATILITÉ — intensité (0 = calme, +15 = extrême) */
+  var vHigh = countKW(t, CK.volatilite.high);
+  var vLow  = countKW(t, CK.volatilite.low);
+  var vBase = clamp(Math.round(((vHigh - vLow * 0.3) / (vHigh + vLow + 1)) * 18), 0, 15);
+  /* Plancher à 3 si on a des articles pertinents */
+  var volatilite = filteredText.length > 100 ? Math.max(3, vBase) : vBase;
+
+  /* 4. FONDAMENTAUX — données macro, banques centrales */
+  var fBull = countKW(t, CK.fondamentaux.bull);
+  var fBear = countKW(t, CK.fondamentaux.bear);
+  var fNeg  = countKW(t, CK.fondamentaux.neg);
+  var fNet  = fBull - fBear - Math.round(fNeg * 0.3);
+  var fTot  = fBull + fBear + 1;
+  /* Fondamentaux = formule différente : pondéré par la présence de macro */
+  var fRaw     = Math.round((fNet / fTot) * 32);
+  var fBoost   = Math.min(fBull + fBear, 10) / 10; /* Plus il y a de données, plus c\'est fiable */
+  var fondamentaux = clamp(Math.round(fRaw * (0.5 + fBoost * 0.5)), -25, 25);
+
+  /* 5. SENTIMENT — positionnement, flux, COT */
+  var sBull = countKW(t, CK.sentiment.bull);
+  var sBear = countKW(t, CK.sentiment.bear);
+  var sNeg  = countKW(t, CK.sentiment.neg);
+  var sNet  = sBull - sBear - Math.round(sNeg * 0.5);
+  var sTot  = sBull + sBear + 1;
+  /* Sentiment = formule contrarian légère : fort retail bull → souvent baissier */
+  var sentiment_score = clamp(Math.round((sNet / sTot) * 18), -15, 15);
+
+  /* Score global (-100/+100) */
+  var score_sentiment = clamp(tendance + momentum + fondamentaux + sentiment_score - Math.round(volatilite * 0.3), -100, 100);
+
+  return {
+    tendance, momentum, volatilite, fondamentaux, sentiment_score, score_sentiment,
+    bull: tBull + mBull + fBull + sBull,
+    bear: tBear + mBear + fBear + sBear,
+    detail: { tBull, tBear, mBull, mBear, fBull, fBear, sBull, sBear, vHigh, vLow }
+  };
 }
 
-function autoContext(sc, instr) {
-  var dir  = sc.tendance > 5 ? 'haussière' : sc.tendance < -5 ? 'baissière' : 'neutre';
-  var vol  = sc.volatilite > 10 ? 'élevée' : sc.volatilite > 5 ? 'modérée' : 'faible';
-  var fund = sc.fondamentaux > 8 ? 'positifs' : sc.fondamentaux < -8 ? 'négatifs' : 'mitigés';
-  return instr + ' — La dynamique des actualités est ' + dir + '. ' +
-    sc.bull + ' signaux haussiers contre ' + sc.bear + ' baissiers. ' +
-    'Fondamentaux ' + fund + ', volatilité ' + vol + '. Score momentum : ' + (sc.momentum>=0?'+':'') + sc.momentum + '/20.';
+/* ── Génération des textes automatiques ── */
+function autoContext(sc, instr, articleCount) {
+  var dir  = sc.tendance > 8 ? 'clairement haussière' : sc.tendance > 2 ? 'légèrement haussière' :
+             sc.tendance < -8 ? 'clairement baissière' : sc.tendance < -2 ? 'légèrement baissière' : 'neutre';
+  var mom  = sc.momentum > 6 ? 'fort et en accélération' : sc.momentum > 0 ? 'modéré' :
+             sc.momentum < -6 ? 'négatif et en accélération' : sc.momentum < 0 ? 'en perte de vitesse' : 'neutre';
+  var fund = sc.fondamentaux > 8 ? 'solides et favorables' : sc.fondamentaux > 0 ? 'légèrement positifs' :
+             sc.fondamentaux < -8 ? 'négatifs et pesants' : sc.fondamentaux < 0 ? 'légèrement défavorables' : 'mitigés';
+  var vol  = sc.volatilite > 10 ? 'très élevée' : sc.volatilite > 6 ? 'élevée' : sc.volatilite > 3 ? 'modérée' : 'faible';
+
+  return instr + ' — Analyse basée sur ' + articleCount + ' articles filtrés. ' +
+    'La dynamique de tendance est ' + dir + '. ' +
+    'Le momentum est ' + mom + '. ' +
+    'Fondamentaux ' + fund + '. Volatilité ' + vol + '. ' +
+    'Signaux directionnels : ' + sc.detail.tBull + ' haussiers vs ' + sc.detail.tBear + ' baissiers. ' +
+    'Données macro : ' + sc.detail.fBull + ' positives vs ' + sc.detail.fBear + ' négatives.';
 }
 
 function autoDecision(sc) {
   var total = sc.tendance + sc.momentum + sc.fondamentaux + sc.sentiment_score;
-  if (total >= 30)  return 'Biais ACHETEUR — Chercher des opportunités LONG sur repli';
-  if (total >= 10)  return 'Légèrement haussier — Confirmer avant entrée';
-  if (total <= -30) return 'Biais VENDEUR — Chercher des opportunités SHORT sur rebond';
-  if (total <= -10) return 'Légèrement baissier — Confirmer avant entrée';
-  return 'Neutre — Attendre une cassure directionnelle claire avant de s\'engager';
+  if (total >= 35)  return 'Biais ACHETEUR FORT — Chercher des configurations LONG sur repli en direction de tendance';
+  if (total >= 15)  return 'Biais haussier — Privilégier les entrées LONG sur supports, confirmer avec le momentum';
+  if (total <= -35) return 'Biais VENDEUR FORT — Chercher des configurations SHORT sur rebond en direction de tendance';
+  if (total <= -15) return 'Biais baissier — Privilégier les entrées SHORT sur résistances, confirmer avec le momentum';
+  return 'Biais NEUTRE — Pas de signal directionnel clair, attendre une cassure décisive avant de s\'engager';
 }
 
-/* ── Run ── */
+function autoLimite(sc) {
+  if (sc.volatilite > 10) return 'Volatilité élevée : élargir les stops, réduire le sizing. Risque de whipsaw important.';
+  if (sc.volatilite > 6)  return 'Volatilité modérée : stops normaux, surveiller les publications macro en cours.';
+  return 'Faible volatilité : attention aux faux cassures, privilégier les breakouts confirmés en clôture.';
+}
+
+/* ── Run principal ── */
 async function runAnalysis() {
   var instr = document.getElementById('instrSel').value;
   if (!instr) return;
 
-  setStatus('loading', 'Analyse en cours…');
+  setStatus('loading', 'Collecte des actualités mondiales…');
   document.getElementById('btnAnalyze').disabled = true;
   document.getElementById('btnPub').disabled = true;
   renderSkeleton();
 
-  var feeds  = FEEDS[currentCat] || FEEDS.forex;
+  /* Afficher tous les feeds */
   var srcCard = document.getElementById('srcCard');
   var srcList = document.getElementById('srcList');
   srcCard.style.display = 'block';
-  srcList.innerHTML = feeds.map(function(f, i){
-    return '<span class="src-tag" id="src'+i+'">'+f.name+'</span>';
+  srcList.innerHTML = ALL_FEEDS.map(function(f, i){
+    return '<span class="src-tag" id="src' + i + '">' + f.name + '</span>';
   }).join('');
 
-  var results = await Promise.all(feeds.map(function(f, i){
-    return fetchFeed(f).then(function(r){
-      var el = document.getElementById('src'+i);
+  setStatus('loading', 'Récupération des flux en cours…');
+
+  /* Fetch tous les feeds en parallèle */
+  var results = await Promise.all(ALL_FEEDS.map(function(f, i) {
+    return fetchFeed(f).then(function(r) {
+      var el = document.getElementById('src' + i);
       if (el) el.className = 'src-tag ' + (r.ok ? 'ok' : 'fail');
       return r;
     });
   }));
 
-  var combined = results.map(function(r){ return r.text; }).join(' ');
-  var totalArt = results.reduce(function(s,r){ return s + (r.count||0); }, 0);
+  var totalArticles = 0;
+  results.forEach(function(r){ totalArticles += r.articles.length; });
+  var activeSources = results.filter(function(r){ return r.ok; }).length;
+
+  setStatus('loading', 'Filtrage des articles sur ' + instr + '…');
+
+  /* Filtrer par instrument */
+  var allArticles = [];
+  results.forEach(function(r){ allArticles = allArticles.concat(r.articles); });
+  var filteredArticles = filterByInstrument(allArticles, instr);
+  var filteredText     = filteredArticles.join(' ');
+  var articleCount     = filteredArticles.length;
+
   document.getElementById('srcCount').textContent =
-    totalArt + ' articles analysés · ' + results.filter(function(r){ return r.ok; }).length + '/' + feeds.length + ' sources actives';
+    totalArticles + ' articles collectés · ' + articleCount + ' concernant ' + instr +
+    ' · ' + activeSources + '/' + ALL_FEEDS.length + ' sources actives';
 
-  var sc = computeScores(combined);
-  lastScores = Object.assign({}, sc, { instrument: instr, categorie: currentCat });
+  /* Calculer les scores */
+  var sc = computeScores(filteredText);
+  lastScores = Object.assign({}, sc, { instrument: instr, categorie: currentCat, articleCount: articleCount });
 
+  /* Render */
   renderRing(sc);
-  renderInfo(sc, instr);
+  renderInfo(sc, instr, articleCount);
   renderCriteria(sc);
 
-  document.getElementById('tContexte').value = autoContext(sc, instr);
+  document.getElementById('tContexte').value = autoContext(sc, instr, articleCount);
   document.getElementById('tDecision').value = autoDecision(sc);
+  document.getElementById('tLimite').value   = autoLimite(sc);
 
   var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
-  var activeFeeds = results.filter(function(r){ return r.ok; }).length;
-  if (activeFeeds === 0) {
-    setStatus('err', 'Flux d\'actualités indisponibles — ajustez les scores manuellement');
+
+  if (activeSources === 0) {
+    setStatus('err', 'Sources indisponibles — affinez manuellement');
+  } else if (articleCount < 3) {
+    setStatus('err', articleCount + ' article(s) filtré(s) sur ' + instr + ' — données insuffisantes, affinez manuellement');
   } else {
-    setStatus('ok', 'Analyse terminée · ' + activeFeeds + ' source(s) · Score ' + (total>=0?'+':'') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
+    setStatus('ok', articleCount + ' articles sur ' + instr + ' · Score brut ' + (total >= 0 ? '+' : '') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
   }
+
   document.getElementById('btnAnalyze').disabled = false;
   document.getElementById('btnPub').disabled = false;
 }
@@ -444,61 +618,80 @@ async function runAnalysis() {
 function renderRing(sc) {
   var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
   var pct   = Math.max(0, Math.min(100, Math.round(((total + 100) / 200) * 100)));
-  var circ  = 2 * Math.PI * 50; // r=50
+  var circ  = 2 * Math.PI * 50;
   var dash  = circ - (pct / 100) * circ;
-  var color = pct >= 65 ? '#22c55e' : pct >= 45 ? '#FFD700' : pct >= 25 ? '#f97316' : '#ef4444';
-  document.getElementById('ringNum').textContent = (total>=0?'+':'') + total;
+  var color = pct >= 65 ? '#22c55e' : pct >= 47 ? '#FFD700' : pct >= 32 ? '#f97316' : '#ef4444';
+  document.getElementById('ringNum').textContent = (total >= 0 ? '+' : '') + total;
   document.getElementById('ringNum').style.color  = color;
   document.getElementById('ringBar').style.stroke = color;
   document.getElementById('ringBar').setAttribute('stroke-dashoffset', dash.toFixed(1));
 }
 
-function renderInfo(sc, instr) {
+function renderInfo(sc, instr, articleCount) {
   var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
   var pct   = Math.max(0, Math.min(100, Math.round(((total + 100) / 200) * 100)));
   document.getElementById('scoreInstr').textContent = instr;
 
   var biasLabel, biasCls;
-  if      (pct >= 65) { biasLabel = '📈 Haussier';            biasCls = 'bias-bull'; }
-  else if (pct >= 52) { biasLabel = '↗ Légèrement haussier'; biasCls = 'bias-bull'; }
-  else if (pct >= 42) { biasLabel = '↔ Neutre';              biasCls = 'bias-neut'; }
-  else if (pct >= 28) { biasLabel = '↘ Légèrement baissier'; biasCls = 'bias-bear'; }
-  else                { biasLabel = '📉 Baissier';           biasCls = 'bias-bear'; }
+  if      (pct >= 68) { biasLabel = '📈 Haussier fort';          biasCls = 'bias-bull'; }
+  else if (pct >= 55) { biasLabel = '↗ Légèrement haussier';    biasCls = 'bias-bull'; }
+  else if (pct >= 44) { biasLabel = '↔ Neutre';                 biasCls = 'bias-neut'; }
+  else if (pct >= 30) { biasLabel = '↘ Légèrement baissier';   biasCls = 'bias-bear'; }
+  else                { biasLabel = '📉 Baissier fort';          biasCls = 'bias-bear'; }
 
   var biasEl = document.getElementById('scoreBias');
   biasEl.textContent = biasLabel;
-  biasEl.className = 'score-bias ' + biasCls;
+  biasEl.className   = 'score-bias ' + biasCls;
 
-  var ss = sc.score_sentiment;
+  /* Indicateur qualité données */
+  var dqClass, dqLabel;
+  if (articleCount >= 10)     { dqClass = 'dq-high'; dqLabel = '● Données solides (' + articleCount + ' articles)'; }
+  else if (articleCount >= 3) { dqClass = 'dq-med';  dqLabel = '◐ Données limitées (' + articleCount + ' articles)'; }
+  else                        { dqClass = 'dq-low';  dqLabel = '○ Données insuffisantes (' + articleCount + ' articles)'; }
+
   document.getElementById('scoreMeta').innerHTML =
-    '<strong>' + sc.bull + '</strong> signaux haussiers · <strong>' + sc.bear + '</strong> baissiers · Sentiment : <strong style="color:var(--gold)">' + (ss>=0?'+':'') + ss + '</strong>';
+    '<strong>' + sc.bull + '</strong> signaux haussiers · <strong>' + sc.bear + '</strong> baissiers<br>' +
+    '<span class="data-quality ' + dqClass + '">' + dqLabel + '</span>';
 }
 
 function renderCriteria(sc) {
   var items = [
-    { name:'Tendance',     key:'tendance',        max:25, signed:true  },
-    { name:'Momentum',     key:'momentum',        max:20, signed:true  },
-    { name:'Volatilité',   key:'volatilite',      max:15, signed:false },
-    { name:'Fondamentaux', key:'fondamentaux',    max:25, signed:true  },
-    { name:'Sentiment',    key:'sentiment_score', max:15, signed:true  }
+    { name:'Tendance',     key:'tendance',        max:25, signed:true,
+      desc:'Signaux directionnels : ' + (sc.detail ? sc.detail.tBull + '↑ ' + sc.detail.tBear + '↓' : '') },
+    { name:'Momentum',     key:'momentum',        max:20, signed:true,
+      desc:'Oscillateurs & vitesse : ' + (sc.detail ? sc.detail.mBull + '↑ ' + sc.detail.mBear + '↓' : '') },
+    { name:'Volatilité',   key:'volatilite',      max:15, signed:false,
+      desc:'Intensité marché : ' + (sc.detail ? sc.detail.vHigh + ' signaux élevés' : '') },
+    { name:'Fondamentaux', key:'fondamentaux',    max:25, signed:true,
+      desc:'Macro & banques centrales : ' + (sc.detail ? sc.detail.fBull + '↑ ' + sc.detail.fBear + '↓' : '') },
+    { name:'Sentiment',    key:'sentiment_score', max:15, signed:true,
+      desc:'Positionnement & flux : ' + (sc.detail ? sc.detail.sBull + '↑ ' + sc.detail.sBear + '↓' : '') }
   ];
-  document.getElementById('criteriaGrid').innerHTML = items.map(function(it){
+  document.getElementById('criteriaGrid').innerHTML = items.map(function(it) {
     var val   = sc[it.key] || 0;
-    var pct   = it.signed ? Math.round(((val+it.max)/(it.max*2))*100) : Math.round((val/it.max)*100);
+    var pct   = it.signed ? Math.round(((val + it.max) / (it.max * 2)) * 100) : Math.round((val / it.max) * 100);
     var color = val > 0 ? '#22c55e' : val < 0 ? '#ef4444' : 'rgba(255,255,255,.25)';
     var sign  = (it.signed && val >= 0) ? '+' : '';
-    var mn    = it.signed ? ('-'+it.max) : '0';
-    return '<div class="crit-card"><div class="crit-top">' +
-      '<span class="crit-name">'+it.name+'</span>' +
-      '<span class="crit-val" style="color:'+color+'">'+sign+val+' <span style="font-size:.6rem;color:var(--muted);font-weight:400">/'+it.max+'</span></span>' +
-      '</div><div class="crit-track"><div class="crit-fill" style="width:'+pct+'%;background:'+color+'"></div></div>' +
-      '<div class="crit-range"><span>'+mn+'</span><span>0</span><span>+'+it.max+'</span></div></div>';
+    var mn    = it.signed ? ('-' + it.max) : '0';
+    return '<div class="crit-card">' +
+      '<div class="crit-top">' +
+        '<span class="crit-name">' + it.name + '</span>' +
+        '<span class="crit-val" style="color:' + color + '">' + sign + val +
+          ' <span style="font-size:.6rem;color:rgba(255,255,255,.3);font-weight:400">/' + it.max + '</span></span>' +
+      '</div>' +
+      '<div class="crit-desc">' + it.desc + '</div>' +
+      '<div class="crit-track"><div class="crit-fill" style="width:' + pct + '%;background:' + color + '"></div></div>' +
+      '<div class="crit-range"><span>' + mn + '</span><span>0</span><span>+' + it.max + '</span></div>' +
+    '</div>';
   }).join('');
 }
 
 function renderSkeleton() {
   document.getElementById('criteriaGrid').innerHTML = [1,2,3,4,5].map(function(){
-    return '<div class="crit-card"><div class="crit-top"><div class="skel" style="width:80px;height:11px"></div><div class="skel" style="width:38px;height:11px"></div></div><div class="crit-track"><div class="skel" style="height:4px;width:100%"></div></div></div>';
+    return '<div class="crit-card"><div class="crit-top">' +
+      '<div class="skel" style="width:80px;height:11px"></div>' +
+      '<div class="skel" style="width:38px;height:11px"></div></div>' +
+      '<div class="crit-track"><div class="skel" style="height:4px;width:100%"></div></div></div>';
   }).join('');
 }
 
@@ -508,19 +701,21 @@ function resetUI() {
   document.getElementById('ringBar').style.stroke = '#333';
   document.getElementById('ringBar').setAttribute('stroke-dashoffset','314.2');
   document.getElementById('scoreInstr').textContent = document.getElementById('instrSel').value || 'Aucun instrument';
-  document.getElementById('scoreBias').textContent = 'En attente…';
-  document.getElementById('scoreBias').className = 'score-bias bias-neut';
-  document.getElementById('scoreMeta').innerHTML = 'Cliquez sur <strong>Analyser</strong>.';
+  document.getElementById('scoreBias').textContent  = 'En attente…';
+  document.getElementById('scoreBias').className    = 'score-bias bias-neut';
+  document.getElementById('scoreMeta').innerHTML    = 'Cliquez sur <strong>Analyser</strong>.';
   document.getElementById('criteriaGrid').innerHTML = '';
-  document.getElementById('srcCard').style.display = 'none';
+  document.getElementById('srcCard').style.display  = 'none';
   document.getElementById('btnPub').disabled = true;
+  document.getElementById('tContexte').value = '';
+  document.getElementById('tDecision').value = '';
+  document.getElementById('tLimite').value   = '';
   setStatus('', 'Sélectionnez un instrument et cliquez sur Analyser');
   lastScores = null;
 }
 
 /* ── Ajustement manuel ── */
 var manualActive = false;
-var manualValues = {};
 
 function buildManualSliders() {
   var items = [
@@ -531,12 +726,11 @@ function buildManualSliders() {
     { name:'Sentiment',    key:'sentiment_score', min:-15, max:15 }
   ];
   var vals = lastScores || {};
-  document.getElementById('manualSliders').innerHTML = items.map(function(it){
+  document.getElementById('manualSliders').innerHTML = items.map(function(it) {
     var v = vals[it.key] || 0;
-    return '<div><label style="font-size:.73rem;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:.3rem;">' +
-      it.name + '<strong id="mv-'+it.key+'" style="color:var(--gold)">'+(v>=0?'+':'')+v+'</strong></label>' +
-      '<input type="range" min="'+it.min+'" max="'+it.max+'" value="'+v+'" ' +
-      'style="-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;" ' +
+    return '<div><label style="font-size:.73rem;color:rgba(255,255,255,.45);display:flex;justify-content:space-between;margin-bottom:.3rem;">' +
+      it.name + '<strong id="mv-' + it.key + '" style="color:#FFD700">' + (v >= 0 ? '+' : '') + v + '</strong></label>' +
+      '<input type="range" min="' + it.min + '" max="' + it.max + '" value="' + v + '" ' +
       'oninput="updateManual(\'' + it.key + '\',this.value,' + it.min + ')" ' +
       'onchange="applyManual()"></div>';
   }).join('');
@@ -544,7 +738,7 @@ function buildManualSliders() {
 
 function updateManual(key, val, mn) {
   var v = parseInt(val);
-  document.getElementById('mv-'+key).textContent = (v>=0&&mn<0?'+':'')+v;
+  document.getElementById('mv-' + key).textContent = (v >= 0 && mn < 0 ? '+' : '') + v;
   if (!lastScores) lastScores = {};
   lastScores[key] = v;
 }
@@ -552,7 +746,7 @@ function updateManual(key, val, mn) {
 function applyManual() {
   if (!lastScores) return;
   renderRing(lastScores);
-  renderInfo(lastScores, lastScores.instrument || document.getElementById('instrSel').value);
+  renderInfo(lastScores, lastScores.instrument || document.getElementById('instrSel').value, lastScores.articleCount || 0);
   renderCriteria(lastScores);
 }
 
@@ -563,24 +757,24 @@ function toggleManual() {
   if (manualActive) {
     buildManualSliders();
     div.style.display = 'block';
-    btn.textContent = '✕ Fermer l\'ajustement';
+    btn.textContent   = '✕ Fermer l\'affinage';
+    document.getElementById('btnPub').disabled = false;
     if (!lastScores) {
-      lastScores = { tendance:0, momentum:0, volatilite:0, fondamentaux:0,
-                     sentiment_score:0, score_sentiment:0,
-                     instrument: document.getElementById('instrSel').value,
-                     categorie: currentCat };
+      lastScores = { tendance:0, momentum:0, volatilite:5, fondamentaux:0,
+                     sentiment_score:0, score_sentiment:0, bull:0, bear:0, articleCount:0,
+                     detail:{ tBull:0,tBear:0,mBull:0,mBear:0,fBull:0,fBear:0,sBull:0,sBear:0,vHigh:0,vLow:0 },
+                     instrument: document.getElementById('instrSel').value, categorie: currentCat };
       renderRing(lastScores);
-      renderInfo(lastScores, lastScores.instrument);
+      renderInfo(lastScores, lastScores.instrument, 0);
       renderCriteria(lastScores);
-      document.getElementById('btnPub').disabled = false;
     }
   } else {
     div.style.display = 'none';
-    btn.textContent = '⚙️ Ajuster manuellement';
+    btn.textContent   = '⚙️ Affiner manuellement';
   }
 }
 
-/* ── Publish ── */
+/* ── Publication Supabase ── */
 function getToken() {
   var fa = localStorage.getItem('fa_token');
   if (fa) return fa;
@@ -621,9 +815,9 @@ async function publishScore() {
   try {
     var res = await fetch(
       SB_URL + '/rest/v1/market_scores?instrument=eq.' + encodeURIComponent(lastScores.instrument),
-      { method:'PATCH',
-        headers:{ 'apikey':SB_KEY,'Authorization':'Bearer '+token,
-                  'Content-Type':'application/json','Prefer':'return=minimal' },
+      { method: 'PATCH',
+        headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token,
+                   'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
         body: JSON.stringify(payload) }
     );
     if (res.status === 204 || res.ok) {
@@ -633,17 +827,18 @@ async function publishScore() {
     }
   } catch(e) { showToast('Erreur réseau', 'err'); }
 
-  btn.disabled = false; btn.innerHTML = '📡 Publier l\'analyse';
+  btn.disabled = false;
+  btn.innerHTML = '📡 Publier l\'analyse';
 }
 
 /* ── Helpers ── */
 function setStatus(type, txt) {
-  document.getElementById('sdot').className = 'sdot' + (type ? ' '+type : '');
+  document.getElementById('sdot').className = 'sdot' + (type ? ' ' + type : '');
   document.getElementById('statusTxt').textContent = txt;
 }
 function showToast(msg, type) {
   var t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast '+type+' show';
+  t.textContent = msg; t.className = 'toast ' + type + ' show';
   setTimeout(function(){ t.classList.remove('show'); }, 3500);
 }
 </script>
