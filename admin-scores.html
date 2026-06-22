@@ -235,7 +235,14 @@ const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 
 /* Collecte RSS via rss2json.com (CORS natif, sans backend) */
-const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=20&rss_url=';
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=12&rss_url=';
+
+/* Fallback proxies CORS si rss2json échoue (rate-limit / flux indisponible) */
+const CORS_PROXIES = [
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
+  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
+];
 
 /* Crédibilité par source (0–1) */
 const SOURCE_WEIGHTS = {
@@ -438,26 +445,65 @@ async function storeNewsCache(arts){
 }
 
 /* ── Fetch avec chaîne de proxy (essai séquentiel) ── */
-async function fetchFeed(feedObj){
+function parseRSSxml(xmlStr, source){
+  try{
+    var doc   = new DOMParser().parseFromString(xmlStr, 'text/xml');
+    var items = Array.prototype.slice.call(doc.querySelectorAll('item, entry'));
+    return items.map(function(it){
+      var t = it.querySelector('title');
+      var d = it.querySelector('description, summary, content');
+      var l = it.querySelector('link');
+      var p = it.querySelector('pubDate, published, updated');
+      var title   = t ? t.textContent : '';
+      var summary = (d ? d.textContent : '').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,300);
+      var link    = l ? (l.getAttribute('href') || l.textContent || '#') : '#';
+      var ts      = p ? new Date(p.textContent).getTime() : 0;
+      return {title:title, summary:summary, link:(link||'#'),
+              txt:(title+' '+summary).toLowerCase(), ts:(ts||0), source:source};
+    });
+  }catch(e){ return []; }
+}
+
+async function fetchViaRss2json(feedObj){
   try{
     var ctrl  = new AbortController();
-    var timer = setTimeout(function(){ ctrl.abort(); }, 10000);
+    var timer = setTimeout(function(){ ctrl.abort(); }, 9000);
     var r     = await fetch(RSS2JSON_API + encodeURIComponent(feedObj.url), {signal: ctrl.signal});
     clearTimeout(timer);
-    if(!r.ok) return {name:feedObj.name, articles:[], ok:false};
+    if(!r.ok) return [];
     var data = await r.json();
-    if(!data || data.status !== 'ok' || !data.items) return {name:feedObj.name, articles:[], ok:false};
-    var arts = data.items.map(function(it){
+    if(!data || data.status !== 'ok' || !data.items) return [];
+    return data.items.map(function(it){
       var title   = it.title || '';
       var summary = (it.description || it.content || '').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,300);
-      var txt     = (title + ' ' + summary).toLowerCase();
       var ts      = it.pubDate ? new Date(it.pubDate).getTime() : 0;
-      return {title:title, summary:summary, link:(it.link||it.guid||'#'), txt:txt, ts:ts, source:feedObj.name};
+      return {title:title, summary:summary, link:(it.link||it.guid||'#'),
+              txt:(title+' '+summary).toLowerCase(), ts:(ts||0), source:feedObj.name};
     });
-    return {name:feedObj.name, articles:arts, ok:true};
-  }catch(e){
-    return {name:feedObj.name, articles:[], ok:false};
+  }catch(e){ return []; }
+}
+
+async function fetchViaProxy(feedObj){
+  for(var i=0;i<CORS_PROXIES.length;i++){
+    try{
+      var ctrl  = new AbortController();
+      var timer = setTimeout(function(){ ctrl.abort(); }, 9000);
+      var r     = await fetch(CORS_PROXIES[i](feedObj.url), {signal: ctrl.signal});
+      clearTimeout(timer);
+      if(!r.ok) continue;
+      var xml = await r.text();
+      if(xml.length < 100 || (xml.indexOf('<item') === -1 && xml.indexOf('<entry') === -1)) continue;
+      var arts = parseRSSxml(xml, feedObj.name);
+      if(arts.length) return arts;
+    }catch(e){}
   }
+  return [];
+}
+
+async function fetchFeed(feedObj){
+  var arts = await fetchViaRss2json(feedObj);
+  if(!arts.length) arts = await fetchViaProxy(feedObj);
+  return {name:feedObj.name, articles:arts, ok:arts.length>0};
 }
 
 /* ── Filtrage par instrument (avec fallback) ── */
@@ -590,17 +636,23 @@ async function runAnalysis(){
     });
     activeSrc = Object.keys(present).length;
   } else {
-    /* 2. Collecte live via rss2json (parallèle) */
-    var results = await Promise.all(FEEDS.map(function(f,i){
-      return fetchFeed(f).then(function(r){
-        var el=document.getElementById('src'+i);
-        if(el) el.className='src-tag '+(r.ok?'ok':'fail');
-        return r;
-      });
-    }));
+    /* 2. Collecte live par lots de 3 (évite le rate-limit rss2json) */
+    var results = [];
+    for(var bi=0; bi<FEEDS.length; bi+=3){
+      var batch = FEEDS.slice(bi, bi+3);
+      var part  = await Promise.all(batch.map(function(f,k){
+        var idx = bi + k;
+        return fetchFeed(f).then(function(r){
+          var el=document.getElementById('src'+idx);
+          if(el) el.className='src-tag '+(r.ok?'ok':'fail');
+          return r;
+        });
+      }));
+      results = results.concat(part);
+    }
     results.forEach(function(r){ allArticles = allArticles.concat(r.articles); });
     activeSrc = results.filter(function(r){return r.ok;}).length;
-    storeNewsCache(allArticles); /* best-effort, ne bloque pas */
+    storeNewsCache(allArticles); /* best-effort */
   }
 
   allArticles = dedupArticles(allArticles);
