@@ -552,56 +552,68 @@ function renderEmptyNoPlan() {
 function renderEmptyNoTrades() {
   const _u = (window.FA && window.FA.getUser()) || JSON.parse(localStorage.getItem('fa_user')||'null');
   const av = _u ? (_u.name||_u.email||'?')[0].toUpperCase() : '?';
+  const name = _u ? (_u.name || _u.email.split('@')[0]) : 'Trader';
   document.getElementById('topbarAvatar').textContent = av;
+  const riskAmt = plan.capital0 && plan.risk ? fmtEUR(plan.capital0 * plan.risk / 100) : '—';
   document.getElementById('mainContent').innerHTML = `
     <div class="page-header">
       <div>
-        <div class="page-greeting">Bonjour 👋</div>
+        <div class="page-greeting">Bienvenue ${name} 👋</div>
         <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">${plan.name || 'Plan en cours'} · Capital initial ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
+        <div class="page-sub">${plan.name || 'Plan actif'} · Capital ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
+      </div>
+      <div class="currency-toggle" id="currencyToggle" style="display:flex;gap:3px;">
+        <button id="btn-eur" class="curr-btn" onclick="setCurrency('EUR')">€ EUR</button>
+        <button id="btn-usd" class="curr-btn" onclick="setCurrency('USD')">$ USD</button>
       </div>
     </div>
 
-    <!-- KPIs vides -->
+    <!-- KPIs plan -->
     <div class="kpi-row">
       <div class="kpi-card hero">
-        <div class="kpi-label">Capital actuel</div>
+        <div class="kpi-label">Capital de départ</div>
         <div class="kpi-value gold">${fmtEUR(plan.capital0)}</div>
-        <div class="kpi-sub" style="margin-top:0.8rem;">En attente de tes premiers trades</div>
-        <div class="kpi-progress"><div class="kpi-progress-bar" style="width:0%;"></div></div>
-        <div class="kpi-sub">Objectif ${fmtEUR(plan.target)} · 0% atteint</div>
+        <div class="kpi-progress" style="margin-top:.8rem;"><div class="kpi-progress-bar" style="width:0%;"></div></div>
+        <div class="kpi-sub" style="margin-top:.4rem;">Objectif : ${fmtEUR(plan.target)}</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-label">Gain net</div>
-        <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">0 trade enregistré</div>
+        <div class="kpi-label">Risque / trade</div>
+        <div class="kpi-value neutral">${riskAmt}</div>
+        <div class="kpi-sub">${plan.risk || '—'}% du capital</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Trades enregistrés</div>
+        <div class="kpi-value neutral">0</div>
+        <div class="kpi-sub">Premier trade attendu</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Win Rate</div>
         <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">Aucun résultat</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Profit Factor</div>
-        <div class="kpi-value neutral">—</div>
-        <div class="kpi-sub">Σ gains / Σ pertes</div>
+        <div class="kpi-sub">Cible : ${plan.winrate || '—'}%</div>
       </div>
     </div>
 
-    <div class="empty">
-      <div class="empty-icon">📝</div>
-      <div class="empty-title">Enregistre ton premier trade</div>
-      <div class="empty-sub">Dès que tu cliqueras "Win" ou "Loss" dans ton journal, ce dashboard se remplira : courbe d'équité, performance par jour, streak, drawdown… tout sera tracé automatiquement.</div>
-      <a href="journal.html" class="empty-cta">Aller au journal →</a>
+    <!-- CTA principal -->
+    <div style="margin:2rem 0;padding:2.2rem 1.5rem;background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.01));border:1px solid rgba(255,215,0,0.3);border-radius:16px;text-align:center;">
+      <div style="font-size:1.6rem;margin-bottom:.5rem;">📓</div>
+      <div style="font-size:1.15rem;font-weight:800;color:var(--gold);margin-bottom:.3rem;">Enregistre ton premier trade</div>
+      <div style="color:var(--t2);font-size:.88rem;margin-bottom:1.4rem;max-width:500px;margin-left:auto;margin-right:auto;">Dès le premier trade, ton dashboard s'anime : courbe d'équité, win rate, drawdown, streak… tout en temps réel.</div>
+      <a href="journal.html" style="display:inline-block;background:var(--gold);color:#000;font-weight:900;font-size:.98rem;padding:.8rem 2rem;border-radius:9px;text-decoration:none;box-shadow:0 4px 20px rgba(255,215,0,0.22);">
+        + Ajouter un trade
+      </a>
     </div>
-    <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem;">
-      <a href="analyses.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">📰 Analyses</a>
-      <a href="marches.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">📈 Marchés</a>
-      <a href="track-record.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">🏆 Track Record</a>
-      <a href="plan-trading.html" style="padding:0.6rem 1.1rem;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--t2);font-size:0.82rem;text-decoration:none;font-weight:500;">🎯 Mon Plan</a>
+
+    <!-- Accès rapide -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-top:1rem;">
+      <a href="plan-trading.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">🎯 Mon Plan</a>
+      <a href="track-record.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">🏆 Track Record</a>
+      <a href="analyses.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">📰 Analyses</a>
+      <a href="marches.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">📈 Marchés</a>
     </div>
-  `;
+  \`;
+  initCurrencyToggle();
 }
+
 
 function render() {
   // Empty state 1 : pas de plan

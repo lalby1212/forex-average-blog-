@@ -1496,15 +1496,19 @@
             <strong>⚠️ Avertissement risque :</strong> Ce plan est un outil éducatif. Le trading implique des risques significatifs de perte. Les performances passées ou projetées ne garantissent pas les résultats futurs. Ne tradez jamais de l'argent que vous ne pouvez pas vous permettre de perdre. Consultez un conseiller financier agréé avant d'investir.
         </div>
 
-        <div class="btn-actions">
-            <button class="btn btn-secondary" onclick="goToStep2()">← Modifier les paramètres</button>
-            <div class="btn-group">
-                <button class="btn btn-secondary" onclick="exportCSV()">⬇️ CSV</button>
-                <a href="journal.html" class="btn btn-primary" style="text-decoration:none;">📓 Ouvrir mon Trading Lab →</a>
+        <!-- CTA Dashboard -->
+        <div id="cta-dashboard-block" style="margin-top:2.5rem;padding:2rem 1.5rem;background:linear-gradient(135deg,rgba(255,215,0,0.09),rgba(255,215,0,0.02));border:1px solid var(--gold);border-radius:16px;text-align:center;">
+            <div style="font-size:2rem;margin-bottom:.5rem;">🎯</div>
+            <div style="font-size:1.25rem;font-weight:900;color:var(--gold);margin-bottom:.4rem;">Votre plan est activé !</div>
+            <div style="color:var(--text-muted);font-size:.9rem;margin-bottom:1.6rem;">Commencez à tracker vos trades et suivez votre progression en temps réel.</div>
+            <a href="dashboard.html" style="display:inline-block;background:var(--gold);color:#000;font-weight:900;font-size:1.05rem;padding:.9rem 2.4rem;border-radius:10px;text-decoration:none;letter-spacing:.02em;box-shadow:0 4px 24px rgba(255,215,0,0.25);">
+                🚀 Accéder à mon Dashboard &nbsp;→
+            </a>
+            <div style="margin-top:1.2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+                <button class="btn btn-secondary" onclick="goToStep2()" style="font-size:.82rem;padding:.45rem 1rem;">← Modifier</button>
+                <button class="btn btn-secondary" onclick="exportCSV()" style="font-size:.82rem;padding:.45rem 1rem;">⬇️ CSV</button>
             </div>
         </div>
-
-    </div>
 
 </div>
 
@@ -1722,6 +1726,7 @@ function goToStep2() {
     setStepActive(2);
     updatePreview();
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(function(){var t=document.getElementById('toast');if(t){t.textContent='🎉 Plan activé ! Cliquez sur Dashboard pour commencer.';t.className='toast show';setTimeout(function(){t.classList.remove('show');},5000);}},500);
 }
 
 /* ══════════════════════════════════════
@@ -1779,6 +1784,8 @@ function setInstrumentPipVal() {
     }
     updatePreview();
 }
+
+function getCurSym() { return (localStorage.getItem('fa_currency')||'EUR')==='USD' ? '$' : '\u20ac'; }
 
 function ptSetCurrency(cur) {
     localStorage.setItem('fa_currency', cur);
@@ -1915,8 +1922,8 @@ function renderPlan(meta) {
     const sess = document.getElementById('p-session');
     const sessLabel = sess.options[sess.selectedIndex].text;
     const instLabel = document.getElementById('p-instrument').options[document.getElementById('p-instrument').selectedIndex].text.split(' —')[0];
-    document.getElementById('plan-header-name').textContent =
-        `${profile ? profile.icon + ' ' + profile.name + ' · ' : ''}${instLabel} · $${capital0} → $${target.toLocaleString()}`;
+    document.getElementById('plan-header-name').textContent = `${profile ? profile.icon+' '+profile.name+' · ' : ''}${instLabel} · ${getCurSym()}${Number(capital0).toLocaleString('fr-FR')} → ${getCurSym()}${Number(target).toLocaleString('fr-FR')}`;
+
 
     // ── Sauvegarder le plan actif pour journal.html ──
     localStorage.setItem('fa_active_plan', JSON.stringify({
