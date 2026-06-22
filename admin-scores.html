@@ -241,7 +241,7 @@ const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
    Sans clé, l'endpoint public renvoie souvent HTTP 422 (throttle). */
 const RSS2JSON_KEY = 'fk4tjm400zm37ji6dzx7koexwnvud4fjjhd8xpky';
 
-const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=12'
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=25'
   + (RSS2JSON_KEY ? '&api_key=' + RSS2JSON_KEY : '')
   + '&rss_url=';
 
@@ -616,7 +616,7 @@ async function runAnalysis(){
   var instr = document.getElementById('instrSel').value;
   if(!instr) return;
 
-  setStatus('loading','Collecte des flux RSS…');
+  setStatus('loading','Collecte des données — analyse en cours…');
   document.getElementById('btnAnalyze').disabled = true;
   document.getElementById('btnPub').disabled = true;
   renderSkeleton();
