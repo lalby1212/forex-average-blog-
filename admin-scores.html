@@ -440,7 +440,7 @@ async function readNewsCache(){
 }
 async function storeNewsCache(arts){
   try{
-    var token = getToken(); if(!token) return;
+    var token = await getFreshToken(); if(!token) return;
     var rows = arts.slice(0,300).map(function(a){
       return {source:a.source, title:(a.title||'').slice(0,500), summary:(a.summary||'').slice(0,500),
               link:(a.link||'#'), published_at:(a.ts ? new Date(a.ts).toISOString() : null)};
@@ -869,9 +869,45 @@ function getToken(){
   }
   return null;
 }
+
+/* Renvoie un access_token VALIDE : rafraîchit la session Supabase si le token
+   est expiré (évite l'erreur "JWT expired" lors de la publication). */
+async function getFreshToken(){
+  try{
+    var sbKey=null;
+    for(var k in localStorage){ if(k.indexOf('sb-')===0 && k.indexOf('-auth-token')>0){ sbKey=k; break; } }
+    if(sbKey){
+      var sess=null; try{ sess=JSON.parse(localStorage.getItem(sbKey)); }catch(e){}
+      if(sess && sess.refresh_token){
+        var expMs = sess.expires_at ? sess.expires_at*1000 : 0;
+        if(!sess.access_token || (expMs && expMs < Date.now()+120000)){
+          var rr=await fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{
+            method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
+            body:JSON.stringify({refresh_token:sess.refresh_token})
+          });
+          if(rr.ok){
+            var ns=await rr.json();
+            if(ns && ns.access_token){
+              sess.access_token=ns.access_token;
+              sess.refresh_token=ns.refresh_token||sess.refresh_token;
+              sess.expires_at=ns.expires_at||(Math.floor(Date.now()/1000)+(ns.expires_in||3600));
+              sess.expires_in=ns.expires_in||sess.expires_in;
+              if(ns.user) sess.user=ns.user;
+              localStorage.setItem(sbKey, JSON.stringify(sess));
+              if(localStorage.getItem('fa_token')) localStorage.setItem('fa_token', ns.access_token);
+              return ns.access_token;
+            }
+          }
+        }
+        if(sess.access_token) return sess.access_token;
+      }
+    }
+  }catch(e){}
+  return getToken();
+}
 async function publishScore(){
   if(!lastScores) return;
-  var token=getToken();
+  var token=await getFreshToken();
   if(!token){showToast('Session expirée — reconnectez-vous','err');return;}
   var btn=document.getElementById('btnPub');
   btn.disabled=true;btn.textContent='⏳ Publication…';
@@ -902,7 +938,7 @@ async function publishScore(){
 /* Historisation pour backtest (best-effort) */
 async function saveSentimentHistory(s){
   try{
-    var token=getToken(); if(!token) return;
+    var token=await getFreshToken(); if(!token) return;
     var conf = s.fallback ? 'low' : (s.articleCount>=12?'high':s.articleCount>=5?'med':s.articleCount>=2?'low':'bad');
     var row={instrument:s.instrument, sentiment_score:s.sentiment_score, article_count:(s.articleCount||0),
              confidence:conf, fallback:!!s.fallback, bull_signals:(s.bull||0), bear_signals:(s.bear||0)};
