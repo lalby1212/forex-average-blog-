@@ -151,7 +151,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 <div class="page">
   <div class="page-badge"><span class="dot"></span> Intelligence Temps Réel</div>
   <h1 class="page-title">🔬 Radar de <span>Marché</span></h1>
-  <p class="page-sub">Analyse automatique par instrument — agrégation multi-sources, 5 critères indépendants, filtrage ciblé.</p>
+  <p class="page-sub">Analyse automatique par instrument — agrégation multi-sources (flux RSS), pondération récence + source, 5 critères, cache partagé.</p>
 
   <div class="selector-row" id="catPills">
     <button class="cat-pill active" data-cat="forex">💱 Forex</button>
@@ -234,13 +234,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 
-/* Chaîne de proxies CORS — essayés dans l\'ordre jusqu\'au premier succès */
-const PROXIES = [
-  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
-  function(u){ return 'https://corsproxy.io/?' + encodeURIComponent(u); },
-  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); },
-  function(u){ return 'https://thingproxy.freeboard.io/fetch/' + u; }
-];
+/* Collecte RSS via rss2json.com (CORS natif, sans backend) */
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=20&rss_url=';
+
+/* Crédibilité par source (0–1) */
+const SOURCE_WEIGHTS = {
+  'ForexLive':1.0,'FXStreet':1.0,'DailyFX':0.9,'Kitco':0.95,'OilPrice':0.9,
+  'CoinTelegraph':0.85,'BeInCrypto':0.8,'Investing.com':0.8,'MarketWatch':0.85,'CNBC':0.75
+};
+function sourceWeight(name){ return SOURCE_WEIGHTS[name] || 0.8; }
+
+/* Pondération par récence — demi-vie ~16h */
+function recencyWeight(ts){
+  if(!ts) return 0.5;
+  var ageH = (Date.now() - ts) / 3600000;
+  if(ageH < 0) ageH = 0;
+  return Math.exp(-ageH / 24);
+}
 
 /* ── Instruments ── */
 const INSTRUMENTS = {
@@ -386,48 +396,76 @@ document.getElementById('catPills').addEventListener('click',function(e){
 document.getElementById('instrSel').addEventListener('change', resetUI);
 
 /* ── Parse RSS XML ── */
-function parseRSS(xmlStr){
+function dedupArticles(list){
+  var seen = {}, out = [];
+  for(var i=0;i<list.length;i++){
+    var key = (list[i].link && list[i].link !== '#') ? list[i].link : list[i].txt.slice(0,80);
+    if(seen[key]) continue;
+    seen[key] = 1; out.push(list[i]);
+  }
+  return out;
+}
+
+/* Cache Supabase partagé (best-effort — la page fonctionne même sans la table) */
+async function readNewsCache(){
   try{
-    var parser = new DOMParser();
-    var doc    = parser.parseFromString(xmlStr,'text/xml');
-    var items  = Array.from(doc.querySelectorAll('item, entry'));
-    return items.map(function(item){
-      var t = item.querySelector('title');
-      var d = item.querySelector('description,summary,content');
-      return ((t?t.textContent:'') + ' ' + (d?d.textContent:'')).toLowerCase().replace(/<[^>]*>/g,' ');
+    var since = new Date(Date.now() - 15*60*1000).toISOString();
+    var res = await fetch(SB_URL + '/rest/v1/news_cache?select=source,title,summary,link,published_at&fetched_at=gte.' + since + '&limit=500',
+      {headers:{'apikey':SB_KEY,'Accept':'application/json'}});
+    if(!res.ok) return null;
+    var rows = await res.json();
+    if(!rows || !rows.length) return null;
+    return rows.map(function(r){
+      var title = r.title || '', summary = r.summary || '';
+      return {title:title, summary:summary, link:(r.link||'#'),
+              txt:(title+' '+summary).toLowerCase(),
+              ts:(r.published_at ? new Date(r.published_at).getTime() : 0), source:(r.source||'')};
     });
-  }catch(e){return [];}
+  }catch(e){ return null; }
+}
+async function storeNewsCache(arts){
+  try{
+    var token = getToken(); if(!token) return;
+    var rows = arts.slice(0,300).map(function(a){
+      return {source:a.source, title:(a.title||'').slice(0,500), summary:(a.summary||'').slice(0,500),
+              link:(a.link||'#'), published_at:(a.ts ? new Date(a.ts).toISOString() : null)};
+    });
+    await fetch(SB_URL + '/rest/v1/news_cache?on_conflict=link',
+      {method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
+       'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+       body:JSON.stringify(rows)});
+  }catch(e){}
 }
 
 /* ── Fetch avec chaîne de proxy (essai séquentiel) ── */
-async function fetchFeedRobust(feedObj){
-  for(var pi = 0; pi < PROXIES.length; pi++){
-    try{
-      var url   = PROXIES[pi](feedObj.url);
-      var ctrl  = new AbortController();
-      var timer = setTimeout(function(){ctrl.abort();}, 8000);
-      var r     = await fetch(url, {signal: ctrl.signal});
-      clearTimeout(timer);
-      if(!r.ok) continue;
-      var xml   = await r.text();
-      /* Vérifier que c\'est du RSS valide et pas une page d\'erreur */
-      if(xml.length < 100 || (!xml.includes('<item') && !xml.includes('<entry'))) continue;
-      var articles = parseRSS(xml);
-      if(articles.length > 0){
-        return {name: feedObj.name, articles: articles, ok: true, proxy: pi};
-      }
-    }catch(e){}
+async function fetchFeed(feedObj){
+  try{
+    var ctrl  = new AbortController();
+    var timer = setTimeout(function(){ ctrl.abort(); }, 10000);
+    var r     = await fetch(RSS2JSON_API + encodeURIComponent(feedObj.url), {signal: ctrl.signal});
+    clearTimeout(timer);
+    if(!r.ok) return {name:feedObj.name, articles:[], ok:false};
+    var data = await r.json();
+    if(!data || data.status !== 'ok' || !data.items) return {name:feedObj.name, articles:[], ok:false};
+    var arts = data.items.map(function(it){
+      var title   = it.title || '';
+      var summary = (it.description || it.content || '').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim().slice(0,300);
+      var txt     = (title + ' ' + summary).toLowerCase();
+      var ts      = it.pubDate ? new Date(it.pubDate).getTime() : 0;
+      return {title:title, summary:summary, link:(it.link||it.guid||'#'), txt:txt, ts:ts, source:feedObj.name};
+    });
+    return {name:feedObj.name, articles:arts, ok:true};
+  }catch(e){
+    return {name:feedObj.name, articles:[], ok:false};
   }
-  return {name: feedObj.name, articles: [], ok: false, proxy: -1};
 }
 
 /* ── Filtrage par instrument (avec fallback) ── */
 function filterArticles(allArticles, instrument){
   var aliases = ALIASES[instrument] || [instrument.toLowerCase()];
-  var matched = allArticles.filter(function(txt){
-    return aliases.some(function(alias){ return txt.indexOf(alias) !== -1; });
+  return allArticles.filter(function(a){
+    return aliases.some(function(alias){ return a.txt.indexOf(alias) !== -1; });
   });
-  return matched;
 }
 
 /* ── Comptage mots-clés avec gestion négation ── */
@@ -446,51 +484,48 @@ function countKW(text, words){
 function clamp(v,mn,mx){return Math.max(mn,Math.min(mx,v));}
 
 /* ── 5 critères indépendants ── */
-function computeScores(text){
+function wcount(articles, words){
+  var w = 0, raw = 0;
+  for(var i=0;i<articles.length;i++){
+    var c = countKW(articles[i].txt, words);
+    if(c){ w += c * (articles[i].weight || 1); raw += c; }
+  }
+  return {w:w, raw:raw};
+}
+function computeScores(articles){
   /* Tendance */
-  var tB = countKW(text, CK.tendance.bull);
-  var tBr= countKW(text, CK.tendance.bear);
-  var tN = countKW(text, CK.tendance.neg);
-  var tNet= tB - tBr - Math.round(tN*0.4);
-  var tTot= tB + tBr + 1;
-  var tendance = clamp(Math.round((tNet/tTot)*30), -25, 25);
+  var tB=wcount(articles,CK.tendance.bull), tBr=wcount(articles,CK.tendance.bear), tN=wcount(articles,CK.tendance.neg);
+  var tNet=tB.w - tBr.w - tN.w*0.4, tTot=tB.w + tBr.w + 1;
+  var tendance=clamp(Math.round((tNet/tTot)*30), -25, 25);
 
   /* Momentum */
-  var mB = countKW(text, CK.momentum.bull);
-  var mBr= countKW(text, CK.momentum.bear);
-  var mN = countKW(text, CK.momentum.neg);
-  var mNet= mB - mBr - Math.round(mN*0.4);
-  var mTot= mB + mBr + 1;
-  var momentum = clamp(Math.round((mNet/mTot)*24), -20, 20);
+  var mB=wcount(articles,CK.momentum.bull), mBr=wcount(articles,CK.momentum.bear), mN=wcount(articles,CK.momentum.neg);
+  var mNet=mB.w - mBr.w - mN.w*0.4, mTot=mB.w + mBr.w + 1;
+  var momentum=clamp(Math.round((mNet/mTot)*24), -20, 20);
 
   /* Volatilité */
-  var vH = countKW(text, CK.volatilite.high);
-  var vL = countKW(text, CK.volatilite.low);
-  var volatilite = clamp(Math.round(((vH*1.2 - vL*0.5)/(vH+vL+1))*15 + 4), 0, 15);
+  var vH=wcount(articles,CK.volatilite.high), vL=wcount(articles,CK.volatilite.low);
+  var volatilite=clamp(Math.round(((vH.w*1.2 - vL.w*0.5)/(vH.w+vL.w+1))*15 + 4), 0, 15);
 
   /* Fondamentaux */
-  var fB = countKW(text, CK.fondamentaux.bull);
-  var fBr= countKW(text, CK.fondamentaux.bear);
-  var fN = countKW(text, CK.fondamentaux.neg);
-  var fNet= fB - fBr - Math.round(fN*0.3);
-  var fTot= fB + fBr + 1;
-  var fBoost = Math.min(fB+fBr, 12)/12;
-  var fondamentaux = clamp(Math.round((fNet/fTot)*32*(0.5+fBoost*0.5)), -25, 25);
+  var fB=wcount(articles,CK.fondamentaux.bull), fBr=wcount(articles,CK.fondamentaux.bear), fN=wcount(articles,CK.fondamentaux.neg);
+  var fNet=fB.w - fBr.w - fN.w*0.3, fTot=fB.w + fBr.w + 1;
+  var fBoost=Math.min(fB.raw + fBr.raw, 12)/12;
+  var fondamentaux=clamp(Math.round((fNet/fTot)*32*(0.5+fBoost*0.5)), -25, 25);
 
   /* Sentiment */
-  var sB = countKW(text, CK.sentiment.bull);
-  var sBr= countKW(text, CK.sentiment.bear);
-  var sN = countKW(text, CK.sentiment.neg);
-  var sNet= sB - sBr - Math.round(sN*0.4);
-  var sTot= sB + sBr + 1;
-  var sentiment_score = clamp(Math.round((sNet/sTot)*18), -15, 15);
+  var sB=wcount(articles,CK.sentiment.bull), sBr=wcount(articles,CK.sentiment.bear), sN=wcount(articles,CK.sentiment.neg);
+  var sNet=sB.w - sBr.w - sN.w*0.4, sTot=sB.w + sBr.w + 1;
+  var sentiment_score=clamp(Math.round((sNet/sTot)*18), -15, 15);
 
-  var score_sentiment = clamp(tendance+momentum+fondamentaux+sentiment_score - Math.round(volatilite*0.2), -100,100);
+  var score_sentiment=clamp(tendance+momentum+fondamentaux+sentiment_score - Math.round(volatilite*0.2), -100, 100);
 
   return {
     tendance, momentum, volatilite, fondamentaux, sentiment_score, score_sentiment,
-    bull: tB+mB+fB+sB, bear: tBr+mBr+fBr+sBr,
-    d:{tB,tBr,mB,mBr,fB,fBr,sB,sBr,vH,vL}
+    bull: Math.round(tB.raw+mB.raw+fB.raw+sB.raw), bear: Math.round(tBr.raw+mBr.raw+fBr.raw+sBr.raw),
+    d:{tB:Math.round(tB.raw),tBr:Math.round(tBr.raw),mB:Math.round(mB.raw),mBr:Math.round(mBr.raw),
+       fB:Math.round(fB.raw),fBr:Math.round(fBr.raw),sB:Math.round(sB.raw),sBr:Math.round(sBr.raw),
+       vH:Math.round(vH.raw),vL:Math.round(vL.raw)}
   };
 }
 
@@ -527,7 +562,7 @@ async function runAnalysis(){
   var instr = document.getElementById('instrSel').value;
   if(!instr) return;
 
-  setStatus('loading','Collecte des flux d\'actualités…');
+  setStatus('loading','Collecte des flux RSS…');
   document.getElementById('btnAnalyze').disabled = true;
   document.getElementById('btnPub').disabled = true;
   renderSkeleton();
@@ -538,42 +573,58 @@ async function runAnalysis(){
     return '<span class="src-tag" id="src'+i+'">'+f.name+'</span>';
   }).join('');
 
-  /* Fetch tous les feeds en parallèle avec fallback proxy */
-  var results = await Promise.all(FEEDS.map(function(f,i){
-    return fetchFeedRobust(f).then(function(r){
-      var el = document.getElementById('src'+i);
-      if(el) el.className='src-tag '+(r.ok?'ok':'fail');
-      return r;
-    });
-  }));
-
   var allArticles = [];
-  results.forEach(function(r){ allArticles = allArticles.concat(r.articles); });
-  var activeSrc = results.filter(function(r){return r.ok;}).length;
-  var totalArt  = allArticles.length;
+  var activeSrc   = 0;
+  var fromCache   = false;
 
-  setStatus('loading','Filtrage sur '+instr+' ('+totalArt+' articles collectés)…');
-
-  /* Filtrage par instrument */
-  var filtered = filterArticles(allArticles, instr);
-  var useFallback = false;
-
-  /* Si 0 résultats spécifiques → utiliser tous les articles de la catégorie */
-  if(filtered.length === 0 && totalArt > 0){
-    filtered    = allArticles;
-    useFallback = true;
+  /* 1. Cache Supabase partagé (TTL 15 min) */
+  var cached = await readNewsCache();
+  if(cached && cached.length){
+    allArticles = cached;
+    fromCache   = true;
+    var present = {};
+    cached.forEach(function(a){ present[a.source]=1; });
+    FEEDS.forEach(function(f,i){
+      var el=document.getElementById('src'+i);
+      if(el) el.className='src-tag '+(present[f.name]?'ok':'fail');
+    });
+    activeSrc = Object.keys(present).length;
+  } else {
+    /* 2. Collecte live via rss2json (parallèle) */
+    var results = await Promise.all(FEEDS.map(function(f,i){
+      return fetchFeed(f).then(function(r){
+        var el=document.getElementById('src'+i);
+        if(el) el.className='src-tag '+(r.ok?'ok':'fail');
+        return r;
+      });
+    }));
+    results.forEach(function(r){ allArticles = allArticles.concat(r.articles); });
+    activeSrc = results.filter(function(r){return r.ok;}).length;
+    storeNewsCache(allArticles); /* best-effort, ne bloque pas */
   }
 
-  var text       = filtered.join(' ');
-  var artCount   = filtered.length;
+  allArticles = dedupArticles(allArticles);
+  var totalArt = allArticles.length;
+
+  setStatus('loading','Filtrage sur '+instr+' ('+totalArt+' articles)…');
+
+  /* Filtrage par instrument + fallback sectoriel */
+  var filtered = filterArticles(allArticles, instr);
+  var useFallback = false;
+  if(filtered.length === 0 && totalArt > 0){ filtered = allArticles; useFallback = true; }
+
+  /* Pondération récence × crédibilité source */
+  filtered.forEach(function(a){ a.weight = recencyWeight(a.ts) * sourceWeight(a.source); });
+
+  var artCount = filtered.length;
 
   document.getElementById('srcCount').textContent =
-    totalArt+' articles collectés · '+
-    (useFallback ? 'filtrage élargi (secteur)' : artCount+' articles sur '+instr)+
-    ' · '+activeSrc+'/'+FEEDS.length+' sources actives';
+    totalArt+' articles'+(fromCache?' (cache)':'')+' · '+
+    (useFallback ? 'filtrage élargi (secteur)' : artCount+' sur '+instr)+
+    ' · '+activeSrc+'/'+FEEDS.length+' sources';
 
-  /* Calcul */
-  var sc = computeScores(text);
+  /* Calcul des scores */
+  var sc = computeScores(filtered);
   lastScores = Object.assign({}, sc, {instrument:instr, categorie:currentCat, articleCount:artCount, fallback:useFallback});
 
   renderRing(sc);
@@ -586,10 +637,10 @@ async function runAnalysis(){
 
   var total = sc.tendance+sc.momentum+sc.volatilite+sc.fondamentaux+sc.sentiment_score;
 
-  if(activeSrc === 0){
-    setStatus('err','Aucune source accessible — vérifiez votre connexion');
+  if(activeSrc === 0 && !fromCache){
+    setStatus('err','Aucune source accessible — réessayez dans un instant');
   } else if(useFallback){
-    setStatus('warn',artCount+' articles (secteur) · Score brut '+(total>=0?'+':'')+total+' · '+new Date().toLocaleTimeString('fr-FR'));
+    setStatus('warn',artCount+' articles (secteur) · Score '+(total>=0?'+':'')+total+' · '+new Date().toLocaleTimeString('fr-FR'));
   } else {
     setStatus('ok',artCount+' articles sur '+instr+' · Score '+(total>=0?'+':'')+total+' · '+new Date().toLocaleTimeString('fr-FR'));
   }
@@ -778,10 +829,27 @@ async function publishScore(){
     var res=await fetch(SB_URL+'/rest/v1/market_scores?instrument=eq.'+encodeURIComponent(lastScores.instrument),
       {method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
        'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
-    if(res.status===204||res.ok) showToast('✅ Publié — '+lastScores.instrument,'ok');
-    else showToast('Erreur lors de la publication','err');
+    if(res.status===204||res.ok){
+      showToast('✅ Publié — '+lastScores.instrument,'ok');
+      saveSentimentHistory(lastScores);
+    } else {
+      showToast('Erreur lors de la publication','err');
+    }
   }catch(e){showToast('Erreur réseau','err');}
   btn.disabled=false;btn.innerHTML='📡 Publier l\'analyse';
+}
+
+/* Historisation pour backtest (best-effort) */
+async function saveSentimentHistory(s){
+  try{
+    var token=getToken(); if(!token) return;
+    var conf = s.fallback ? 'low' : (s.articleCount>=12?'high':s.articleCount>=5?'med':s.articleCount>=2?'low':'bad');
+    var row={instrument:s.instrument, sentiment_score:s.sentiment_score, article_count:(s.articleCount||0),
+             confidence:conf, fallback:!!s.fallback, bull_signals:(s.bull||0), bear_signals:(s.bear||0)};
+    await fetch(SB_URL+'/rest/v1/sentiment_history',
+      {method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
+       'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)});
+  }catch(e){}
 }
 
 /* ── Helpers ── */
