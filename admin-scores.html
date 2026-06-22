@@ -385,7 +385,7 @@ function autoDecision(sc) {
   if (total >= 10)  return 'Légèrement haussier — Confirmer avant entrée';
   if (total <= -30) return 'Biais VENDEUR — Chercher des opportunités SHORT sur rebond';
   if (total <= -10) return 'Légèrement baissier — Confirmer avant entrée';
-  return 'Neutre — Attendre une cassure directionnelle claire avant de s'engager';
+  return 'Neutre — Attendre une cassure directionnelle claire avant de s\'engager';
 }
 
 /* ── Run ── */
@@ -432,7 +432,7 @@ async function runAnalysis() {
   var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
   var activeFeeds = results.filter(function(r){ return r.ok; }).length;
   if (activeFeeds === 0) {
-    setStatus('err', 'Flux d'actualités indisponibles — ajustez les scores manuellement');
+    setStatus('err', 'Flux d\'actualités indisponibles — ajustez les scores manuellement');
   } else {
     setStatus('ok', 'Analyse terminée · ' + activeFeeds + ' source(s) · Score ' + (total>=0?'+':'') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
   }
@@ -537,7 +537,7 @@ function buildManualSliders() {
       it.name + '<strong id="mv-'+it.key+'" style="color:var(--gold)">'+(v>=0?'+':'')+v+'</strong></label>' +
       '<input type="range" min="'+it.min+'" max="'+it.max+'" value="'+v+'" ' +
       'style="-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;" ' +
-      'oninput="updateManual(''+it.key+'',this.value,'+it.min+')" ' +
+      'oninput="updateManual(\'' + it.key + '\',this.value,' + it.min + ')" ' +
       'onchange="applyManual()"></div>';
   }).join('');
 }
@@ -563,7 +563,7 @@ function toggleManual() {
   if (manualActive) {
     buildManualSliders();
     div.style.display = 'block';
-    btn.textContent = '✕ Fermer l'ajustement';
+    btn.textContent = '✕ Fermer l\'ajustement';
     if (!lastScores) {
       lastScores = { tendance:0, momentum:0, volatilite:0, fondamentaux:0,
                      sentiment_score:0, score_sentiment:0,
@@ -633,7 +633,7 @@ async function publishScore() {
     }
   } catch(e) { showToast('Erreur réseau', 'err'); }
 
-  btn.disabled = false; btn.innerHTML = '📡 Publier l'analyse';
+  btn.disabled = false; btn.innerHTML = '📡 Publier l\'analyse';
 }
 
 /* ── Helpers ── */
