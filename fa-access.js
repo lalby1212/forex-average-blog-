@@ -31,9 +31,14 @@
     return true;
   }
 
+  /* ── Config Supabase ── */
+  const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+  const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+
   /* ── Synchronisation depuis Supabase ──
      Si l'utilisateur est connecté via Supabase Auth mais que les clés FA
-     ne sont pas encore posées, on les remplit à partir de la session SB. */
+     ne sont pas encore posées, on les remplit à partir de la session SB.
+     Retourne { synced, userId, accessToken } pour la récupération du plan. */
   function syncFromSupabase() {
     try {
       for (const k of Object.keys(localStorage)) {
@@ -43,7 +48,7 @@
         let sess;
         try { sess = JSON.parse(raw); } catch { continue; }
         if (!sess || !sess.access_token) continue;
-        // Vérif expiration (expires_at est en secondes UNIX dans Supabase)
+        // Vérif expiration
         if (sess.expires_at && sess.expires_at * 1000 < Date.now()) continue;
 
         const user  = sess.user || {};
@@ -52,16 +57,48 @@
         const meta  = user.user_metadata || {};
         const name  = meta.name || meta.full_name || meta.display_name || email.split('@')[0];
 
-        // Pose les clés FA si absentes (sans écraser un FA.login() existant)
+        // Pose les clés FA si absentes
         if (!localStorage.getItem(KEY_USER))  localStorage.setItem(KEY_USER,  JSON.stringify({ email, name }));
         if (!localStorage.getItem(KEY_TOKEN)) localStorage.setItem(KEY_TOKEN, sess.access_token);
 
-        // Plan (free par défaut, sauf si déjà posé)
+        // Plan = free par défaut, sera écrasé par fetchPlanFromSupabase()
         if (!localStorage.getItem(KEY_PLAN)) localStorage.setItem(KEY_PLAN, 'free');
-        return true;
+
+        return { synced: true, userId: user.id, accessToken: sess.access_token };
       }
     } catch (e) { /* silent */ }
-    return false;
+    return { synced: false };
+  }
+
+  /* ── Récupération du plan depuis subscriptions ── */
+  async function fetchPlanFromSupabase(userId, accessToken) {
+    try {
+      const res = await fetch(
+        SB_URL + '/rest/v1/subscriptions?user_id=eq.' + userId + '&select=plan,status,expires_at&limit=1',
+        {
+          headers: {
+            'apikey': SB_KEY,
+            'Authorization': 'Bearer ' + accessToken,
+            'Accept': 'application/json'
+          }
+        }
+      );
+      if (!res.ok) return;
+      const rows = await res.json();
+      if (!rows || !rows.length) return;
+      const sub = rows[0];
+      const isActive = sub.status === 'active';
+      const notExpired = !sub.expires_at || new Date(sub.expires_at) > new Date();
+      const plan = (sub.plan === 'vip' && isActive && notExpired) ? 'vip' : 'free';
+      localStorage.setItem(KEY_PLAN, plan);
+      // Rafraîchir nav + paywall avec le bon plan
+      initNav();
+      if (plan === 'vip') {
+        // Supprimer les paywalls déjà posés
+        document.querySelectorAll('.fa-paywall-overlay').forEach(el => el.remove());
+        document.querySelectorAll('.fa-locked').forEach(el => el.classList.remove('fa-locked'));
+      }
+    } catch (e) { /* silent — pas de fetch = on garde 'free' */ }
   }
 
   /* ── Détection de session Supabase active (sans modif des clés FA) ── */
@@ -287,8 +324,8 @@
 
   /* ── Boot ── */
   function boot() {
-    // ⚡ NOUVEAU : sync Supabase → FA AVANT tout le reste
-    syncFromSupabase();
+    // ⚡ Sync Supabase → FA (identité + token)
+    const sbResult = syncFromSupabase();
 
     injectStyles();
     checkAuthPage();
@@ -296,6 +333,11 @@
     initPaywall();
     initDropdowns();
     initLogoutBtns();
+
+    // ⚡ Fetch plan depuis subscriptions Supabase (async, met à jour nav après)
+    if (sbResult && sbResult.synced && sbResult.userId && sbResult.accessToken) {
+      fetchPlanFromSupabase(sbResult.userId, sbResult.accessToken);
+    }
   }
 
   if (document.readyState === 'loading') {
