@@ -398,7 +398,7 @@ function loadJournal() {
     // Convertir result_r (R-multiple) en win/loss et en montant €
     var activePlan = JSON.parse(localStorage.getItem('fa_active_plan') || 'null');
     var capital0   = activePlan && activePlan.capital0 ? activePlan.capital0 : 0;
-    var riskPct    = activePlan && activePlan.risk     ? activePlan.risk     : 1;
+    var riskPct    = activePlan && activePlan.riskPct     ? activePlan.riskPct     : 1;
     var riskAmt    = capital0 * riskPct / 100; // montant risqué par trade
     return raw.map(function(e){
       var rVal   = parseFloat(e.result_r || 0);
@@ -554,13 +554,13 @@ function renderEmptyNoTrades() {
   const av = _u ? (_u.name||_u.email||'?')[0].toUpperCase() : '?';
   const name = _u ? (_u.name || _u.email.split('@')[0]) : 'Trader';
   document.getElementById('topbarAvatar').textContent = av;
-  const riskAmt = plan.capital0 && plan.risk ? fmtEUR(plan.capital0 * plan.risk / 100) : '—';
+  const riskAmt = plan.capital0 && plan.riskPct ? fmtEUR(plan.capital0 * plan.riskPct / 100) : '—';
   document.getElementById('mainContent').innerHTML = `
     <div class="page-header">
       <div>
         <div class="page-greeting">Bienvenue ${name} 👋</div>
         <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">${plan.name || 'Plan actif'} · Capital ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
+        <div class="page-sub">${plan.profile || 'Plan actif'} · Capital ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
       </div>
       <div class="currency-toggle" id="currencyToggle" style="display:flex;gap:3px;">
         <button id="btn-eur" class="curr-btn" onclick="setCurrency('EUR')">€ EUR</button>
@@ -579,7 +579,7 @@ function renderEmptyNoTrades() {
       <div class="kpi-card">
         <div class="kpi-label">Risque / trade</div>
         <div class="kpi-value neutral">${riskAmt}</div>
-        <div class="kpi-sub">${plan.risk || '—'}% du capital</div>
+        <div class="kpi-sub">${plan.riskPct || '—'}% du capital</div>
       </div>
       <div class="kpi-card">
         <div class="kpi-label">Trades enregistrés</div>
@@ -610,7 +610,7 @@ function renderEmptyNoTrades() {
       <a href="analyses.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">📰 Analyses</a>
       <a href="marches.html" style="padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--t1);text-decoration:none;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;">📈 Marchés</a>
     </div>
-  \`;
+  `;
   initCurrencyToggle();
 }
 
@@ -637,7 +637,7 @@ function render() {
       <div>
         <div class="page-greeting">Bonjour 👋</div>
         <h1 class="page-title">Ton <span>dashboard</span> trading</h1>
-        <div class="page-sub">${plan.name || 'Plan en cours'} · Capital initial ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
+        <div class="page-sub">${plan.profile || 'Plan en cours'} · Capital initial ${fmtEUR(plan.capital0)} · Objectif ${fmtEUR(plan.target)}</div>
       </div>
       <div class="period-tabs" id="periodTabs">
         <button class="period-tab ${currentPeriod===7?'active':''}" data-p="7">7j</button>
