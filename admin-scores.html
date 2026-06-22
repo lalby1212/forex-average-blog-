@@ -253,8 +253,8 @@ const CORS_PROXIES = [
 
 /* Crédibilité par source (0–1) */
 const SOURCE_WEIGHTS = {
-  'ForexLive':1.0,'FXStreet':1.0,'DailyFX':0.9,'Kitco':0.95,'OilPrice':0.9,
-  'BullionVault':0.9,'CoinTelegraph':0.85,'BeInCrypto':0.8,'Investing.com':0.8,'MarketWatch':0.85,'CNBC':0.75
+  'ForexLive':1.0,'Investing FX':0.9,'FXEmpire':0.85,'ActionForex':0.85,'PoundSterlingLive':0.8,
+  'OilPrice':0.9,'BullionVault':0.9,'CoinTelegraph':0.85,'BeInCrypto':0.8,'MarketWatch':0.85,'CNBC':0.75
 };
 function sourceWeight(name){ return SOURCE_WEIGHTS[name] || 0.8; }
 
@@ -332,7 +332,10 @@ const ALIASES = {
 /* ── Feeds RSS — large spectre ── */
 const FEEDS = [
   {url:'https://www.forexlive.com/feed/news',            name:'ForexLive'},
-  {url:'https://www.investing.com/rss/news.rss',         name:'Investing.com'},
+  {url:'https://www.investing.com/rss/news_1.rss',       name:'Investing FX'},
+  {url:'https://www.fxempire.com/api/v1/en/articles/rss/news', name:'FXEmpire'},
+  {url:'https://www.actionforex.com/feed/',              name:'ActionForex'},
+  {url:'https://www.poundsterlinglive.com/markets?format=feed&type=rss', name:'PoundSterlingLive'},
   {url:'https://feeds.content.dowjones.io/public/rss/mw_topstories', name:'MarketWatch'},
   {url:'https://www.cnbc.com/id/100003114/device/rss/rss.html', name:'CNBC'},
   {url:'https://oilprice.com/rss/main',                  name:'OilPrice'},
