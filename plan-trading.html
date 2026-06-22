@@ -148,6 +148,8 @@
             gap: 0;
             margin-bottom: 2.5rem;
             position: relative;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .step-item {
@@ -167,6 +169,7 @@
             top: 18px;
             left: calc(50% + 22px);
             right: calc(-50% + 22px);
+            max-width: 100%;
             height: 2px;
             background: var(--border);
             z-index: 0;
@@ -970,7 +973,31 @@
             .nav-item-drop.open .drop-panel { display:block; }
         }
         /* ══ FIN NAV DESIGN SYSTEM ══ */
-        </style>
+        
+        /* ── FIXES OVERFLOW / ALIGNEMENT ── */
+        html, body { overflow-x: hidden; }
+        * { box-sizing: border-box; }
+
+        @media (max-width: 600px) {
+            .main-wrap { padding: 1.5rem .85rem 3rem; }
+            .card { padding: 1.25rem 1rem; border-radius: 12px; }
+            .page-header h1 { font-size: 1.6rem; }
+            .page-header p { font-size: .85rem; }
+            .stepper { gap: 0; padding: 0 .5rem; }
+            .step-item { max-width: 90px; }
+            .step-label { font-size: .65rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .btn-group { flex-direction: column; width: 100%; }
+            .btn-group .btn, .btn-group a { width: 100%; text-align: center; }
+            .btn-actions { flex-direction: column; gap: .75rem; }
+            #cta-dashboard-block { padding: 1.5rem 1rem; }
+        }
+        @media (max-width: 380px) {
+            .main-wrap { padding: 1rem .65rem 2.5rem; }
+            .step-label { display: none; }
+        }
+
+</style>
 
 <style>
     /* ════════════════════ NAV UNIQUE v3.0 ════════════════════ */
@@ -1088,6 +1115,7 @@
 }
 /* ══ END NAV v3 ══ */
 
+
 </style>
   <!-- OG Tags -->
   <meta property="og:type" content="website">
@@ -1116,18 +1144,24 @@
 
 <nav id="mainNav">
   <div class="nav-container">
+
     <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
       <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span>
       <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
     </a>
+
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Accueil</a></li>
       <li><a href="marches.html">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
       <li><a href="partenaires.html">Partenaires</a></li>
+
+      <!-- Communauté dropdown -->
+      <!-- Communauté dropdown -->
       <li class="nav-item-drop">
         <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1148,11 +1182,16 @@
           </a>
         </div>
       </li>
+
       <div class="nav-spacer"></div>
+
+            <!-- Auth guest -->
       <li class="nav-auth-guest" style="display:none;list-style:none;">
         <a href="login.html" class="nav-login-btn">Connexion</a>
         <a href="pricing.html" class="nav-cta">✦ VIP</a>
       </li>
+
+      <!-- Profil connecté -->
       <li class="nav-auth-user nav-item-drop" style="display:none;list-style:none;">
         <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);transition:all .2s;">
           <div class="fa-avatar">?</div>
@@ -1160,17 +1199,9 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="drop-panel" style="right:0;min-width:200px;">
-          <a href="dashboard.html" class="drop-link">
-            <span class="drop-icon">📊</span>
-            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
-          </a>
           <a href="journal.html" class="drop-link">
             <span class="drop-icon">📓</span>
             <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
-          </a>
-          <a href="profile.html" class="drop-link">
-            <span class="drop-icon">👤</span>
-            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
@@ -1179,6 +1210,7 @@
           </a>
         </div>
       </li>
+
     </ul>
   </div>
 </nav>
@@ -1733,21 +1765,22 @@ function goToStep2() {
    STEPPER HELPERS
 ══════════════════════════════════════ */
 function setStepActive(n) {
-    [1,2,3].forEach(i => {
-        const el = document.getElementById('step-item-' + i);
-        el.classList.remove('active');
-        if (i === n) el.classList.add('active');
-    });
+    var el = document.getElementById('step-item-'+n);
+    if(el){ el.classList.add('active'); el.classList.remove('done'); }
+    var dot = document.getElementById('dot-'+n);
+    if(dot){ dot.classList.add('active'); dot.classList.remove('done'); }
 }
-
 function setStepDone(n) {
-    const el = document.getElementById('step-item-' + n);
-    el.classList.remove('active');
-    el.classList.add('done');
-    const num = el.querySelector('.step-num');
-    num.textContent = '✓';
+    var el = document.getElementById('step-item-'+n);
+    if(el){ el.classList.remove('active'); el.classList.add('done'); }
+    // Topbar mini dots
+    var dot = document.getElementById('dot-'+n);
+    if(dot){ dot.classList.add('done'); dot.classList.remove('active'); }
+    var line = document.getElementById('line-'+n+'-'+(n+1));
+    if(line) line.classList.add('done');
+    var conn = document.getElementById('connector-'+n);
+    if(conn) conn.classList.add('done');
 }
-
 function show(id) { document.getElementById(id).style.display = 'block'; }
 function hide(id) { document.getElementById(id).style.display = 'none'; }
 
