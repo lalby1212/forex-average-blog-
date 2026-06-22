@@ -235,19 +235,26 @@ const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 
 /* Collecte RSS via rss2json.com (CORS natif, sans backend) */
-const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=12&rss_url=';
+/* ── Clé API rss2json (GRATUITE) ──
+   1) Crée un compte sur https://rss2json.com  (gratuit, 10 000 req/jour)
+   2) Copie ta clé "API Key" dans la variable ci-dessous, entre les quotes.
+   Sans clé, l'endpoint public renvoie souvent HTTP 422 (throttle). */
+const RSS2JSON_KEY = 'fk4tjm400zm37ji6dzx7koexwnvud4fjjhd8xpky';
 
-/* Fallback proxies CORS si rss2json échoue (rate-limit / flux indisponible) */
+const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?count=12'
+  + (RSS2JSON_KEY ? '&api_key=' + RSS2JSON_KEY : '')
+  + '&rss_url=';
+
+/* Fallback CORS si rss2json échoue (allorigins uniquement — les autres proxies
+   publics sont morts : corsproxy.io = 403, codetabs = 400). */
 const CORS_PROXIES = [
-  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); },
-  function(u){ return 'https://corsproxy.io/?url=' + encodeURIComponent(u); },
-  function(u){ return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u); }
+  function(u){ return 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u); }
 ];
 
 /* Crédibilité par source (0–1) */
 const SOURCE_WEIGHTS = {
   'ForexLive':1.0,'FXStreet':1.0,'DailyFX':0.9,'Kitco':0.95,'OilPrice':0.9,
-  'CoinTelegraph':0.85,'BeInCrypto':0.8,'Investing.com':0.8,'MarketWatch':0.85,'CNBC':0.75
+  'BullionVault':0.9,'CoinTelegraph':0.85,'BeInCrypto':0.8,'Investing.com':0.8,'MarketWatch':0.85,'CNBC':0.75
 };
 function sourceWeight(name){ return SOURCE_WEIGHTS[name] || 0.8; }
 
@@ -325,15 +332,13 @@ const ALIASES = {
 /* ── Feeds RSS — large spectre ── */
 const FEEDS = [
   {url:'https://www.forexlive.com/feed/news',            name:'ForexLive'},
-  {url:'https://www.fxstreet.com/rss/news',              name:'FXStreet'},
-  {url:'https://www.dailyfx.com/feeds/forex-rate-news',  name:'DailyFX'},
-  {url:'https://www.kitco.com/rss/kitco-gold-news.xml',  name:'Kitco'},
-  {url:'https://oilprice.com/rss/main',                  name:'OilPrice'},
-  {url:'https://cointelegraph.com/rss',                  name:'CoinTelegraph'},
-  {url:'https://beincrypto.com/feed/',                   name:'BeInCrypto'},
   {url:'https://www.investing.com/rss/news.rss',         name:'Investing.com'},
   {url:'https://feeds.content.dowjones.io/public/rss/mw_topstories', name:'MarketWatch'},
-  {url:'https://www.cnbc.com/id/100003114/device/rss/rss.html', name:'CNBC'}
+  {url:'https://www.cnbc.com/id/100003114/device/rss/rss.html', name:'CNBC'},
+  {url:'https://oilprice.com/rss/main',                  name:'OilPrice'},
+  {url:'https://www.bullionvault.com/gold-news/rss.do',  name:'BullionVault'},
+  {url:'https://cointelegraph.com/rss',                  name:'CoinTelegraph'},
+  {url:'https://beincrypto.com/feed/',                   name:'BeInCrypto'}
 ];
 
 /* ── Mots-clés par critère ── */
