@@ -215,6 +215,13 @@ html,body{background:var(--dark);color:var(--text);
     </div>
   </div>
 
+  <!-- Ajustement manuel -->
+  <div id="manualAdj" style="display:none;background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.15);border-radius:11px;padding:1rem 1.1rem;margin-bottom:.85rem;">
+    <div style="font-size:.63rem;font-weight:700;letter-spacing:1.1px;text-transform:uppercase;color:rgba(255,215,0,.5);margin-bottom:.85rem;">Ajustement Manuel</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;" id="manualSliders"></div>
+  </div>
+  <button id="btnManual" onclick="toggleManual()" style="background:transparent;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-size:.75rem;padding:.35rem .85rem;border-radius:6px;cursor:pointer;margin-bottom:1rem;">⚙️ Ajuster manuellement</button>
+
   <!-- Sources -->
   <div class="sources-card" id="srcCard">
     <div class="src-lbl">Sources analysées</div>
@@ -235,7 +242,8 @@ html,body{background:var(--dark);color:var(--text);
 /* ── Config ── */
 const SB_URL  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY  = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
-const R2J     = 'https://api.rss2json.com/v1/api.json?count=30&rss_url=';
+/* allorigins.win : pas de rate-limit, retourne le XML brut */
+const ALLORIGINS = 'https://api.allorigins.win/raw?url=';
 
 const INSTRUMENTS = {
   forex:     ['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','NZD/USD','USD/CAD',
@@ -306,19 +314,35 @@ document.getElementById('catPills').addEventListener('click', function(e) {
 document.getElementById('instrSel').addEventListener('change', resetUI);
 
 /* ── Fetch RSS ── */
-async function fetchFeed(feedObj) {
-  try {
-    var r = await fetch(R2J + encodeURIComponent(feedObj.url));
-    if (!r.ok) return { name: feedObj.name, text: '', ok: false };
-    var j = await r.json();
-    var text = (j.items || []).map(function(i){
-      return (i.title||'') + ' ' + (i.description||'');
-    }).join(' ').toLowerCase();
-    return { name: feedObj.name, text: text, ok: true, count: (j.items||[]).length };
-  } catch(e) {
-    return { name: feedObj.name, text: '', ok: false };
+/* Parse XML RSS avec DOMParser */
+  function parseRSS(xmlStr) {
+    try {
+      var parser = new DOMParser();
+      var doc    = parser.parseFromString(xmlStr, 'text/xml');
+      var items  = Array.from(doc.querySelectorAll('item, entry'));
+      var texts  = items.map(function(item) {
+        var title = item.querySelector('title');
+        var desc  = item.querySelector('description, summary, content');
+        return (title ? title.textContent : '') + ' ' + (desc ? desc.textContent : '');
+      });
+      return { ok: items.length > 0, count: items.length, text: texts.join(' ').toLowerCase() };
+    } catch(e) { return { ok: false, count: 0, text: '' }; }
   }
-}
+
+  async function fetchFeed(feedObj) {
+    try {
+      var ctrl = new AbortController();
+      var timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+      var r = await fetch(ALLORIGINS + encodeURIComponent(feedObj.url), { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (!r.ok) return { name: feedObj.name, text: '', ok: false, count: 0 };
+      var xml    = await r.text();
+      var parsed = parseRSS(xml);
+      return { name: feedObj.name, text: parsed.text, ok: parsed.ok, count: parsed.count };
+    } catch(e) {
+      return { name: feedObj.name, text: '', ok: false, count: 0 };
+    }
+  }
 
 /* ── Score computation ── */
 function countKW(text, words) {
@@ -406,7 +430,12 @@ async function runAnalysis() {
   document.getElementById('tDecision').value = autoDecision(sc);
 
   var total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
-  setStatus('ok', 'Analyse terminée · Score ' + (total>=0?'+':'') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
+  var activeFeeds = results.filter(function(r){ return r.ok; }).length;
+  if (activeFeeds === 0) {
+    setStatus('err', 'Flux d'actualités indisponibles — ajustez les scores manuellement');
+  } else {
+    setStatus('ok', 'Analyse terminée · ' + activeFeeds + ' source(s) · Score ' + (total>=0?'+':'') + total + ' · ' + new Date().toLocaleTimeString('fr-FR'));
+  }
   document.getElementById('btnAnalyze').disabled = false;
   document.getElementById('btnPub').disabled = false;
 }
@@ -487,6 +516,68 @@ function resetUI() {
   document.getElementById('btnPub').disabled = true;
   setStatus('', 'Sélectionnez un instrument et cliquez sur Analyser');
   lastScores = null;
+}
+
+/* ── Ajustement manuel ── */
+var manualActive = false;
+var manualValues = {};
+
+function buildManualSliders() {
+  var items = [
+    { name:'Tendance',     key:'tendance',        min:-25, max:25 },
+    { name:'Momentum',     key:'momentum',        min:-20, max:20 },
+    { name:'Volatilité',   key:'volatilite',      min:0,   max:15 },
+    { name:'Fondamentaux', key:'fondamentaux',    min:-25, max:25 },
+    { name:'Sentiment',    key:'sentiment_score', min:-15, max:15 }
+  ];
+  var vals = lastScores || {};
+  document.getElementById('manualSliders').innerHTML = items.map(function(it){
+    var v = vals[it.key] || 0;
+    return '<div><label style="font-size:.73rem;color:var(--muted);display:flex;justify-content:space-between;margin-bottom:.3rem;">' +
+      it.name + '<strong id="mv-'+it.key+'" style="color:var(--gold)">'+(v>=0?'+':'')+v+'</strong></label>' +
+      '<input type="range" min="'+it.min+'" max="'+it.max+'" value="'+v+'" ' +
+      'style="-webkit-appearance:none;width:100%;height:4px;background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;" ' +
+      'oninput="updateManual(''+it.key+'',this.value,'+it.min+')" ' +
+      'onchange="applyManual()"></div>';
+  }).join('');
+}
+
+function updateManual(key, val, mn) {
+  var v = parseInt(val);
+  document.getElementById('mv-'+key).textContent = (v>=0&&mn<0?'+':'')+v;
+  if (!lastScores) lastScores = {};
+  lastScores[key] = v;
+}
+
+function applyManual() {
+  if (!lastScores) return;
+  renderRing(lastScores);
+  renderInfo(lastScores, lastScores.instrument || document.getElementById('instrSel').value);
+  renderCriteria(lastScores);
+}
+
+function toggleManual() {
+  var div = document.getElementById('manualAdj');
+  var btn = document.getElementById('btnManual');
+  manualActive = !manualActive;
+  if (manualActive) {
+    buildManualSliders();
+    div.style.display = 'block';
+    btn.textContent = '✕ Fermer l'ajustement';
+    if (!lastScores) {
+      lastScores = { tendance:0, momentum:0, volatilite:0, fondamentaux:0,
+                     sentiment_score:0, score_sentiment:0,
+                     instrument: document.getElementById('instrSel').value,
+                     categorie: currentCat };
+      renderRing(lastScores);
+      renderInfo(lastScores, lastScores.instrument);
+      renderCriteria(lastScores);
+      document.getElementById('btnPub').disabled = false;
+    }
+  } else {
+    div.style.display = 'none';
+    btn.textContent = '⚙️ Ajuster manuellement';
+  }
 }
 
 /* ── Publish ── */
