@@ -3,356 +3,550 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Admin Scores | Forex Average</title>
+<title>Radar de Marché | Forex Average</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#FFD700;--dark:#080808;--card:#0f0f0f;--border:rgba(255,215,0,0.12);
-  --text:#e8e8e8;--muted:rgba(255,255,255,0.45);--green:#22c55e;--red:#ef4444;}
-body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  font-size:14px;min-height:100vh;padding:2rem 1rem 4rem;}
-.wrap{max-width:860px;margin:0 auto;}
-h1{font-size:1.5rem;font-weight:900;color:var(--gold);margin-bottom:.4rem;}
-.subtitle{color:var(--muted);font-size:.85rem;margin-bottom:2rem;}
+:root{
+  --gold:#FFD700;--dark:#080808;--card:#0f0f0f;--card2:#141414;
+  --border:rgba(255,215,0,0.12);--text:#e8e8e8;--muted:rgba(255,255,255,0.45);
+  --green:#22c55e;--red:#ef4444;--orange:#f97316;
+}
+html,body{background:var(--dark);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;
+  min-height:100vh;}
+.page{max-width:1000px;margin:0 auto;padding:2rem 1.5rem 4rem;}
 
-/* Sélecteur instrument */
-.select-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem;align-items:center;}
-.select-bar label{font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
-select{background:#141414;border:1px solid var(--border);color:var(--text);
-  padding:.6rem 1rem;border-radius:8px;font-size:.88rem;flex:1;max-width:280px;outline:none;cursor:pointer;}
-select:focus{border-color:var(--gold);}
-.cat-filter{display:flex;gap:.5rem;flex-wrap:wrap;}
-.cat-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  color:var(--muted);padding:.4rem .9rem;border-radius:6px;font-size:.78rem;cursor:pointer;transition:.2s;}
-.cat-btn:hover,.cat-btn.active{background:rgba(255,215,0,.12);border-color:rgba(255,215,0,.3);color:var(--gold);}
+/* ── Header ── */
+.page-header{margin-bottom:2rem;}
+.page-badge{display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);
+  color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;padding:.35rem .9rem;border-radius:99px;margin-bottom:.9rem;}
+.page-badge .dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.page-title{font-size:1.65rem;font-weight:900;color:#fff;margin-bottom:.35rem;}
+.page-title span{color:var(--gold);}
+.page-sub{color:var(--muted);font-size:.88rem;line-height:1.5;}
 
-/* Formulaire */
-.form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;}
-.form-section-title{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(255,215,0,.5);margin-bottom:1.25rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
-.scores-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.75rem;}
-@media(max-width:560px){.scores-grid{grid-template-columns:1fr;}}
-.score-field label{display:flex;justify-content:space-between;align-items:center;
-  font-size:.78rem;color:var(--muted);margin-bottom:.5rem;}
-.score-field .cur-val{font-weight:900;font-size:.9rem;color:var(--gold);}
-.score-field .range-wrap{position:relative;}
-input[type=range]{
-  -webkit-appearance:none;appearance:none;width:100%;height:4px;
-  background:rgba(255,255,255,.1);border-radius:99px;outline:none;cursor:pointer;
-}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
-  background:var(--gold);cursor:pointer;border:2px solid #000;
-}
-.range-limits{display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.25rem;}
-.text-fields{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.75rem;}
-.text-field label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.5px;
-  text-transform:uppercase;color:var(--muted);margin-bottom:.4rem;}
-textarea,input[type=number]{
-  width:100%;background:#141414;border:1px solid rgba(255,255,255,.1);
-  color:var(--text);border-radius:8px;padding:.7rem .9rem;font-size:.85rem;
-  font-family:inherit;outline:none;transition:.2s;resize:vertical;
-}
-textarea:focus,input[type=number]:focus{border-color:var(--gold);}
-.num-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.actions{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;}
-.btn-save{
+/* ── Sélecteur ── */
+.selector-row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1.75rem;}
+.cat-pills{display:flex;gap:.4rem;flex-wrap:wrap;}
+.cat-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  color:var(--muted);padding:.4rem .85rem;border-radius:99px;font-size:.78rem;
+  cursor:pointer;transition:.18s;font-weight:500;}
+.cat-pill:hover{border-color:rgba(255,215,0,.3);color:rgba(255,215,0,.7);}
+.cat-pill.active{background:rgba(255,215,0,.1);border-color:rgba(255,215,0,.3);color:var(--gold);}
+.instr-select{background:#141414;border:1px solid var(--border);color:var(--text);
+  padding:.55rem 1rem;border-radius:8px;font-size:.88rem;min-width:160px;outline:none;cursor:pointer;}
+.instr-select:focus{border-color:var(--gold);}
+.btn-analyze{
   background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;
-  border:none;padding:.75rem 2rem;border-radius:8px;font-weight:900;
-  font-size:.9rem;cursor:pointer;transition:.2s;
+  border:none;padding:.55rem 1.4rem;border-radius:8px;font-weight:800;
+  font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;
+  transition:.18s;white-space:nowrap;
 }
-.btn-save:hover{opacity:.9;transform:translateY(-1px);}
-.btn-save:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.btn-reset{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
-  color:var(--muted);padding:.75rem 1.5rem;border-radius:8px;font-size:.88rem;cursor:pointer;}
-.toast{
-  position:fixed;bottom:2rem;right:2rem;padding:.8rem 1.4rem;
+.btn-analyze:hover{opacity:.9;}
+.btn-analyze:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ── Status bar ── */
+.status-bar{display:flex;align-items:center;gap:.6rem;font-size:.75rem;
+  color:var(--muted);margin-bottom:1.5rem;min-height:20px;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);}
+.status-dot.loading{background:var(--gold);animation:pulse 1s infinite;}
+.status-dot.ok{background:var(--green);}
+.status-dot.err{background:var(--red);}
+
+/* ── Score card principal ── */
+.score-main{display:grid;grid-template-columns:auto 1fr;gap:2rem;
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:1.75rem;margin-bottom:1.25rem;align-items:center;}
+@media(max-width:580px){.score-main{grid-template-columns:1fr;}}
+
+/* Ring */
+.ring-wrap{position:relative;width:130px;height:130px;flex-shrink:0;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:rgba(255,255,255,.06);stroke-width:11;}
+.ring-bar{fill:none;stroke-width:11;stroke-linecap:round;
+  transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1),stroke .4s;}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;}
+.ring-num{font-size:1.9rem;font-weight:900;line-height:1;}
+.ring-sub{font-size:.62rem;color:rgba(255,255,255,.35);margin-top:2px;}
+
+/* Info droite */
+.score-info{}
+.score-instr{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:.45rem;}
+.score-bias{display:inline-block;padding:.28rem .85rem;border-radius:99px;
+  font-size:.8rem;font-weight:700;letter-spacing:.3px;margin-bottom:.65rem;}
+.bias-bull{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.bias-bear{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.bias-neut{background:rgba(255,255,255,.06);color:var(--muted);border:1px solid rgba(255,255,255,.1);}
+.score-meta{font-size:.78rem;color:var(--muted);line-height:1.6;}
+.score-meta strong{color:#fff;}
+
+/* ── Barres critères ── */
+.criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.25rem;}
+@media(max-width:580px){.criteria-grid{grid-template-columns:1fr;}}
+.crit-card{background:var(--card);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:1rem 1.1rem;}
+.crit-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.65rem;}
+.crit-name{font-size:.75rem;font-weight:600;color:var(--muted);}
+.crit-val{font-size:.88rem;font-weight:900;}
+.crit-bar-track{height:5px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
+.crit-bar-fill{height:100%;border-radius:99px;transition:width .8s cubic-bezier(.4,0,.2,1);}
+.crit-range{display:flex;justify-content:space-between;font-size:.62rem;
+  color:rgba(255,255,255,.2);margin-top:.25rem;}
+
+/* ── Sections texte ── */
+.text-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem;}
+@media(max-width:580px){.text-grid{grid-template-columns:1fr;}}
+.text-card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:1rem 1.1rem;}
+.text-card.full{grid-column:1/-1;}
+.text-label{font-size:.63rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:rgba(255,215,0,.5);margin-bottom:.5rem;}
+.text-input{width:100%;background:transparent;border:none;color:var(--text);
+  font-size:.83rem;font-family:inherit;outline:none;resize:none;line-height:1.55;
+  min-height:60px;}
+.text-input::placeholder{color:rgba(255,255,255,.2);}
+
+/* ── Sources ── */
+.sources-wrap{background:var(--card);border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.75rem;}
+.sources-title{font-size:.63rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:rgba(255,255,255,.3);margin-bottom:.75rem;}
+.sources-list{display:flex;flex-wrap:wrap;gap:.5rem;}
+.source-tag{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.4);font-size:.72rem;padding:.25rem .65rem;border-radius:6px;}
+.source-tag.fetched{border-color:rgba(34,197,94,.25);color:rgba(34,197,94,.7);}
+.news-count{font-size:.72rem;color:var(--muted);margin-top:.6rem;}
+
+/* ── Bouton publier ── */
+.publish-bar{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.btn-publish{
+  background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;border:none;
+  padding:.8rem 2rem;border-radius:9px;font-weight:900;font-size:.9rem;
+  cursor:pointer;transition:.18s;display:flex;align-items:center;gap:.5rem;
+}
+.btn-publish:hover{opacity:.9;transform:translateY(-1px);}
+.btn-publish:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.publish-hint{font-size:.78rem;color:var(--muted);}
+
+/* ── Skeleton ── */
+.skel{background:linear-gradient(90deg,#1a1a1a 25%,#222 50%,#1a1a1a 75%);
+  background-size:200% 100%;animation:shimmer 1.2s infinite;border-radius:6px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:2rem;right:2rem;padding:.8rem 1.4rem;
   border-radius:10px;font-weight:700;font-size:.88rem;z-index:9999;
-  transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none;
-}
+  transform:translateY(20px);opacity:0;transition:.3s;pointer-events:none;}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{background:#22c55e;color:#000;}
 .toast.err{background:#ef4444;color:#fff;}
-
-/* Preview widget */
-.preview-title{font-size:.65rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  color:rgba(255,215,0,.5);margin:2rem 0 .75rem;}
 </style>
 </head>
 <body>
-<!-- Auth guard admin -->
 <script>
 (function(){
-  var u = localStorage.getItem('fa_user');
-  var t = localStorage.getItem('fa_token');
-  if(!u||!t){ window.location.replace('login.html?redirect=admin-scores.html'); }
+  var u=localStorage.getItem('fa_user'),t=localStorage.getItem('fa_token');
+  if(!u||!t)window.location.replace('login.html?redirect=admin-scores.html');
 })();
 </script>
 
-<div class="wrap">
-  <h1>⚙️ Scores Macro</h1>
-  <p class="subtitle">Saisie manuelle des scores par instrument — sauvegardé dans Supabase</p>
+<div class="page">
 
-  <!-- Filtres catégorie + sélecteur -->
-  <div class="select-bar">
-    <label>Catégorie :</label>
-    <div class="cat-filter">
-      <button class="cat-btn active" data-cat="forex">💱 Forex</button>
-      <button class="cat-btn" data-cat="commodity">🥇 Commodities</button>
-      <button class="cat-btn" data-cat="crypto">₿ Crypto</button>
-      <button class="cat-btn" data-cat="indice">📈 Indices</button>
-    </div>
-  </div>
-  <div class="select-bar" style="margin-top:-.5rem">
-    <label>Instrument :</label>
-    <select id="instrSelect"></select>
-    <button class="btn-reset" onclick="loadInstrument()" style="padding:.6rem 1rem;">🔄 Charger</button>
+  <div class="page-header">
+    <div class="page-badge"><span class="dot"></span> Intelligence Automatique</div>
+    <h1 class="page-title">🔬 Radar de <span>Marché</span></h1>
+    <p class="page-sub">Scores calculés automatiquement à partir des actualités financières en temps réel.<br>
+    Affinez si nécessaire et publiez pour vos membres.</p>
   </div>
 
-  <!-- Formulaire scores -->
-  <div class="form-card">
-    <div class="form-section-title">Score Quantitatif</div>
-    <div class="scores-grid">
-      <div class="score-field">
-        <label>Tendance <span class="cur-val" id="v-tendance">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-tendance" min="-25" max="25" value="0" oninput="syncSlider('tendance')">
-          <div class="range-limits"><span>-25</span><span>0</span><span>+25</span></div>
-        </div>
-      </div>
-      <div class="score-field">
-        <label>Momentum <span class="cur-val" id="v-momentum">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-momentum" min="-20" max="20" value="0" oninput="syncSlider('momentum')">
-          <div class="range-limits"><span>-20</span><span>0</span><span>+20</span></div>
-        </div>
-      </div>
-      <div class="score-field">
-        <label>Volatilité <span class="cur-val" id="v-volatilite">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-volatilite" min="0" max="15" value="0" oninput="syncSlider('volatilite')">
-          <div class="range-limits"><span>0</span><span>7</span><span>15</span></div>
-        </div>
-      </div>
-      <div class="score-field">
-        <label>Fondamentaux <span class="cur-val" id="v-fondamentaux">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-fondamentaux" min="-25" max="25" value="0" oninput="syncSlider('fondamentaux')">
-          <div class="range-limits"><span>-25</span><span>0</span><span>+25</span></div>
-        </div>
-      </div>
-      <div class="score-field">
-        <label>Sentiment <span class="cur-val" id="v-sentiment_score">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-sentiment_score" min="-15" max="15" value="0" oninput="syncSlider('sentiment_score')">
-          <div class="range-limits"><span>-15</span><span>0</span><span>+15</span></div>
-        </div>
-      </div>
-      <div class="score-field">
-        <label>Score Sentimental <span class="cur-val" id="v-score_sentiment">0</span></label>
-        <div class="range-wrap">
-          <input type="range" id="s-score_sentiment" min="-100" max="100" value="0" oninput="syncSlider('score_sentiment')">
-          <div class="range-limits"><span>-100</span><span>0</span><span>+100</span></div>
-        </div>
+  <!-- Sélecteur -->
+  <div class="selector-row">
+    <div class="cat-pills" id="catPills">
+      <button class="cat-pill active" data-cat="forex">💱 Forex</button>
+      <button class="cat-pill" data-cat="commodity">🥇 Commodities</button>
+      <button class="cat-pill" data-cat="crypto">₿ Crypto</button>
+      <button class="cat-pill" data-cat="indice">📈 Indices</button>
+    </div>
+    <select class="instr-select" id="instrSelect"></select>
+    <button class="btn-analyze" id="btnAnalyze" onclick="runAnalysis()">
+      <span>⚡</span> Analyser
+    </button>
+  </div>
+
+  <!-- Status -->
+  <div class="status-bar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Sélectionnez un instrument pour lancer l'analyse</span>
+  </div>
+
+  <!-- Score principal -->
+  <div class="score-main" id="scoreMain">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 130 130" width="130" height="130">
+        <circle class="ring-bg" cx="65" cy="65" r="54"/>
+        <circle class="ring-bar" id="ringBar" cx="65" cy="65" r="54"
+          stroke="#FFD700" stroke-dasharray="339.3" stroke-dashoffset="339.3"/>
+      </svg>
+      <div class="ring-label">
+        <span class="ring-num" id="ringNum" style="color:#FFD700">—</span>
+        <span class="ring-sub">/100</span>
       </div>
     </div>
-
-    <div class="form-section-title">Textes</div>
-    <div class="text-fields">
-      <div>
-        <label>Contexte fondamental</label>
-        <textarea id="t-contexte" rows="4" placeholder="Contexte macro actuel, données économiques, événements clés..."></textarea>
+    <div class="score-info">
+      <div class="score-instr" id="scoreInstr">Aucun instrument sélectionné</div>
+      <div class="score-bias bias-neut" id="scoreBias">En attente d'analyse…</div>
+      <div class="score-meta" id="scoreMeta">
+        Choisissez un instrument et cliquez sur <strong>Analyser</strong> pour obtenir le score automatique.
       </div>
-      <div class="num-row">
-        <div>
-          <label>Décision fondamentale</label>
-          <textarea id="t-decision" rows="2" placeholder="Ex: ACHAT sur repli, attente NFP..."></textarea>
-        </div>
-        <div>
-          <label>Limite / Invalidation</label>
-          <textarea id="t-limite" rows="2" placeholder="Ex: Clôture sous 1.0800 invalide le scénario..."></textarea>
-        </div>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="btn-save" id="btnSave" onclick="saveScore()">💾 Sauvegarder</button>
-      <button class="btn-reset" onclick="resetForm()">✕ Réinitialiser</button>
-      <span id="total-display" style="color:var(--muted);font-size:.85rem;margin-left:auto;">Total : <strong style="color:var(--gold)">0/100</strong></span>
     </div>
   </div>
 
-  <!-- Aperçu widget -->
-  <div class="preview-title">APERÇU DU WIDGET</div>
-  <div id="score-preview"></div>
+  <!-- Barres critères -->
+  <div class="criteria-grid" id="criteriaGrid">
+    <!-- généré par JS -->
+  </div>
+
+  <!-- Textes -->
+  <div class="text-grid">
+    <div class="text-card full">
+      <div class="text-label">Contexte Fondamental</div>
+      <textarea class="text-input" id="t-contexte" rows="4"
+        placeholder="L'analyse automatique va générer un résumé du contexte macro..."></textarea>
+    </div>
+    <div class="text-card">
+      <div class="text-label">Décision</div>
+      <textarea class="text-input" id="t-decision" rows="3"
+        placeholder="Signal directionnel principal..."></textarea>
+    </div>
+    <div class="text-card">
+      <div class="text-label">Limite / Invalidation</div>
+      <textarea class="text-input" id="t-limite" rows="3"
+        placeholder="Scénario d'invalidation..."></textarea>
+    </div>
+  </div>
+
+  <!-- Sources -->
+  <div class="sources-wrap" id="sourcesWrap" style="display:none">
+    <div class="sources-title">Sources analysées</div>
+    <div class="sources-list" id="sourcesList"></div>
+    <div class="news-count" id="newsCount"></div>
+  </div>
+
+  <!-- Publier -->
+  <div class="publish-bar">
+    <button class="btn-publish" id="btnPublish" onclick="publishScore()" disabled>
+      📡 Publier l'analyse
+    </button>
+    <span class="publish-hint">L'analyse sera visible par tous vos membres immédiatement.</span>
+  </div>
+
 </div>
-
 <div class="toast" id="toast"></div>
 
-<script src="fa-scores.js"></script>
 <script>
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+const RSS2JSON = 'https://api.rss2json.com/v1/api.json?count=30&rss_url=';
 
 const INSTRUMENTS = {
-  forex: ['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','NZD/USD','USD/CAD',
-          'EUR/GBP','EUR/JPY','EUR/CHF','EUR/AUD','EUR/CAD','GBP/JPY','GBP/CHF',
-          'GBP/AUD','GBP/CAD','AUD/JPY','AUD/CHF','AUD/CAD','NZD/JPY','CAD/JPY','CHF/JPY'],
+  forex:     ['EUR/USD','GBP/USD','USD/JPY','USD/CHF','AUD/USD','NZD/USD','USD/CAD',
+              'EUR/GBP','EUR/JPY','EUR/CHF','EUR/AUD','EUR/CAD','GBP/JPY','GBP/CHF',
+              'GBP/AUD','GBP/CAD','AUD/JPY','AUD/CHF','AUD/CAD','NZD/JPY','CAD/JPY','CHF/JPY'],
   commodity: ['XAU/USD','XAG/USD','Platinum','Copper','Palladium','Brent Oil','WTI Oil','Natural Gas'],
-  crypto: ['BTC/USD','ETH/USD','SOL/USD','BNB/USD','XRP/USD','ADA/USD','DOGE/USD','AVAX/USD','DOT/USD','MATIC/USD','LTC/USD','LINK/USD'],
-  indice: ['S&P 500','NASDAQ','DAX','CAC 40','Nikkei','FTSE 100']
+  crypto:    ['BTC/USD','ETH/USD','SOL/USD','BNB/USD','XRP/USD','ADA/USD','DOGE/USD','AVAX/USD','DOT/USD','MATIC/USD','LTC/USD','LINK/USD'],
+  indice:    ['S&P 500','NASDAQ','DAX','CAC 40','Nikkei','FTSE 100']
+};
+
+// Flux RSS par catégorie
+const FEEDS = {
+  forex:     ['https://www.forexlive.com/feed/news','https://www.fxstreet.com/rss/news','https://www.dailyfx.com/feeds/forex-rate-news'],
+  commodity: ['https://www.kitco.com/rss/kitco-gold-news.xml','https://oilprice.com/rss/main','https://www.bullionvault.com/gold-news/rss.do'],
+  crypto:    ['https://cointelegraph.com/rss','https://beincrypto.com/feed/'],
+  indice:    ['https://www.forexlive.com/feed/news','https://www.fxstreet.com/rss/news']
+};
+
+// Mots clés par critère
+const KW = {
+  bull: ['bullish','rally','surge','gains','rises','climbs','strong','upside','buy','breakout',
+         'hawkish ecb','rate hike ecb','positive','growth','beat','optimism','recovery','above expectations'],
+  bear: ['bearish','fall','drop','decline','weakness','downside','sell','breakdown',
+         'hawkish fed','rate hike fed','negative','recession','miss','pessimism','below expectations','slowdown'],
+  trend: ['trend','trending','direction','uptrend','downtrend','momentum','sustained'],
+  momentum: ['accelerat','gaining speed','losing momentum','oversold','overbought','rsi','macd','divergence'],
+  volatility: ['volatile','volatility','uncertainty','risk','swing','gap','spike','whipsaw','vix'],
+  fundamental: ['gdp','cpi','inflation','unemployment','nfp','fomc','ecb','fed','boe','boj','rate decision',
+                'central bank','interest rate','monetary policy','fiscal','trade balance','pmi'],
+  sentiment: ['fear','greed','sentiment','positioning','retail','institutions','net long','net short','cot']
 };
 
 let currentCat = 'forex';
+let lastScores = null;
+let fetchedHeadlines = [];
 
+// ── Init ──────────────────────────────────────────────
 function buildSelect(cat) {
   const sel = document.getElementById('instrSelect');
   sel.innerHTML = INSTRUMENTS[cat].map(i => `<option value="${i}">${i}</option>`).join('');
 }
 
-document.querySelectorAll('.cat-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentCat = btn.dataset.cat;
-    buildSelect(currentCat);
-  });
+document.getElementById('catPills').addEventListener('click', e => {
+  const pill = e.target.closest('.cat-pill');
+  if (!pill) return;
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  currentCat = pill.dataset.cat;
+  buildSelect(currentCat);
+  resetScores();
 });
 
 buildSelect('forex');
 
-function syncSlider(key) {
-  const val = parseInt(document.getElementById('s-'+key).value);
-  const label = document.getElementById('v-'+key);
-  const sign = (key !== 'volatilite' && val >= 0) ? '+' : '';
-  label.textContent = sign + val;
-  updateTotal();
-}
-
-function updateTotal() {
-  const keys = ['tendance','momentum','volatilite','fondamentaux','sentiment_score'];
-  const total = keys.reduce((s,k) => s + parseInt(document.getElementById('s-'+k).value||0), 0);
-  const sign = total >= 0 ? '+' : '';
-  document.getElementById('total-display').innerHTML =
-    'Total : <strong style="color:var(--gold)">' + sign + total + '/100</strong>';
-}
-
-function resetForm() {
-  ['tendance','momentum','volatilite','fondamentaux','sentiment_score','score_sentiment'].forEach(k => {
-    document.getElementById('s-'+k).value = 0;
-    syncSlider(k);
-  });
-  ['contexte','decision','limite'].forEach(k => { document.getElementById('t-'+k).value = ''; });
-  document.getElementById('score-preview').innerHTML = '';
-}
-
-function getToken() {
+// ── Fetch RSS ─────────────────────────────────────────
+async function fetchFeed(url) {
   try {
-    for (const k of Object.keys(localStorage)) {
-      if (k.startsWith('sb-') && k.endsWith('-auth-token')) {
-        const s = JSON.parse(localStorage.getItem(k));
-        if (s && s.access_token) return s.access_token;
-      }
+    const r = await fetch(RSS2JSON + encodeURIComponent(url));
+    const j = await r.json();
+    return (j.items||[]).map(i => (i.title||'') + ' ' + (i.description||'')).join(' ').toLowerCase();
+  } catch { return ''; }
+}
+
+// ── Analyse ───────────────────────────────────────────
+function countKW(text, words) {
+  return words.reduce((n, w) => n + (text.split(w).length - 1), 0);
+}
+
+function clamp(v, mn, mx) { return Math.max(mn, Math.min(mx, v)); }
+
+function computeScores(text, instr) {
+  const bull = countKW(text, KW.bull);
+  const bear = countKW(text, KW.bear);
+  const net  = bull - bear;
+  const vol  = countKW(text, KW.volatility);
+  const fund = countKW(text, KW.fundamental);
+  const trend= countKW(text, KW.trend);
+  const mom  = countKW(text, KW.momentum);
+  const sent = countKW(text, KW.sentiment);
+  const total_art = bull + bear + 1;
+
+  // Normalisation vers plages (avec cap)
+  const tendance    = clamp(Math.round((net / total_art) * 25 * 2), -25, 25);
+  const momentum    = clamp(Math.round(((bull - bear * .8) / total_art) * 20 * 1.5), -20, 20);
+  const volatilite  = clamp(Math.round((vol / (total_art + 1)) * 50), 0, 15);
+  const fondamentaux= clamp(Math.round(((fund > 0 ? net : 0) / (total_art + 1)) * 30), -25, 25);
+  const sentiment_s = clamp(Math.round(((bull * 1.2 - bear) / (total_art + 1)) * 20), -15, 15);
+  const score_sent  = clamp(Math.round(net / (total_art + 1) * 100), -100, 100);
+
+  return { tendance, momentum, volatilite, fondamentaux, sentiment_score: sentiment_s, score_sentiment: score_sent, bull, bear, total: total_art };
+}
+
+function generateContext(sc, instr, cat) {
+  const dir = sc.tendance > 0 ? 'haussière' : sc.tendance < 0 ? 'baissière' : 'neutre';
+  const vol  = sc.volatilite > 10 ? 'élevée' : sc.volatilite > 5 ? 'modérée' : 'faible';
+  const fund = sc.fondamentaux > 10 ? 'positifs' : sc.fondamentaux < -10 ? 'négatifs' : 'mitigés';
+  return `La dynamique actuelle sur ${instr} est ${dir}, portée par ${sc.bull} signaux haussiers contre ${sc.bear} baissiers détectés dans les actualités récentes. Les fondamentaux apparaissent ${fund} avec une volatilité ${vol}. Score momentum : ${sc.momentum > 0 ? '+' : ''}${sc.momentum}/20.`;
+}
+
+function generateDecision(sc) {
+  const total = sc.tendance + sc.momentum + sc.fondamentaux + sc.sentiment_score;
+  if (total >= 30)  return 'Biais acheteur — Chercher des opportunités LONG sur repli';
+  if (total >= 10)  return 'Légèrement haussier — Prudence, confirmer avant entrée';
+  if (total <= -30) return 'Biais vendeur — Chercher des opportunités SHORT sur rebond';
+  if (total <= -10) return 'Légèrement baissier — Prudence, confirmer avant entrée';
+  return 'Neutre — Attendre une cassure directionnelle claire';
+}
+
+// ── Run analysis ──────────────────────────────────────
+async function runAnalysis() {
+  const instr = document.getElementById('instrSelect').value;
+  if (!instr) return;
+
+  setStatus('loading', 'Récupération des actualités en cours…');
+  document.getElementById('btnAnalyze').disabled = true;
+  document.getElementById('btnPublish').disabled = true;
+  renderCriteriaSkeleton();
+
+  const feeds = FEEDS[currentCat] || FEEDS.forex;
+  const srcEl = document.getElementById('sourcesList');
+  const srcWrap = document.getElementById('sourcesWrap');
+  srcWrap.style.display = 'block';
+  srcEl.innerHTML = feeds.map(f => `<span class="source-tag" id="src-${btoa(f).slice(0,8)}">${new URL(f).hostname.replace('www.','')}</span>`).join('');
+
+  // Fetch all feeds in parallel
+  const texts = await Promise.all(feeds.map(async (url) => {
+    const t = await fetchFeed(url);
+    const id = 'src-' + btoa(url).slice(0,8);
+    const el = document.getElementById(id);
+    if (el) el.classList.add('fetched');
+    return t;
+  }));
+
+  const combined = texts.join(' ');
+  const sc = computeScores(combined, instr);
+  lastScores = { ...sc, instrument: instr, categorie: currentCat };
+
+  document.getElementById('newsCount').textContent =
+    `${sc.bull + sc.bear} signaux analysés · ${sc.bull} haussiers · ${sc.bear} baissiers`;
+
+  renderScoreMain(sc, instr);
+  renderCriteria(sc);
+
+  // Textes auto
+  document.getElementById('t-contexte').value = generateContext(sc, instr, currentCat);
+  document.getElementById('t-decision').value = generateDecision(sc);
+  if (!document.getElementById('t-limite').value)
+    document.getElementById('t-limite').value = '';
+
+  setStatus('ok', `Analyse complète — ${new Date().toLocaleTimeString('fr-FR')}`);
+  document.getElementById('btnAnalyze').disabled = false;
+  document.getElementById('btnPublish').disabled = false;
+}
+
+// ── Render ────────────────────────────────────────────
+function renderScoreMain(sc, instr) {
+  const total = sc.tendance + sc.momentum + sc.volatilite + sc.fondamentaux + sc.sentiment_score;
+  const pct   = Math.max(0, Math.min(100, Math.round(((total + 100) / 200) * 100)));
+  const circ  = 2 * Math.PI * 54;
+  const dash  = circ - (pct / 100) * circ;
+  const color = pct >= 65 ? '#22c55e' : pct >= 40 ? '#FFD700' : pct >= 20 ? '#f97316' : '#ef4444';
+
+  document.getElementById('ringNum').textContent = (total >= 0 ? '+' : '') + total;
+  document.getElementById('ringNum').style.color = color;
+  document.getElementById('ringBar').style.stroke = color;
+  document.getElementById('ringBar').setAttribute('stroke-dashoffset', dash.toFixed(1));
+
+  document.getElementById('scoreInstr').textContent = instr;
+
+  let biasLabel, biasCls;
+  if (pct >= 65)      { biasLabel = '📈 Haussier';             biasCls = 'bias-bull'; }
+  else if (pct >= 50) { biasLabel = '↗ Légèrement haussier';  biasCls = 'bias-bull'; }
+  else if (pct >= 40) { biasLabel = '↔ Neutre';               biasCls = 'bias-neut'; }
+  else if (pct >= 25) { biasLabel = '↘ Légèrement baissier';  biasCls = 'bias-bear'; }
+  else                { biasLabel = '📉 Baissier';            biasCls = 'bias-bear'; }
+
+  const biasEl = document.getElementById('scoreBias');
+  biasEl.textContent = biasLabel;
+  biasEl.className = 'score-bias ' + biasCls;
+
+  const sentSign = sc.score_sentiment >= 0 ? '+' : '';
+  document.getElementById('scoreMeta').innerHTML =
+    `<strong>${sc.bull}</strong> signaux haussiers · <strong>${sc.bear}</strong> baissiers · Score sentiment : <strong style="color:var(--gold)">${sentSign}${sc.score_sentiment}</strong>`;
+}
+
+function renderCriteria(sc) {
+  const items = [
+    { name:'Tendance',      key:'tendance',        max:25,  signed:true },
+    { name:'Momentum',      key:'momentum',        max:20,  signed:true },
+    { name:'Volatilité',    key:'volatilite',      max:15,  signed:false },
+    { name:'Fondamentaux',  key:'fondamentaux',    max:25,  signed:true },
+    { name:'Sentiment',     key:'sentiment_score', max:15,  signed:true },
+  ];
+
+  document.getElementById('criteriaGrid').innerHTML = items.map(it => {
+    const val   = sc[it.key] || 0;
+    const pct   = it.signed
+      ? Math.round(((val + it.max) / (it.max * 2)) * 100)
+      : Math.round((val / it.max) * 100);
+    const color = val > 0 ? '#22c55e' : val < 0 ? '#ef4444' : 'rgba(255,255,255,.3)';
+    const sign  = it.signed && val >= 0 ? '+' : '';
+    const mn    = it.signed ? '-'+it.max : '0';
+    const mx    = '+' + it.max;
+    return `<div class="crit-card">
+      <div class="crit-top">
+        <span class="crit-name">${it.name}</span>
+        <span class="crit-val" style="color:${color}">${sign}${val} <span style="font-size:.65rem;color:var(--muted);font-weight:400">/${it.max}</span></span>
+      </div>
+      <div class="crit-bar-track">
+        <div class="crit-bar-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <div class="crit-range"><span>${mn}</span><span>0</span><span>${mx}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function renderCriteriaSkeleton() {
+  document.getElementById('criteriaGrid').innerHTML = [1,2,3,4,5].map(() =>
+    `<div class="crit-card">
+      <div class="crit-top">
+        <div class="skel" style="width:80px;height:12px;"></div>
+        <div class="skel" style="width:40px;height:12px;"></div>
+      </div>
+      <div class="crit-bar-track"><div class="skel" style="height:5px;width:100%;"></div></div>
+    </div>`).join('');
+}
+
+function resetScores() {
+  document.getElementById('ringNum').textContent = '—';
+  document.getElementById('ringBar').setAttribute('stroke-dashoffset', '339.3');
+  document.getElementById('scoreInstr').textContent = 'Sélectionnez un instrument';
+  document.getElementById('scoreBias').textContent = 'En attente…';
+  document.getElementById('scoreBias').className = 'score-bias bias-neut';
+  document.getElementById('scoreMeta').innerHTML = '';
+  document.getElementById('criteriaGrid').innerHTML = '';
+  document.getElementById('sourcesWrap').style.display = 'none';
+  document.getElementById('btnPublish').disabled = true;
+  setStatus('', 'Sélectionnez un instrument pour lancer l'analyse');
+  lastScores = null;
+}
+
+// ── Publish ───────────────────────────────────────────
+function getToken() {
+  for (const k of Object.keys(localStorage)) {
+    if (k.startsWith('sb-') && k.endsWith('-auth-token')) {
+      try { const s = JSON.parse(localStorage.getItem(k)); if (s && s.access_token) return s.access_token; } catch{}
     }
-  } catch(e) {}
+  }
   return null;
 }
 
-async function loadInstrument() {
-  const instr = document.getElementById('instrSelect').value;
-  if (!instr) return;
-  try {
-    const res = await fetch(
-      SB_URL + '/rest/v1/market_scores?instrument=eq.' + encodeURIComponent(instr) + '&limit=1',
-      { headers: { 'apikey': SB_KEY, 'Accept': 'application/json' } }
-    );
-    const rows = await res.json();
-    if (rows && rows[0]) {
-      const d = rows[0];
-      ['tendance','momentum','volatilite','fondamentaux','sentiment_score','score_sentiment'].forEach(k => {
-        document.getElementById('s-'+k).value = d[k] || 0;
-        syncSlider(k);
-      });
-      ['contexte','decision','limite'].forEach(k => {
-        document.getElementById('t-'+k).value = d[k] || '';
-      });
-      showToast('✅ ' + instr + ' chargé', 'ok');
-      updatePreview();
-    } else {
-      showToast('Aucune donnée pour ' + instr, 'err');
-    }
-  } catch(e) {
-    showToast('Erreur de chargement', 'err');
-  }
-}
-
-async function saveScore() {
-  const instr = document.getElementById('instrSelect').value;
-  if (!instr) return;
-
+async function publishScore() {
+  if (!lastScores) return;
   const token = getToken();
-  if (!token) { showToast('Non connecté', 'err'); return; }
+  if (!token) { toast('Reconnectez-vous pour publier', 'err'); return; }
+
+  const btn = document.getElementById('btnPublish');
+  btn.disabled = true; btn.textContent = '⏳ Publication…';
 
   const payload = {
-    instrument:      instr,
-    categorie:       currentCat,
-    tendance:        parseInt(document.getElementById('s-tendance').value),
-    momentum:        parseInt(document.getElementById('s-momentum').value),
-    volatilite:      parseInt(document.getElementById('s-volatilite').value),
-    fondamentaux:    parseInt(document.getElementById('s-fondamentaux').value),
-    sentiment_score: parseInt(document.getElementById('s-sentiment_score').value),
-    score_sentiment: parseInt(document.getElementById('s-score_sentiment').value),
-    contexte:        document.getElementById('t-contexte').value.trim(),
-    decision:        document.getElementById('t-decision').value.trim(),
-    limite:          document.getElementById('t-limite').value.trim(),
-    updated_at:      new Date().toISOString()
+    ...lastScores,
+    contexte:   document.getElementById('t-contexte').value.trim(),
+    decision:   document.getElementById('t-decision').value.trim(),
+    limite:     document.getElementById('t-limite').value.trim(),
+    updated_at: new Date().toISOString()
   };
-
-  const btn = document.getElementById('btnSave');
-  btn.disabled = true; btn.textContent = '⏳ Sauvegarde...';
+  delete payload.bull; delete payload.bear; delete payload.total;
 
   try {
     const res = await fetch(
-      SB_URL + '/rest/v1/market_scores?instrument=eq.' + encodeURIComponent(instr),
-      {
-        method: 'PATCH',
-        headers: {
-          'apikey': SB_KEY,
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal'
-        },
-        body: JSON.stringify(payload)
-      }
+      SB_URL + '/rest/v1/market_scores?instrument=eq.' + encodeURIComponent(lastScores.instrument),
+      { method:'PATCH', headers:{ 'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json','Prefer':'return=minimal' }, body: JSON.stringify(payload) }
     );
-
     if (res.status === 204 || res.ok) {
-      showToast('✅ Sauvegardé — ' + instr, 'ok');
-      updatePreview();
+      toast('✅ Analyse publiée — ' + lastScores.instrument, 'ok');
     } else {
-      const err = await res.text();
-      showToast('Erreur : ' + err.slice(0,60), 'err');
+      toast('Erreur de publication', 'err');
     }
-  } catch(e) {
-    showToast('Erreur réseau', 'err');
-  }
+  } catch { toast('Erreur réseau', 'err'); }
 
-  btn.disabled = false; btn.textContent = '💾 Sauvegarder';
+  btn.disabled = false; btn.innerHTML = '📡 Publier l'analyse';
 }
 
-function updatePreview() {
-  const instr = document.getElementById('instrSelect').value;
-  if (instr && window.FAScores) FAScores.render('score-preview', instr);
+// ── Helpers ───────────────────────────────────────────
+function setStatus(type, txt) {
+  document.getElementById('statusDot').className = 'status-dot' + (type ? ' '+type : '');
+  document.getElementById('statusText').textContent = txt;
 }
 
-function showToast(msg, type) {
+function toast(msg, type) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + type + ' show';
-  setTimeout(() => t.classList.remove('show'), 3000);
+  t.textContent = msg; t.className = 'toast '+type+' show';
+  setTimeout(() => t.classList.remove('show'), 3500);
 }
 
-// Charger auto au changement d'instrument
-document.getElementById('instrSelect').addEventListener('change', loadInstrument);
+// Auto-chargement si instrument déjà sélectionné
+document.getElementById('instrSelect').addEventListener('change', resetScores);
 </script>
 </body>
 </html>
