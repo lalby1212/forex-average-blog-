@@ -405,61 +405,71 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
   }catch(e){}
 })();
 </script>
-<!-- ── VIP Gate (async Supabase) ── -->
+<!-- ── VIP Gate (async Supabase, avec refresh auto du token) ── -->
 <script>
-(function(){
-  try {
-    // Si déjà connu VIP en local → accès immédiat
-    if (localStorage.getItem('fa_plan') === 'vip') return;
+(async function(){
+  var SB  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+  var KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+  function goPricing(){ window.location.replace('pricing.html?from=graphique'); }
+  function showPage(){ document.documentElement.style.visibility = 'visible'; }
+  try{
+    // Accès immédiat si déjà VIP en cache
+    if(localStorage.getItem('fa_plan') === 'vip') return;
 
     // Cacher la page pendant la vérification
     document.documentElement.style.visibility = 'hidden';
 
-    // Récupérer la session Supabase
+    // Trouver la session Supabase
     var sbKey = null;
-    for (var k in localStorage) {
-      if (k.startsWith('sb-') && k.endsWith('-auth-token')) { sbKey = k; break; }
+    for(var k in localStorage){ if(k.indexOf('sb-') === 0 && k.indexOf('-auth-token') > 0){ sbKey = k; break; } }
+    if(!sbKey){ goPricing(); return; }
+    var sess = null; try{ sess = JSON.parse(localStorage.getItem(sbKey)); }catch(e){}
+    if(!sess || !sess.user){ goPricing(); return; }
+
+    // Rafraîchir le token s'il est expiré ou sur le point de l'être
+    var token = sess.access_token;
+    var expMs = sess.expires_at ? sess.expires_at * 1000 : 0;
+    if((!token || (expMs && expMs < Date.now() + 60000)) && sess.refresh_token){
+      try{
+        var rr = await fetch(SB + '/auth/v1/token?grant_type=refresh_token', {
+          method:'POST',
+          headers:{ 'apikey':KEY, 'Content-Type':'application/json' },
+          body:JSON.stringify({ refresh_token: sess.refresh_token })
+        });
+        if(rr.ok){
+          var ns = await rr.json();
+          if(ns && ns.access_token){
+            sess.access_token  = ns.access_token;
+            sess.refresh_token = ns.refresh_token || sess.refresh_token;
+            sess.expires_at    = ns.expires_at || (Math.floor(Date.now()/1000) + (ns.expires_in || 3600));
+            sess.expires_in    = ns.expires_in || sess.expires_in;
+            if(ns.user) sess.user = ns.user;
+            localStorage.setItem(sbKey, JSON.stringify(sess));
+            token = ns.access_token;
+          }
+        }
+      }catch(e){}
     }
-    if (!sbKey) { window.location.replace('pricing.html?from=graphique'); return; }
+    if(!token){ goPricing(); return; }
 
-    var sess = null;
-    try { sess = JSON.parse(localStorage.getItem(sbKey)); } catch(e) {}
-    if (!sess || !sess.access_token || !sess.user) {
-      window.location.replace('pricing.html?from=graphique'); return;
-    }
-
-    var userId = sess.user.id;
-    var token  = sess.access_token;
-
-    fetch('https://bpfpghlpdzevzyhalxov.supabase.co/rest/v1/subscriptions?user_id=eq.' + userId + '&select=plan,status,expires_at&limit=1', {
-      headers: {
-        'apikey': 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ',
-        'Authorization': 'Bearer ' + token,
-        'Accept': 'application/json'
-      }
-    })
-    .then(function(r){ return r.json(); })
-    .then(function(rows){
-      var sub = rows && rows[0];
-      var ok  = sub && sub.plan === 'vip' && sub.status === 'active'
-                && (!sub.expires_at || new Date(sub.expires_at) > new Date());
-      if (ok) {
-        localStorage.setItem('fa_plan', 'vip');
-        document.documentElement.style.visibility = 'visible';
-      } else {
-        window.location.replace('pricing.html?from=graphique');
-      }
-    })
-    .catch(function(){
-      // Réseau KO : si plan déjà en cache → laisser passer, sinon bloquer
-      if (localStorage.getItem('fa_plan') === 'vip') {
-        document.documentElement.style.visibility = 'visible';
-      } else {
-        window.location.replace('pricing.html?from=graphique');
-      }
+    // Vérifier l'abonnement avec un token valide
+    var r = await fetch(SB + '/rest/v1/subscriptions?user_id=eq.' + sess.user.id + '&select=plan,status,expires_at&limit=1', {
+      headers:{ 'apikey':KEY, 'Authorization':'Bearer ' + token, 'Accept':'application/json' }
     });
-  } catch(e) {
-    window.location.replace('pricing.html?from=graphique');
+    var rows = await r.json();
+    var sub  = Array.isArray(rows) ? rows[0] : null;
+    var ok   = sub && sub.plan === 'vip' && sub.status === 'active'
+               && (!sub.expires_at || new Date(sub.expires_at) > new Date());
+    if(ok){
+      localStorage.setItem('fa_plan', 'vip');
+      showPage();
+    } else {
+      if(localStorage.getItem('fa_plan') === 'vip'){ showPage(); }
+      else { goPricing(); }
+    }
+  }catch(e){
+    if(localStorage.getItem('fa_plan') === 'vip'){ showPage(); }
+    else { goPricing(); }
   }
 })();
 </script>
