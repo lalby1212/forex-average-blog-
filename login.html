@@ -131,6 +131,14 @@
             nav { padding: 0 1.2rem; }
         }
     </style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Connexion | Forex Average">
+  <meta property="og:description" content="Connectez-vous à Forex Average pour accéder à vos outils de trading.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 </head>
 <body>
 
@@ -241,20 +249,29 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="fa-access.js"></script>
 <script>
-// ── Comptes localStorage ──
-function getAccounts(){try{return JSON.parse(localStorage.getItem('fa_accounts')||'[]');}catch{return [];}}
+/* ════════ AUTH VIA SUPABASE ════════ */
+const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+const sb = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SB_URL, SB_KEY)
+  : null;
 
-// ── Redirect si déjà connecté ──
-document.addEventListener('DOMContentLoaded', function(){
-    if(window.FA && window.FA.isLogged()){
-        var params = new URLSearchParams(location.search);
-        window.location.href = params.get('redirect') || 'marches.html';
+/* Redirige si déjà connecté (session Supabase active) */
+document.addEventListener('DOMContentLoaded', async function(){
+  try{
+    if(!sb) return;
+    const { data } = await sb.auth.getSession();
+    if(data && data.session){
+      const params = new URLSearchParams(location.search);
+      window.location.href = params.get('redirect') || 'marches.html';
     }
+  }catch(e){}
 });
 
-// ── Toggle screens ──
+/* ── Écrans ── */
 function showReset(){
     document.getElementById('login-screen').style.display='none';
     document.getElementById('reset-screen').classList.add('show');
@@ -265,25 +282,32 @@ function showLogin(){
     document.getElementById('reset-success').classList.remove('show');
 }
 
-// ── Toggle password visibility ──
+/* ── Voir / cacher le mot de passe ── */
 function togglePw(){
     var input=document.getElementById('password');
     var btn=document.querySelector('.toggle-pw');
     var hidden=input.type==='password';
     input.type=hidden?'text':'password';
-    btn.innerHTML=hidden
-        ?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
-        :'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    btn.innerHTML=hidden ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
 }
 
 function showAlert(msg){
-    document.getElementById('alert-error-text').textContent=msg;
+    document.getElementById('alert-error-text').innerHTML=msg;
     document.getElementById('alert-error').classList.add('show');
 }
 function hideAlert(){document.getElementById('alert-error').classList.remove('show');}
 
-// ── Login ──
-function login(){
+function setLoading(on){
+    var btn=document.getElementById('submit-btn');
+    var btnText=document.getElementById('btn-text');
+    var spinner=document.getElementById('spinner');
+    if(btn) btn.disabled=on;
+    if(btnText) btnText.textContent=on?'Connexion…':'Se connecter';
+    if(spinner) spinner.style.display=on?'block':'none';
+}
+
+/* ── Connexion ── */
+async function login(){
     hideAlert();
     var email=document.getElementById('email').value.trim();
     var password=document.getElementById('password').value;
@@ -299,68 +323,60 @@ function login(){
     if(!password) valid=false;
 
     if(!valid) return;
+    if(!sb){ showAlert('Service de connexion indisponible. Réessayez dans un instant.'); return; }
 
-    var btn=document.getElementById('submit-btn');
-    var btnText=document.getElementById('btn-text');
-    var spinner=document.getElementById('spinner');
-    btn.disabled=true;
-    btnText.textContent='Connexion…';
-    spinner.style.display='block';
+    setLoading(true);
+    try{
+        const { data, error } = await sb.auth.signInWithPassword({ email: email, password: password });
+        if(error) throw error;
 
-    // Vérif comptes localStorage
-    setTimeout(function(){
-        var accounts=getAccounts();
-        var account=accounts.find(function(a){return a.email.toLowerCase()===email.toLowerCase();});
+        // Session stockée par supabase-js. On pose les clés FA pour la nav immédiate.
+        var u = data.user || {};
+        var meta = u.user_metadata || {};
+        var name = meta.name || meta.full_name || meta.display_name || (u.email||'').split('@')[0];
+        localStorage.setItem('fa_user', JSON.stringify({ email: u.email, name: name }));
+        if(data.session && data.session.access_token) localStorage.setItem('fa_token', data.session.access_token);
+        if(!localStorage.getItem('fa_plan')) localStorage.setItem('fa_plan','free');
 
-        if(!account){
-            showAlert('Aucun compte trouvé avec cet email. <a href="register.html" style="color:var(--gold);">Créer un compte</a>');
-            btn.disabled=false; btnText.textContent='Se connecter'; spinner.style.display='none';
-            return;
-        }
-        if(account.password!==password){
-            showAlert('Mot de passe incorrect.');
-            btn.disabled=false; btnText.textContent='Se connecter'; spinner.style.display='none';
-            return;
-        }
-
-        // Connexion réussie — pose les clés FA manuellement (sans reload)
-        var token=btoa(email+':'+Date.now());
-        localStorage.setItem('fa_user', JSON.stringify({email:account.email, name:account.name}));
-        localStorage.setItem('fa_plan', account.plan||'free');
-        localStorage.setItem('fa_token', token);
-
-        // Redirect vers la page demandée ou marches.html
         var params=new URLSearchParams(location.search);
-        var redirect=params.get('redirect');
-        window.location.href=redirect||'marches.html';
-    }, 400);
+        window.location.href = params.get('redirect') || 'marches.html';
+    }catch(err){
+        var m = (err && err.message) || '';
+        if(/Invalid login credentials/i.test(m))      showAlert('Email ou mot de passe incorrect. <a href="register.html" style="color:var(--gold);">Créer un compte</a>');
+        else if(/Email not confirmed/i.test(m))       showAlert('Confirme d\'abord ton email (vérifie ta boîte de réception, et les spams).');
+        else if(/rate limit|too many/i.test(m))       showAlert('Trop de tentatives. Réessaie dans quelques minutes.');
+        else                                          showAlert(m || 'Erreur de connexion.');
+        setLoading(false);
+    }
 }
 
-// ── Reset password (info locale) ──
-function resetPassword(){
+/* ── Mot de passe oublié (email Supabase réel) ── */
+async function resetPassword(){
     var email=document.getElementById('reset-email').value.trim();
     var emailOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     document.getElementById('err-reset-email').classList.toggle('show',!emailOk);
     document.getElementById('reset-email').classList.toggle('error',!emailOk);
     if(!emailOk) return;
 
-    // Vérif compte local
-    var accounts=getAccounts();
-    var account=accounts.find(function(a){return a.email.toLowerCase()===email.toLowerCase();});
-
+    if(sb){
+        try{
+            await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/reset-password.html' });
+        }catch(e){ /* on n'expose pas l'existence du compte */ }
+    }
+    // Toujours afficher le succès (anti-énumération de comptes)
     document.getElementById('reset-success-email').textContent=email;
     document.getElementById('reset-screen').classList.remove('show');
     document.getElementById('reset-success').classList.add('show');
 }
 
-// ── Enter key ──
+/* ── Touche Entrée ── */
 document.addEventListener('keydown',function(e){
     if(e.key!=='Enter') return;
     if(document.getElementById('reset-screen').classList.contains('show')) resetPassword();
     else login();
 });
 
-// ── Clear errors ──
+/* ── Effacer les erreurs à la saisie ── */
 ['email','password'].forEach(function(id){
     var el=document.getElementById(id);
     if(el) el.addEventListener('input',function(){

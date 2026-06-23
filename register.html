@@ -396,27 +396,31 @@
 </div>
 
 <script>
-// ── Comptes localStorage ──
-function getAccounts(){try{return JSON.parse(localStorage.getItem('fa_accounts')||'[]');}catch{return[];}}
-function saveAccounts(a){localStorage.setItem('fa_accounts',JSON.stringify(a));}
+/* ════════ INSCRIPTION VIA SUPABASE ════════ */
+const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+const sb = (window.supabase && window.supabase.createClient)
+  ? window.supabase.createClient(SB_URL, SB_KEY)
+  : null;
 
-// ── Redirect si déjà connecté ──
-document.addEventListener('DOMContentLoaded',function(){
-    if(window.FA&&window.FA.isLogged()) window.location.href='dashboard.html';
+/* Redirige si déjà connecté */
+document.addEventListener('DOMContentLoaded', async function(){
+  try{
+    if(!sb) return;
+    const { data } = await sb.auth.getSession();
+    if(data && data.session) window.location.href='dashboard.html';
+  }catch(e){}
 });
 
-
-// ── Toggle password visibility ──
+/* ── Voir / cacher le mot de passe ── */
 function togglePw(id, btn) {
     var input = document.getElementById(id);
     var isHidden = input.type === 'password';
     input.type = isHidden ? 'text' : 'password';
-    btn.innerHTML = isHidden
-        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>'
-        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    btn.innerHTML = isHidden ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
 }
 
-// ── Password strength ──
+/* ── Force du mot de passe ── */
 document.getElementById('password').addEventListener('input', function() {
     var pw = this.value;
     var score = 0;
@@ -435,36 +439,40 @@ document.getElementById('password').addEventListener('input', function() {
     else { fill.style.background = '#22c55e'; label.textContent = 'Fort'; label.style.color = '#22c55e'; }
 });
 
-// ── Pseudo uniqueness check (debounced) ──
+/* ── Disponibilité du pseudo (via table profiles, public read) ── */
 var pseudoTimer = null;
-var pseudoAvailable = null; // null = unknown, true = ok, false = taken
+var pseudoAvailable = null; // null = inconnu, true = dispo, false = pris
+
+async function checkPseudo(val){
+    try{
+        var r = await fetch(SB_URL + '/rest/v1/profiles?username=eq.' + encodeURIComponent(val) + '&select=id&limit=1',
+            { headers:{ 'apikey':SB_KEY, 'Accept':'application/json' } });
+        if(!r.ok) return null;
+        var rows = await r.json();
+        return Array.isArray(rows) && rows.length === 0; // true = dispo
+    }catch(e){ return null; }
+}
 
 document.getElementById('pseudo').addEventListener('input', function() {
     var val = this.value.trim();
     var statusEl = document.getElementById('pseudo-status');
-
-    // Reset
     pseudoAvailable = null;
     statusEl.className = 'pseudo-status';
     statusEl.textContent = '';
     clearTimeout(pseudoTimer);
-
     if (val.length < 3) return;
     if (!/^[a-zA-Z0-9_]+$/.test(val)) return;
-
-    // Debounce 600ms
     statusEl.className = 'pseudo-status checking';
     statusEl.textContent = 'Vérification…';
-
-    pseudoTimer = setTimeout(function() {
-        var accounts = getAccounts();
-        var taken = accounts.some(function(a){ return a.name.toLowerCase() === val.toLowerCase(); });
-        if(taken){
+    pseudoTimer = setTimeout(async function() {
+        var dispo = await checkPseudo(val);
+        if(dispo === false){
             pseudoAvailable = false;
             statusEl.className = 'pseudo-status taken';
             statusEl.textContent = '✕ Ce pseudo est déjà pris';
             document.getElementById('pseudo').classList.add('error');
         } else {
+            // dispo === true OU null (inconnu) → on n'empêche pas l'inscription
             pseudoAvailable = true;
             statusEl.className = 'pseudo-status available';
             statusEl.textContent = '✓ Pseudo disponible';
@@ -474,7 +482,7 @@ document.getElementById('pseudo').addEventListener('input', function() {
     }, 400);
 });
 
-// ── Validation helpers ──
+/* ── Validation helpers ── */
 function showErr(id, show) {
     document.getElementById(id).classList.toggle('show', show);
     var inputId = id.replace('err-', '');
@@ -487,10 +495,18 @@ function showAlert(msg) {
 }
 function hideAlert() { document.getElementById('alert-error').classList.remove('show'); }
 
-// ── Register ──
+function setLoading(on){
+    var btn=document.getElementById('submit-btn');
+    var btnText=document.getElementById('btn-text');
+    var spinner=document.getElementById('spinner');
+    if(btn) btn.disabled=on;
+    if(btnText) btnText.textContent = on ? 'Création en cours…' : 'Créer mon compte gratuit';
+    if(spinner) spinner.style.display = on ? 'block' : 'none';
+}
+
+/* ── Inscription ── */
 async function register() {
     hideAlert();
-
     var pseudo   = document.getElementById('pseudo').value.trim();
     var email    = document.getElementById('email').value.trim();
     var password = document.getElementById('password').value;
@@ -498,86 +514,79 @@ async function register() {
     var terms    = document.getElementById('terms').checked;
     var valid    = true;
 
-    // Validation pseudo : 3+ chars, only letters/digits/underscore
     var pseudoOk = pseudo.length >= 3 && /^[a-zA-Z0-9_]+$/.test(pseudo);
     showErr('err-pseudo', !pseudoOk);
-    if (!pseudoOk) { valid = false; }
-
-    // Pseudo pris ?
+    if (!pseudoOk) valid = false;
     if (pseudoOk && pseudoAvailable === false) {
         valid = false;
         showAlert('Ce pseudo est déjà utilisé, veuillez en choisir un autre.');
     }
 
-    // Si disponibilité pas encore vérifiée (user a tapé trop vite)
-    if (pseudoOk && pseudoAvailable === null) {
-        showAlert('Vérification du pseudo en cours, veuillez patienter quelques secondes…');
-        return;
-    }
-
-    // Email
     var emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     showErr('err-email', !emailOk);
     if (!emailOk) valid = false;
 
-    // Password length
     showErr('err-password', password.length < 8);
     if (password.length < 8) valid = false;
 
-    // Confirmation
     showErr('err-confirm', password !== confirm);
     if (password !== confirm) valid = false;
 
-    // Terms
     showErr('err-terms', !terms);
     if (!terms) valid = false;
 
     if (!valid) return;
+    if (!sb){ showAlert('Service d\'inscription indisponible. Réessayez dans un instant.'); return; }
 
-    var btn     = document.getElementById('submit-btn');
-    var btnText = document.getElementById('btn-text');
-    var spinner = document.getElementById('spinner');
-    btn.disabled = true;
-    btnText.textContent = 'Création en cours…';
-    spinner.style.display = 'block';
+    setLoading(true);
+    try{
+        const { data, error } = await sb.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { username: pseudo, name: pseudo, full_name: pseudo },
+                emailRedirectTo: window.location.origin + '/login.html'
+            }
+        });
+        if(error) throw error;
 
-    // Vérif email unique
-    var accounts = getAccounts();
-    var emailExists = accounts.some(function(a){ return a.email.toLowerCase() === email.toLowerCase(); });
-    if(emailExists){
-        showAlert('Cet email est déjà utilisé. <a href="login.html" style="color:var(--gold);">Connectez-vous</a>');
-        btn.disabled=false; btnText.textContent='Créer mon compte gratuit'; spinner.style.display='none';
-        return;
+        if(data.session){
+            // Confirmation d'email désactivée → connecté directement
+            localStorage.setItem('fa_user', JSON.stringify({ email: email, name: pseudo }));
+            localStorage.setItem('fa_token', data.session.access_token);
+            if(!localStorage.getItem('fa_plan')) localStorage.setItem('fa_plan','free');
+            window.location.href = 'dashboard.html';
+        } else {
+            // Confirmation requise → écran "vérifie ton email"
+            document.getElementById('success-email').textContent = email;
+            document.getElementById('register-form-section').style.display = 'none';
+            document.getElementById('success-screen').classList.add('show');
+        }
+    }catch(err){
+        var m = (err && err.message) || '';
+        if(/already registered|already been registered|User already|already exists/i.test(m))
+            showAlert('Cet email est déjà utilisé. <a href="login.html" style="color:var(--gold);">Connectez-vous</a>');
+        else if(/Password should be/i.test(m))
+            showAlert('Le mot de passe doit contenir au moins 8 caractères.');
+        else if(/rate limit|too many|after/i.test(m))
+            showAlert('Trop de tentatives. Réessaie dans quelques minutes.');
+        else
+            showAlert(m || 'Erreur lors de la création du compte.');
+        setLoading(false);
     }
-
-    // Créer le compte en localStorage
-    accounts.push({ email:email, name:pseudo, password:password, plan:'free', createdAt:Date.now() });
-    saveAccounts(accounts);
-
-    // Connecter directement (sans reload)
-    var token = btoa(email+':'+Date.now());
-    localStorage.setItem('fa_user', JSON.stringify({email:email, name:pseudo}));
-    localStorage.setItem('fa_plan', 'free');
-    localStorage.setItem('fa_token', token);
-
-    // Écran succès → redirect
-    document.getElementById('success-email').textContent = pseudo;
-    document.getElementById('register-form-section').style.display = 'none';
-    document.getElementById('success-screen').classList.add('show');
-        setTimeout(function(){ window.location.href = 'dashboard.html'; }, 1800);
 }
 
-// ── Enter key submit ──
+/* ── Touche Entrée ── */
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') register();
 });
 
-// ── Clear errors on input ──
+/* ── Effacer les erreurs à la saisie ── */
 ['pseudo','email','password','confirm'].forEach(function(id) {
     var el = document.getElementById(id);
     if (!el) return;
     el.addEventListener('input', function() {
-        if (id !== 'pseudo') { // pseudo errors managed separately
+        if (id !== 'pseudo') {
             document.getElementById('err-' + id)?.classList.remove('show');
             this.classList.remove('error');
         }
@@ -585,6 +594,7 @@ document.addEventListener('keydown', function(e) {
     });
 });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="fa-access.js"></script>
 </body>
 </html>
