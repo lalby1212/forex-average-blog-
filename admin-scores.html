@@ -268,6 +268,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 
 <div class="toast" id="toast"></div>
 
+<script src="fa-fundamentals.js"></script>
 <script>
 /* ═══════════════════════════════════════════════════════
    RADAR DE MARCHÉ v3 — Multi-proxy + filtrage intelligent
@@ -635,8 +636,9 @@ function autoContext(sc, instr, n, fallback){
   var mom = sc.momentum>6?'fort et en accélération':sc.momentum>0?'modéré':
             sc.momentum<-6?'négatif et en accélération':sc.momentum<0?'en perte de vitesse':'neutre';
   var src = fallback ? ' (analyse sectorielle — filtrage élargi)' : '';
+  var fdet = sc.fundamentalSource ? ' ['+sc.fundamentalSource.detail+']' : '';
   return instr+' — '+n+' articles analysés'+src+'. Tendance '+dir+', momentum '+mom+
-    '. Fondamentaux '+fund+'. Volatilité '+vol+
+    '. Fondamentaux '+fund+fdet+'. Volatilité '+vol+
     '. Signaux : '+sc.d.tB+' haussiers vs '+sc.d.tBr+' baissiers.';
 }
 function autoDecision(sc){
@@ -727,6 +729,13 @@ async function runAnalysis(){
 
   /* Calcul des scores */
   var sc = computeScores(filtered);
+  /* Pilier Fondamental : remplace le critère mot-clé par le différentiel macro si dispo */
+  var fund = (window.FAFundamentals) ? window.FAFundamentals.fundamental(instr, currentCat) : null;
+  if(fund){
+    sc.fondamentaux = fund.score;
+    sc.fundamentalSource = fund;
+    sc.score_sentiment = clamp(sc.tendance+sc.momentum+sc.fondamentaux+sc.sentiment_score - Math.round(sc.volatilite*0.2), -100, 100);
+  }
   lastScores = Object.assign({}, sc, {instrument:instr, categorie:currentCat, articleCount:artCount, fallback:useFallback});
 
   renderRing(sc);
@@ -797,7 +806,7 @@ function renderCriteria(sc){
     {name:'Tendance',    key:'tendance',       max:25,signed:true, sub:sc.d.tB+'↑ '+sc.d.tBr+'↓ signaux directionnels'},
     {name:'Momentum',   key:'momentum',       max:20,signed:true, sub:sc.d.mB+'↑ '+sc.d.mBr+'↓ vitesse & oscillateurs'},
     {name:'Volatilité', key:'volatilite',     max:15,signed:false,sub:sc.d.vH+' signaux élevés / '+sc.d.vL+' calme'},
-    {name:'Fondamentaux',key:'fondamentaux',  max:25,signed:true, sub:sc.d.fB+'↑ '+sc.d.fBr+'↓ données macro'},
+    {name:'Fondamentaux',key:'fondamentaux',  max:25,signed:true, sub:(sc.fundamentalSource?sc.fundamentalSource.detail:sc.d.fB+'↑ '+sc.d.fBr+'↓ données macro')},
     {name:'Sentiment',  key:'sentiment_score',max:15,signed:true, sub:sc.d.sB+'↑ '+sc.d.sBr+'↓ positionnement'}
   ];
   document.getElementById('criteriaGrid').innerHTML = items.map(function(it){
