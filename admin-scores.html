@@ -133,18 +133,60 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 <body>
 
 <script>
-(function(){
+/* ── Garde ADMIN : page réservée aux administrateurs ──
+   Vérifie la session Supabase, rafraîchit le token si expiré,
+   puis contrôle profiles.is_admin. La vraie protection est la RLS
+   sur market_scores (côté serveur) ; ceci n'est que le confort UI. */
+(async function(){
+  var SB  = 'https://bpfpghlpdzevzyhalxov.supabase.co';
+  var KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+  var de  = document.documentElement;
+  function deny(to){ try{ location.replace(to); }catch(e){} }
   try{
-    var u=localStorage.getItem('fa_user'),t=localStorage.getItem('fa_token');
-    if(u&&t)return;
-    for(var k in localStorage){
-      if(k.indexOf('sb-')===0&&k.indexOf('-auth-token')>0){
-        var s=null;try{s=JSON.parse(localStorage.getItem(k));}catch(e){}
-        if(s&&s.access_token&&(!s.expires_at||s.expires_at*1000>Date.now()))return;
-      }
+    de.style.visibility = 'hidden';
+
+    var sbKey = null;
+    for(var k in localStorage){ if(k.indexOf('sb-')===0 && k.indexOf('-auth-token')>0){ sbKey=k; break; } }
+    if(!sbKey){ deny('login.html?redirect=admin-scores.html'); return; }
+    var sess = null; try{ sess = JSON.parse(localStorage.getItem(sbKey)); }catch(e){}
+    if(!sess || !sess.user){ deny('login.html?redirect=admin-scores.html'); return; }
+
+    // Rafraîchir le token si expiré
+    var token = sess.access_token;
+    var expMs = sess.expires_at ? sess.expires_at*1000 : 0;
+    if((!token || (expMs && expMs < Date.now()+60000)) && sess.refresh_token){
+      try{
+        var rr = await fetch(SB + '/auth/v1/token?grant_type=refresh_token', {
+          method:'POST', headers:{ 'apikey':KEY, 'Content-Type':'application/json' },
+          body: JSON.stringify({ refresh_token: sess.refresh_token })
+        });
+        if(rr.ok){
+          var ns = await rr.json();
+          if(ns && ns.access_token){
+            sess.access_token  = ns.access_token;
+            sess.refresh_token = ns.refresh_token || sess.refresh_token;
+            sess.expires_at    = ns.expires_at || (Math.floor(Date.now()/1000)+(ns.expires_in||3600));
+            if(ns.user) sess.user = ns.user;
+            localStorage.setItem(sbKey, JSON.stringify(sess));
+            token = ns.access_token;
+          }
+        }
+      }catch(e){}
     }
-    window.location.replace('login.html?redirect=admin-scores.html');
-  }catch(e){}
+    if(!token){ deny('login.html?redirect=admin-scores.html'); return; }
+
+    // Contrôle du rôle admin
+    var r = await fetch(SB + '/rest/v1/profiles?id=eq.' + sess.user.id + '&select=is_admin&limit=1',
+      { headers:{ 'apikey':KEY, 'Authorization':'Bearer '+token, 'Accept':'application/json' } });
+    var rows = await r.json();
+    if(rows && rows[0] && rows[0].is_admin === true){
+      de.style.visibility = 'visible';
+    } else {
+      deny('marches.html');
+    }
+  }catch(e){
+    deny('login.html?redirect=admin-scores.html');
+  }
 })();
 </script>
 
@@ -922,10 +964,13 @@ async function publishScore(){
     updated_at:new Date().toISOString()
   };
   try{
-    var res=await fetch(SB_URL+'/rest/v1/market_scores?instrument=eq.'+encodeURIComponent(lastScores.instrument),
-      {method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
-       'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
-    if(res.status===204||res.ok){
+    /* Upsert : crée la ligne si l'instrument n'existe pas, sinon la met à jour.
+       Nécessite une contrainte UNIQUE(instrument) sur market_scores. */
+    var res=await fetch(SB_URL+'/rest/v1/market_scores?on_conflict=instrument',
+      {method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
+       'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+       body:JSON.stringify(payload)});
+    if(res.ok||res.status===201||res.status===204){
       showToast('✅ Publié — '+lastScores.instrument,'ok');
       saveSentimentHistory(lastScores);
     } else {
