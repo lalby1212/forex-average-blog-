@@ -576,6 +576,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
+<style>
+  .whop-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:99999;align-items:flex-start;justify-content:center;overflow-y:auto;padding:2.5rem 1rem;}
+  .whop-modal.open{display:flex;}
+  .whop-modal-box{position:relative;width:100%;max-width:480px;background:#000;border:1px solid rgba(255,215,0,0.28);border-radius:18px;margin:auto;box-shadow:0 30px 80px rgba(0,0,0,0.7);}
+  .whop-modal-close{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;background:#FFD700;color:#000;border:none;font-weight:900;font-size:1rem;cursor:pointer;z-index:3;line-height:1;}
+  .whop-modal-hint{padding:0.5rem 1.2rem 1rem;text-align:center;font-size:0.74rem;color:rgba(255,255,255,0.45);}
+  #whopMount{min-height:120px;}
+</style>
 </head>
 <body>
 
@@ -698,10 +707,10 @@
                 <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tous les outils gratuits inclus</li>
             </ul>
             <div class="pay-buttons">
-                <a href="https://whop.com/checkout/plan_fESsedBCA6bYI" target="_blank" rel="noopener noreferrer" class="btn-stripe">
+                <button type="button" class="btn-stripe" onclick="openWhop('plan_fESsedBCA6bYI')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Essayer 7 jours gratuits
-                </a>
+                </button>
                 <div class="pay-secure">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                     Paiement 100% sécurisé via Whop
@@ -731,10 +740,10 @@
                 <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 mois d'accès continu</li>
             </ul>
             <div class="pay-buttons">
-                <a href="https://whop.com/checkout/plan_fRWEFJAAhokZP" target="_blank" rel="noopener noreferrer" class="btn-stripe">
+                <button type="button" class="btn-stripe" onclick="openWhop('plan_fRWEFJAAhokZP')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Payer — carte ou crypto
-                </a>
+                </button>
                 <div class="pay-secure">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                     Paiement sécurisé via Whop · SSL
@@ -763,10 +772,10 @@
                 <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Meilleur rapport qualité/prix</li>
             </ul>
             <div class="pay-buttons">
-                <a href="https://whop.com/checkout/plan_FQ6nFwuAzvl1x" target="_blank" rel="noopener noreferrer" class="btn-stripe">
+                <button type="button" class="btn-stripe" onclick="openWhop('plan_FQ6nFwuAzvl1x')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     Payer — carte ou crypto
-                </a>
+                </button>
                 <div class="pay-secure">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                     Paiement sécurisé via Whop · SSL
@@ -1014,5 +1023,50 @@ if (!window._FA_NAV_INIT) {
 }
 </script>
 <script src="fa-access.js"></script>
+<!-- ── Checkout Whop intégré ── -->
+<div id="whopModal" class="whop-modal" onclick="if(event.target===this)closeWhop()">
+  <div class="whop-modal-box">
+    <button class="whop-modal-close" onclick="closeWhop()" aria-label="Fermer">✕</button>
+    <div id="whopMount"></div>
+    <div class="whop-modal-hint">Paiement sécurisé via Whop · Utilisez le même email que votre compte Forex Average pour activer votre accès automatiquement.</div>
+  </div>
+</div>
+<script>
+/* Email du membre connecté (pour pré-remplir le checkout -> activation VIP auto) */
+function faMemberEmail(){
+  try{ var u=JSON.parse(localStorage.getItem('fa_user')||'null'); if(u&&u.email) return u.email; }catch(e){}
+  try{ for(var k in localStorage){ if(k.indexOf('sb-')===0 && k.indexOf('-auth-token')>0){ var ss=JSON.parse(localStorage.getItem(k)); if(ss&&ss.user&&ss.user.email) return ss.user.email; } } }catch(e){}
+  return '';
+}
+/* Callback succès (skip-redirect auto) */
+window.faWhopComplete = function(planId, receiptId){
+  closeWhop();
+  alert('✅ Paiement reçu ! Votre accès VIP s’active automatiquement. Reconnectez-vous si l’accès n’apparaît pas tout de suite.');
+};
+function openWhop(planId){
+  var host=document.getElementById('whopMount'); host.innerHTML='';
+  var email=faMemberEmail();
+  var d=document.createElement('div');
+  d.setAttribute('data-whop-checkout-plan-id', planId);
+  d.setAttribute('data-whop-checkout-theme','dark');
+  d.setAttribute('data-whop-checkout-theme-accent-color','gold');
+  d.setAttribute('data-whop-checkout-style-container-padding-x','16');
+  d.setAttribute('data-whop-checkout-style-container-padding-y','20');
+  d.setAttribute('data-whop-checkout-prefill-address-country','FR');
+  d.setAttribute('data-whop-checkout-on-complete','faWhopComplete');
+  if(email){ d.setAttribute('data-whop-checkout-prefill-email', email); }
+  host.appendChild(d);
+  /* Montage : l'observer du loader Whop détecte le nouvel élément ; fallback wco.mount */
+  try{ if(window.wco && typeof window.wco.mount==='function') window.wco.mount(d); }catch(e){}
+  document.getElementById('whopModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeWhop(){
+  document.getElementById('whopModal').classList.remove('open');
+  document.getElementById('whopMount').innerHTML='';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeWhop(); });
+</script>
 </body>
 </html>
