@@ -389,6 +389,8 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<script src="fa-fundamentals.js"></script>
+<script src="fa-analyse.js"></script>
 </head>
 <body>
 <h1 class="sr-only">Graphiques Live</h1>
@@ -500,7 +502,7 @@ html,body{height:100%;overflow:hidden;background:var(--dark);color:var(--text);
           </a>
           <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
-            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="feed.html" class="drop-link">
@@ -2366,13 +2368,11 @@ async function loadFundamental() {
   let data   = null;
   let source = 'local'; // 'api' | 'local' | 'generic'
 
-  /* ── 1. Essayer /api/analyse (Vercel + Supabase) ── */
+  /* ── 1. Stratégie locale LIVE : différentiel macro × sentiment actualités ── */
   try {
-    const url = `/api/analyse?symbol=${encodeURIComponent(currentSym)}&category=${cat}&label=${encodeURIComponent(currentLabel)}`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
-    if (res.ok) {
-      const json = await res.json();
-      if (json?.sentiment && json?.tldr) { data = json; source = 'api'; }
+    if (window.FAAnalyse) {
+      const r = await FAAnalyse.compute(currentSym, currentLabel, cat);
+      if (r && r.tldr) { data = r; source = 'live'; }
     }
   } catch(e) { /* fallback */ }
 
@@ -2410,8 +2410,8 @@ function renderFundamental(data, source) {
   const sentIcon  = sentiment==='bullish'?'📈 Haussier':sentiment==='bearish'?'📉 Baissier':'⚖️ Neutre';
   const sentCls   = sentiment==='bullish'?'fund-s-bull':sentiment==='bearish'?'fund-s-bear':'fund-s-neut';
 
-  const sourceTag = source === 'api'
-    ? `<span style="font-size:0.58rem;color:rgba(34,197,94,0.6);">✓ Live — actualisé automatiquement</span>`
+  const sourceTag = (source === 'api' || source === 'live')
+    ? `<span style="font-size:0.58rem;color:rgba(34,197,94,0.6);">✓ Auto — fondamental + actualités</span>`
     : source === 'local'
     ? `<span style="font-size:0.58rem;color:rgba(255,215,0,0.4);">◉ Données locales</span>`
     : `<span style="font-size:0.58rem;color:rgba(255,255,255,0.2);">⚠ Données génériques</span>`;
