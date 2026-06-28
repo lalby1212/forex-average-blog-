@@ -399,7 +399,7 @@ async function genAI(){
       var cat=cats[c][0], offset=0, guard=0;
       do{
         st.textContent="🤖 "+cats[c][1]+"… (lot "+(offset/5+1)+")";
-        var r=await fetch("/api/generate-fundamentals?category="+cat+"&offset="+offset,{headers:{"Authorization":"Bearer "+token}});
+        var r=await fetch("/api/generate-fundamentals?category="+cat+"&offset="+offset,{headers:{"Authorization":"Bearer "+token},signal:AbortSignal.timeout(65000)});
         var j=null; try{ j=await r.json(); }catch(e){ j={}; }
         if(!r.ok){ throw new Error((j&&j.error)||("HTTP "+r.status)); }
         totalDone += (j.processed||[]).length;
