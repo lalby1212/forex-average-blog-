@@ -248,11 +248,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
     </div>
   </div>
 
-  <div id="manualAdj">
-    <div class="man-lbl">Affinage Manuel</div>
-    <div id="manualSliders"></div>
-  </div>
-  <button id="btnManual" onclick="toggleManual()">⚙️ Affiner manuellement</button>
 
   <div class="sources-card" id="srcCard">
     <div class="src-lbl">Sources analysées</div>
@@ -730,6 +725,7 @@ async function runAnalysis(){
   /* Calcul des scores */
   var sc = computeScores(filtered);
   /* Pilier Fondamental : remplace le critère mot-clé par le différentiel macro si dispo */
+  if(window.FAFundamentals && window.FAFundamentals.whenReady){ try{ await window.FAFundamentals.whenReady(); }catch(e){} }
   var fund = (window.FAFundamentals) ? window.FAFundamentals.fundamental(instr, currentCat) : null;
   if(fund){
     sc.fondamentaux = fund.score;
@@ -982,6 +978,7 @@ async function publishScore(){
     if(res.ok||res.status===201||res.status===204){
       showToast('✅ Publié — '+lastScores.instrument,'ok');
       saveSentimentHistory(lastScores);
+      publishToFeed(token);
     } else {
       showToast('Erreur lors de la publication','err');
     }
@@ -990,6 +987,29 @@ async function publishScore(){
 }
 
 /* Historisation pour backtest (best-effort) */
+/* Publie aussi l'analyse comme post officiel dans le feed communauté */
+async function publishToFeed(token){
+  try{
+    if(!token||!lastScores) return;
+    var sbKey=null;
+    for(var k in localStorage){ if(k.indexOf('sb-')===0 && k.indexOf('-auth-token')>0){ sbKey=k; break; } }
+    var sess=sbKey?JSON.parse(localStorage.getItem(sbKey)):null;
+    var uid=sess&&sess.user&&sess.user.id;
+    if(!uid) return;
+    var s=lastScores;
+    var ctx=(document.getElementById('tContexte').value||'').trim();
+    var dec=(document.getElementById('tDecision').value||'').trim();
+    var lim=(document.getElementById('tLimite').value||'').trim();
+    var total=(s.tendance||0)+(s.momentum||0)+(s.volatilite||0)+(s.fondamentaux||0)+(s.sentiment_score||0);
+    var content='📊 Analyse '+s.instrument+' ('+(total>=0?'+':'')+total+'/100)\n\n'+ctx;
+    if(dec) content+='\n\n🎯 '+dec;
+    if(lim) content+='\n\n⚠️ '+lim;
+    var tag=(s.instrument||'').replace(/[^A-Za-z0-9]/g,'').toUpperCase();
+    await fetch(SB_URL+'/rest/v1/posts',{method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({user_id:uid, username:'Forex Average', is_vip:true, content:content, image_url:null, tags:tag?[tag]:[]})});
+  }catch(e){}
+}
 async function saveSentimentHistory(s){
   try{
     var token=await getFreshToken(); if(!token) return;

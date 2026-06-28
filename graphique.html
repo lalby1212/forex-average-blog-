@@ -852,8 +852,8 @@ const MARKETS = {
     { sym:'SHIB-USD', label:'SHIB/USD' },
   ],
   'matieres': [
-    { sym:'XAUUSD=X', label:'Or (XAU)' },
-    { sym:'XAGUSD=X', label:'Argent (XAG)' },
+    { sym:'GC=F', label:'Or (XAU)' },
+    { sym:'SI=F', label:'Argent (XAG)' },
     { sym:'CL=F',     label:'WTI Oil' },
     { sym:'BZ=F',     label:'Brent' },
     { sym:'NG=F',     label:'Gaz Nat.' },
@@ -914,7 +914,7 @@ const toggles = { ob:true, fvg:true, bos:true, liq:true, swing:true };
 
 const SYM_DESC = {
   'EURUSD=X':'Euro / Dollar US','GBPUSD=X':'Livre / Dollar US','USDJPY=X':'Dollar US / Yen',
-  'GBPJPY=X':'Livre / Yen','XAUUSD=X':'Or / Dollar US','CL=F':'Pétrole WTI',
+  'GBPJPY=X':'Livre / Yen','GC=F':'Or / Dollar US','CL=F':'Pétrole WTI',
   'BTC-USD':'Bitcoin / Dollar','ETH-USD':'Ethereum / Dollar','^GSPC':'S&P 500','^NDX':'Nasdaq 100'
 };
 
@@ -1128,7 +1128,7 @@ function getPriceTolerance(sym) {
     'AVAX-USD','DOGE-USD','DOT-USD','LINK-USD','MATIC-USD','LTC-USD','ATOM-USD',
     'UNI-USD','NEAR-USD','OP-USD','ARB-USD','SUI-USD','TRX-USD','SHIB-USD'];
   const JPY    = ['USDJPY=X','EURJPY=X','GBPJPY=X','CADJPY=X','AUDJPY=X','NZDJPY=X','CHFJPY=X'];
-  const METALS = ['XAUUSD=X','XAGUSD=X'];
+  const METALS = ['GC=F','SI=F'];
   const INDEX  = ['^GSPC','^NDX','^DJI','^GDAXI','^FTSE','^N225','^FCHI','^STOXX50E','ES=F','NQ=F','YM=F'];
   if (CRYPTO.includes(sym))  return 0.005;   // 0.50% crypto
   if (JPY.includes(sym))     return 0.0002;  // 0.02% JPY
@@ -1716,8 +1716,8 @@ function formatPrice(p) {
   var sym = (typeof currentSym !== 'undefined' && currentSym) ? currentSym : '';
   var d;
   if (/JPY=X$/.test(sym))            d = 3;   // paires en yen
-  else if (sym === 'XAUUSD=X')       d = 2;   // or
-  else if (sym === 'XAGUSD=X')       d = 3;   // argent
+  else if (sym === 'GC=F')       d = 2;   // or
+  else if (sym === 'SI=F')       d = 3;   // argent
   else if (sym === 'NG=F')           d = 3;   // gaz naturel
   else if (sym === 'HG=F')           d = 4;   // cuivre
   else if (/=F$/.test(sym))          d = 2;   // pétrole, platine, palladium, grains, softs, futures indices
@@ -2264,12 +2264,12 @@ const MARKET_DATA = {
     conclusion:'Long EUR/JPY. Entrée 186-188. Stop 183. Cible 193-195.' },
 
   /* ── OR / MÉTAUX ── */
-  'XAUUSD=X': { score:78, sentiment:'bullish',
+  'GC=F': { score:78, sentiment:'bullish',
     tldr:'Or à des niveaux historiques. Dollar faible (DXY <100) + taux réels négatifs + achats banques centrales record + géopolitique = confluences haussières majeures.',
     factors:['DXY sous 100 · Or libellé USD renchéri mécaniquement','Taux réels négatifs · Or actif de protection privilégié','Banques centrales · Achats massifs record (>1000t/an)','Tensions géopolitiques · Valeur refuge en demande structurelle','Momentum institutionnel · ETF inflows en reprise'],
     conclusion:'Long Or. Entrée sur replis. Support $2 950-3 000. Cible $3 200-3 500.' },
 
-  'XAGUSD=X': { score:70, sentiment:'bullish',
+  'SI=F': { score:70, sentiment:'bullish',
     tldr:'Argent haussier. Corrèle positivement avec l\'or + demande industrielle (panneaux solaires, semi-conducteurs) en forte hausse.',
     factors:['Corrélation avec l\'or · Ratio Or/Argent en compression','Demande industrielle · Panneaux solaires + semi-conducteurs','Dollar faible · Soutien automatique','Transition énergétique · Argent métal clé','Stocks physiques en baisse · Offre tendue'],
     conclusion:'Long Argent. Entrée $31-32. Stop $29. Cible $38-42.' },
@@ -2360,7 +2360,7 @@ const FUND_CAT_MAP = {
   'EURUSD=X':'forex','GBPUSD=X':'forex','USDJPY=X':'forex','USDCHF=X':'forex',
   'USDCAD=X':'forex','AUDUSD=X':'forex','NZDUSD=X':'forex','EURGBP=X':'forex',
   'EURJPY=X':'forex','GBPJPY=X':'forex','GBPAUD=X':'forex','CADJPY=X':'forex',
-  'XAUUSD=X':'or','XAGUSD=X':'or','CL=F':'petrole','BZ=F':'petrole',
+  'GC=F':'or','SI=F':'or','CL=F':'petrole','BZ=F':'petrole',
   'BTC-USD':'crypto','ETH-USD':'crypto','SOL-USD':'crypto','BNB-USD':'crypto','XRP-USD':'crypto',
   'AVAX-USD':'crypto','DOGE-USD':'crypto','ADA-USD':'crypto','LINK-USD':'crypto',
   '^GSPC':'macro','^NDX':'macro','^DJI':'macro','^GDAXI':'macro','^FTSE':'macro','^N225':'macro',
