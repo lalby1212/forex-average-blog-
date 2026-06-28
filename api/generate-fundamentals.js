@@ -16,13 +16,15 @@
 //  Réponse : { category, processed:[codes], total, nextOffset|null }
 // ════════════════════════════════════════════════════════════════
 
+export const maxDuration = 60;
+
 const SB_URL  = process.env.SUPABASE_URL || 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ANON    = process.env.SUPABASE_ANON_KEY || 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 const ANTHRO  = process.env.ANTHROPIC_API_KEY;
-const MODEL   = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
+const MODEL   = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 const RSSKEY  = process.env.RSS2JSON_KEY || 'fk4tjm400zm37ji6dzx7koexwnvud4fjjhd8xpky';
-const CHUNK   = 5;
+const CHUNK   = 3;
 
 /* Piliers par catégorie (clés EXACTES attendues par fondamentaux.html) */
 const PILLARS = {
@@ -44,20 +46,20 @@ const NEWS_FEEDS = {
 function send(res, code, obj){ res.status(code).json(obj); }
 
 async function getNewsHeadlines(category){
-  var feeds = NEWS_FEEDS[category] || NEWS_FEEDS.currency;
-  var heads = [];
-  for (var i=0; i<feeds.length; i++){
+  var feeds = (NEWS_FEEDS[category] || NEWS_FEEDS.currency).slice(0, 2);
+  var results = await Promise.all(feeds.map(async function(f){
     try{
-      var u = 'https://api.rss2json.com/v1/api.json?count=12' + (RSSKEY ? '&api_key='+RSSKEY : '') + '&rss_url=' + encodeURIComponent(feeds[i]);
-      var r = await fetch(u, { signal: AbortSignal.timeout(8000) });
-      if(!r.ok) continue;
+      var u = 'https://api.rss2json.com/v1/api.json?count=10' + (RSSKEY ? '&api_key='+RSSKEY : '') + '&rss_url=' + encodeURIComponent(f);
+      var r = await fetch(u, { signal: AbortSignal.timeout(5000) });
+      if(!r.ok) return [];
       var d = await r.json();
-      if(d && d.status==='ok' && d.items){
-        d.items.forEach(function(it){ if(it.title) heads.push(it.title); });
-      }
-    }catch(e){}
-  }
-  return heads.slice(0, 30);
+      if(d && d.status==='ok' && d.items) return d.items.map(function(it){ return it.title; }).filter(Boolean);
+      return [];
+    }catch(e){ return []; }
+  }));
+  var heads = [];
+  results.forEach(function(a){ heads = heads.concat(a); });
+  return heads.slice(0, 20);
 }
 
 function buildPrompt(category, instruments, headlines){
@@ -100,8 +102,8 @@ async function callClaude(prompt){
   var r = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
     headers:{ 'x-api-key': ANTHRO, 'anthropic-version':'2023-06-01', 'content-type':'application/json' },
-    body: JSON.stringify({ model: MODEL, max_tokens: 6000, messages:[{ role:'user', content: prompt }] }),
-    signal: AbortSignal.timeout(55000)
+    body: JSON.stringify({ model: MODEL, max_tokens: 4500, messages:[{ role:'user', content: prompt }] }),
+    signal: AbortSignal.timeout(50000)
   });
   if(!r.ok){ var t = await r.text(); throw new Error('Anthropic '+r.status+': '+t.slice(0,200)); }
   var data = await r.json();
