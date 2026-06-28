@@ -24,7 +24,7 @@ const ANON    = process.env.SUPABASE_ANON_KEY || 'sb_publishable_XHStaFT7Lkp7FRo
 const ANTHRO  = process.env.ANTHROPIC_API_KEY;
 const MODEL   = process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001';
 const RSSKEY  = process.env.RSS2JSON_KEY || 'fk4tjm400zm37ji6dzx7koexwnvud4fjjhd8xpky';
-const CHUNK   = 3;
+const CHUNK   = 1;
 
 /* Piliers par catégorie (clés EXACTES attendues par fondamentaux.html) */
 const PILLARS = {
@@ -102,7 +102,7 @@ async function callClaude(prompt){
   var r = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
     headers:{ 'x-api-key': ANTHRO, 'anthropic-version':'2023-06-01', 'content-type':'application/json' },
-    body: JSON.stringify({ model: MODEL, max_tokens: 4500, messages:[{ role:'user', content: prompt }] }),
+    body: JSON.stringify({ model: MODEL, max_tokens: 2000, messages:[{ role:'user', content: prompt }] }),
     signal: AbortSignal.timeout(50000)
   });
   if(!r.ok){ var t = await r.text(); throw new Error('Anthropic '+r.status+': '+t.slice(0,200)); }
@@ -132,7 +132,7 @@ async function upsert(item, category){
 
 export default async function handler(req, res){
   res.setHeader('Access-Control-Allow-Origin','*');
-  res.setHeader('Access-Control-Allow-Methods','GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers','Authorization, Content-Type');
   if(req.method==='OPTIONS'){ res.status(200).end(); return; }
 
@@ -165,7 +165,7 @@ export default async function handler(req, res){
     var batch = all.slice(offset, offset+CHUNK);
     if(!batch.length) return send(res,200,{ category, processed:[], total:all.length, nextOffset:null });
 
-    var heads = await getNewsHeadlines(category);
+    var heads = (req.body && Array.isArray(req.body.headlines)) ? req.body.headlines : [];
     var items = await callClaude(buildPrompt(category, batch, heads));
 
     var processed = [];
