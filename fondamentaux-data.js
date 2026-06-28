@@ -168,7 +168,7 @@ let CURR = [
   },
 ];
 
-const OPPS = [
+let OPPS = [
   {rank:'01',top:true,pair:'AUD/USD',dir:'BUY',dirCls:'dir-buy',logic:'<strong>RBA hawkish actif (4.10% → 4.85% prévu).</strong> AUD/USD à 0.700 (plus haut 16 mois) · RBA a monté 2 fois d\'affilée · Inflation au-dessus cible · Emploi solide. USD LÉG. BAISSIER. Momentum haussier clair. Cible 0.72-0.73.',spread:'Score diff : <span>AUD +1.5 vs USD −1.0 = 2.5 pts</span> · Cible : <span>0.72-0.73</span>'},
   {rank:'02',top:true,pair:'USD/CHF',dir:'SELL',dirCls:'dir-sell',logic:'<strong>CHF = safe haven + rotation hors USD.</strong> USD/CHF 0.782 · SNB 0.00% mais CHF structurellement fort via géopolitique + rotation hors USD. SNB impuissant. Cible 0.75-0.76.',spread:'Score diff : <span>CHF +1.5 vs USD −1.0 = 2.5 pts</span> · Cible : <span>0.75-0.76</span>'},
   {rank:'03',top:true,pair:'NOK/SEK',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Arbitrage nordique : Norges Bank hawkish vs Riksbank dovish.</strong> NB signale hike juin (4.00% → +) vs Riksbank à 1.75% (inflation core 1.1%). Pétrole élevé avantage NOK. Trade de conviction.',spread:'Score diff : <span>NOK +1.5 vs SEK −0.5 = 2.0 pts</span> · Meilleur trade Scandi'},
@@ -304,6 +304,8 @@ function showDetail(idx) {
 /* ── FX OPPORTUNITIES ── */
 function renderOpps() {
   const g = document.getElementById('oppGrid');
+  if (!g) return;
+  g.innerHTML = '';
   OPPS.forEach(o => {
     const el = document.createElement('div');
     el.className = `opp-card${o.top ? ' top' : ''}`;
@@ -399,7 +401,7 @@ let METALS = [
   },
 ];
 
-const METALS_OPPS = [
+let METALS_OPPS = [
   {rank:'01',top:true,pair:'GOLD (Long / Repli = opportunité)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Or $4,683 · Repli depuis ATH $4,830 (2 Avr.) · FOMC 28-29 Avr. + Talks Iran stagnent = prise de bénéfices.</strong> Drivers structurels intacts : dédollarisation + achats BC records + taux réels bas. Acheter replis $4,600-$4,650.',spread:'Score : <span>+4.0</span> · Cible MT : <span>$5,000-$5,200</span> · Stop : <span>$4,350</span>'},
   {rank:'02',top:true,pair:'COPPER (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Cuivre $6.03/lb · +24% YoY · Record production Chine 1.33M T mars · Restocking Labour Day 1-5 Mai.</strong> Transition EV/solaire + stimulus Chine. Momentum solide.',spread:'Score : <span>+2.5</span> · Cible MT : <span>$6.80-7.00</span> · Stop : <span>$5.50</span>'},
   {rank:'03',top:false,pair:'SILVER (Long / Repli)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Argent $75.28 · Repli depuis ATH · Ratio Or/Ag 62x.</strong> Zone d\'achat : triple driver intact (USD, solaire, risk-on). Acheter $73-75.',spread:'Score : <span>+3.0</span> · Cible : <span>$90-$100</span> · Stop : <span>$68</span>'},
@@ -470,7 +472,7 @@ let ENERGY = [
   },
 ];
 
-const ENERGY_OPPS = [
+let ENERGY_OPPS = [
   {rank:'01',top:true,pair:'BRENT (Long / Hormuz fermé)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>Brent $107.6 · Hormuz toujours fermé (9e sem.) · Iran doubles down · Talks échoués.</strong> EIA peak $115 Q2 · Citi $150 si juin fermé. Spread Brent/WTI $11.2 (prime géopo. max). Acheter replis $103-105.',spread:'Score : <span>+3.5</span> · Range : <span>$100-120</span> · Stop : <span>$95</span>'},
   {rank:'02',top:true,pair:'WTI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>WTI $96.4 · Hormuz fermé + OPEC+ plancher $80 + Driving season US (mai-août).</strong> IEA demand 103.8 Mb/j · Chine +4.2%. Acheter replis $92-94.',spread:'Score : <span>+2.5</span> · Range : <span>$92-105</span> · Stop : <span>$85</span>'},
   {rank:'03',top:false,pair:'NAT GAS (Éviter CT)',dir:'SELL / ÉVITER',dirCls:'dir-sell',logic:'<strong>Stocks EIA +8% vs avg · Saison creuse printanière · Production EQT en baisse (-4.1 bcfd).</strong> Floor possible CT. Attendre $2.40 ou chaleur estivale pour rebond.',spread:'Score : <span>−1.5</span> · Support : <span>$2.40</span> · Rebond été : <span>$3.00-3.20</span>'},
@@ -588,7 +590,7 @@ let INDICES = [
   },
 ];
 
-const INDICES_OPPS = [
+let INDICES_OPPS = [
   {rank:'01',top:true,pair:'NIKKEI (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 60,537 · BoJ HOLD confirmé (3/9 pro-hike = futur signal hawkish MT).</strong> USD/JPY 158 · Shunto +5.8% · TSE reform · EPS exportateurs records. Meilleur indice DM.',spread:'Score : <span>+3.0</span> · Niveau : <span>60,537 ATH</span> · Cible : <span>62,000-65,000</span>'},
   {rank:'02',top:true,pair:'NASDAQ (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 24,887 · Monétisation IA concrète · FOMC hold + EPS MAG7 saison.</strong> MAG7 beats records. 30x P/E justifié +20% EPS. Beta 1.35 = amplificateur RISK-ON.',spread:'Score : <span>+2.5</span> · Niveau : <span>24,887 ATH</span> · Cible : <span>26,500-27,500</span>'},
   {rank:'03',top:false,pair:'FTSE (Long)',dir:'BUY',dirCls:'dir-buy',logic:'<strong>ATH 10,609 · Super-cycle Or/Cuivre.</strong> Rio/BHP = Or $4,830 ATH + Cuivre $5.89/lb (+30%). Shell/BP légèrement freiné (WTI $88.8). Net positif. P/E 13x + yield 3.5% = moins cher + mieux rémunéré.',spread:'Score : <span>+1.5</span> · Niveau : <span>10,609 ATH</span> · Yield : <span>3.5%</span>'},
@@ -721,7 +723,7 @@ let CRYPTO = [
   },
 ];
 
-const CRYPTO_OPPS = [
+let CRYPTO_OPPS = [
   {rank:'01',top:true,pair:'BTC (DCA Aggressif)',dir:'BUY (DCA)',dirCls:'dir-buy',logic:'<strong>Rebond $78.3K depuis $74K · Correction mid-cycle −39% · EXTREME FEAR.</strong> Zone d\'accumulation historique. ETF flows positifs = institutionnels achètent la faiblesse. USD faible + Or ATH = environnement favorable. DCA $74-82K. Halving cycle cible $150-200K.',spread:'Score MT : <span>HAUSSIER</span> · Niveau actuel : <span>~$78,263</span> · Cible 18-24M : <span>$150-200K</span>'},
   {rank:'02',top:true,pair:'BTC/ETH (Long Ratio)',dir:'BUY BTC / SELL ETH',dirCls:'dir-buy',logic:'<strong>ETH/BTC à 0.0313 · Quasi-ATB.</strong> ETH perd la guerre narrative vs BTC. L2 cannibalise fees ETH. ETF BTC 6x > ETF ETH. Ratio peut aller à 0.025 dans ce cycle.',spread:'Ratio ETH/BTC : <span>0.0313</span> · Cible : <span>0.025-0.028</span> · Driver : <span>narratif BTC > ETH</span>'},
   {rank:'03',top:false,pair:'XRP (Pari ETF)',dir:'BUY (spéculatif)',dirCls:'dir-buy',logic:'<strong>ETF XRP 2026 = catalyseur binaire.</strong> Clarté légale SEC Win + nouveau régime réglementaire Trump. Si ETF approuvé → $3.50-5.00 (+150%). Accumuler sous $1.30 pour asymétrie.',spread:'Score : <span>−0.5</span> · Catalyseur : <span>ETF XRP 2026</span> · Cible si approuvé : <span>$3.50-5.00</span>'},
@@ -1082,5 +1084,30 @@ renderAll(); /* rendu immédiat avec les valeurs de secours */
     if(by.crypto.length)   CRYPTO=by.crypto;
     renderAll();
     if(latest){ var el=document.getElementById('update-date'); if(el) el.textContent=new Date(latest).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}); }
+  }catch(e){}
+})();
+
+
+/* ── Chargement des OPPORTUNITÉS depuis Supabase (table opportunities) ──
+   Alimenté par l'IA (api/generate-opportunities.js). Si vide, on garde
+   les opportunités de secours codées ci-dessus. */
+(async function(){
+  try{
+    var SB='https://bpfpghlpdzevzyhalxov.supabase.co';
+    var KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+    var r=await fetch(SB+'/rest/v1/opportunities?select=*&order=position.asc',{headers:{'apikey':KEY,'Accept':'application/json'}});
+    if(!r.ok) return;
+    var rows=await r.json();
+    if(!Array.isArray(rows)||!rows.length) return;
+    function card(x){ return {rank:x.rank||'', top:!!x.top, pair:x.pair||'', dir:x.dir||'',
+      dirCls:(x.dir_cls==='dir-sell'?'dir-sell':'dir-buy'), logic:x.logic||'', spread:x.spread||''}; }
+    var by={currency:[],metal:[],energy:[],indice:[],crypto:[]};
+    rows.forEach(function(x){ if(by[x.category]) by[x.category].push(card(x)); });
+    if(by.currency.length) OPPS=by.currency;
+    if(by.metal.length)    METALS_OPPS=by.metal;
+    if(by.energy.length)   ENERGY_OPPS=by.energy;
+    if(by.indice.length)   INDICES_OPPS=by.indice;
+    if(by.crypto.length)   CRYPTO_OPPS=by.crypto;
+    renderAll();
   }catch(e){}
 })();

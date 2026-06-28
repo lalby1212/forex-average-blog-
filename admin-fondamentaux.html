@@ -429,6 +429,11 @@ async function genAI(){
         offset = j.nextOffset;
         guard++;
       } while(offset!=null && guard<40);
+      // Opportunités de la catégorie (best-effort, n'interrompt pas la suite)
+      st.textContent="\uD83D\uDCA1 Opportunités "+cats[c][1]+"…";
+      try{
+        await fetch("/api/generate-opportunities?category="+cat,{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({headlines:heads}),signal:AbortSignal.timeout(45000)});
+      }catch(e){}
     }
     st.textContent="";
     toast("✅ "+totalDone+" instruments générés par l\'IA","ok");
