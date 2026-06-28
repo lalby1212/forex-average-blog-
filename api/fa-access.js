@@ -381,6 +381,32 @@
     }
   }
 
+  /* FAGate : overlay Passez VIP sur une zone gatee */
+  window.FAGate = window.FAGate || {
+    gate: function (el, level, loggedIn) {
+      try {
+        if (!el || el.querySelector(':scope > .fa-gate-overlay')) return;
+        var cs = window.getComputedStyle(el);
+        if (cs && cs.position === 'static') el.style.position = 'relative';
+        var ov = document.createElement('div');
+        ov.className = 'fa-gate-overlay';
+        ov.style.cssText = 'position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;'
+          + 'align-items:center;justify-content:center;text-align:center;gap:.8rem;padding:1.5rem;'
+          + 'background:linear-gradient(180deg,rgba(10,12,18,.55) 0%,rgba(10,12,18,.92) 60%);'
+          + 'backdrop-filter:blur(3px);border-radius:inherit;';
+        var msg = loggedIn
+          ? 'Analyse reservee aux membres VIP'
+          : 'Connecte-toi et passe VIP pour debloquer cette analyse';
+        ov.innerHTML = '<div style="font-size:1.6rem;">\u{1F512}</div>'
+          + '<div style="color:#fff;font-weight:700;font-size:.95rem;max-width:320px;">' + msg + '</div>'
+          + '<a href="pricing.html" style="background:linear-gradient(135deg,#f0b90b,#d4a017);color:#0a0c12;'
+          + 'font-weight:800;padding:.6rem 1.4rem;border-radius:10px;text-decoration:none;font-size:.9rem;">'
+          + (loggedIn ? '\u2B50 Passer VIP' : '\u2B50 Voir les offres VIP') + '</a>';
+        el.appendChild(ov);
+      } catch (e) {}
+    }
+  };
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
