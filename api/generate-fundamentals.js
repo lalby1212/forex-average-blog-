@@ -92,6 +92,7 @@ news,
 '  pricing (string court, contexte de prix/niveaux),',
 '  concl (string court, synthèse directionnelle).',
 '- Tout en FRANÇAIS. Reste factuel, nuancé, sans promesse de rendement.',
+'- SOIS CONCIS pour tenir dans la limite : 2 à 3 lignes de détail MAX par pilier, paragraphes (pr) de 1 à 2 phrases, key_data 3 à 4 éléments.',
 '- bias_cls : score>=1.5 "bt-hawk" ; 0.5..1.4 "bt-lhawk" ; -0.4..0.4 "bt-neu" ; -1.4..-0.5 "bt-ldov" ; <=-1.5 "bt-dov".',
 '',
 'RÉPONDS UNIQUEMENT avec un tableau JSON valide (commençant par [ et finissant par ]), sans texte ni balises autour.'
@@ -102,16 +103,18 @@ async function callClaude(prompt){
   var r = await fetch('https://api.anthropic.com/v1/messages', {
     method:'POST',
     headers:{ 'x-api-key': ANTHRO, 'anthropic-version':'2023-06-01', 'content-type':'application/json' },
-    body: JSON.stringify({ model: MODEL, max_tokens: 2000, messages:[{ role:'user', content: prompt }] }),
+    body: JSON.stringify({ model: MODEL, max_tokens: 4000, messages:[{ role:'user', content: prompt }] }),
     signal: AbortSignal.timeout(50000)
   });
   if(!r.ok){ var t = await r.text(); throw new Error('Anthropic '+r.status+': '+t.slice(0,200)); }
   var data = await r.json();
   var text = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : '';
-  // extraire le JSON (au cas où Claude ajoute des ```json)
+  text = text.replace(/```json/gi,'').replace(/```/g,'').trim();
   var m = text.match(/\[[\s\S]*\]/);
-  if(!m) throw new Error('Réponse Claude sans JSON');
-  return JSON.parse(m[0]);
+  if(m){ return JSON.parse(m[0]); }
+  var o = text.match(/\{[\s\S]*\}/);
+  if(o){ return [JSON.parse(o[0])]; }
+  throw new Error('Réponse Claude sans JSON exploitable');
 }
 
 async function upsert(item, category){
