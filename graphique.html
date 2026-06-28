@@ -1713,9 +1713,22 @@ function hideError() {
 }
 function formatPrice(p) {
   if (p == null || isNaN(p)) return '—';
-  if (p > 1000) return p.toFixed(2);
-  if (p > 10)   return p.toFixed(3);
-  return p.toFixed(5);
+  var sym = (typeof currentSym !== 'undefined' && currentSym) ? currentSym : '';
+  var d;
+  if (/JPY=X$/.test(sym))            d = 3;   // paires en yen
+  else if (sym === 'XAUUSD=X')       d = 2;   // or
+  else if (sym === 'XAGUSD=X')       d = 3;   // argent
+  else if (sym === 'NG=F')           d = 3;   // gaz naturel
+  else if (sym === 'HG=F')           d = 4;   // cuivre
+  else if (/=F$/.test(sym))          d = 2;   // pétrole, platine, palladium, grains, softs, futures indices
+  else if (/^\^/.test(sym))          d = 2;   // indices boursiers
+  else if (/=X$/.test(sym))          d = 5;   // forex majeurs
+  else if (/-USD$/.test(sym)) {               // crypto : selon la valeur
+    d = (p >= 1) ? 2 : (p >= 0.01) ? 4 : 6;
+  } else {                                     // secours : selon l'ordre de grandeur
+    d = (p > 1000) ? 2 : (p > 10) ? 3 : 5;
+  }
+  return Number(p).toFixed(d);
 }
 function showToast(msg) {
   const t = document.getElementById('toast');
