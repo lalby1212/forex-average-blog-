@@ -1,5 +1,5 @@
 /* ── DATA G10 — Mise à jour 28 Avril 2026 ── */
-const CURR = [
+let CURR = [
   {
     code:'USD', flag:'🇺🇸', name:'Dollar US', bank:'Federal Reserve',
     rate:'3.50-3.75%', score:-1.0,
@@ -332,7 +332,7 @@ const METALS_PDEF  = [
   {key:'risk',     icon:'🛡️',  label:'Risk Sentiment / Safe Haven'},
 ];
 
-const METALS = [
+let METALS = [
   {
     code:'GOLD', flag:'🥇', name:'Or', bank:'OANDA:XAUUSD',
     rate:'~$4,683', score:4.0,
@@ -419,7 +419,7 @@ const ENERGY_PDEF  = [
   {key:'seasonal',   icon:'📅', label:'Saisonnalité / Raffinage'},
 ];
 
-const ENERGY = [
+let ENERGY = [
   {
     code:'WTI', flag:'🛢️', name:'Pétrole WTI', bank:'TVC:USOIL',
     rate:'~$96.4', score:2.5,
@@ -489,7 +489,7 @@ const INDICES_PDEF  = [
   {key:'risk',     icon:'⚠️',  label:'Risk Sentiment / VIX'},
 ];
 
-const INDICES = [
+let INDICES = [
   {
     code:'S&P 500', flag:'🇺🇸', name:'S&P 500', bank:'FOREXCOM:SPXUSD',
     rate:'~7,174', score:2.0,
@@ -608,7 +608,7 @@ const CRYPTO_PDEF  = [
   {key:'sentiment', icon:'😨', label:'Sentiment (Funding / Fear & Greed)'},
 ];
 
-const CRYPTO = [
+let CRYPTO = [
   {
     code:'BTC', flag:'₿', name:'Bitcoin', bank:'BINANCE:BTCUSDT',
     rate:'~$78,263', score:-0.5,
@@ -1044,15 +1044,43 @@ document.getElementById('catTabs').addEventListener('click', function(e) {
 document.getElementById('update-date').textContent = '28 Avril 2026';
 
 /* ── INIT ── */
-renderGrid();
-renderOpps();
-renderCatGrid(METALS,  'metalsGrid',  METALS_PKEYS,  METALS_PLBLS,  METALS_PDEF);
-renderCatGrid(ENERGY,  'energyGrid',  ENERGY_PKEYS,  ENERGY_PLBLS,  ENERGY_PDEF);
-renderCatGrid(INDICES, 'indicesGrid', INDICES_PKEYS, INDICES_PLBLS, INDICES_PDEF);
-renderCatOpps(METALS_OPPS,  'metalsOppGrid');
-renderCatOpps(ENERGY_OPPS,  'energyOppGrid');
-renderCatOpps(INDICES_OPPS, 'indicesOppGrid');
-renderCatGrid(CRYPTO, 'cryptoGrid', CRYPTO_PKEYS, CRYPTO_PLBLS, CRYPTO_PDEF);
-renderCatOpps(CRYPTO_OPPS, 'cryptoOppGrid');
-buildRegistry();
-populateCompareSelects();
+function renderAll(){
+  renderGrid();
+  renderOpps();
+  renderCatGrid(METALS,  'metalsGrid',  METALS_PKEYS,  METALS_PLBLS,  METALS_PDEF);
+  renderCatGrid(ENERGY,  'energyGrid',  ENERGY_PKEYS,  ENERGY_PLBLS,  ENERGY_PDEF);
+  renderCatGrid(INDICES, 'indicesGrid', INDICES_PKEYS, INDICES_PLBLS, INDICES_PDEF);
+  renderCatOpps(METALS_OPPS,  'metalsOppGrid');
+  renderCatOpps(ENERGY_OPPS,  'energyOppGrid');
+  renderCatOpps(INDICES_OPPS, 'indicesOppGrid');
+  renderCatGrid(CRYPTO, 'cryptoGrid', CRYPTO_PKEYS, CRYPTO_PLBLS, CRYPTO_PDEF);
+  renderCatOpps(CRYPTO_OPPS, 'cryptoOppGrid');
+  buildRegistry();
+  populateCompareSelects();
+}
+renderAll(); /* rendu immédiat avec les valeurs de secours */
+
+/* ── Chargement depuis Supabase (table fundamentals) -> re-render ──
+   Alimenté par admin-fondamentaux.html. Si indispo, on garde le secours. */
+(async function(){
+  try{
+    var SB='https://bpfpghlpdzevzyhalxov.supabase.co';
+    var KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+    var r=await fetch(SB+'/rest/v1/fundamentals?select=*&order=position.asc',{headers:{'apikey':KEY,'Accept':'application/json'}});
+    if(!r.ok) return;
+    var rows=await r.json();
+    if(!Array.isArray(rows)||!rows.length) return;
+    function conv(x){ return {code:x.code,flag:x.flag,name:x.name,bank:x.bank,rate:x.rate,
+      score:(x.score==null?0:Number(x.score)),bias:x.bias,biasCls:x.bias_cls,
+      keyData:x.key_data||[],pillars:x.pillars||{},detail:x.detail||{},pricing:x.pricing||'',concl:x.concl||''}; }
+    var by={currency:[],metal:[],energy:[],indice:[],crypto:[]}, latest=null;
+    rows.forEach(function(x){ if(by[x.category]) by[x.category].push(conv(x)); if(x.updated_at&&(!latest||x.updated_at>latest)) latest=x.updated_at; });
+    if(by.currency.length) CURR=by.currency;
+    if(by.metal.length)    METALS=by.metal;
+    if(by.energy.length)   ENERGY=by.energy;
+    if(by.indice.length)   INDICES=by.indice;
+    if(by.crypto.length)   CRYPTO=by.crypto;
+    renderAll();
+    if(latest){ var el=document.getElementById('update-date'); if(el) el.textContent=new Date(latest).toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}); }
+  }catch(e){}
+})();
