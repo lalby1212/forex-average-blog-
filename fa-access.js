@@ -71,6 +71,15 @@
   }
 
   /* ── Récupération du plan depuis subscriptions ── */
+  /* Diffuse l'état d'accès (VIP / connexion) aux pages qui gatent leur contenu */
+  function emitAccess() {
+    try {
+      document.dispatchEvent(new CustomEvent('fa:access', {
+        detail: { isVIP: isVip(), loggedIn: isLogged(), plan: getPlan() }
+      }));
+    } catch (e) {}
+  }
+
   async function fetchPlanFromSupabase(userId, accessToken) {
     try {
       const res = await fetch(
@@ -98,6 +107,7 @@
         document.querySelectorAll('.fa-paywall-overlay').forEach(el => el.remove());
         document.querySelectorAll('.fa-locked').forEach(el => el.classList.remove('fa-locked'));
       }
+      emitAccess(); // ⚡ re-notifier les pages (gate VIP) avec le plan confirmé
     } catch (e) { /* silent — pas de fetch = on garde 'free' */ }
   }
 
@@ -374,6 +384,7 @@
     initPaywall();
     initDropdowns();
     initLogoutBtns();
+    emitAccess(); // ⚡ premier signal d'accès (valeurs locales)
 
     // ⚡ Fetch plan depuis subscriptions Supabase (async, met à jour nav après)
     if (sbResult && sbResult.synced && sbResult.userId && sbResult.accessToken) {

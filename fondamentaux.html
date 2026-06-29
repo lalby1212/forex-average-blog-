@@ -1056,8 +1056,17 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
 
   var FREE_FOREX_CARDS = 3; // nombre de cartes forex visibles sans VIP
 
+  function ungateAll() {
+    // Retire les overlays VIP et le flou (ex: VIP confirmé en async)
+    document.querySelectorAll('.fa-gate-overlay').forEach(function(o){ o.remove(); });
+    document.querySelectorAll('.c-card, .opp-card').forEach(function(c){
+      c.style.filter=''; c.style.pointerEvents=''; c.style.userSelect=''; c.style.opacity='';
+    });
+    document.querySelectorAll('.cat-tab').forEach(function(b){ b.style.opacity=''; b.style.cursor=''; });
+  }
+
   function applyFondamentauxGate(isVIP, loggedIn) {
-    if (isVIP) return; // VIP → tout visible, rien à faire
+    if (isVIP) { ungateAll(); return; } // VIP → tout visible
 
     /* ── 1. Gater tous les onglets non-forex ──────────────────────── */
     var lockedTabs = ['cat-metals','cat-energy','cat-indices','cat-crypto','cat-compare'];
@@ -1137,7 +1146,9 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
   });
 
   // Also try once FA is already set (if event fired before listener registered)
-  if (window.FA) applyFondamentauxGate(window.FA.isVIP, window.FA.loggedIn);
+  if (window.FA && typeof window.FA.isVip === 'function') {
+    applyFondamentauxGate(window.FA.isVip(), window.FA.isLogged());
+  }
 
 })();
 </script>
