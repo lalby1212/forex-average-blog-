@@ -1876,6 +1876,23 @@ window.navSignOut = async function () { await sb.auth.signOut(); window.location
 sb.auth.getSession().then(r => { if (r.data && r.data.session) updateNavAuth(r.data.session.user); });
 sb.auth.onAuthStateChange((_e, session) => updateNavAuth(session ? session.user : null));
 
+/* Exposer les handlers onclick au scope global (ils vivent dans le bloc else du garde SDK) */
+try{window.toggleLikePost=toggleLikePost;}catch(e){}
+try{window.toggleComments=toggleComments;}catch(e){}
+try{window.submitComment=submitComment;}catch(e){}
+try{window.toggleLikeComment=toggleLikeComment;}catch(e){}
+try{window.deleteComment=deleteComment;}catch(e){}
+try{window.toggleFollow=toggleFollow;}catch(e){}
+try{window.deletePost=deletePost;}catch(e){}
+try{window.filterByTag=filterByTag;}catch(e){}
+try{window.openLightbox=openLightbox;}catch(e){}
+try{window.closeLightbox=closeLightbox;}catch(e){}
+try{window.loadMore=loadMore;}catch(e){}
+try{window.showFollowList=showFollowList;}catch(e){}
+try{window.mobileCompose=mobileCompose;}catch(e){}
+try{window.mobileFollowing=mobileFollowing;}catch(e){}
+try{window.mobileTrends=mobileTrends;}catch(e){}
+
 init();
 }
 </script>
