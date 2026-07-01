@@ -606,14 +606,23 @@ async function init() {
   }
 
   // Fetch profile info from posts table
-  const { data: latestPost } = await sb.from('posts')
+  let { data: latestPost } = await sb.from('posts')
     .select('username, is_vip, created_at')
     .eq('user_id', profileUserId)
     .order('created_at', { ascending: true })
     .limit(1)
     .maybeSingle();
 
-  if (!latestPost) { showError(); return; }
+  if (!latestPost) {
+    // Ton propre profil sans post : on l'affiche quand même (depuis la session)
+    if (currentUser && currentUser.id === profileUserId) {
+      const uname = (currentUser.user_metadata && currentUser.user_metadata.username)
+        || (currentUser.email ? currentUser.email.split('@')[0] : 'Trader');
+      latestPost = { username: uname, is_vip: currentUserIsVIP, created_at: currentUser.created_at || new Date().toISOString() };
+    } else {
+      showError(); return;
+    }
+  }
 
   profileUsername = latestPost.username;
   profileIsVip = latestPost.is_vip;
@@ -1022,6 +1031,21 @@ function updateNavAuth(user) {
 window.navSignOut = async function() { await sb.auth.signOut(); window.location.href = 'feed.html'; };
 sb.auth.getSession().then(r => { if(r.data && r.data.session) updateNavAuth(r.data.session.user); });
 sb.auth.onAuthStateChange((_e, session) => updateNavAuth(session ? session.user : null));
+
+/* Exposer les handlers onclick au scope global (ils vivent dans le bloc else du garde SDK) */
+try{window.toggleLikePost=toggleLikePost;}catch(e){}
+try{window.toggleComments=toggleComments;}catch(e){}
+try{window.submitComment=submitComment;}catch(e){}
+try{window.toggleLikeComment=toggleLikeComment;}catch(e){}
+try{window.deleteComment=deleteComment;}catch(e){}
+try{window.toggleFollow=toggleFollow;}catch(e){}
+try{window.toggleFollowUser=toggleFollowUser;}catch(e){}
+try{window.deletePost=deletePost;}catch(e){}
+try{window.openLightbox=openLightbox;}catch(e){}
+try{window.closeLightbox=closeLightbox;}catch(e){}
+try{window.loadFollowModal=loadFollowModal;}catch(e){}
+try{window.loadMorePosts=loadMorePosts;}catch(e){}
+try{window.switchTab=switchTab;}catch(e){}
 
 init();
 }
