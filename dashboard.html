@@ -1022,5 +1022,19 @@ render();
 </script>
 
 <script src="fa-access.js"></script>
+<script src="fa-journal.js"></script>
+<script>
+/* Sync Supabase -> re-render une fois les données du compte récupérées */
+if (window.FAJournal) {
+  FAJournal.ready.then(function(){
+    try { plan = loadPlan(); allTrades = loadJournal(); } catch(e){}
+    var main = document.getElementById('mainContent');
+    if (main) main.innerHTML = '';
+    if (!plan) { renderEmptyNoPlan(); }
+    else if (!allTrades.length) { renderEmptyNoTrades(); }
+    else { render(); }
+  });
+}
+</script>
 </body>
 </html>
