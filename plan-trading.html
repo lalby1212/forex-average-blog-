@@ -1974,6 +1974,7 @@ function renderPlan(meta) {
         profileIcon: profile ? profile.icon : '📊',
         instrument: instLabel,
         session: sessLabel,
+        schedule: (typeof planData !== 'undefined' && Array.isArray(planData)) ? planData.slice(0, 300) : [],
         createdAt: Date.now()
     }));
     if (window.FAJournal) FAJournal.pushPlan();

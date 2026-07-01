@@ -549,6 +549,41 @@ function renderEmptyNoPlan() {
   `;
 }
 
+function dashFmt2(n){ return Number(n||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function renderPlanScheduleHTML(){
+  if(!plan || !Array.isArray(plan.schedule) || !plan.schedule.length) return '';
+  var sym = getCurSym();
+  var rows = plan.schedule.slice(0,120).map(function(r){
+    var ph = r.phase || {};
+    var badge = '<span style="font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:6px;background:'+(ph.color||'rgba(255,255,255,.06)')+';color:'+(ph.text||'#aaa')+';border:1px solid '+(ph.border||'rgba(255,255,255,.1)')+'">'+(ph.icon||'')+' '+(ph.name||'')+'</span>';
+    return '<tr>'+
+      '<td style="padding:.5rem .6rem;">#'+r.trade+'</td>'+
+      '<td style="padding:.5rem .6rem;font-weight:700;">'+sym+dashFmt2(r.capital)+'</td>'+
+      '<td style="padding:.5rem .6rem;color:#3b82f6;">'+(r.lot!=null?Number(r.lot).toFixed(2):'')+'</td>'+
+      '<td style="padding:.5rem .6rem;color:#22c55e;">+'+sym+dashFmt2(r.gain)+'</td>'+
+      '<td style="padding:.5rem .6rem;color:#ef4444;">-'+sym+dashFmt2(r.sl)+'</td>'+
+      '<td style="padding:.5rem .6rem;font-weight:700;">'+sym+dashFmt2(r.newCapital)+'</td>'+
+      '<td style="padding:.5rem .6rem;">'+badge+'</td>'+
+    '</tr>';
+  }).join('');
+  var more = plan.schedule.length>120 ? '<tr><td colspan="7" style="text-align:center;color:var(--t3,rgba(255,255,255,.4));padding:.9rem;font-style:italic;">… +'+(plan.schedule.length-120)+' trades (plan complet sur la page Mon Plan)</td></tr>' : '';
+  return '<div style="margin-top:2rem;background:var(--card,rgba(255,255,255,.02));border:1px solid var(--border,rgba(255,255,255,.08));border-radius:16px;padding:1.3rem;overflow-x:auto;">'+
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">'+
+      '<h2 style="font-size:1.02rem;margin:0;font-weight:800;">📋 Mon plan jour par jour</h2>'+
+      '<a href="plan-trading.html" style="font-size:.8rem;color:var(--gold,#f0b90b);text-decoration:none;font-weight:600;">Modifier le plan →</a>'+
+    '</div>'+
+    '<table style="width:100%;border-collapse:collapse;font-size:.82rem;min-width:560px;">'+
+      '<thead><tr style="text-align:left;color:var(--t3,rgba(255,255,255,.45));border-bottom:1px solid var(--border,rgba(255,255,255,.08));">'+
+        '<th style="padding:.5rem .6rem;font-weight:600;">Trade</th><th style="padding:.5rem .6rem;font-weight:600;">Capital</th><th style="padding:.5rem .6rem;font-weight:600;">Lots</th><th style="padding:.5rem .6rem;font-weight:600;">TP</th><th style="padding:.5rem .6rem;font-weight:600;">SL</th><th style="padding:.5rem .6rem;font-weight:600;">Après TP</th><th style="padding:.5rem .6rem;font-weight:600;">Phase</th>'+
+      '</tr></thead><tbody>'+rows+more+'</tbody></table></div>';
+}
+function appendPlanSchedule(){
+  var html = renderPlanScheduleHTML();
+  if(!html) return;
+  var main = document.getElementById('mainContent');
+  if(main) main.insertAdjacentHTML('beforeend', html);
+}
+
 function renderEmptyNoTrades() {
   const _u = (window.FA && window.FA.getUser()) || JSON.parse(localStorage.getItem('fa_user')||'null');
   const av = _u ? (_u.name||_u.email||'?')[0].toUpperCase() : '?';
@@ -612,6 +647,7 @@ function renderEmptyNoTrades() {
     </div>
   `;
   initCurrencyToggle();
+  appendPlanSchedule();
 }
 
 
@@ -801,6 +837,7 @@ function render() {
   renderDailyChart(trades);
   renderMonthlyChart();
   renderDistChart(m);
+  appendPlanSchedule();
 }
 
 // ════════════════════ TRADE LIST ════════════════════
