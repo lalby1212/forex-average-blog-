@@ -840,7 +840,7 @@
           </a>
           <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
-            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="feed.html" class="drop-link">
@@ -959,7 +959,7 @@
     <!-- VIP upgrade (only shown for non-vip connected) -->
     <div class="sb-vip-card" id="sb-vip-cta">
       <h4>✦ Passe VIP</h4>
-      <p>Accède aux signaux live, analyses exclusives et au canal privé.</p>
+      <p>Accède aux analyses, scénarios de marché et au canal privé.</p>
       <a href="pricing.html" class="sb-btn-vip">Voir les offres</a>
     </div>
 
@@ -1119,7 +1119,7 @@
       <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border);">
         <a href="pricing.html" style="display:block;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,193,7,0.06));border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:0.65rem 0.85rem;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,215,0,0.4)'" onmouseout="this.style.borderColor='rgba(255,215,0,0.2)'">
           <div style="font-size:0.78rem;font-weight:800;color:var(--gold);">✦ Accès VIP</div>
-          <div style="font-size:0.71rem;color:var(--text-muted);margin-top:2px;">Signaux live · Canal privé · Analyses exclusives</div>
+          <div style="font-size:0.71rem;color:var(--text-muted);margin-top:2px;">Analyses · Canal privé · Scénarios de marché</div>
         </a>
       </div>
     </div>
@@ -1171,6 +1171,8 @@
 <!-- ══════════════════════════════════════
      SUPABASE + LOGIC
 ══════════════════════════════════════ -->
+<!-- Supabase JS SDK (requis par le feed communauté) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
 // ── Guard : Supabase SDK requis pour cette page ──
