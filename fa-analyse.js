@@ -48,7 +48,7 @@
 
   /* Mapping symbole graphique -> instrument fa-fundamentals (non-forex) */
   var SYM2INSTR = {
-    'XAUUSD=X':'XAU/USD','XAGUSD=X':'XAG/USD','CL=F':'WTI Oil','BZ=F':'Brent Oil','NG=F':'Natural Gas',
+    'GC=F':'XAU/USD','SI=F':'XAG/USD','CL=F':'WTI Oil','BZ=F':'Brent Oil','NG=F':'Natural Gas',
     'BTC-USD':'BTC/USD','ETH-USD':'ETH/USD','SOL-USD':'SOL/USD','BNB-USD':'BNB/USD','XRP-USD':'XRP/USD',
     '^GSPC':'S&P 500','^NDX':'NASDAQ','^DJI':'S&P 500','^GDAXI':'DAX','^FCHI':'CAC 40','^N225':'Nikkei','^FTSE':'FTSE 100','^STOXX50E':'DAX'
   };
@@ -76,6 +76,7 @@
   function count(txt,words){ var n=0; for(var i=0;i<words.length;i++){ if(txt.indexOf(words[i])!==-1) n++; } return n; }
 
   async function compute(sym, label, gcat){
+    if(window.FAFundamentals && window.FAFundamentals.whenReady){ try{ await window.FAFundamentals.whenReady(); }catch(e){} }
     var fcat = GCAT2FCAT[gcat] || 'forex';
     var instrument = (fcat==='forex') ? label : (SYM2INSTR[sym] || label);
 
