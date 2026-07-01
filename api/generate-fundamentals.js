@@ -133,6 +133,65 @@ async function upsert(item, category){
   return r.ok || r.status===201 || r.status===204;
 }
 
+/* ── Mode OPPORTUNITÉS (fusionné pour rester sous la limite Vercel) ── */
+const PAIR_HINT = {
+  currency: 'des PAIRES forex (ex "AUD/USD", "USD/CHF", "NOK/SEK") en opposant les devises au plus fort différentiel de score.',
+  metal:    'des actifs métaux (ex "GOLD (Long)", "SILVER (Long / repli)", "COPPER (Long)").',
+  energy:   'des actifs énergie (ex "WTI (Long)", "BRENT (Long)", "NATGAS (Short)").',
+  indice:   'des indices (ex "S&P 500 (Long)", "NASDAQ (Long)", "DAX (Long)").',
+  crypto:   'des cryptos (ex "BTC/USD (Long)", "ETH/USD (Short)").'
+};
+
+function buildOppsPrompt(category, instruments, headlines){
+  var list = instruments.map(function(x){
+    return '- '+x.code+' ('+(x.name||x.code)+') : score '+(x.score==null?'?':x.score)+'/5'+(x.bias?(' · '+x.bias):'');
+  }).join('\n');
+  var news = (headlines && headlines.length) ? headlines.map(function(h){ return '- '+h; }).join('\n') : '(aucune actualité disponible)';
+  return [
+'Tu es analyste macro pour Forex Average. À partir des SCORES fondamentaux et des actus, identifie les MEILLEURES opportunités de trading de la catégorie. But informatif, pas de conseil financier, pas de promesse de gain.',
+'',
+'CATÉGORIE : '+category,
+'INSTRUMENTS (score fondamental -5 à +5) :',
+list,
+'',
+'ACTUALITÉS RÉCENTES (titres) :',
+news,
+'',
+'CONSIGNES :',
+'- Propose 4 à 6 opportunités, classées de la plus forte (rank "01") à la plus faible.',
+'- Utilise '+(PAIR_HINT[category]||PAIR_HINT.currency),
+'- Privilégie les plus GROSSES divergences de score (long le fort, short le faible).',
+'- Pour CHAQUE opportunité, un objet JSON avec EXACTEMENT ces champs :',
+'  rank (string "01".."06"), top (boolean ; true pour les 3 meilleures),',
+'  pair (string), dir (string court : "BUY", "SELL", ou "SELL XXX"),',
+'  dir_cls (string : "dir-buy" si achat/long, "dir-sell" si vente/short),',
+'  logic (string HTML COURT : commence par <strong>…</strong> résumant la thèse, puis 1-2 phrases + une cible. Max ~45 mots),',
+'  spread (string HTML COURT : ex "Score diff : <span>AUD +1.5 vs USD −1.0 = 2.5 pts</span> · Cible : <span>0.72-0.73</span>").',
+'- Tout en FRANÇAIS, factuel, nuancé.',
+'',
+'RÉPONDS UNIQUEMENT avec un tableau JSON valide (de [ à ]), sans texte ni balises autour.'
+  ].join('\n');
+}
+
+async function replaceOpportunities(category, items){
+  await fetch(SB_URL+'/rest/v1/opportunities?category=eq.'+encodeURIComponent(category), {
+    method:'DELETE', headers:{ 'apikey': SERVICE, 'Authorization':'Bearer '+SERVICE, 'Prefer':'return=minimal' }
+  });
+  var rows = (items||[]).map(function(it, i){
+    return { category: category, rank: it.rank || ('0'+(i+1)), top: !!it.top, pair: it.pair || '',
+      dir: it.dir || '', dir_cls: (it.dir_cls === 'dir-sell' ? 'dir-sell' : 'dir-buy'),
+      logic: it.logic || '', spread: it.spread || '', position: i, updated_at: new Date().toISOString() };
+  });
+  if(!rows.length) return 0;
+  var r = await fetch(SB_URL+'/rest/v1/opportunities', {
+    method:'POST',
+    headers:{ 'apikey': SERVICE, 'Authorization':'Bearer '+SERVICE, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+    body: JSON.stringify(rows)
+  });
+  if(!(r.ok || r.status===201 || r.status===204)){ var t = await r.text(); throw new Error('Insert opp '+r.status+': '+t.slice(0,150)); }
+  return rows.length;
+}
+
 export default async function handler(req, res){
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','GET, POST, OPTIONS');
@@ -157,6 +216,19 @@ export default async function handler(req, res){
   var category = req.query.category;
   var offset = parseInt(req.query.offset||'0')||0;
   if(!PILLARS[category]) return send(res,400,{ error:'Catégorie invalide' });
+
+  // ── Mode opportunités ──
+  if (req.query.mode === 'opportunities') {
+    try {
+      var iro = await fetch(SB_URL+'/rest/v1/fundamentals?category=eq.'+encodeURIComponent(category)+'&select=code,name,score,bias&order=score.desc', { headers:{ 'apikey':ANON } });
+      var instrO = await iro.json();
+      if(!Array.isArray(instrO) || !instrO.length) return send(res,200,{ category, count:0 });
+      var headsO = (req.body && Array.isArray(req.body.headlines)) ? req.body.headlines : [];
+      var opps = await callClaude(buildOppsPrompt(category, instrO, headsO));
+      var count = await replaceOpportunities(category, opps);
+      return send(res,200,{ category, count });
+    } catch(e){ return send(res,500,{ error:(e&&e.message)||'Erreur opportunités' }); }
+  }
 
   try{
     // instruments de la catégorie (depuis la table)

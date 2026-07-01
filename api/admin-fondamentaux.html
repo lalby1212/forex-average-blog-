@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Fondamentaux | Forex Average</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#FFD700;--dark:#080808;--card:#0f0f0f;--border:rgba(255,215,0,0.12);
+ --text:#e8e8e8;--muted:rgba(255,255,255,0.45);--green:#22c55e;--red:#ef4444;}
+html,body{background:var(--dark);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;min-height:100vh;}
+.page{max-width:920px;margin:0 auto;padding:1.6rem 1.4rem 5rem;}
+h1{font-size:1.35rem;font-weight:900;color:#fff;margin-bottom:.3rem;}
+h1 span{color:var(--gold);}
+.sub{color:var(--muted);font-size:.84rem;margin-bottom:1.4rem;}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem;}
+select,input,textarea{background:#141414;border:1px solid var(--border);color:var(--text);
+ padding:.5rem .7rem;border-radius:8px;font-size:.85rem;font-family:inherit;outline:none;}
+select:focus,input:focus,textarea:focus{border-color:var(--gold);}
+textarea{width:100%;resize:vertical;line-height:1.5;}
+.btn{background:linear-gradient(135deg,#FFD700,#FFA500);color:#000;border:none;padding:.55rem 1.3rem;
+ border-radius:8px;font-weight:800;font-size:.85rem;cursor:pointer;}
+.btn:hover{opacity:.9;}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--muted);
+ padding:.45rem .9rem;border-radius:7px;font-size:.78rem;cursor:pointer;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.btn-del{background:transparent;border:none;color:var(--red);cursor:pointer;font-size:1rem;padding:0 .3rem;}
+.sec{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1rem;}
+.sec-title{font-size:.66rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,215,0,.55);margin-bottom:.85rem;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.7rem;}
+@media(max-width:560px){.grid2,.grid3{grid-template-columns:1fr;}}
+.fld{display:flex;flex-direction:column;gap:.25rem;}
+.fld label{font-size:.68rem;color:var(--muted);font-weight:600;}
+.fld input,.fld select{width:100%;}
+.kv-row,.dt-row{display:flex;gap:.5rem;align-items:center;margin-bottom:.5rem;}
+.kv-row input{flex:1;}
+.dt-row input{flex:1;}
+.dt-row select{width:110px;flex-shrink:0;}
+.pillar{border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:.9rem 1rem;margin-bottom:.8rem;}
+.pillar-head{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem;flex-wrap:wrap;}
+.pillar-name{font-weight:800;color:#fff;font-size:.9rem;min-width:96px;}
+.pillar-head input{width:90px;}
+.mini-lbl{font-size:.64rem;color:var(--muted);}
+.toast{position:fixed;bottom:1.4rem;right:1.4rem;padding:.7rem 1.2rem;border-radius:9px;font-weight:700;
+ font-size:.85rem;z-index:9999;transform:translateY(14px);opacity:0;transition:.25s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{background:var(--green);color:#000;}.toast.err{background:var(--red);color:#fff;}
+.savebar{position:sticky;bottom:0;background:linear-gradient(to top,var(--dark) 60%,transparent);
+ padding:1rem 0 .4rem;display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;}
+.hint{font-size:.74rem;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<!-- Garde ADMIN -->
+<script>
+(async function(){
+  var SB='https://bpfpghlpdzevzyhalxov.supabase.co';
+  var KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+  var de=document.documentElement;
+  function deny(to){ try{ location.replace(to); }catch(e){} }
+  try{
+    de.style.visibility='hidden';
+    var sbKey=null;
+    for(var k in localStorage){ if(k.indexOf('sb-')===0 && k.indexOf('-auth-token')>0){ sbKey=k; break; } }
+    if(!sbKey){ deny('login.html?redirect=admin-fondamentaux.html'); return; }
+    var sess=null; try{ sess=JSON.parse(localStorage.getItem(sbKey)); }catch(e){}
+    if(!sess || !sess.user){ deny('login.html?redirect=admin-fondamentaux.html'); return; }
+    var token=sess.access_token, expMs=sess.expires_at?sess.expires_at*1000:0;
+    if((!token || (expMs && expMs<Date.now()+60000)) && sess.refresh_token){
+      try{
+        var rr=await fetch(SB+'/auth/v1/token?grant_type=refresh_token',{method:'POST',
+          headers:{'apikey':KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh_token})});
+        if(rr.ok){var ns=await rr.json();if(ns&&ns.access_token){sess.access_token=ns.access_token;sess.refresh_token=ns.refresh_token||sess.refresh_token;sess.expires_at=ns.expires_at||(Math.floor(Date.now()/1000)+(ns.expires_in||3600));if(ns.user)sess.user=ns.user;localStorage.setItem(sbKey,JSON.stringify(sess));token=ns.access_token;}}
+      }catch(e){}
+    }
+    if(!token){ deny('login.html?redirect=admin-fondamentaux.html'); return; }
+    var r=await fetch(SB+'/rest/v1/profiles?id=eq.'+sess.user.id+'&select=is_admin&limit=1',
+      {headers:{'apikey':KEY,'Authorization':'Bearer '+token,'Accept':'application/json'}});
+    var rows=await r.json();
+    if(rows && rows[0] && rows[0].is_admin===true){ de.style.visibility='visible'; }
+    else { deny('marches.html'); }
+  }catch(e){ deny('login.html?redirect=admin-fondamentaux.html'); }
+})();
+</script>
+
+<div class="page">
+  <h1>📊 Admin <span>Fondamentaux</span></h1>
+  <p class="sub">Mets à jour ton analyse macro par instrument — enregistré dans Supabase, lu automatiquement par le site. Aucun code à éditer.</p>
+
+  <div class="row">
+    <select id="instrSel" style="min-width:240px;"></select>
+    <button class="btn-ghost" onclick="newInstr()">+ Nouvel instrument</button>
+    <span class="hint" id="status"></span>
+  </div>
+
+  <div class="row">
+    <button class="btn-ghost" id="tabFull" onclick="setMode('full')">📝 Mode complet</button>
+    <button class="btn-ghost" id="tabQuick" onclick="setMode('quick')">⚡ Mode rapide (scores)</button>
+    <button class="btn-ghost" id="genBtn" onclick="genAI()" style="border-color:rgba(167,139,250,.45);color:#a78bfa;">🤖 Générer via IA</button>
+    <span class="hint" id="genStatus"></span>
+  </div>
+
+  <!-- ── MODE RAPIDE ── -->
+  <div id="quickPanel" style="display:none;">
+    <div class="sec">
+      <div class="sec-title">Scores rapides — modifie juste les chiffres, enregistre tout</div>
+      <div id="quickGrid"></div>
+      <div class="savebar">
+        <button class="btn" onclick="saveQuick()">💾 Enregistrer tous les scores</button>
+        <span class="hint">Seul le score global est mis à jour — suffit pour graphique.html + admin-scores.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="fullPanel">
+
+  <!-- Général -->
+  <div class="sec">
+    <div class="sec-title">Général</div>
+    <div class="grid3">
+      <div class="fld"><label>Catégorie</label>
+        <select id="f_category">
+          <option value="currency">Devise</option><option value="metal">Métal</option>
+          <option value="energy">Énergie</option><option value="indice">Indice</option><option value="crypto">Crypto</option>
+        </select></div>
+      <div class="fld"><label>Code (unique, ex. USD, GOLD, BTC)</label><input id="f_code" placeholder="USD"></div>
+      <div class="fld"><label>Drapeau / emoji</label><input id="f_flag" placeholder="🇺🇸"></div>
+      <div class="fld"><label>Nom</label><input id="f_name" placeholder="Dollar US"></div>
+      <div class="fld"><label>Banque / référence</label><input id="f_bank" placeholder="Federal Reserve"></div>
+      <div class="fld"><label>Taux directeur</label><input id="f_rate" placeholder="3.50-3.75%"></div>
+      <div class="fld"><label>Score global (-5 à +5)</label><input id="f_score" type="number" step="0.1" placeholder="-1.0"></div>
+      <div class="fld"><label>Biais (texte)</label><input id="f_bias" placeholder="LÉG. BAISSIER"></div>
+      <div class="fld"><label>Classe de biais</label>
+        <select id="f_biascls">
+          <option value="bt-hawk">Haussier (bt-hawk)</option>
+          <option value="bt-lhawk">Lég. haussier (bt-lhawk)</option>
+          <option value="bt-neu">Neutre (bt-neu)</option>
+          <option value="bt-ldov">Lég. baissier (bt-ldov)</option>
+          <option value="bt-dov">Baissier (bt-dov)</option>
+        </select></div>
+    </div>
+  </div>
+
+  <!-- Données clés -->
+  <div class="sec">
+    <div class="sec-title">Données clés <span style="color:var(--muted);text-transform:none;font-weight:400;">(libellé · valeur)</span></div>
+    <div id="keyData"></div>
+    <button class="btn-ghost" onclick="addKV()">+ Ligne</button>
+  </div>
+
+  <!-- Piliers -->
+  <div class="sec">
+    <div class="sec-title">Les 5 piliers (score · poids · détails)</div>
+    <div id="pillars"></div>
+  </div>
+
+  <!-- Pricing & Conclusion -->
+  <div class="sec">
+    <div class="sec-title">Pricing</div>
+    <textarea id="f_pricing" rows="3" placeholder="Niveaux, probabilités, contexte de marché…"></textarea>
+  </div>
+  <div class="sec">
+    <div class="sec-title">Conclusion</div>
+    <textarea id="f_concl" rows="3" placeholder="Synthèse directionnelle…"></textarea>
+  </div>
+
+  <div class="savebar">
+    <button class="btn" id="saveBtn" onclick="save()">💾 Enregistrer</button>
+    <span class="hint" id="saveHint">Lecture publique · écriture admin uniquement</span>
+  </div>
+  </div><!-- /fullPanel -->
+</div>
+
+<div class="toast" id="toast"></div>
+
+<input type="hidden" id="f_position" value="0">
+
+<script>
+const SB_URL='https://bpfpghlpdzevzyhalxov.supabase.co';
+const SB_KEY='sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
+var PILLAR_DEFS = {
+  currency: [['monetary','Monétaire'],['inflation','Inflation'],['growth','Croissance'],['employment','Emploi'],['risk','Risque']],
+  metal:    [['supply','Offre'],['demand','Demande'],['usd','USD'],['rates','Taux'],['risk','Risk']],
+  energy:   [['opec','OPEC'],['inventories','Stocks'],['demand','Demande'],['usd','USD'],['seasonal','Saison']],
+  indice:   [['policy','Banque centrale'],['macro','Macro'],['earnings','Bénéfices (EPS)'],['flows','Flux'],['risk','Risk']],
+  crypto:   [['macro','Macro'],['onchain','On-chain'],['adoption','Adoption'],['supply','Supply'],['sentiment','Sentiment']]
+};
+function currentPillars(){ var c=(document.getElementById('f_category')||{}).value||'currency'; return PILLAR_DEFS[c]||PILLAR_DEFS.currency; }
+
+/* ── Token frais (refresh si expiré) ── */
+function getRawToken(){
+  for(var k in localStorage){ if(k.indexOf('sb-')===0&&k.indexOf('-auth-token')>0){ try{var s=JSON.parse(localStorage.getItem(k));if(s&&s.access_token)return s.access_token;}catch(e){} } }
+  return null;
+}
+async function getFreshToken(){
+  try{
+    var sbKey=null;
+    for(var k in localStorage){ if(k.indexOf('sb-')===0&&k.indexOf('-auth-token')>0){ sbKey=k; break; } }
+    if(sbKey){
+      var sess=null; try{ sess=JSON.parse(localStorage.getItem(sbKey)); }catch(e){}
+      if(sess&&sess.refresh_token){
+        var expMs=sess.expires_at?sess.expires_at*1000:0;
+        if(!sess.access_token||(expMs&&expMs<Date.now()+120000)){
+          var rr=await fetch(SB_URL+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{'apikey':SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh_token})});
+          if(rr.ok){var ns=await rr.json();if(ns&&ns.access_token){sess.access_token=ns.access_token;sess.refresh_token=ns.refresh_token||sess.refresh_token;sess.expires_at=ns.expires_at||(Math.floor(Date.now()/1000)+(ns.expires_in||3600));localStorage.setItem(sbKey,JSON.stringify(sess));return ns.access_token;}}
+        }
+        if(sess.access_token) return sess.access_token;
+      }
+    }
+  }catch(e){}
+  return getRawToken();
+}
+
+/* ── Build piliers (5 fixes) ── */
+function buildPillars(){
+  var box=document.getElementById('pillars'); box.innerHTML='';
+  currentPillars().forEach(function(pk){
+    var key=pk[0], lbl=pk[1];
+    var d=document.createElement('div'); d.className='pillar';
+    d.innerHTML=
+      '<div class="pillar-head">'+
+        '<span class="pillar-name">'+lbl+'</span>'+
+        '<span class="mini-lbl">Score</span><input id="p_'+key+'_score" type="number" step="0.1" placeholder="0">'+
+        '<span class="mini-lbl">Poids</span><input id="p_'+key+'_wt" placeholder="40%" style="width:70px;">'+
+      '</div>'+
+      '<div id="dt_'+key+'"></div>'+
+      '<button class="btn-ghost" type="button" onclick="addDT(\''+key+'\')">+ Ligne détail</button>'+
+      '<div style="margin-top:.6rem;"><div class="mini-lbl" style="margin-bottom:.25rem;">Paragraphe (pr)</div>'+
+      '<textarea id="p_'+key+'_pr" rows="2" placeholder="Analyse du pilier…"></textarea></div>';
+    box.appendChild(d);
+  });
+}
+
+/* ── Lignes dynamiques ── */
+function addKV(label,value){
+  var box=document.getElementById('keyData');
+  var row=document.createElement('div'); row.className='kv-row';
+  row.innerHTML='<input placeholder="Libellé (ex. PCE/Core)"><input placeholder="Valeur (ex. 2.7%)"><button class="btn-del" type="button" title="Supprimer">✕</button>';
+  row.children[0].value=label||''; row.children[1].value=value||'';
+  row.children[2].onclick=function(){ row.remove(); };
+  box.appendChild(row);
+}
+function addDT(key,k,v,c){
+  var box=document.getElementById('dt_'+key);
+  var row=document.createElement('div'); row.className='dt-row';
+  row.innerHTML='<input placeholder="Libellé"><input placeholder="Valeur">'+
+    '<select><option value="">—</option><option value="bull">bull</option><option value="bear">bear</option><option value="neutral">neutral</option></select>'+
+    '<button class="btn-del" type="button">✕</button>';
+  row.children[0].value=k||''; row.children[1].value=v||''; row.children[2].value=c||'';
+  row.children[3].onclick=function(){ row.remove(); };
+  box.appendChild(row);
+}
+
+/* ── Charger la liste ── */
+async function loadList(){
+  try{
+    var r=await fetch(SB_URL+'/rest/v1/fundamentals?select=code,category,name,position&order=position.asc',
+      {headers:{'apikey':SB_KEY,'Accept':'application/json'}});
+    var rows=await r.json();
+    var groups={currency:'Devises',metal:'Métaux',energy:'Énergie',indice:'Indices',crypto:'Crypto'};
+    var html='<option value="">— Choisir un instrument —</option>';
+    Object.keys(groups).forEach(function(cat){
+      var items=(rows||[]).filter(function(x){return x.category===cat;});
+      if(!items.length) return;
+      html+='<optgroup label="'+groups[cat]+'">';
+      items.forEach(function(x){ html+='<option value="'+x.code+'">'+x.code+' — '+(x.name||'')+'</option>'; });
+      html+='</optgroup>';
+    });
+    document.getElementById('instrSel').innerHTML=html;
+    document.getElementById('status').textContent=(rows?rows.length:0)+' instruments';
+  }catch(e){ document.getElementById('status').textContent='Erreur de chargement'; }
+}
+
+/* ── Charger un instrument ── */
+async function selectInstr(code){
+  if(!code){ return; }
+  try{
+    var r=await fetch(SB_URL+'/rest/v1/fundamentals?code=eq.'+encodeURIComponent(code)+'&limit=1',
+      {headers:{'apikey':SB_KEY,'Accept':'application/json'}});
+    var rows=await r.json();
+    if(rows&&rows[0]) populate(rows[0]);
+  }catch(e){ toast('Erreur de chargement','err'); }
+}
+
+function setV(id,v){ var el=document.getElementById(id); if(el) el.value=(v==null?'':v); }
+
+function populate(d){
+  setV('f_category',d.category||'currency'); setV('f_code',d.code); setV('f_flag',d.flag);
+  setV('f_name',d.name); setV('f_bank',d.bank); setV('f_rate',d.rate);
+  setV('f_score',d.score); setV('f_bias',d.bias); setV('f_biascls',d.bias_cls||'bt-neu');
+  setV('f_pricing',d.pricing); setV('f_concl',d.concl); setV('f_position',d.position||0);
+  document.getElementById('f_code').readOnly=true;
+
+  // key_data
+  var kd=document.getElementById('keyData'); kd.innerHTML='';
+  (d.key_data||[]).forEach(function(p){ addKV(p[0],p[1]); });
+  if(!(d.key_data||[]).length) addKV();
+
+  // piliers
+  buildPillars();
+  currentPillars().forEach(function(pk){
+    var key=pk[0]; var pil=(d.pillars||{})[key]||{}; var det=(d.detail||{})[key]||{};
+    setV('p_'+key+'_score', pil.score); setV('p_'+key+'_wt', pil.wt);
+    setV('p_'+key+'_pr', det.pr);
+    (det.rows||[]).forEach(function(r){ addDT(key, r.k, r.v, r.c); });
+  });
+}
+
+function newInstr(){
+  ['f_code','f_flag','f_name','f_bank','f_rate','f_score','f_bias','f_pricing','f_concl'].forEach(function(id){ setV(id,''); });
+  setV('f_category','currency'); setV('f_biascls','bt-neu'); setV('f_position',999);
+  document.getElementById('f_code').readOnly=false;
+  document.getElementById('keyData').innerHTML=''; addKV();
+  buildPillars();
+  document.getElementById('instrSel').value='';
+  toast('Nouvel instrument — remplis puis Enregistre','ok');
+}
+
+/* ── Collecter le formulaire ── */
+function collect(){
+  var key_data=[];
+  document.querySelectorAll('#keyData .kv-row').forEach(function(row){
+    var l=row.children[0].value.trim(), v=row.children[1].value.trim();
+    if(l||v) key_data.push([l,v]);
+  });
+  var pillars={}, detail={};
+  currentPillars().forEach(function(pk){
+    var key=pk[0];
+    var sc=document.getElementById('p_'+key+'_score').value;
+    pillars[key]={ score: sc===''?0:parseFloat(sc), wt: document.getElementById('p_'+key+'_wt').value.trim() };
+    var rows=[];
+    document.querySelectorAll('#dt_'+key+' .dt-row').forEach(function(row){
+      var k=row.children[0].value.trim(), v=row.children[1].value.trim(), c=row.children[2].value;
+      if(k||v){ var o={k:k,v:v}; if(c) o.c=c; rows.push(o); }
+    });
+    detail[key]={ rows: rows, pr: document.getElementById('p_'+key+'_pr').value.trim() };
+  });
+  var scoreV=document.getElementById('f_score').value;
+  return {
+    code: document.getElementById('f_code').value.trim(),
+    category: document.getElementById('f_category').value,
+    flag: document.getElementById('f_flag').value.trim(),
+    name: document.getElementById('f_name').value.trim(),
+    bank: document.getElementById('f_bank').value.trim(),
+    rate: document.getElementById('f_rate').value.trim(),
+    score: scoreV===''?null:parseFloat(scoreV),
+    bias: document.getElementById('f_bias').value.trim(),
+    bias_cls: document.getElementById('f_biascls').value,
+    key_data: key_data, pillars: pillars, detail: detail,
+    pricing: document.getElementById('f_pricing').value.trim(),
+    concl: document.getElementById('f_concl').value.trim(),
+    position: parseInt(document.getElementById('f_position').value)||0,
+    updated_at: new Date().toISOString()
+  };
+}
+
+/* ── Enregistrer (upsert) ── */
+async function save(){
+  var payload=collect();
+  if(!payload.code){ toast('Le code est obligatoire','err'); return; }
+  var token=await getFreshToken();
+  if(!token){ toast('Session expirée — reconnecte-toi','err'); return; }
+  var btn=document.getElementById('saveBtn'); btn.disabled=true; btn.textContent='⏳ Enregistrement…';
+  try{
+    var res=await fetch(SB_URL+'/rest/v1/fundamentals?on_conflict=code',
+      {method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,
+       'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=minimal'},
+       body:JSON.stringify(payload)});
+    if(res.ok||res.status===201||res.status===204){
+      toast('✅ Enregistré — '+payload.code,'ok');
+      document.getElementById('f_code').readOnly=true;
+      loadList();
+    } else {
+      var t=''; try{ t=(await res.json()).message||''; }catch(e){}
+      toast('Erreur ('+res.status+') '+t,'err');
+    }
+  }catch(e){ toast('Erreur réseau','err'); }
+  btn.disabled=false; btn.textContent='💾 Enregistrer';
+}
+
+/* ── Helpers ── */
+function toast(msg,type){ var t=document.getElementById('toast'); t.textContent=msg; t.className='toast '+(type||'ok')+' show'; setTimeout(function(){t.classList.remove('show');},3200); }
+
+document.getElementById('instrSel').addEventListener('change',function(){ selectInstr(this.value); });
+document.getElementById('f_category').addEventListener('change',function(){ buildPillars(); });
+
+var NEWS_FEEDS_C={
+  currency:['https://www.forexlive.com/feed/news','https://www.investing.com/rss/news_1.rss'],
+  metal:['https://www.bullionvault.com/gold-news/rss.do'],
+  energy:['https://oilprice.com/rss/main'],
+  indice:['https://feeds.content.dowjones.io/public/rss/mw_topstories'],
+  crypto:['https://cointelegraph.com/rss']
+};
+var RSSKEY_C='fk4tjm400zm37ji6dzx7koexwnvud4fjjhd8xpky';
+async function fetchCategoryNews(cat){
+  var feeds=NEWS_FEEDS_C[cat]||[]; var heads=[];
+  for(var i=0;i<feeds.length;i++){
+    try{
+      var u='https://api.rss2json.com/v1/api.json?count=12&api_key='+RSSKEY_C+'&rss_url='+encodeURIComponent(feeds[i]);
+      var r=await fetch(u,{signal:AbortSignal.timeout(6000)});
+      if(!r.ok) continue;
+      var d=await r.json();
+      if(d&&d.status==='ok'&&d.items) d.items.forEach(function(it){ if(it.title) heads.push(it.title); });
+    }catch(e){}
+  }
+  return heads.slice(0,20);
+}
+async function genAI(){
+  if(!confirm("Générer l\'analyse fondamentale via Claude AI ?\n\nCela consomme des crédits Anthropic et ÉCRASE les données actuelles des instruments. Continuer ?")) return;
+  var token=await getFreshToken();
+  if(!token){ toast("Session expirée — reconnecte-toi","err"); return; }
+  var st=document.getElementById("genStatus");
+  var btn=document.getElementById("genBtn"); btn.disabled=true;
+  var cats=[["currency","Devises"],["metal","Métaux"],["energy","Énergie"],["indice","Indices"],["crypto","Crypto"]];
+  var totalDone=0;
+  try{
+    for(var c=0;c<cats.length;c++){
+      var cat=cats[c][0], offset=0, guard=0;
+      st.textContent="📰 Actus "+cats[c][1]+"…";
+      var heads=await fetchCategoryNews(cat);
+      do{
+        st.textContent="🤖 "+cats[c][1]+" — instrument "+(offset+1)+"…";
+        var r=await fetch("/api/generate-fundamentals?category="+cat+"&offset="+offset,{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({headlines:heads}),signal:AbortSignal.timeout(40000)});
+        var j=null; try{ j=await r.json(); }catch(e){ j={}; }
+        if(!r.ok){ throw new Error((j&&j.error)||("HTTP "+r.status)); }
+        totalDone += (j.processed||[]).length;
+        offset = j.nextOffset;
+        guard++;
+      } while(offset!=null && guard<40);
+      // Opportunités de la catégorie (best-effort, n'interrompt pas la suite)
+      st.textContent="\uD83D\uDCA1 Opportunités "+cats[c][1]+"…";
+      try{
+        await fetch("/api/generate-fundamentals?category="+cat+"&mode=opportunities",{method:"POST",headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:JSON.stringify({headlines:heads}),signal:AbortSignal.timeout(45000)});
+      }catch(e){}
+    }
+    st.textContent="";
+    toast("✅ "+totalDone+" instruments générés par l\'IA","ok");
+    loadList();
+    var cur=document.getElementById("instrSel").value; if(cur) selectInstr(cur);
+  }catch(e){
+    st.textContent="";
+    toast("Erreur IA : "+((e&&e.message)||e),"err");
+  }
+  btn.disabled=false;
+}
+
+var _quickOrig={};
+function setMode(m){
+  document.getElementById('fullPanel').style.display = m==='full'?'block':'none';
+  document.getElementById('quickPanel').style.display = m==='quick'?'block':'none';
+  if(m==='quick') loadQuick();
+}
+async function loadQuick(){
+  var grid=document.getElementById('quickGrid'); grid.innerHTML='Chargement…';
+  try{
+    var r=await fetch(SB_URL+'/rest/v1/fundamentals?select=code,category,name,score&order=position.asc',{headers:{'apikey':SB_KEY,'Accept':'application/json'}});
+    var rows=await r.json();
+    var groups={currency:'Devises',metal:'Métaux',energy:'Énergie',indice:'Indices',crypto:'Crypto'};
+    var html=''; _quickOrig={};
+    Object.keys(groups).forEach(function(cat){
+      var items=(rows||[]).filter(function(x){return x.category===cat;});
+      if(!items.length) return;
+      html+='<div class="mini-lbl" style="margin:.7rem 0 .3rem;color:var(--gold);font-weight:700;font-size:.7rem;text-transform:uppercase;letter-spacing:1px;">'+groups[cat]+'</div>';
+      items.forEach(function(x){
+        _quickOrig[x.code]=(x.score==null?null:Number(x.score));
+        html+='<div class="kv-row"><span style="flex:1;font-size:.82rem;">'+x.code+' — '+(x.name||'')+'</span>'+
+              '<input type="number" step="0.1" data-code="'+x.code+'" value="'+(x.score==null?'':x.score)+'" style="width:90px;"></div>';
+      });
+    });
+    grid.innerHTML=html||'Aucun instrument';
+  }catch(e){ grid.innerHTML='Erreur de chargement'; }
+}
+async function saveQuick(){
+  var token=await getFreshToken();
+  if(!token){ toast('Session expirée — reconnecte-toi','err'); return; }
+  var inputs=document.querySelectorAll('#quickGrid input[data-code]');
+  var changed=[];
+  inputs.forEach(function(inp){
+    var code=inp.getAttribute('data-code');
+    var v=inp.value===''?null:parseFloat(inp.value);
+    if(v!==_quickOrig[code]) changed.push({code:code,score:v});
+  });
+  if(!changed.length){ toast('Aucune modification','ok'); return; }
+  var okc=0;
+  for(var i=0;i<changed.length;i++){
+    try{
+      var res=await fetch(SB_URL+'/rest/v1/fundamentals?code=eq.'+encodeURIComponent(changed[i].code),
+        {method:'PATCH',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json','Prefer':'return=minimal'},
+         body:JSON.stringify({score:changed[i].score, updated_at:new Date().toISOString()})});
+      if(res.ok||res.status===204) okc++;
+    }catch(e){}
+  }
+  toast('✅ '+okc+'/'+changed.length+' scores enregistrés','ok');
+  loadQuick();
+}
+
+/* Init */
+buildPillars(); addKV();
+loadList();
+</script>
+</body>
+</html>
