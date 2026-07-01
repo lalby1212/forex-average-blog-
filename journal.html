@@ -340,7 +340,7 @@
         <div class="sidebar-section-label">VIP</div>
         <a href="#" class="nav-item" id="nav-signals" onclick="checkVIP(event,'signaux')">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-            Signaux Telegram
+            Analyses Telegram
             <span class="nav-lock" id="lock-signals">🔒</span>
         </a>
         <a href="#" class="nav-item" id="nav-webinar" onclick="checkVIP(event,'webinaire')">
@@ -619,6 +619,7 @@
 <div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:99;" onclick="closeSidebar()"></div>
 
 <script src="fa-access.js"></script>
+<script src="fa-journal.js"></script>
 <script>
 
 /* ── JOURNAL DE TRADING — localStorage + fa-access.js ── */
@@ -641,6 +642,7 @@ function loadFromStorage() {
 }
 function saveToStorage(entries) {
     localStorage.setItem(storageKey(), JSON.stringify(entries));
+    if (window.FAJournal) FAJournal.pushTrades();
 }
 
 /* ── TOAST ── */
@@ -977,7 +979,7 @@ function signOut() {
 
     if (new URLSearchParams(location.search).get('action') === 'new') openDrawer();
 
-    loadEntries();
+    if (window.FAJournal) { FAJournal.ready.then(loadEntries); } else { loadEntries(); }
 })();
 
 </script>
