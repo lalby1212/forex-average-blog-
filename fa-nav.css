@@ -33,7 +33,9 @@
 
 #mainNav .nav-item-drop{position:relative;display:flex;align-items:center;height:auto;}
 #mainNav .nav-item-drop>a{height:auto;border-bottom:none;cursor:pointer;}
-#mainNav .drop-panel{display:none!important;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:220px;background:rgba(10,10,10,0.98);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:0.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:200;}
+#mainNav .drop-panel{display:none!important;position:absolute;top:calc(100% + 8px);left:0;right:auto;transform:none!important;animation:none!important;transition:none!important;min-width:220px;background:rgba(10,10,10,0.98);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:0.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.6);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);z-index:200;}
+/* Menu profil (avatar) : ancré à droite */
+#mainNav .nav-auth-user .drop-panel{left:auto!important;right:0!important;}
 #mainNav .nav-item-drop:hover>.drop-panel,#mainNav .nav-item-drop.open>.drop-panel{display:block!important;}
 #mainNav .drop-link{display:flex!important;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:8px;text-decoration:none;color:rgba(255,255,255,0.8);font-size:0.85rem;height:auto;}
 #mainNav .drop-link:hover{background:rgba(255,215,0,0.07);color:#fff;}
