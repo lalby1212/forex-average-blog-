@@ -609,7 +609,7 @@
     <div class="ticker-widget">
         <div class="tradingview-widget-container" style="height:46px;">
             <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
             {"symbols":[{"proName":"BINANCE:BTCUSDT","title":"BTC"},{"proName":"BINANCE:ETHUSDT","title":"ETH"},{"proName":"BINANCE:SOLUSDT","title":"SOL"},{"proName":"FX_IDC:EURUSD","title":"EUR/USD"},{"proName":"FX_IDC:USDJPY","title":"USD/JPY"},{"proName":"FX_IDC:XAUUSD","title":"GOLD"},{"proName":"TVC:UKOIL","title":"BRENT"},{"proName":"CAPITALCOM:US500","title":"S&P 500"},{"proName":"BINANCE:BNBUSDT","title":"BNB"}],"showSymbolLogo":true,"colorTheme":"dark","isTransparent":true,"displayMode":"compact","locale":"fr"}
             </script>
         </div>
@@ -1145,43 +1145,43 @@ loadCategory('forex');
 
 <script src="fa-access.js"></script>
 
+
+
 <script>
-/* ── TradingView Lazy Loader ── */
+/* TV_LAZY_V2 — TradingView : charge à l'écran, décharge hors écran sur mobile (anti-crash) */
 (function(){
   'use strict';
-  // Tous les widgets TradingView non encore chargés
-  function lazyLoadTV() {
-    var widgets = document.querySelectorAll('.tradingview-widget-container:not([data-tv-loaded])');
-    if (!widgets.length) return;
-    
-    var io = new IntersectionObserver(function(entries, obs) {
-      entries.forEach(function(entry) {
-        if (!entry.isIntersecting) return;
-        var container = entry.target;
-        obs.unobserve(container);
-        container.setAttribute('data-tv-loaded', '1');
-        
-        // Réactiver les scripts TradingView désactivés
-        container.querySelectorAll('script[data-tv-src]').forEach(function(tmpl) {
-          var s = document.createElement('script');
-          s.src = tmpl.getAttribute('data-tv-src');
-          s.async = true;
-          s.textContent = tmpl.textContent;
-          tmpl.parentNode.replaceChild(s, tmpl);
-        });
+  function init(){
+    var widgets = document.querySelectorAll('.tradingview-widget-container');
+    if(!widgets.length) return;
+    var mobile = window.matchMedia('(max-width:900px)').matches;
+    widgets.forEach(function(w){ if(w._tvTpl==null) w._tvTpl = w.innerHTML; });
+    function load(w){
+      if(w.getAttribute('data-tv-loaded')==='1') return;
+      var tmpl = w.querySelector('script[data-tv-src]');
+      if(!tmpl) return;
+      w.setAttribute('data-tv-loaded','1');
+      var s=document.createElement('script');
+      s.type='text/javascript'; s.async=true;
+      s.src=tmpl.getAttribute('data-tv-src'); s.textContent=tmpl.textContent;
+      tmpl.parentNode.replaceChild(s,tmpl);
+    }
+    function unload(w){
+      if(w.getAttribute('data-tv-loaded')!=='1') return;
+      w.removeAttribute('data-tv-loaded');
+      if(w._tvTpl!=null) w.innerHTML = w._tvTpl;
+    }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting) load(e.target);
+        else if(mobile) unload(e.target);
       });
-    }, { rootMargin: '200px' });
-    
-    widgets.forEach(function(w) { io.observe(w); });
+    }, { rootMargin: mobile ? '120px' : '400px' });
+    widgets.forEach(function(w){ io.observe(w); });
   }
-  
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', lazyLoadTV);
-  } else {
-    lazyLoadTV();
-  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
-
 </body>
 </html>
