@@ -15,9 +15,19 @@
      donc fonctionne même si l'init échoue ou si la page est lourde. */
   if (!window.__faNavDelegated) {
     window.__faNavDelegated = true;
+    var FA_MENU_STYLE = 'display:flex!important;position:fixed!important;top:64px!important;left:0!important;right:0!important;bottom:0!important;'
+      + 'flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:0.6rem 1rem 2.5rem!important;'
+      + 'overflow-y:auto!important;z-index:99999!important;margin:0!important;background:#08080a!important;';
+    var faOpenMenu = function (menu, burger) {
+      menu.setAttribute('style', FA_MENU_STYLE);
+      menu.classList.add('open');
+      if (burger) burger.classList.add('active');
+      document.body.classList.add('fa-menu-open');
+      document.body.style.overflow = 'hidden';
+    };
     var faCloseMenu = function () {
       var m = document.querySelector('#mainNav .nav-links');
-      if (m) m.classList.remove('open');
+      if (m) { m.classList.remove('open'); m.removeAttribute('style'); }
       var b = document.querySelector('#mainNav .hamburger');
       if (b) b.classList.remove('active');
       document.body.classList.remove('fa-menu-open');
@@ -30,13 +40,13 @@
         e.preventDefault(); e.stopPropagation();
         var menu = document.querySelector('#mainNav .nav-links') || document.getElementById('navLinks');
         if (!menu) return;
-        var open = !menu.classList.contains('open');
-        menu.classList.toggle('open', open);
-        burger.classList.toggle('active', open);
-        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.classList.toggle('fa-menu-open', open);
-        document.body.style.overflow = open ? 'hidden' : '';
-        if (!open) document.querySelectorAll('#mainNav .nav-item-drop.open').forEach(function (d) { d.classList.remove('open'); });
+        if (menu.classList.contains('open')) {
+          faCloseMenu();
+          burger.setAttribute('aria-expanded', 'false');
+        } else {
+          faOpenMenu(menu, burger);
+          burger.setAttribute('aria-expanded', 'true');
+        }
         return;
       }
       var tgl = t.closest('.nav-item-drop > a[href="#"], .nav-item-drop > a[role="button"]');
