@@ -1179,6 +1179,48 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css">
+<style id="hero-fa-styles">
+.hero-fa{position:relative;min-height:calc(100vh - 64px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:2rem;max-width:1400px;margin:0 auto;padding:2rem 2rem 3rem;overflow:hidden;text-align:left;}
+.hero-fa::before{content:'';position:absolute;top:-20%;right:-8%;width:58%;height:80%;background:radial-gradient(circle,var(--gold-glow,rgba(255,215,0,0.18)),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0;}
+.hf-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,215,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.04) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(circle at 62% 42%,#000,transparent 72%);mask-image:radial-gradient(circle at 62% 42%,#000,transparent 72%);z-index:0;animation:hfGridDrift 20s linear infinite;}
+@keyframes hfGridDrift{to{background-position:44px 44px;}}
+.hf-copy{position:relative;z-index:2;max-width:560px;}
+.hf-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.16);color:var(--gold);font-size:0.74rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:999px;margin-bottom:1.3rem;}
+.hf-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:hfPing 1.8s infinite;}
+@keyframes hfPing{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
+.hero-fa h1{font-size:clamp(2.3rem,5vw,3.8rem);line-height:1.05;font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem;color:var(--text);}
+.hero-fa h1 .grad{background:linear-gradient(135deg,#FFD700,#FFC107 55%,#FFD700);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hf-sub{font-size:1.05rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.8rem;}
+.hero-fa .hero-buttons{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:flex-start;}
+.hf-trust{margin-top:1.5rem;display:flex;gap:1.4rem;flex-wrap:wrap;color:var(--text-faint);font-size:0.8rem;}
+.hf-trust b{color:var(--gold);}
+.hf-engine{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:0.5rem 0;}
+.hf-regime{max-width:340px;width:100%;display:flex;align-items:center;justify-content:center;gap:0.55rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:999px;padding:0.5rem 1rem;font-size:0.78rem;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:0.35rem;transition:background .45s,border-color .45s;}
+.hf-regime .rlabel{color:var(--text-faint);font-weight:700;}
+.hf-node{position:relative;width:100%;max-width:340px;background:linear-gradient(180deg,rgba(20,20,22,0.92),rgba(12,12,14,0.92));border:1px solid rgba(255,215,0,0.16);border-radius:14px;padding:0.65rem 1rem;display:flex;align-items:center;gap:0.7rem;opacity:0;transform:translateY(10px);animation:hfNodeIn .5s ease forwards;box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+.hf-node .ic{width:32px;height:32px;flex-shrink:0;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:rgba(255,215,0,0.1);font-weight:800;color:var(--gold);}
+.hf-node .t{font-size:0.84rem;font-weight:700;color:var(--text);}
+.hf-node .d{font-size:0.69rem;color:var(--text-faint);}
+.hf-node .tag{margin-left:auto;font-size:0.66rem;font-weight:800;padding:0.15rem 0.5rem;border-radius:5px;}
+.tg-up{color:var(--green);background:rgba(34,197,94,0.12);}
+.tg-dn{color:var(--red);background:rgba(239,68,68,0.12);}
+.tg-nu{color:var(--gold);background:rgba(255,215,0,0.12);}
+@keyframes hfNodeIn{to{opacity:1;transform:none;}}
+.hf-link{width:2px;height:24px;position:relative;background:linear-gradient(rgba(255,215,0,0.16),rgba(255,215,0,0.05));}
+.hf-link::after{content:'';position:absolute;left:50%;top:0;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:hfFlow 1.6s linear infinite;}
+.hf-link.g::after{background:var(--green);box-shadow:0 0 10px var(--green);}
+.hf-link.r::after{background:var(--red);box-shadow:0 0 10px var(--red);}
+@keyframes hfFlow{0%{top:-2px;opacity:0;}20%{opacity:1;}100%{top:24px;opacity:0;}}
+.hf-verdict{max-width:340px;width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.09),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.16);border-radius:16px;padding:0.9rem 1.1rem;opacity:0;animation:hfNodeIn .5s .95s ease forwards;}
+.hf-vtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.65rem;}
+.hf-vpair{font-size:1.1rem;font-weight:900;color:var(--text);}
+.hf-vbadge{font-size:0.72rem;font-weight:900;padding:0.25rem 0.7rem;border-radius:999px;transition:all .4s;}
+.hf-meter{height:8px;border-radius:999px;background:linear-gradient(90deg,rgba(239,68,68,0.4),rgba(255,215,0,0.35),rgba(34,197,94,0.4));position:relative;}
+.hf-marker{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);transform:translate(-50%,-50%);left:78%;transition:left .9s cubic-bezier(.5,0,.2,1),border-color .4s;box-shadow:0 0 12px rgba(255,215,0,0.7);}
+.hf-scale{display:flex;justify-content:space-between;font-size:0.63rem;color:var(--text-faint);margin-top:0.45rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+@media(max-width:900px){.hero-fa{grid-template-columns:1fr;min-height:auto;padding-top:2.2rem;gap:2.3rem;}.hf-engine{order:2;margin:0 auto;}.hf-copy{order:1;text-align:center;}.hf-badge{margin-left:auto;margin-right:auto;}.hero-fa .hero-buttons{justify-content:center;}.hf-trust{justify-content:center;}}
+</style>
 </head>
 <body>
 
@@ -1280,37 +1322,44 @@
 
 <main>
 <!-- ═══════════════════ HERO ═══════════════════ -->
-<section class="hero section" id="home" itemscope itemtype="https://schema.org/WebPageElement">
-    <div style="max-width:1000px; margin:0 auto; position:relative; z-index:1;">
-        <h1 itemprop="headline" style="font-size:clamp(3rem,8vw,6rem); margin-bottom:0.6rem; background:linear-gradient(135deg,#FFD700,#FFC107); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">FOREX AVERAGE</h1>
-        <p itemprop="description" style="font-size:0.8rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-faint); font-weight:400; margin-bottom:3rem; animation:fadeUp 0.7s ease 0.15s both;">
-            Analyse des marchés Forex, Crypto et Commodités — outils, données et communauté
-        </p>
-
-        <div class="hero-buttons">
-            <a href="register.html" class="btn-primary" aria-label="Créer un compte gratuit">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="9" cy="7" r="4"></circle>
-                    <line x1="19" y1="8" x2="19" y2="14"></line>
-                    <line x1="22" y1="11" x2="16" y2="11"></line>
-                </svg>
-                Créer mon compte gratuit
-            </a>
-            <a href="pricing.html" class="btn-secondary" aria-label="Voir les plans VIP">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                Passer VIP
-            </a>
-            <a href="graphique.html" class="btn-secondary" aria-label="Graphiques Live avec IA">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                </svg>
-                Graphiques Live
-            </a>
-        </div>
+<section class="hero-fa section" id="home" itemscope itemtype="https://schema.org/WebPageElement">
+  <div class="hf-grid"></div>
+  <div class="hf-copy">
+    <span class="hf-badge"><span class="hf-dot"></span> Analyse fondamentale en direct</span>
+    <h1 itemprop="headline">Le marché,<br><span class="grad">décodé pour toi.</span></h1>
+    <p class="hf-sub" itemprop="description">Des banques centrales jusqu'à ton biais de trading : Forex Average transforme la macro en un signal clair — <b style="color:var(--text);">haussier, baissier ou neutre</b> — sur le Forex, les cryptos et les matières premières.</p>
+    <div class="hero-buttons">
+      <a href="register.html" class="btn-primary" aria-label="Créer un compte gratuit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
+        Créer mon compte gratuit
+      </a>
+      <a href="pricing.html" class="btn-secondary" aria-label="Voir les plans VIP">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        Passer VIP
+      </a>
+      <a href="graphique.html" class="btn-secondary" aria-label="Graphiques Live avec IA">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        Graphiques Live
+      </a>
     </div>
+    <div class="hf-trust"><span><b>28</b> instruments analysés</span><span><b>5</b> piliers par marché</span><span><b>100%</b> gratuit pour commencer</span></div>
+  </div>
+  <div class="hf-engine" aria-hidden="true">
+    <div class="hf-regime" id="hfRegime"><span class="rlabel">Régime marché</span> <span id="hfRegimeVal">RISK-ON</span></div>
+    <div class="hf-node" style="animation-delay:.15s"><div class="ic">🏛️</div><div><div class="t">Banques centrales</div><div class="d">BCE vs Fed · taux directeurs</div></div><span class="tag tg-nu" id="tg1">Écart</span></div>
+    <div class="hf-link"></div>
+    <div class="hf-node" style="animation-delay:.30s"><div class="ic">%</div><div><div class="t">Écart de taux</div><div class="d">Différentiel de rendement</div></div><span class="tag tg-up" id="tg2">+</span></div>
+    <div class="hf-link g"></div>
+    <div class="hf-node" style="animation-delay:.45s"><div class="ic">🌊</div><div><div class="t">Flux de capitaux</div><div class="d">Entrées / sorties · DXY</div></div><span class="tag tg-up" id="tg3">Flux</span></div>
+    <div class="hf-link g"></div>
+    <div class="hf-node" style="animation-delay:.60s"><div class="ic">🛢️</div><div><div class="t">Matières & corrélations</div><div class="d">Pétrole · or · devises liées</div></div><span class="tag tg-dn" id="tg4">Risk</span></div>
+    <div class="hf-link"></div>
+    <div class="hf-verdict">
+      <div class="hf-vtop"><span class="hf-vpair" id="vPair">EUR/USD</span><span class="hf-vbadge" id="vBadge">HAUSSIER</span></div>
+      <div class="hf-meter"><div class="hf-marker" id="vMarker"></div></div>
+      <div class="hf-scale"><span>Baissier</span><span>Neutre</span><span>Haussier</span></div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════════ TRACK RECORD STRIP ═══════════════════ -->
@@ -1652,15 +1701,15 @@
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem;">
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:BTCUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:BTCUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:ETHUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:ETHUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:SOLUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"BINANCE:SOLUSDT","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
         </div>
 
@@ -1674,15 +1723,15 @@
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden; margin-bottom:2rem;">
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"TVC:GOLD","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"TVC:GOLD","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"TVC:UKOIL","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"TVC:UKOIL","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"CAPITALCOM:NATURALGAS","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"CAPITALCOM:NATURALGAS","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
         </div>
 
@@ -1691,15 +1740,15 @@
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:14px; overflow:hidden;">
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"OANDA:EURUSD","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"OANDA:EURUSD","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"OANDA:USDJPY","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"OANDA:USDJPY","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
             <div style="height:220px; background:var(--card);">
                 <div class="tradingview-widget-container" style="height:100%;"><div class="tradingview-widget-container__widget" style="height:100%;"></div>
-                <script type="text/javascript" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"CAPITALCOM:US500","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script</script></div>
+                <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js">{"symbol":"CAPITALCOM:US500","width":"100%","height":"100%","locale":"fr","dateRange":"1M","colorTheme":"dark","isTransparent":true,"autosize":true}</script></div>
             </div>
         </div>
 
@@ -1937,7 +1986,7 @@
                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                     </svg><strong>Webinaires Mensuels</strong> — Sessions de formation en direct</li>
                 </ul>
-                <a href="https://whop.com/checkout/plan_fESsedBCA6bYI" target="_blank" rel="noopener noreferrer" class="btn-green" style="width:100%; justify-content:center; font-size:0.95rem;">S'abonner au VIP</a>
+                <a href="https://whop.com/checkout/plan_fESsedBCA6bYI" target="_blank" rel="noopener noreferrer" class="btn-green" style="width:100%; justify-content:center; font-size:0.95rem;">Essayer 7 jours GRATUIT</a>
             </div>
         </div>
 
@@ -2226,5 +2275,32 @@ window.addEventListener('load', async () => {
 })();
 </script>
 
+<script>
+(function(){
+  var scenes=[
+    {pair:'EUR/USD',bias:'HAUSSIER',pos:78,col:'#22c55e',regime:'RISK-ON',rcol:'#22c55e',tags:['Écart','+','Flux','Risk'],tcls:['tg-nu','tg-up','tg-up','tg-nu']},
+    {pair:'XAU/USD',bias:'HAUSSIER',pos:86,col:'#22c55e',regime:'RISK-OFF',rcol:'#ef4444',tags:['Refuge','+','Achats BC','USD↓'],tcls:['tg-nu','tg-up','tg-up','tg-up']},
+    {pair:'USD/JPY',bias:'NEUTRE',pos:52,col:'#FFD700',regime:'MIXTE',rcol:'#FFD700',tags:['Carry','=','Flux','BoJ'],tcls:['tg-nu','tg-nu','tg-nu','tg-dn']},
+    {pair:'BTC/USD',bias:'BAISSIER',pos:24,col:'#ef4444',regime:'RISK-OFF',rcol:'#ef4444',tags:['Macro','−','Sorties','Risk'],tcls:['tg-dn','tg-dn','tg-dn','tg-dn']},
+    {pair:'GBP/USD',bias:'HAUSSIER',pos:68,col:'#22c55e',regime:'RISK-ON',rcol:'#22c55e',tags:['BoE','+','Flux','Risk'],tcls:['tg-up','tg-up','tg-up','tg-nu']},
+    {pair:'WTI',bias:'HAUSSIER',pos:82,col:'#22c55e',regime:'RISK-ON',rcol:'#22c55e',tags:['OPEC+','+','Demande','USD↓'],tcls:['tg-up','tg-up','tg-up','tg-up']}
+  ];
+  function hexA(h,a){var r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return 'rgba('+r+','+g+','+b+','+a+')';}
+  var vPair=document.getElementById('vPair'),vBadge=document.getElementById('vBadge'),vMarker=document.getElementById('vMarker');
+  var reg=document.getElementById('hfRegime'),regVal=document.getElementById('hfRegimeVal');
+  var tg=[document.getElementById('tg1'),document.getElementById('tg2'),document.getElementById('tg3'),document.getElementById('tg4')];
+  if(!vPair) return;
+  function render(sc){
+    vPair.textContent=sc.pair;
+    vBadge.textContent=sc.bias; vBadge.style.color=sc.col; vBadge.style.background=hexA(sc.col,0.15);
+    vMarker.style.left=sc.pos+'%'; vMarker.style.borderColor=sc.col;
+    regVal.textContent=sc.regime; regVal.style.color=sc.rcol;
+    reg.style.background=hexA(sc.rcol,0.08); reg.style.borderColor=hexA(sc.rcol,0.32);
+    for(var k=0;k<4;k++){ if(tg[k]){ tg[k].textContent=sc.tags[k]; tg[k].className='tag '+sc.tcls[k]; } }
+  }
+  var i=0; render(scenes[0]);
+  setInterval(function(){ i=(i+1)%scenes.length; render(scenes[i]); },2600);
+})();
+</script>
 </body>
 </html>
