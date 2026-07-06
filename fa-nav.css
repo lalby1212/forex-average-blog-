@@ -82,3 +82,8 @@
 /* Anti bug iOS : masquer les iframes (ticker TradingView) quand le menu mobile est ouvert */
 body.fa-menu-open .ticker-widget{display:none!important;}
 body.fa-menu-open iframe{display:none!important;}
+
+/* Mobile : masquer le bandeau de prix (allège la mémoire + evite le bleed-through) */
+@media(max-width:900px){
+  .ticker-widget{display:none!important;}
+}
