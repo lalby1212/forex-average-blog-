@@ -382,6 +382,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css?v=11">
 </head>
 <body>
 <h1 class="sr-only">Mon Profil</h1>
@@ -585,16 +586,9 @@ const PAGE_SIZE = 15;
 
 // ── Init ──────────────────────────────────────────────────────
 async function init() {
-  // Get profile user from URL
   const params = new URLSearchParams(window.location.search);
-  profileUserId = params.get('id');
 
-  if (!profileUserId) {
-    showError();
-    return;
-  }
-
-  // Get current session
+  // Session d'abord : permet d'afficher SON propre profil si aucun ?id
   const { data: sessionData } = await sb.auth.getSession();
   if (sessionData && sessionData.session) {
     currentUser = sessionData.session.user;
@@ -604,6 +598,10 @@ async function init() {
     const { data: follows } = await sb.from('follows').select('following_id').eq('follower_id', currentUser.id);
     if (follows) follows.forEach(f => followingSet.add(f.following_id));
   }
+
+  // Quel profil afficher : ?id de l'URL, sinon le sien
+  profileUserId = params.get('id') || (currentUser && currentUser.id);
+  if (!profileUserId) { window.location.href = 'login.html?redirect=profile.html'; return; }
 
   // Fetch profile info from posts table
   let { data: latestPost } = await sb.from('posts')
@@ -1068,6 +1066,6 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
-<script src="fa-access.js"></script>
+<script src="fa-access.js?v=11"></script>
 </body>
 </html>
