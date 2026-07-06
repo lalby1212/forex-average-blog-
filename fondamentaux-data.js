@@ -907,6 +907,69 @@ function populateCompareSelects() {
   });
 }
 
+/* ── Décision de trading sur une PAIRE (à partir du différentiel) ── */
+var FXLBL = { monetary:'politique monétaire', inflation:'inflation', growth:'croissance', employment:'emploi', risk:'sentiment de risque' };
+function pairBias(a, b){
+  var diff = (Number(a.score)||0) - (Number(b.score)||0);
+  var abs = Math.abs(diff);
+  var forex = (a._catLabel==='Devises G10' && b._catLabel==='Devises G10');
+  var pair = forex ? (a.code+'/'+b.code) : (a.code+' vs '+b.code);
+  var strength = abs>=4?'très forte' : abs>=2.5?'forte' : abs>=1?'modérée' : 'faible';
+  var dir, cls, col, icon;
+  if(abs<1){ dir = forex?('NEUTRE '+pair):'NEUTRE'; cls='dec-neu'; col='var(--gold)'; icon='⚖️'; }
+  else if(diff>0){ dir = forex?('LONG '+pair):('FAVORISER '+a.code); cls='dec-long'; col='var(--green)'; icon='▲'; }
+  else { dir = forex?('SHORT '+pair):('FAVORISER '+b.code); cls='dec-short'; col='var(--red)'; icon='▼'; }
+  // Drivers par pilier (si mêmes clés)
+  var drivers = [];
+  if(JSON.stringify(a._pkeys)===JSON.stringify(b._pkeys)){
+    a._pkeys.forEach(function(k,i){
+      var da=(a.pillars[k]&&Number(a.pillars[k].score))||0, db=(b.pillars[k]&&Number(b.pillars[k].score))||0;
+      var d=da-db;
+      if(Math.abs(d)>=1) drivers.push({ lbl:(FXLBL[k]||a._plbls[i]), d:d, fav:(d>0?a.code:b.code) });
+    });
+    drivers.sort(function(x,y){ return Math.abs(y.d)-Math.abs(x.d); });
+  }
+  return { diff:diff, abs:abs, forex:forex, pair:pair, strength:strength, dir:dir, cls:cls, col:col, icon:icon, drivers:drivers };
+}
+function decisionHTML(a, b){
+  var D = pairBias(a, b);
+  var win = D.diff>=0 ? a : b, los = D.diff>=0 ? b : a;
+  var topd = D.drivers.slice(0,3).map(function(x){ return x.lbl; });
+  var reason;
+  if(D.abs<1){
+    reason = 'Les deux marchés sont fondamentalement <b>quasi équivalents</b> (différentiel '+sStr(D.diff)+' pts). Pas d\'avantage net — mieux vaut <b>attendre</b> un catalyseur ou une confirmation technique.';
+  } else {
+    reason = '<b>'+win.code+'</b> domine '+ (D.forex?('sur '+D.pair):'')+' avec un différentiel de <b>'+sStr(D.diff)+' pts</b>'+
+             (topd.length?(', porté par : <b>'+topd.join(', ')+'</b>'):'')+'. '+
+             (win.rate&&los.rate?('Différentiel de taux : '+win.code+' '+win.rate+' vs '+los.code+' '+los.rate+'. '):'')+
+             (D.forex?('Privilégier les <b>'+(D.diff>0?'achats':'ventes')+'</b> sur '+D.pair+' (acheter '+win.code+' / vendre '+los.code+').'):('Biais favorable à <b>'+win.code+'</b>.'));
+  }
+  var driverChips = D.drivers.map(function(x){
+    var c = x.fav===a.code ? 'dch-a' : 'dch-b';
+    return '<span class="dec-chip '+c+'">'+x.lbl+' → '+x.fav+' ('+sStr(x.d)+')</span>';
+  }).join('');
+  var banner = '<div class="dec-banner '+D.cls+'"><div class="dec-dir">'+D.icon+' '+D.dir+'</div>'+
+               '<div class="dec-strength">Conviction '+D.strength+' · différentiel '+sStr(D.diff)+' pts</div></div>';
+  var detail = '<div class="dec-detail"><div class="dec-title">🎯 Décision de trading — '+D.pair+'</div>'+
+               '<p class="dec-reason">'+reason+'</p>'+
+               (driverChips?('<div class="dec-chips">'+driverChips+'</div>'):'')+
+               '<p class="dec-caveat">⚠️ Analyse fondamentale — à confirmer avec la technique (structure, BOS, order block). Ceci n\'est pas un conseil financier.</p></div>';
+  return { banner:banner, detail:detail };
+}
+function setPair(ca, cb){
+  var selA=document.getElementById('cmpSelectA'), selB=document.getElementById('cmpSelectB');
+  if(selA) selA.value=ca; if(selB) selB.value=cb;
+  runCompare();
+  var r=document.getElementById('cmpResult'); if(r&&r.scrollIntoView) r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function populatePairQuick(){
+  var box=document.getElementById('pairQuick'); if(!box) return;
+  var codes={}; (CURR||[]).forEach(function(c){ codes[c.code]=1; });
+  var pairs=[['EUR','USD'],['GBP','USD'],['USD','JPY'],['AUD','USD'],['NZD','USD'],['USD','CAD'],['USD','CHF'],['AUD','NZD'],['EUR','GBP'],['EUR','JPY'],['GBP','JPY'],['AUD','JPY'],['EUR','CHF'],['AUD','CAD'],['NOK','SEK']];
+  box.innerHTML = pairs.filter(function(pr){ return codes[pr[0]]&&codes[pr[1]]; })
+    .map(function(pr){ return '<button class="pair-btn" onclick="setPair(\''+pr[0]+'\',\''+pr[1]+'\')">'+pr[0]+'/'+pr[1]+'</button>'; }).join('');
+}
+
 function runCompare() {
   const codeA = document.getElementById('cmpSelectA').value;
   const codeB = document.getElementById('cmpSelectB').value;
@@ -927,6 +990,7 @@ function runCompare() {
   if (!a || !b) return;
 
   const scA = sCls(a.score), scB = sCls(b.score);
+  const DEC = decisionHTML(a, b);
 
   // Build pillar comparison rows using each asset's own pdef
   const pillarHtml = generatePillarComparison(a, b);
@@ -969,6 +1033,7 @@ function runCompare() {
       </div>
     </div>
 
+    ${DEC.banner}
     <div class="cmp-pillars-wrap">${pillarHtml}</div>
 
     <div class="cmp-data-grid">
@@ -982,7 +1047,7 @@ function runCompare() {
       </div>
     </div>
 
-    ${winnerHtml}
+    ${DEC.detail}
 
     <div class="cmp-concl-grid">
       <div class="concl-box" style="margin:0;">
@@ -1059,6 +1124,7 @@ function renderAll(){
   renderCatOpps(CRYPTO_OPPS, 'cryptoOppGrid');
   buildRegistry();
   populateCompareSelects();
+  populatePairQuick();
 }
 renderAll(); /* rendu immédiat avec les valeurs de secours */
 

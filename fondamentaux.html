@@ -766,6 +766,28 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
   <meta property="og:title" content="Analyse Macro G10 | Forex Average">
   <meta property="og:description" content="Analyse fondamentale des devises G10 — scores hawkish/dovish, market pricing, opportunités FX.">
   <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+  <link rel="stylesheet" href="fa-nav.css">
+<style id="pair-decision-styles">
+.pair-quick-wrap{margin-bottom:1.1rem;}
+.pair-quick-label{font-size:0.7rem;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.5px;font-weight:700;margin-bottom:0.55rem;}
+.pair-quick{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.pair-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.82);font-size:0.8rem;font-weight:700;padding:0.4rem 0.75rem;border-radius:8px;cursor:pointer;transition:all .15s;font-family:inherit;}
+.pair-btn:hover{border-color:rgba(255,215,0,0.45);color:#FFD700;background:rgba(255,215,0,0.08);transform:translateY(-1px);}
+.dec-banner{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-radius:14px;padding:0.9rem 1.2rem;margin:0 0 1.1rem;border:1px solid;}
+.dec-banner .dec-dir{font-size:1.3rem;font-weight:900;letter-spacing:-0.01em;}
+.dec-banner .dec-strength{font-size:0.78rem;font-weight:700;opacity:0.85;color:rgba(255,255,255,0.7);}
+.dec-long{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.4);} .dec-long .dec-dir{color:#22c55e;}
+.dec-short{background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.4);} .dec-short .dec-dir{color:#ef4444;}
+.dec-neu{background:rgba(255,215,0,0.08);border-color:rgba(255,215,0,0.35);} .dec-neu .dec-dir{color:#FFD700;}
+.dec-detail{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1.1rem 1.2rem;margin-top:1.1rem;}
+.dec-title{font-size:0.95rem;font-weight:800;color:#FFD700;margin-bottom:0.6rem;}
+.dec-reason{font-size:0.9rem;line-height:1.6;color:rgba(255,255,255,0.85);}
+.dec-reason b{color:#fff;}
+.dec-chips{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.85rem;}
+.dec-chip{font-size:0.72rem;font-weight:700;padding:0.25rem 0.6rem;border-radius:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.78);}
+.dec-chip.dch-a{border-color:rgba(56,189,248,0.35);} .dec-chip.dch-b{border-color:rgba(167,139,250,0.35);}
+.dec-caveat{font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:0.9rem;line-height:1.5;}
+</style>
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -973,6 +995,10 @@ nav.scrolled{background:rgba(4,4,4,0.99);border-bottom-color:var(--border-strong
     <!-- ── COMPARATEUR A/B ── -->
     <div class="cat-section" id="cat-compare">
       <div class="cmp-wrap">
+        <div class="pair-quick-wrap">
+          <div class="pair-quick-label">⚡ Paires rapides — clique pour analyser</div>
+          <div class="pair-quick" id="pairQuick"></div>
+        </div>
         <div class="cmp-selectors">
           <div class="cmp-select-group">
             <div class="cmp-select-label">⬛ Actif A</div>
