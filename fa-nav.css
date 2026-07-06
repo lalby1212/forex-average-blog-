@@ -105,3 +105,11 @@ body.fa-menu-open iframe{display:none!important;}
 .nav-links.fa-mobmenu .nav-auth-guest .nav-login-btn,.nav-links.fa-mobmenu .nav-auth-guest .nav-cta{display:block!important;width:100%!important;text-align:center!important;margin:0!important;padding:0.9rem 1rem!important;border-radius:10px!important;font-size:0.98rem!important;}
 .nav-links.fa-mobmenu .nav-auth-user{width:100%!important;}
 .nav-links.fa-mobmenu .nav-spacer{display:none!important;}
+
+/* Desktop : ancrer le menu déroulant pile sous la barre (corrige l'écart sur outils/app-shell) */
+@media(min-width:901px){
+  #mainNav .nav-item-drop{height:64px!important;display:flex!important;align-items:center!important;}
+  #mainNav .nav-item-drop>a{height:64px!important;display:flex!important;align-items:center!important;}
+  #mainNav .drop-panel{top:64px!important;}
+  #mainNav .nav-item-drop::after{top:64px!important;height:12px!important;left:-14px!important;right:-14px!important;}
+}
