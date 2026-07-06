@@ -55,11 +55,10 @@
   #mainNav .hamburger.active span:nth-child(2){opacity:0;}
   #mainNav .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
   /* panneau plein écran qui glisse */
-  #mainNav .nav-links{display:flex!important;position:fixed;top:64px;left:0;right:0;bottom:0;
+  #mainNav .nav-links{display:none!important;position:fixed;top:64px;left:0;right:0;bottom:0;
      background:#08080a;
-     flex-direction:column;align-items:stretch;gap:0;padding:0.6rem 1rem 2.5rem;overflow-y:auto;z-index:1200;margin:0;
-     transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);pointer-events:none;}
-  #mainNav .nav-links.open{transform:translateX(0);pointer-events:auto;}
+     flex-direction:column;align-items:stretch;gap:0;padding:0.6rem 1rem 2.5rem;overflow-y:auto;z-index:1200;margin:0;}
+  #mainNav .nav-links.open{display:flex!important;}
   #mainNav .nav-links>li{width:100%;border-bottom:1px solid rgba(255,255,255,0.05);}
   #mainNav .nav-links>li>a{width:100%;padding:1rem 0.75rem;font-size:1.02rem;font-weight:600;border-radius:10px;display:flex;justify-content:space-between;align-items:center;color:rgba(255,255,255,0.88);}
   #mainNav .nav-links>li>a:hover,#mainNav .nav-links>li>a.active{background:rgba(255,215,0,0.06);color:#FFD700;}
@@ -81,5 +80,5 @@
 }
 
 /* Anti bug iOS : masquer les iframes (ticker TradingView) quand le menu mobile est ouvert */
-body.fa-menu-open .ticker-widget{visibility:hidden!important;}
-body.fa-menu-open iframe{visibility:hidden!important;}
+body.fa-menu-open .ticker-widget{display:none!important;}
+body.fa-menu-open iframe{display:none!important;}
