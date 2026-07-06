@@ -15,21 +15,23 @@
      donc fonctionne même si l'init échoue ou si la page est lourde. */
   if (!window.__faNavDelegated) {
     window.__faNavDelegated = true;
-    var FA_MENU_STYLE = 'display:flex!important;position:fixed!important;top:64px!important;left:0!important;right:0!important;bottom:0!important;'
-      + 'flex-direction:column!important;align-items:stretch!important;gap:0!important;padding:0.6rem 1rem 2.5rem!important;'
-      + 'overflow-y:auto!important;z-index:99999!important;margin:0!important;background:#08080a!important;';
     var faOpenMenu = function (menu, burger) {
-      menu.setAttribute('style', FA_MENU_STYLE);
-      menu.classList.add('open');
+      if (!menu.__faHome) menu.__faHome = { p: menu.parentNode, n: menu.nextSibling };
+      menu.classList.add('open', 'fa-mobmenu');
+      document.body.appendChild(menu);           /* sort du contexte d'empilement de #mainNav */
       if (burger) burger.classList.add('active');
       document.body.classList.add('fa-menu-open');
       document.body.style.overflow = 'hidden';
+      window.__faMenuRef = menu;
     };
     var faCloseMenu = function () {
-      var m = document.querySelector('#mainNav .nav-links');
-      if (m) { m.classList.remove('open'); m.removeAttribute('style'); }
-      var b = document.querySelector('#mainNav .hamburger');
-      if (b) b.classList.remove('active');
+      var m = window.__faMenuRef || document.querySelector('.fa-mobmenu') || document.querySelector('#mainNav .nav-links') || document.getElementById('navLinks');
+      if (m) {
+        m.classList.remove('open', 'fa-mobmenu');
+        m.removeAttribute('style');
+        if (m.__faHome) { try { m.__faHome.n ? m.__faHome.p.insertBefore(m, m.__faHome.n) : m.__faHome.p.appendChild(m); } catch (e) {} }
+      }
+      var b = document.querySelector('#mainNav .hamburger'); if (b) b.classList.remove('active');
       document.body.classList.remove('fa-menu-open');
       document.body.style.overflow = '';
     };
