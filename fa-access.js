@@ -269,6 +269,7 @@
         burger.classList.toggle('active', open);
         burger.setAttribute('aria-expanded', open ? 'true' : 'false');
         document.body.style.overflow = open ? 'hidden' : '';
+        document.body.classList.toggle('fa-menu-open', open);
         if (!open) document.querySelectorAll('#mainNav .nav-item-drop.open').forEach(d => d.classList.remove('open'));
       };
       burger.addEventListener('click', (e) => { e.stopPropagation(); setMenu(!mobileMenu.classList.contains('open')); });

@@ -79,3 +79,7 @@
   #mainNav .nav-auth-user>div:first-child{width:100%;justify-content:space-between;}
   #mainNav .nav-spacer{display:none;}
 }
+
+/* Anti bug iOS : masquer les iframes (ticker TradingView) quand le menu mobile est ouvert */
+body.fa-menu-open .ticker-widget{visibility:hidden!important;}
+body.fa-menu-open iframe{visibility:hidden!important;}
