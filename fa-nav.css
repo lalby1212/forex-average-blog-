@@ -37,6 +37,9 @@
 /* Menu profil (avatar) : ancré à droite */
 #mainNav .nav-auth-user .drop-panel{left:auto!important;right:0!important;}
 #mainNav .nav-item-drop:hover>.drop-panel,#mainNav .nav-item-drop.open>.drop-panel{display:block!important;}
+/* Pont invisible : comble l'écart bouton->menu pour que le survol ne se perde pas */
+#mainNav .nav-item-drop::after{content:'';position:absolute;top:100%;left:-10px;right:-10px;height:16px;}
+#mainNav .nav-item-drop:not(:hover)::after{pointer-events:none;}
 #mainNav .drop-link{display:flex!important;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:8px;text-decoration:none;color:rgba(255,255,255,0.8);font-size:0.85rem;height:auto;}
 #mainNav .drop-link:hover{background:rgba(255,215,0,0.07);color:#fff;}
 #mainNav .drop-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border-radius:8px;flex-shrink:0;color:rgba(255,255,255,0.7);font-size:1rem;}
@@ -70,6 +73,7 @@
      margin:0 0 0.5rem 0.6rem!important;padding:0.15rem 0!important;min-width:0!important;width:auto!important;display:none!important;}
   #mainNav .nav-item-drop:hover>.drop-panel{display:none!important;}
   #mainNav .nav-item-drop.open>.drop-panel{display:block!important;}
+  #mainNav .nav-item-drop::after{display:none!important;}
   #mainNav .drop-link{padding:0.8rem 0.75rem!important;}
   /* boutons connexion / VIP pleine largeur */
   #mainNav .nav-auth-guest{width:100%;flex-direction:column!important;gap:0.6rem;padding:1.1rem 0.2rem 0!important;border-bottom:none!important;}
