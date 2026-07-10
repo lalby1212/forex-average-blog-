@@ -338,7 +338,7 @@ async function signInWithGoogle(){
     if(btn){ btn.disabled=true; btn.textContent='Redirection…'; }
     const { error } = await sb.auth.signInWithOAuth({
         provider: 'google',
-        options: { redirectTo: 'https://forexaverage.com/login.html?redirect=marches.html' }
+        options: { redirectTo: 'https://forexaverage.com/auth-callback.html' }
     });
     if(error){
         alert('Erreur Google : ' + error.message);
