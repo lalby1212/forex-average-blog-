@@ -9,72 +9,49 @@
     .spinner { width:40px; height:40px; border:3px solid rgba(255,215,0,0.2); border-top-color:#FFD700; border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 1rem; }
     @keyframes spin { to { transform:rotate(360deg); } }
     p { color:rgba(255,255,255,0.55); font-size:.9rem; }
-    #debug { margin-top:1rem; font-size:.75rem; color:rgba(255,255,255,0.3); word-break:break-all; }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="spinner"></div>
-  <p id="status">Connexion en cours…</p>
-  <div id="debug"></div>
+  <p>Connexion en cours…</p>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 
-function log(msg) {
-  console.log('[callback]', msg);
-  var d = document.getElementById('debug');
-  if(d) d.innerHTML += msg + '<br>';
+/* Implicit flow : token dans le hash #access_token=... */
+const sb = window.supabase.createClient(SB_URL, SB_KEY, {
+  auth: { flowType: 'implicit', detectSessionInUrl: true }
+});
+
+function finalize(session) {
+  if (!session) return;
+  var u = session.user || {};
+  var meta = u.user_metadata || {};
+  var name = meta.name || meta.full_name || meta.display_name || (u.email||'').split('@')[0];
+  localStorage.setItem('fa_user',  JSON.stringify({ email: u.email, name: name }));
+  localStorage.setItem('fa_token', session.access_token || '');
+  if (!localStorage.getItem('fa_plan')) localStorage.setItem('fa_plan', 'free');
+  window.location.replace('marches.html');
 }
 
-// Vérifie si erreur dans l'URL
-var urlParams = new URLSearchParams(location.search);
-var urlError  = urlParams.get('error');
-var urlCode   = urlParams.get('code');
-var urlHash   = location.hash;
+sb.auth.onAuthStateChange(function(event, session) {
+  if (event === 'SIGNED_IN' && session) finalize(session);
+});
 
-log('URL: ' + location.href.substring(0,120));
-log('code: ' + urlCode);
-log('error: ' + urlError);
-log('hash: ' + urlHash.substring(0,60));
+sb.auth.getSession().then(function(res) {
+  if (res.data && res.data.session) finalize(res.data.session);
+});
 
-if(urlError){
-  document.getElementById('status').textContent = 'Erreur: ' + urlError;
-  setTimeout(function(){ window.location.replace('login.html'); }, 3000);
+/* Si erreur dans l'URL */
+var params = new URLSearchParams(location.search);
+if (params.get('error')) {
+  document.querySelector('p').textContent = 'Erreur de connexion. Retour…';
+  setTimeout(function(){ window.location.replace('login.html'); }, 2000);
 } else {
-
-  var sb = window.supabase.createClient(SB_URL, SB_KEY);
-
-  function finalize(session) {
-    if (!session) return;
-    log('Session OK: ' + session.user.email);
-    var u = session.user || {};
-    var meta = u.user_metadata || {};
-    var name = meta.name || meta.full_name || meta.display_name || (u.email||'').split('@')[0];
-    localStorage.setItem('fa_user',  JSON.stringify({ email: u.email, name: name }));
-    localStorage.setItem('fa_token', session.access_token || '');
-    if (!localStorage.getItem('fa_plan')) localStorage.setItem('fa_plan', 'free');
-    window.location.replace('marches.html');
-  }
-
-  sb.auth.onAuthStateChange(function(event, session) {
-    log('Event: ' + event + ' | session: ' + (session ? session.user.email : 'null'));
-    if (event === 'SIGNED_IN' && session) finalize(session);
-  });
-
-  sb.auth.getSession().then(function(res) {
-    var s = res.data && res.data.session;
-    log('getSession: ' + (s ? s.user.email : 'null'));
-    if (s) finalize(s);
-  });
-
-  setTimeout(function() {
-    log('Timeout — retour login');
-    window.location.replace('login.html');
-  }, 10000);
+  setTimeout(function(){ window.location.replace('login.html'); }, 10000);
 }
 </script>
 </body>

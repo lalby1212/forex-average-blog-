@@ -265,7 +265,7 @@
 const SB_URL = 'https://bpfpghlpdzevzyhalxov.supabase.co';
 const SB_KEY = 'sb_publishable_XHStaFT7Lkp7FRomgGmOFw_8puBQvTZ';
 const sb = (window.supabase && window.supabase.createClient)
-  ? window.supabase.createClient(SB_URL, SB_KEY)
+  ? window.supabase.createClient(SB_URL, SB_KEY, { auth: { flowType: 'implicit' } })
   : null;
 
 /* Redirige si déjà connecté — gère aussi le retour OAuth (hash token) */
