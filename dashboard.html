@@ -371,6 +371,11 @@
         Partenaires
       </a>
 
+      <a href="education.html" class="nav-item" style="margin-top:.25rem;background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(14,14,14,0.95));border:1px solid rgba(255,215,0,0.2);border-radius:8px;">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span style="color:#FFD700;font-weight:700;">Éducation</span>
+      </a>
+
       <a href="coaching.html" class="nav-item" style="margin-top:.5rem;background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,193,7,0.05));border:1px solid rgba(255,215,0,0.3);border-radius:8px;">
         <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         <span style="color:#FFD700;font-weight:700;">Coaching Privé</span>
@@ -823,6 +828,26 @@ function render() {
         <div class="card-badge gold">Identifie tes meilleurs jours</div>
       </div>
       <div class="wd-grid" id="weekdayGrid"></div>
+    </div>
+
+    <!-- EDUCATION BANNER -->
+    <div class="card" style="background:linear-gradient(135deg,rgba(255,215,0,0.05) 0%,rgba(18,18,18,0.95) 60%);border-color:rgba(255,215,0,0.25);position:relative;overflow:hidden;margin-bottom:1rem;">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.6),transparent);"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;">
+        <div style="flex:1;min-width:220px;">
+          <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FFD700;margin-bottom:.5rem;">📚 Éducation Trading</div>
+          <div style="font-size:1.15rem;font-weight:800;margin-bottom:.4rem;">Comprends les marchés en profondeur</div>
+          <div style="font-size:.88rem;color:rgba(255,255,255,0.6);line-height:1.6;">Corrélations, cause à effet, taux d'intérêt, banques centrales, matières premières, crypto & actions — tout ce qu'il faut savoir pour trader avec contexte.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;min-width:180px;">
+          <a href="education.html" style="display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.4rem;background:linear-gradient(135deg,#FFD700,#FFC107);color:#000;font-weight:800;font-size:.88rem;border-radius:8px;text-decoration:none;transition:all .2s;box-shadow:0 4px 16px rgba(255,215,0,0.2);">
+            Accéder au guide →
+          </a>
+          <a href="education.html#tab-devises" style="display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.6rem 1.4rem;border:1px solid rgba(255,215,0,0.3);color:rgba(255,255,255,0.7);font-size:.82rem;font-weight:600;border-radius:8px;text-decoration:none;transition:all .2s;">
+            Corrélations devises
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- COACHING BANNER -->
