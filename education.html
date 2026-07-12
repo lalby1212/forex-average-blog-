@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éducation Trading — Corrélations & Cause-Effet | Forex Average</title>
+  <link rel="canonical" href="https://forexaverage.com/education.html">
+    <meta name="description" content="Comprendre les corrélations en trading : taux d'intérêt, banques centrales, matières premières, crypto et actions — guide complet Forex Average.">
+    <meta name="theme-color" content="#FFD700">
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --gold:#FFD700; --dark:#000; --card:rgba(14,14,14,0.95);
+            --border:rgba(255,215,0,0.15); --text:#fff;
+            --muted:rgba(255,255,255,0.55); --green:#22c55e; --red:#ef4444;
+        }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:-apple-system,'SF Pro Text',BlinkMacSystemFont,'Segoe UI',sans-serif;
+            background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6;
+        }
+        body::before {
+            content:''; position:fixed; inset:0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.03) 0%, transparent 60%);
+            pointer-events:none; z-index:0;
+        }
+        body::after {
+            content:''; position:fixed; inset:0;
+            background-image:linear-gradient(rgba(255,215,0,0.012) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,215,0,0.012) 1px, transparent 1px);
+            background-size:60px 60px; pointer-events:none; z-index:0;
+        }
+
+        /* NAV */
+        #mainNav { position:sticky; top:0; z-index:1000; background:rgba(7,7,7,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,215,0,0.14); height:62px; }
+        .nav-container { max-width:1380px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; height:100%; }
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; }
+        .nav-links-wrap { display:flex; align-items:center; list-style:none; height:100%; margin:0 0 0 2rem; padding:0; flex:1; }
+        .nav-item > a { display:flex; align-items:center; height:62px; padding:0 0.9rem; color:rgba(255,255,255,0.72); font-size:0.875rem; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s; border-bottom:2px solid transparent; }
+        .nav-item > a:hover, .nav-item > a.nav-active { color:#FFD700; }
+        .nav-item > a.nav-active { border-bottom-color:#FFD700; }
+        .nav-item-drop { position:relative; height:100%; display:flex; align-items:center; }
+        .nav-item-drop > a { display:flex; align-items:center; height:62px; padding:0 0.9rem; color:rgba(255,255,255,0.72); font-size:0.875rem; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s; cursor:pointer; border-bottom:2px solid transparent; gap:0.2rem; }
+        .nav-item-drop > a:hover, .nav-item-drop:hover > a { color:#FFD700; }
+        .nav-chevron { width:13px; height:13px; margin-left:2px; transition:transform .22s ease; flex-shrink:0; }
+        .nav-item-drop:hover .nav-chevron { transform:rotate(180deg); }
+        .drop-panel { display:none; position:absolute; top:calc(100% + 2px); left:0; min-width:270px; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.16); border-radius:14px; padding:0.5rem; box-shadow:0 24px 64px rgba(0,0,0,0.75); z-index:200; animation:dropIn .18s ease; }
+        @keyframes dropIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+        .nav-item-drop:hover .drop-panel { display:block; }
+        .drop-link { display:flex; align-items:center; gap:0.75rem; padding:0.65rem 0.85rem; border-radius:9px; color:rgba(255,255,255,0.75); text-decoration:none; transition:background .15s,color .15s; }
+        .drop-link:hover { background:rgba(255,215,0,0.07); color:#FFD700; }
+        .drop-icon { width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.95rem; }
+        .drop-label { display:block; font-size:0.875rem; font-weight:600; color:inherit; }
+        .drop-desc { display:block; font-size:0.72rem; color:rgba(255,255,255,0.42); margin-top:1px; }
+        .drop-sep { height:1px; background:rgba(255,255,255,0.06); margin:0.35rem 0.85rem; }
+        .nav-spacer { flex:1; }
+        .nav-auth-guest, .nav-auth-user { display:none; align-items:center; }
+        .nav-login-btn { display:inline-flex; align-items:center; padding:0.42rem 1rem; border:1.5px solid rgba(255,255,255,0.2); border-radius:8px; color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.85rem; font-weight:600; transition:all .2s; white-space:nowrap; }
+        .nav-login-btn:hover { border-color:rgba(255,215,0,0.5); color:#FFD700; }
+        .nav-cta { display:inline-flex; align-items:center; padding:0.42rem 1.1rem; background:linear-gradient(135deg,#FFD700,#FFA000); border-radius:8px; color:#000; text-decoration:none; font-size:0.85rem; font-weight:800; margin-left:0.6rem; transition:all .2s; white-space:nowrap; box-shadow:0 2px 12px rgba(255,215,0,0.25); }
+        .nav-profile-wrap { position:relative; margin-left:0.75rem; }
+        .nav-profile-btn { display:flex; align-items:center; gap:0.45rem; padding:0.38rem 0.75rem 0.38rem 0.5rem; border:1.5px solid rgba(255,215,0,0.2); border-radius:10px; cursor:pointer; transition:border-color .2s; font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.85); }
+        .nav-profile-wrap.open .nav-profile-btn { border-color:#FFD700; }
+        .nav-profile-wrap.open .nav-chevron { transform:rotate(180deg); }
+        .fa-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-weight:800; font-size:0.8rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .nav-profile-drop { display:none; position:absolute; top:calc(100% + 8px); right:0; min-width:230px; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.16); border-radius:14px; padding:0.5rem; box-shadow:0 24px 64px rgba(0,0,0,0.75); z-index:200; }
+        .nav-profile-wrap.open .nav-profile-drop { display:block; }
+        .profile-header { display:flex; align-items:center; gap:0.6rem; padding:0.65rem 0.85rem 0.75rem; }
+        .profile-name { font-size:0.88rem; font-weight:700; color:#fff; }
+        .fa-plan-badge { font-size:0.65rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:100px; text-transform:uppercase; }
+        .badge-free { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.6); }
+        .badge-vip  { background:rgba(255,215,0,0.2); color:#FFD700; }
+        .nav-burger { display:none; flex-direction:column; justify-content:center; align-items:center; width:40px; height:40px; border:none; background:transparent; cursor:pointer; gap:5px; margin-left:auto; padding:4px; flex-shrink:0; }
+        .nav-burger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.8); border-radius:2px; transition:all .28s ease; transform-origin:center; }
+        .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+        .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+        @media (max-width:900px) {
+            .nav-burger { display:flex; }
+            .nav-links-wrap { display:none; position:fixed; top:62px; left:0; right:0; bottom:0; background:rgba(5,5,5,0.99); flex-direction:column; align-items:stretch; justify-content:flex-start; padding:1rem 1rem 2rem; overflow-y:auto; z-index:999; height:auto; margin:0; gap:0.15rem; border-top:1px solid rgba(255,215,0,0.12); }
+            .nav-links-wrap.open { display:flex; }
+            body.nav-open { overflow:hidden; }
+            .nav-item, .nav-item-drop { height:auto; display:block; }
+            .nav-item > a, .nav-item-drop > a { height:auto; padding:0.85rem 1rem; border-radius:10px; border-bottom:none; font-size:0.95rem; font-weight:600; color:rgba(255,255,255,0.8); width:100%; }
+            .nav-item-drop:hover .drop-panel { display:none; }
+            .nav-item-drop.mob-open > a { color:#FFD700; }
+            .nav-item-drop.mob-open > a .nav-chevron { transform:rotate(180deg); }
+            .nav-item-drop.mob-open .drop-panel { display:block; position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:10px; margin:0.25rem 0 0.5rem 0.75rem; padding:0.35rem; animation:none; }
+            .nav-spacer { display:none; }
+            .nav-auth-guest, .nav-auth-user { flex-direction:column; align-items:stretch; margin-top:0.5rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.07); gap:0.5rem; }
+            .nav-login-btn, .nav-cta { justify-content:center; margin-left:0; padding:0.75rem; font-size:0.95rem; }
+            .nav-profile-wrap { margin-left:0; }
+            .nav-profile-btn { width:100%; padding:0.75rem 1rem; border-radius:10px; }
+            .nav-profile-drop { position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:10px; margin-top:0.4rem; }
+        }
+
+        /* HERO */
+        .page-hero { position:relative; z-index:1; padding:2.5rem 2rem 2rem; max-width:1380px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+        .hero-left h1 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; letter-spacing:-0.5px; }
+        .hero-left p { margin-top:0.35rem; color:var(--muted); font-size:0.9rem; }
+        .live-badge { display:inline-flex; align-items:center; gap:0.45rem; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.18); border-radius:100px; padding:0.3rem 0.85rem; font-size:0.75rem; font-weight:600; color:var(--gold); }
+        .live-dot { width:6px; height:6px; border-radius:50%; background:#22c55e; flex-shrink:0; animation:pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+        /* TABS BAR */
+        .main-tabs-wrap { position:relative; z-index:1; max-width:1380px; margin:0 auto; padding:0 2rem 1.5rem; }
+        .main-tabs { display:flex; gap:0.35rem; flex-wrap:wrap; background:rgba(14,14,14,0.85); border:1px solid rgba(255,215,0,0.12); border-radius:14px; padding:0.4rem; }
+        .mtab { display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1.1rem; border-radius:10px; border:none; background:transparent; color:rgba(255,255,255,0.55); font-size:0.88rem; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; flex:1; justify-content:center; font-family:inherit; }
+        .mtab:hover { color:#fff; background:rgba(255,255,255,0.05); }
+        .mtab.active { background:rgba(255,215,0,0.1); color:var(--gold); border:1px solid rgba(255,215,0,0.22); }
+
+        /* TAB PANELS */
+        .tab-panel { display:none; }
+        .tab-panel.active { display:block; }
+
+        /* SECTION WRAP */
+        .section-wrap { position:relative; z-index:1; max-width:1380px; margin:0 auto; padding:0 2rem 4rem; }
+
+        /* ACTUALITES */
+        .cat-bar { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+        .cat-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.45rem 0.9rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--muted); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all .18s; white-space:nowrap; font-family:inherit; }
+        .cat-btn:hover { border-color:rgba(255,215,0,0.3); color:#fff; }
+        .cat-btn.active { background:rgba(255,215,0,0.1); border-color:rgba(255,215,0,0.35); color:var(--gold); }
+        .cat-count { font-size:0.72rem; background:rgba(255,255,255,0.08); padding:0.1rem 0.45rem; border-radius:100px; }
+        .top-bar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.2rem; }
+        .sources-label { font-size:0.78rem; color:var(--muted); }
+        .last-update { color:rgba(255,255,255,0.3); font-size:0.75rem; margin-left:0.5rem; }
+        .refresh-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.38rem 0.75rem; border-radius:7px; border:1px solid rgba(255,255,255,0.12); background:transparent; color:var(--muted); font-size:0.8rem; font-weight:600; cursor:pointer; transition:all .18s; font-family:inherit; }
+        .refresh-btn:hover { border-color:rgba(255,215,0,0.3); color:var(--gold); }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .refresh-btn.spinning svg { animation:spin 0.6s linear; }
+        .news-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:1rem; }
+        .news-card { display:flex; flex-direction:column; gap:0.55rem; padding:1.1rem 1.2rem; border-radius:12px; background:rgba(16,16,16,0.92); border:1px solid rgba(255,255,255,0.07); text-decoration:none; color:inherit; transition:all .2s; }
+        .news-card:hover { border-color:rgba(255,215,0,0.25); transform:translateY(-2px); }
+        .card-top { display:flex; justify-content:space-between; align-items:center; gap:0.5rem; }
+        .source-badge { font-size:0.7rem; font-weight:700; padding:0.18rem 0.55rem; background:rgba(255,215,0,0.1); color:var(--gold); border-radius:5px; text-transform:uppercase; }
+        .card-date { font-size:0.72rem; color:rgba(255,255,255,0.3); }
+        .card-title { font-size:0.91rem; font-weight:700; line-height:1.4; color:#fff; }
+        .card-summary { font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.5; }
+        .card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:0.4rem; }
+        .read-more { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.78rem; font-weight:600; color:var(--gold); }
+        .card-full-date { font-size:0.72rem; color:rgba(255,255,255,0.2); }
+        .skeleton-card { display:flex; flex-direction:column; gap:0.6rem; padding:1.1rem 1.2rem; border-radius:12px; background:rgba(16,16,16,0.7); border:1px solid rgba(255,255,255,0.05); }
+        .skel { background:rgba(255,255,255,0.07); border-radius:4px; animation:shimmer 1.4s infinite; }
+        @keyframes shimmer { 0%,100%{opacity:.5} 50%{opacity:1} }
+        .state-box { grid-column:1/-1; text-align:center; padding:3.5rem 2rem; }
+        .state-icon { font-size:2.5rem; display:block; margin-bottom:1rem; }
+        .state-box h3 { font-size:1.15rem; margin-bottom:0.5rem; }
+        .state-box p { color:var(--muted); font-size:0.85rem; max-width:360px; margin:0 auto 1.2rem; }
+        .retry-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.2rem; border-radius:8px; border:1px solid rgba(255,215,0,0.3); background:rgba(255,215,0,0.07); color:var(--gold); font-size:0.85rem; font-weight:600; cursor:pointer; font-family:inherit; }
+        /* News gate */
+        .news-gate-wrap { position:relative; }
+        .news-gate-fade { position:absolute; left:0; right:0; bottom:0; height:280px; background:linear-gradient(to bottom,transparent,rgba(4,4,4,0.96)); z-index:5; pointer-events:none; }
+        .news-gate-card { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); z-index:6; background:rgba(12,12,12,0.97); border:1px solid rgba(255,215,0,0.22); border-radius:18px; padding:1.6rem 2rem; max-width:400px; width:90%; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.75); backdrop-filter:blur(24px); }
+        .news-hidden-blur { filter:blur(6px); pointer-events:none; user-select:none; opacity:0.4; }
+
+        /* ANALYSES */
+        .ticker-widget { height:46px; overflow:hidden; border-bottom:none; }
+        .analyses-filter-bar { background:rgba(5,5,5,0.97); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,215,0,0.1); padding:0.5rem 2rem; position:sticky; top:62px; z-index:90; }
+        .ticker-widget { margin-bottom:0; }
+        .analyses-filter-inner { max-width:1380px; margin:0 auto; display:flex; gap:0.5rem; flex-wrap:wrap; }
+        .af-btn { padding:0.45rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--muted); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all .18s; white-space:nowrap; font-family:inherit; }
+        .af-btn:hover { border-color:rgba(255,215,0,0.3); color:#fff; }
+        .af-btn.active { background:var(--gold); color:#000; border-color:var(--gold); }
+        .results-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.8rem; }
+        .results-count { font-size:0.82rem; color:var(--muted); }
+        .results-count strong { color:var(--gold); }
+        .articles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.5rem; }
+        .article-card { background:rgba(18,18,18,0.92); border:1px solid rgba(255,215,0,0.18); border-radius:14px; overflow:hidden; cursor:pointer; transition:all .25s; text-decoration:none; color:inherit; display:block; position:relative; }
+        .article-card:hover { border-color:rgba(255,215,0,0.38); transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.45); }
+        .article-img { height:160px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:2rem; border-bottom:1px solid rgba(255,215,0,0.18); }
+        .article-body { padding:1.3rem; }
+        .article-meta { display:flex; gap:0.6rem; margin-bottom:0.9rem; flex-wrap:wrap; align-items:center; }
+        .tag { padding:0.2rem 0.7rem; border-radius:4px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+        .tag-bull { background:rgba(34,197,94,0.15); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+        .tag-bear { background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); }
+        .tag-forex { background:rgba(255,215,0,0.12); color:var(--gold); border:1px solid rgba(255,215,0,0.3); }
+        .tag-crypto { background:rgba(139,92,246,0.15); color:#a78bfa; border:1px solid rgba(139,92,246,0.3); }
+        .tag-gold { background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); }
+        .tag-oil { background:rgba(249,115,22,0.15); color:#fb923c; border:1px solid rgba(249,115,22,0.3); }
+        .tag-strat { background:rgba(14,165,233,0.15); color:#38bdf8; border:1px solid rgba(14,165,233,0.3); }
+        .tag-indices { background:rgba(59,130,246,0.15); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); }
+        .article-date { font-size:0.78rem; color:rgba(255,255,255,0.38); }
+        .article-title { font-size:1.02rem; font-weight:700; margin-bottom:0.7rem; line-height:1.35; }
+        .article-excerpt { font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; margin-bottom:1rem; }
+        .article-levels { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+        .level-pill { font-size:0.72rem; font-weight:700; padding:0.22rem 0.6rem; border-radius:4px; }
+        .lp-entry { background:rgba(255,215,0,0.1); color:var(--gold); }
+        .lp-sl { background:rgba(239,68,68,0.12); color:#fca5a5; }
+        .lp-tp { background:rgba(34,197,94,0.12); color:#86efac; }
+        .vip-badge { position:absolute; top:10px; right:10px; z-index:3; background:linear-gradient(135deg,#FFD700,#FFC107); color:#000; font-size:0.62rem; font-weight:800; padding:0.22rem 0.55rem; border-radius:20px; letter-spacing:0.8px; text-transform:uppercase; box-shadow:0 2px 8px rgba(255,215,0,0.4); }
+        .article-card.locked .article-excerpt { -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 30%,transparent 100%); mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 30%,transparent 100%); }
+        .article-card.locked .article-levels { filter:blur(4px); pointer-events:none; }
+        .lock-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(12,12,12,0.96) 0%,rgba(12,12,12,0.7) 60%,transparent 100%); border-radius:0 0 14px 14px; padding:2rem 1.5rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:0.6rem; text-align:center; }
+        .lock-icon { width:36px; height:36px; border-radius:50%; background:rgba(255,215,0,0.12); border:1px solid rgba(255,215,0,0.3); display:flex; align-items:center; justify-content:center; font-size:1rem; }
+        .lock-label { font-size:0.82rem; font-weight:700; color:var(--gold); }
+        .lock-sub { font-size:0.72rem; color:rgba(255,255,255,0.38); }
+        .lock-cta { font-size:0.78rem; font-weight:700; color:#000; background:linear-gradient(135deg,#FFD700,#FFC107); padding:0.35rem 0.9rem; border-radius:20px; }
+        /* Paywall modal */
+        #paywall-modal { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:1.5rem; }
+        #paywall-modal.open { display:flex; }
+        .paywall-card { background:rgba(14,14,14,0.98); border:1px solid rgba(255,215,0,0.28); border-radius:22px; padding:2.5rem; max-width:460px; width:100%; position:relative; box-shadow:0 32px 80px rgba(0,0,0,0.7); animation:modalIn .25s ease; }
+        @keyframes modalIn { from{opacity:0;transform:scale(0.94) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        .paywall-close { position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,0.06); border:none; cursor:pointer; width:32px; height:32px; border-radius:50%; color:var(--muted); font-size:1rem; display:flex; align-items:center; justify-content:center; }
+        .paywall-icon { width:56px; height:56px; border-radius:16px; background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.25); display:flex; align-items:center; justify-content:center; margin:0 auto 1.2rem; font-size:1.6rem; }
+        .paywall-title { font-size:1.4rem; font-weight:800; text-align:center; margin-bottom:0.4rem; }
+        .paywall-hint { text-align:center; font-size:0.82rem; color:rgba(255,255,255,0.38); margin-bottom:1.5rem; padding:0.5rem 1rem; background:rgba(255,215,0,0.05); border-radius:8px; border:1px solid rgba(255,215,0,0.1); }
+        .paywall-features { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1.1rem 1.3rem; margin-bottom:1.5rem; }
+        .paywall-features p { font-size:0.75rem; font-weight:700; color:var(--gold); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:0.7rem; }
+        .paywall-features ul { list-style:none; display:flex; flex-direction:column; gap:0.45rem; }
+        .paywall-features li { font-size:0.83rem; color:var(--muted); display:flex; align-items:center; gap:0.55rem; }
+        .paywall-features li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+        .paywall-price { text-align:center; margin-bottom:1.5rem; }
+        .paywall-price .price-amount { font-size:2rem; font-weight:900; color:var(--gold); }
+        .paywall-price .price-period { font-size:0.82rem; color:rgba(255,255,255,0.38); }
+        .btn-paywall-cta { width:100%; padding:0.9rem; background:linear-gradient(135deg,#FFD700,#FFC107); color:#000; font-weight:800; font-size:0.95rem; border:none; border-radius:10px; cursor:pointer; font-family:inherit; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:0.5rem; transition:all .2s; margin-bottom:0.7rem; }
+        .btn-paywall-secondary { width:100%; padding:0.75rem; background:transparent; color:var(--muted); font-size:0.85rem; font-weight:600; border:1px solid rgba(255,255,255,0.1); border-radius:10px; cursor:pointer; font-family:inherit; text-decoration:none; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+        .paywall-guarantee { text-align:center; font-size:0.72rem; color:rgba(255,255,255,0.28); margin-top:1rem; }
+
+        /* SCREENER */
+        .screener-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(520px,1fr)); gap:1.5rem; }
+        .screener-section { background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .screener-section h2 { font-size:1.05rem; font-weight:700; margin-bottom:0.35rem; }
+        .screener-section p { font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
+        .screener-widget { border-radius:10px; overflow:hidden; }
+
+        /* CALENDRIER */
+        .sessions-section { background:linear-gradient(135deg,rgba(255,215,0,0.06) 0%,rgba(22,163,74,0.04) 100%); border:1px solid rgba(255,215,0,0.18); border-radius:14px; padding:2rem; margin-bottom:2rem; }
+        .sessions-section h2 { font-size:1.1rem; font-weight:700; color:var(--gold); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem; }
+        .sessions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; }
+        .session-card { background:rgba(14,14,14,0.85); border:1px solid rgba(255,215,0,0.15); border-radius:12px; padding:1.5rem; text-align:center; transition:all .25s; }
+        .session-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+        .session-card h3 { font-size:1rem; font-weight:700; color:var(--gold); margin-bottom:1rem; }
+        .session-opening { font-size:0.85rem; color:var(--muted); margin-bottom:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(255,215,0,0.1); }
+        .session-opening strong { color:#fff; display:block; }
+        .session-opening span { font-size:0.78rem; color:rgba(255,255,255,0.38); }
+        .session-status { padding:0.55rem 1rem; border-radius:7px; font-weight:700; font-size:0.88rem; margin-bottom:0.75rem; text-transform:uppercase; border:1.5px solid; display:inline-block; }
+        .session-open   { background:rgba(34,197,94,0.12); color:#22c55e; border-color:#22c55e; }
+        .session-closed { background:rgba(239,68,68,0.12); color:#ef4444; border-color:#ef4444; }
+        .session-current-time { font-size:1.25rem; font-weight:700; color:var(--gold); font-family:'Monaco','Courier New',monospace; }
+        .session-next { font-size:0.78rem; color:var(--muted); margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid rgba(255,215,0,0.1); }
+        /* G10 */
+        .g10-section { margin-bottom:2rem; background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .g10-section h2 { font-size:1.05rem; font-weight:700; color:var(--gold); margin-bottom:0.35rem; display:flex; align-items:center; gap:0.5rem; }
+        .g10-subtitle { font-size:0.8rem; color:var(--muted); margin-bottom:1.2rem; }
+        .g10-subtitle span { color:var(--gold); font-weight:600; }
+        .g10-table-wrap { overflow-x:auto; border-radius:10px; border:1px solid rgba(255,215,0,0.12); }
+        .g10-table { width:100%; border-collapse:collapse; font-size:0.85rem; min-width:680px; }
+        .g10-table thead tr { background:rgba(255,215,0,0.06); border-bottom:1px solid rgba(255,215,0,0.18); }
+        .g10-table th { padding:0.75rem 1rem; text-align:left; font-size:0.7rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#fff; white-space:nowrap; }
+        .g10-table th:not(:first-child) { text-align:right; }
+        .g10-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background .15s; }
+        .g10-table tbody tr:last-child { border-bottom:none; }
+        .g10-table tbody tr:hover { background:rgba(255,215,0,0.03); }
+        .g10-table td { padding:0.8rem 1rem; color:var(--muted); white-space:nowrap; }
+        .g10-table td:not(:first-child) { text-align:right; }
+        .td-country { display:flex; align-items:center; gap:0.65rem; }
+        .td-flag { font-size:1.2rem; line-height:1; }
+        .td-names { display:flex; flex-direction:column; }
+        .td-country-name { font-weight:700; color:#fff; font-size:0.88rem; }
+        .td-currency { font-size:0.7rem; color:rgba(255,215,0,0.65); font-weight:600; letter-spacing:0.5px; }
+        .td-bank { font-size:0.76rem; color:rgba(255,255,255,0.45); }
+        .td-rate { color:var(--muted); }
+        .g10-note { font-size:0.72rem; color:rgba(255,255,255,0.25); margin-top:0.75rem; text-align:right; }
+        /* Eco Cal */
+        .eco-cal-section { background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .eco-cal-section h2 { font-size:1.05rem; font-weight:700; margin-bottom:0.35rem; }
+        .eco-cal-section p { font-size:0.8rem; color:var(--muted); margin-bottom:1rem; }
+        .eco-cal-widget { border-radius:10px; overflow:hidden; }
+
+        /* FOOTER */
+        footer { position:relative; z-index:1; background:rgba(5,5,5,0.98); border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; }
+        .footer-logo { font-weight:900; font-size:1.1rem; color:var(--gold); letter-spacing:1.5px; margin-bottom:0.35rem; }
+        .footer-tagline { font-size:0.72rem; color:rgba(255,255,255,0.3); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1.5rem; }
+        .footer-links { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+        .footer-links a { color:rgba(255,255,255,0.35); text-decoration:none; font-size:0.82rem; transition:color .2s; }
+        .footer-links a:hover { color:var(--gold); }
+        .footer-copy { color:rgba(255,255,255,0.18); font-size:0.72rem; }
+
+        /* RESPONSIVE */
+        @media (max-width:768px) {
+            .page-hero { padding:1.5rem 1rem 1rem; }
+            .main-tabs-wrap { padding:0 1rem 1rem; }
+            .section-wrap { padding:0 1rem 3rem; }
+            .analyses-filter-bar { padding:0.7rem 1rem; }
+            .mtab { padding:0.5rem 0.6rem; font-size:0.78rem; gap:0.3rem; }
+            .screener-grid, .articles-grid { grid-template-columns:1fr; }
+        }
+    
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        
+                /* ── LOGO ── */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; -webkit-text-fill-color:unset !important; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; display:block; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.45rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.3) !important; -webkit-text-fill-color:rgba(255,255,255,0.3) !important; }
+        .logo:hover { opacity:0.85; }
+
+        /* ══ NAV DESIGN SYSTEM ══ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        /* Logo */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; }
+        .logo-forex { color:#ffffff; }
+        .logo-average { color:#FFD700; }
+
+        /* Nav links */
+        .nav-links { display:flex; list-style:none; align-items:center; gap:0.15rem; margin:0; padding:0; }
+        .nav-links a { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.875rem; font-weight:500; padding:0.4rem 0.7rem; border-radius:6px; transition:color .2s, background .2s; white-space:nowrap; }
+        .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
+        .nav-links a.active { color:#FFD700; }
+        .nav-spacer { flex:1; }
+
+        /* Hamburger */
+        .hamburger { display:none; flex-direction:column; gap:5px; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); border-radius:6px; padding:8px; cursor:pointer; }
+        .hamburger span { display:block; width:20px; height:2px; background:#FFD700; border-radius:2px; transition:all .3s; }
+
+        /* Dropdown Communauté */
+        .nav-item-drop { position:relative; }
+        .nav-item-drop > a { display:flex; align-items:center; gap:0.3rem; }
+        .nav-chevron { width:12px; height:12px; transition:transform .2s; flex-shrink:0; }
+        .nav-item-drop:hover .nav-chevron { transform:rotate(180deg); }
+        .drop-panel { display:none; position:absolute; top:calc(100% + 8px); right:0; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.15); border-radius:12px; padding:0.5rem; min-width:220px; backdrop-filter:blur(20px); box-shadow:0 8px 32px rgba(0,0,0,0.6); z-index:200; }
+        .nav-item-drop:hover .drop-panel { display:block; }
+        .drop-link { display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0.75rem; border-radius:8px; text-decoration:none; transition:background .15s; }
+        .drop-link:hover { background:rgba(255,215,0,0.07); }
+        .drop-icon { width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
+        .drop-label { display:block; font-size:0.875rem; font-weight:600; color:#fff; }
+        .drop-desc { display:block; font-size:0.73rem; color:rgba(255,255,255,0.38); margin-top:1px; }
+        .drop-sep { height:1px; background:rgba(255,215,0,0.1); margin:0.3rem 0; }
+
+        /* Auth */
+        .nav-login-btn { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.85rem; font-weight:500; padding:0.4rem 0.8rem; border-radius:6px; border:1px solid rgba(255,215,0,0.2); transition:all .2s; margin-right:0.4rem; }
+        .nav-login-btn:hover { color:#fff; border-color:rgba(255,215,0,0.5); }
+        .nav-cta { display:inline-flex; align-items:center; background:#FFD700; color:#000; font-size:0.83rem; font-weight:800; padding:0.42rem 1rem; border-radius:50px; text-decoration:none; transition:background .2s; white-space:nowrap; }
+        .nav-cta:hover { background:#fff; }
+        .fa-avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-weight:800; font-size:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hamburger { display:flex; }
+            .nav-links { display:none; position:absolute; top:64px; left:0; right:0; background:rgba(7,7,7,0.99); border-bottom:1px solid rgba(255,215,0,0.12); flex-direction:column; padding:1rem; align-items:stretch; }
+            .nav-links.open { display:flex; }
+            .nav-links a { font-size:1rem; padding:0.65rem 0.5rem; }
+            .drop-panel { position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:8px; }
+            .nav-item-drop:hover .drop-panel { display:none; }
+            .nav-item-drop.open .drop-panel { display:block; }
+        }
+        /* ══ FIN NAV DESIGN SYSTEM ══ */
+        </style>
+<style>
+
+/* ══════════════════════════════════════
+   NAV DESIGN SYSTEM v3 — FOREX AVERAGE
+   ══════════════════════════════════════ */
+#mainNav{position:sticky;top:0;z-index:1000;background:rgba(7,7,7,0.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,215,0,0.14);}
+.nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;height:64px;display:flex;align-items:center;gap:1rem;}
+.logo{display:flex;flex-direction:column;gap:3px;text-decoration:none;flex-shrink:0;line-height:1;background:none!important;-webkit-text-fill-color:unset!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
+.logo:hover{opacity:0.85;}
+.logo-main{font-weight:900;font-size:1.3rem;letter-spacing:-0.01em;text-transform:uppercase;display:block;}
+.logo-forex{color:#ffffff!important;-webkit-text-fill-color:#ffffff!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
+.logo-average{color:#FFD700!important;-webkit-text-fill-color:#FFD700!important;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
+.logo-sub{font-size:0.45rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.3)!important;-webkit-text-fill-color:rgba(255,255,255,0.3)!important;display:block;background:none!important;-webkit-background-clip:unset!important;background-clip:unset!important;}
+.nav-links{display:flex;list-style:none;align-items:center;gap:0.1rem;margin:0 0 0 auto;padding:0;flex-wrap:nowrap;}
+.nav-links>li>a{text-decoration:none;color:rgba(255,255,255,0.7);font-size:0.875rem;font-weight:500;letter-spacing:0.2px;padding:0.45rem 0.85rem;border-radius:6px;transition:color 0.2s,background 0.2s;display:inline-flex;align-items:center;gap:0.35rem;white-space:nowrap;}
+.nav-links>li>a:hover,.nav-links>li>a.active{color:#fff;}
+.nav-links>li>a.active{color:#FFD700;font-weight:600;}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:0.4rem;margin-left:auto;}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
+.nav-spacer{min-width:0.5rem;}
+.nav-login-btn{background:transparent;border:1px solid rgba(255,255,255,0.2);color:#fff!important;padding:0.4rem 1rem;border-radius:6px;font-size:0.83rem;font-weight:500;text-decoration:none;transition:all .2s;display:inline-block;margin-right:0.4rem;}
+.nav-login-btn:hover{border-color:rgba(255,255,255,0.5);}
+.nav-cta{background:#FFD700;color:#000!important;padding:0.4rem 1rem;border-radius:6px;font-size:0.83rem;font-weight:700;text-decoration:none;transition:all .2s;display:inline-block;}
+.nav-cta:hover{background:#fff;}
+.nav-item-drop{position:relative;}
+.drop-panel{display:none;position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:220px;background:rgba(10,10,10,0.98);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:0.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.6);backdrop-filter:blur(20px);z-index:200;}
+.nav-item-drop:hover>.drop-panel{display:block;}
+.drop-link{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:8px;text-decoration:none;color:rgba(255,255,255,0.8);font-size:0.85rem;transition:all 0.2s;}
+.drop-link:hover{background:rgba(255,215,0,0.07);color:#fff;}
+.drop-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);border-radius:8px;flex-shrink:0;color:rgba(255,255,255,0.7);font-size:1rem;}
+.drop-label{display:block;font-weight:600;font-size:0.85rem;line-height:1.2;}
+.drop-desc{display:block;font-size:0.73rem;color:rgba(255,255,255,0.45);margin-top:1px;}
+.drop-sep{height:1px;background:rgba(255,255,255,0.07);margin:0.35rem 0;}
+.fa-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#FFD700,#FFC107);color:#000;font-size:0.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.nav-chevron{width:12px;height:12px;opacity:0.6;}
+@media(max-width:900px){
+  .hamburger{display:flex;}
+  .nav-links{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(5,5,5,0.98);flex-direction:column;align-items:flex-start;padding:1.5rem 1rem;gap:0.25rem;overflow-y:auto;z-index:999;}
+  .nav-links.open{display:flex;}
+  .nav-links>li,.nav-links>li.nav-auth-guest,.nav-links>li.nav-auth-user{width:100%;}
+  .nav-links>li>a{width:100%;padding:0.85rem 1rem;font-size:1rem;}
+  .drop-panel{position:static!important;transform:none!important;box-shadow:none!important;background:rgba(20,20,20,0.5)!important;border:none!important;border-radius:8px!important;margin:0.25rem 0 0.25rem 1rem;display:none!important;}
+  .nav-item-drop.open>.drop-panel{display:block!important;}
+  .nav-spacer{display:none;}
+}
+/* ══ END NAV v3 ══ */
+
+</style>
+  <!-- OG Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Éducation Trading | Forex Average">
+  <meta property="og:description" content="Corrélations trading : taux, banques centrales, matières premières, crypto & actions.">
+  <meta property="og:image" content="https://forexaverage.com/images/forex-average-og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css?v=13">
+
+<style>
+
+/* ── EDUCATION PAGE HERO ── */
+.page-hero { position:relative; z-index:1; padding:4rem 2rem 3rem; text-align:center; max-width:900px; margin:0 auto; }
+.eyebrow { display:inline-block; font-size:0.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25); border-radius:20px; padding:.35rem .9rem; margin-bottom:1.2rem; }
+.hero-title { font-size:clamp(2rem,5vw,3rem); font-weight:900; line-height:1.15; margin-bottom:1rem; color:#fff; }
+.hero-sub { font-size:1rem; color:rgba(255,255,255,0.65); max-width:700px; margin:0 auto; line-height:1.6; }
+.container { max-width:1200px; margin:0 auto; }
+
+/* ── MUTED VAR FIX (for edu CSS) ── */
+:root { --muted: rgba(255,255,255,0.55); --blue: #3b82f6; }
+
+/* ── PAGE STYLES ── */
+    /* HERO */
+    .hero { position:relative; z-index:1; padding:5rem 1.5rem 3rem; text-align:center; max-width:900px; margin:0 auto; }
+    .hero-badge { display:inline-flex; align-items:center; gap:.4rem; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25); border-radius:20px; padding:.35rem .9rem; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:1.2rem; }
+    .hero h1 { font-size:clamp(2rem,5vw,3.2rem); font-weight:900; line-height:1.15; margin-bottom:1rem; }
+    .hero h1 span { color:var(--gold); }
+    .hero p { font-size:1.05rem; color:var(--muted); max-width:650px; margin:0 auto 2rem; }
+
+    /* TABS */
+    .tabs-nav { position:sticky; top:62px; z-index:50; background:rgba(6,6,6,0.95); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,215,0,0.1); padding:.6rem 1.5rem; display:flex; gap:.5rem; overflow-x:auto; }
+    .tab-btn { flex-shrink:0; padding:.5rem 1.1rem; border-radius:20px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:rgba(255,255,255,0.55); font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; }
+    .tab-btn.active, .tab-btn:hover { background:rgba(255,215,0,0.1); border-color:rgba(255,215,0,0.35); color:var(--gold); }
+
+    /* SECTIONS */
+    .edu-section { position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:2.5rem 1.5rem; display:none; }
+    .edu-section.active { display:block; }
+    .section-title { font-size:1.6rem; font-weight:900; margin-bottom:.4rem; }
+    .section-sub { color:var(--muted); font-size:.9rem; margin-bottom:2.5rem; }
+
+    /* FLOW */
+    .flow-container { background:rgba(10,10,10,0.9); border:1px solid rgba(255,215,0,0.12); border-radius:16px; padding:2rem; margin-bottom:2rem; overflow-x:auto; }
+    .flow-title { font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; text-align:center; }
+    .chain { display:flex; align-items:center; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:1rem 0; }
+    .chain-node { padding:.5rem 1rem; border-radius:8px; font-size:.8rem; font-weight:700; text-align:center; line-height:1.3; min-width:100px; }
+    .chain-arrow { font-size:1.2rem; color:var(--muted); flex-shrink:0; }
+    .chain-arrow.green { color:var(--green); }
+    .chain-arrow.red { color:var(--red); }
+
+    .n-gold { background:rgba(255,215,0,0.12); border:1px solid rgba(255,215,0,0.35); color:var(--gold); }
+    .n-blue { background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.35); color:#60a5fa; }
+    .n-green { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.35); color:var(--green); }
+    .n-red { background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.35); color:var(--red); }
+    .n-purple { background:rgba(168,85,247,0.1); border:1px solid rgba(168,85,247,0.35); color:#c084fc; }
+    .n-orange { background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.35); color:#fb923c; }
+    .n-white { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); color:#fff; }
+
+    /* CARDS CORR */
+    .corr-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.2rem; margin-bottom:2rem; }
+    .corr-card { background:rgba(10,10,10,0.9); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.4rem; transition:border-color .2s; }
+    .corr-card:hover { border-color:rgba(255,215,0,0.25); }
+    .corr-header { display:flex; align-items:center; gap:.7rem; margin-bottom:1rem; }
+    .corr-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .corr-pair { font-size:1rem; font-weight:800; }
+    .corr-type { font-size:.7rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; margin-top:2px; }
+    .corr-type.positive { color:var(--green); }
+    .corr-type.negative { color:var(--red); }
+    .corr-bar-wrap { display:flex; align-items:center; gap:.7rem; margin:0.5rem 0; }
+    .corr-bar-bg { flex:1; height:6px; background:rgba(255,255,255,0.08); border-radius:3px; overflow:hidden; }
+    .corr-bar-fill { height:100%; border-radius:3px; }
+    .fill-green { background:linear-gradient(90deg,#16a34a,#22c55e); }
+    .fill-red { background:linear-gradient(90deg,#b91c1c,#ef4444); }
+    .corr-val { font-size:.8rem; font-weight:700; min-width:40px; text-align:right; }
+    .corr-desc { font-size:.78rem; color:var(--muted); line-height:1.5; margin-top:.7rem; }
+
+    /* TWO COL */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2rem; }
+    @media(max-width:700px) { .two-col { grid-template-columns:1fr; } }
+
+    /* INFO BLOCK */
+    .info-block { background:rgba(10,10,10,0.9); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.4rem; }
+    .info-block h3 { font-size:.85rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; margin-bottom:1rem; }
+    .info-row { display:flex; align-items:flex-start; gap:.8rem; padding:.6rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .info-row:last-child { border-bottom:none; }
+    .info-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:.35rem; }
+    .info-text { font-size:.82rem; line-height:1.5; color:rgba(255,255,255,0.78); }
+    .info-text strong { color:#fff; font-weight:700; }
+    .dot-green { background:var(--green); }
+    .dot-red { background:var(--red); }
+    .dot-gold { background:var(--gold); }
+    .dot-blue { background:var(--blue); }
+    .dot-purple { background:#a855f7; }
+
+    /* BIG FLOW */
+    .big-flow { background:rgba(8,8,8,0.95); border:1px solid rgba(255,215,0,0.12); border-radius:16px; padding:2rem; margin-bottom:2rem; }
+    .flow-row { display:flex; align-items:stretch; gap:1rem; justify-content:center; flex-wrap:wrap; margin:1rem 0; }
+    .flow-box { border-radius:10px; padding:.9rem 1.1rem; font-size:.78rem; font-weight:700; text-align:center; line-height:1.4; min-width:120px; max-width:160px; flex:1; }
+    .flow-box small { display:block; font-size:.68rem; font-weight:500; opacity:.7; margin-top:.25rem; }
+    .flow-center { display:flex; justify-content:center; align-items:center; margin:.5rem 0; }
+    .flow-center-text { background:rgba(255,215,0,0.12); border:1.5px solid rgba(255,215,0,0.4); border-radius:10px; padding:.7rem 1.5rem; font-size:.9rem; font-weight:800; color:var(--gold); text-align:center; }
+    .flow-arrow-down { text-align:center; font-size:1.4rem; margin:.2rem 0; color:rgba(255,255,255,0.35); }
+    .flow-arrow-down.gold { color:var(--gold); }
+    .flow-divider { display:flex; align-items:center; gap:1rem; margin:1rem 0; color:rgba(255,255,255,0.2); font-size:.7rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; }
+    .flow-divider::before, .flow-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.08); }
+
+    /* TABLES */
+    .sum-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    .sum-table th { text-align:left; padding:.7rem 1rem; border-bottom:1px solid rgba(255,215,0,0.2); color:var(--gold); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; font-weight:700; }
+    .sum-table td { padding:.65rem 1rem; border-bottom:1px solid rgba(255,255,255,0.05); color:rgba(255,255,255,0.8); vertical-align:middle; }
+    .sum-table tr:hover td { background:rgba(255,215,0,0.03); }
+    .badge { display:inline-block; padding:.2rem .55rem; border-radius:5px; font-size:.68rem; font-weight:700; }
+    .badge-green { background:rgba(34,197,94,0.15); color:var(--green); }
+    .badge-red { background:rgba(239,68,68,0.15); color:var(--red); }
+    .badge-mixed { background:rgba(255,215,0,0.1); color:var(--gold); }
+
+    /* HIGHLIGHT */
+    .highlight { background:rgba(255,215,0,0.05); border-left:3px solid var(--gold); border-radius:0 10px 10px 0; padding:1rem 1.2rem; margin:1.5rem 0; font-size:.85rem; color:rgba(255,255,255,0.8); line-height:1.6; }
+    .highlight strong { color:var(--gold); }
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="nav-container">
+    <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
+      <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span>
+      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+    </a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="marches.html">Marchés</a></li>
+      <li><a href="outils.html">Outils</a></li>
+      <li><a href="partenaires.html">Partenaires</a></li>
+      <li><a href="education.html" class="active">Éducation</a></li>
+      <li class="nav-item-drop">
+        <a href="#" role="button">Communauté
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="drop-panel">
+          <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
+            <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
+          </a>
+          <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="feed.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses &amp; idées communauté</span></span>
+          </a>
+        </div>
+      </li>
+      <div class="nav-spacer"></div>
+      <li class="nav-auth-guest" style="display:none;list-style:none;">
+        <a href="login.html" class="nav-login-btn">Connexion</a>
+        <a href="pricing.html" class="nav-cta">✦ VIP</a>
+      </li>
+      <li class="nav-auth-user nav-item-drop" style="display:none;list-style:none;">
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);transition:all .2s;">
+          <div class="fa-avatar">?</div>
+          <span class="fa-username" style="font-size:0.83rem;font-weight:600;color:#fff;white-space:nowrap;"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
+          <a href="journal.html" class="drop-link">
+            <span class="drop-icon">📓</span>
+            <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
+            <span class="drop-icon">🚪</span>
+            <span><span class="drop-label">Déconnexion</span></span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+<main>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <span class="eyebrow">📊 Analyse Fondamentale · Guide Complet</span>
+    <h1 class="hero-title">Corrélations &amp; Relations<br><span style="color:var(--gold);">Cause → Effet</span></h1>
+    <p class="hero-sub">Comment les taux d'intérêt, banques centrales, matières premières et la bourse influencent les devises, la crypto et les actions — et comment en tirer profit.</p>
+  </div>
+</section>
+
+
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('taux',this)">🏦 Taux &amp; Banques centrales</button>
+  <button class="tab-btn" onclick="showTab('matieres',this)">🛢️ Matières premières</button>
+  <button class="tab-btn" onclick="showTab('risk',this)">📈 Bourse &amp; Risk</button>
+  <button class="tab-btn" onclick="showTab('devises',this)">💱 Corrélations devises</button>
+  <button class="tab-btn" onclick="showTab('crypto',this)">₿ Crypto</button>
+  <button class="tab-btn" onclick="showTab('actions',this)">📊 Actions</button>
+  <button class="tab-btn" onclick="showTab('synthese',this)">⚡ Synthèse rapide</button>
+</div>
+
+<!-- ═══ TAUX ═══ -->
+<div class="edu-section active" id="tab-taux">
+  <div class="section-title">🏦 Taux d'intérêt &amp; Banques centrales</div>
+  <div class="section-sub">Le mécanisme de transmission le plus direct sur le Forex</div>
+
+  <div class="highlight"><strong>Principe fondamental :</strong> Une banque centrale qui <strong>monte ses taux</strong> rend sa monnaie plus attractive pour les investisseurs → afflux de capitaux → la devise <strong>s'apprécie</strong>. L'inverse vaut pour une baisse de taux.</div>
+
+  <div class="flow-container">
+    <div class="flow-title">⬆ Hausse de taux directeur → Impact sur la devise</div>
+    <div class="chain">
+      <div class="chain-node n-blue">Banque Centrale<br><small>🏛️ Hausse taux</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Obligations d'État<br><small>Rendements ⬆</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-purple">Capitaux étrangers<br><small>Afflux vers le pays</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Demande de devise<br><small>Achats massifs</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">Devise ⬆<br><small>Appréciation</small></div>
+    </div>
+    <div style="text-align:center;font-size:.75rem;color:var(--muted);margin-top:1rem;">⬇ Baisse de taux : logique inversée → Devise ⬇</div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">Écart de taux (Differential) → Force directionnelle EUR/USD</div>
+    <div class="chain">
+      <div class="chain-node n-gold">Taux BCE<br><small>ex: 3.5%</small></div>
+      <span class="chain-arrow" style="font-size:.9rem;color:var(--muted);">vs</span>
+      <div class="chain-node n-blue">Taux Fed<br><small>ex: 5.5%</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Différentiel<br><small>+2% en faveur USD</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">EUR/USD ⬇<br><small>USD favorisé</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,255,255,0.03);border-radius:8px;text-align:center;font-size:.75rem;color:var(--muted);">
+      📌 <strong style="color:#fff;">Règle clé :</strong> Écart favorable USD → EUR/USD baisse &nbsp;|&nbsp; Écart se resserre → EUR/USD remonte
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h3 style="color:#60a5fa;">🏛️ Signaux Hawkish (devise ↑)</h3>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Hausse des taux</strong> ou guidance vers une hausse future</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Discours restrictif</strong> : "nous resterons restrictifs aussi longtemps que nécessaire"</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>QT (Quantitative Tightening)</strong> : réduction du bilan → moins de liquidités → devise ↑</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Inflation forte</strong> → anticipation de taux plus hauts → devise ↑</div></div>
+    </div>
+    <div class="info-block">
+      <h3 style="color:#f87171;">🕊️ Signaux Dovish (devise ↓)</h3>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Baisse des taux</strong> ou pivot anticipé</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Discours accommodant</strong> : préoccupations sur la croissance / l'emploi</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>QE (Quantitative Easing)</strong> : injection de liquidités → devise ↓</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Chômage élevé</strong> → priorité à l'emploi → biais accommodant</div></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">🌍 Tableau BCE vs FED — Impact EUR/USD</div>
+    <table class="sum-table">
+      <thead><tr><th>Scénario</th><th>BCE</th><th>FED</th><th>EUR/USD</th><th>Force</th></tr></thead>
+      <tbody>
+        <tr><td>Divergence max. haussière EUR</td><td style="color:var(--green);">Hawkish ↑</td><td style="color:var(--red);">Dovish ↓</td><td><span class="badge badge-green">EUR/USD ↑↑</span></td><td>⭐⭐⭐</td></tr>
+        <tr><td>BCE hawkish, FED neutre</td><td style="color:var(--green);">Hawkish ↑</td><td style="color:var(--gold);">Neutre →</td><td><span class="badge badge-green">EUR/USD ↑</span></td><td>⭐⭐</td></tr>
+        <tr><td>Les deux neutres</td><td style="color:var(--gold);">Neutre →</td><td style="color:var(--gold);">Neutre →</td><td><span class="badge badge-mixed">Range →</span></td><td>⭐</td></tr>
+        <tr><td>FED hawkish, BCE neutre</td><td style="color:var(--gold);">Neutre →</td><td style="color:var(--green);">Hawkish ↑</td><td><span class="badge badge-red">EUR/USD ↓</span></td><td>⭐⭐</td></tr>
+        <tr><td>Divergence max. baissière EUR</td><td style="color:var(--red);">Dovish ↓</td><td style="color:var(--green);">Hawkish ↑</td><td><span class="badge badge-red">EUR/USD ↓↓</span></td><td>⭐⭐⭐</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ MATIÈRES ═══ -->
+<div class="edu-section" id="tab-matieres">
+  <div class="section-title">🛢️ Matières premières &amp; Devises</div>
+  <div class="section-sub">Les commodity currencies et les relations métal/énergie sur le Forex</div>
+
+  <div class="highlight"><strong>Pourquoi les matières premières influencent les devises ?</strong> Certains pays sont de gros exportateurs de ressources. Quand le prix de leur principale export monte, leurs revenus augmentent → leur devise s'apprécie. Ce sont les <strong>"commodity currencies"</strong>.</div>
+
+  <div class="flow-container">
+    <div class="flow-title">🛢️ Pétrole (WTI / Brent) → Impact sur les devises</div>
+    <div class="chain">
+      <div class="chain-node n-orange">Pétrole ⬆</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">CAD ⬆<br><small>Canada = gros exportateur</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-orange">Pétrole ⬆</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">NOK ⬆<br><small>Norvège = gros exportateur</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-orange">Pétrole ⬆</div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">JPY ⬇<br><small>Japon = gros importateur</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-orange">Pétrole ⬆<br><small>Inflation US</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">FED hawkish ?<br><small>Si inflation core ↑</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">USD ⬆</div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">🥇 Or (XAU/USD) → Relations clés</div>
+    <div class="chain">
+      <div class="chain-node n-gold">Or ⬆</div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">USD ⬇<br><small>Corrélation négative forte</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-gold">Or ⬆</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">AUD ⬆<br><small>Australie = gros producteur d'or</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-white">Taux réels ⬇<br><small>(taux - inflation)</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-gold">Or ⬆<br><small>Refuge sans concurrent</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-white">Géopolitique ⬆</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-gold">Or ⬆</div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">USD ⬇<br><small>(souvent)</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,215,0,0.04);border-radius:8px;font-size:.75rem;color:var(--muted);">
+      📌 <strong style="color:var(--gold);">Exception :</strong> En crise sévère (2008, COVID), or ET USD peuvent monter ensemble. L'or est anti-USD structurellement, mais pas toujours à court terme.
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">🌍 Commodity Currencies — Tableau de référence</div>
+    <table class="sum-table">
+      <thead><tr><th>Devise</th><th>Pays</th><th>Principale matière première</th><th>Corrélation vs prix MP</th></tr></thead>
+      <tbody>
+        <tr><td><strong style="color:#fb923c;">AUD</strong></td><td>Australie</td><td>Or, Minerai de fer, Charbon</td><td><span class="badge badge-green">Positive ↑</span></td></tr>
+        <tr><td><strong style="color:#fb923c;">CAD</strong></td><td>Canada</td><td>Pétrole (WTI), Bois</td><td><span class="badge badge-green">Positive ↑</span></td></tr>
+        <tr><td><strong style="color:#fb923c;">NZD</strong></td><td>Nouvelle-Zélande</td><td>Produits laitiers, Agriculture</td><td><span class="badge badge-green">Positive ↑</span></td></tr>
+        <tr><td><strong style="color:#fb923c;">NOK</strong></td><td>Norvège</td><td>Pétrole (Brent), Gaz</td><td><span class="badge badge-green">Positive ↑</span></td></tr>
+        <tr><td><strong style="color:#60a5fa;">JPY</strong></td><td>Japon</td><td>Importateur pétrole / métaux</td><td><span class="badge badge-red">Négative ↓</span></td></tr>
+        <tr><td><strong style="color:#60a5fa;">EUR</strong></td><td>Zone Euro</td><td>Importateur net énergie</td><td><span class="badge badge-mixed">Modérée ↓</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ ACTIONS ═══ -->
+<div class="edu-section" id="tab-risk">
+  <div class="section-title">📈 Marchés actions &amp; Sentiment de risque</div>
+  <div class="section-sub">Risk-On vs Risk-Off : le moteur caché du Forex</div>
+
+  <div class="highlight"><strong>Concept clé — Risk-On / Risk-Off :</strong> Quand les investisseurs sont confiants (risk-on), ils achètent des actifs risqués (actions, devises à haut rendement). Quand ils ont peur (risk-off), ils fuient vers les refuges (JPY, CHF, USD, or).</div>
+
+  <div class="two-col">
+    <div class="info-block" style="border-color:rgba(34,197,94,0.2);">
+      <h3 style="color:var(--green);">🟢 Risk-On (marchés haussiers)</h3>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>S&amp;P 500 / DAX ↑</strong> → confiance → achat d'actifs risqués</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>AUD ↑, NZD ↑, CAD ↑</strong> devises à haut rendement demandées</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>JPY ↓, CHF ↓</strong> valeurs refuges délaissées</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>USD ↓</strong> capitaux vers marchés émergents et risqués</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>VIX ↓</strong> indice de peur faible = confiance</div></div>
+    </div>
+    <div class="info-block" style="border-color:rgba(239,68,68,0.2);">
+      <h3 style="color:var(--red);">🔴 Risk-Off (marchés baissiers)</h3>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>S&amp;P 500 / DAX ↓</strong> → panique → fuite vers les refuges</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>AUD ↓, NZD ↓</strong> devises risquées vendues massivement</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>JPY ↑, CHF ↑</strong> valeurs refuges achetées massivement</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>USD ↑</strong> retour vers la liquidité dollar</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>VIX ↑</strong> indice de peur élevé = panique</div></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">Chaîne de transmission : Krach boursier → Forex</div>
+    <div class="chain">
+      <div class="chain-node n-red">S&amp;P 500 ⬇<br><small>-3% ou plus</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-red">VIX ⬆<br><small>"Peur" monte</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Risk-Off<br><small>Fuite refuges</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">JPY ⬆ CHF ⬆<br><small>USD ⬆</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-white">Risk-Off</div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">AUD ⬇ NZD ⬇<br><small>CAD ⬇ (si pétrole ↓)</small></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">📊 VIX &amp; Corrélations Forex</div>
+    <table class="sum-table">
+      <thead><tr><th>Devise / Actif</th><th>VIX ↑ (peur)</th><th>VIX ↓ (calme)</th><th>Explication</th></tr></thead>
+      <tbody>
+        <tr><td><strong>USD</strong></td><td><span class="badge badge-green">↑ Refuge</span></td><td><span class="badge badge-red">↓ Risk-On</span></td><td style="font-size:.75rem;color:var(--muted);">Dollar = refuge universel</td></tr>
+        <tr><td><strong>JPY</strong></td><td><span class="badge badge-green">↑↑ Fort refuge</span></td><td><span class="badge badge-red">↓↓ Carry trade</span></td><td style="font-size:.75rem;color:var(--muted);">Carry trade dénoué en crise</td></tr>
+        <tr><td><strong>CHF</strong></td><td><span class="badge badge-green">↑ Refuge</span></td><td><span class="badge badge-red">↓ Modéré</span></td><td style="font-size:.75rem;color:var(--muted);">Neutralité suisse = valeur refuge</td></tr>
+        <tr><td><strong>AUD</strong></td><td><span class="badge badge-red">↓↓ Vendu</span></td><td><span class="badge badge-green">↑↑ Risk-On</span></td><td style="font-size:.75rem;color:var(--muted);">Corrélation forte avec S&amp;P 500</td></tr>
+        <tr><td><strong>NZD</strong></td><td><span class="badge badge-red">↓ Vendu</span></td><td><span class="badge badge-green">↑ Risk-On</span></td><td style="font-size:.75rem;color:var(--muted);">Similaire AUD</td></tr>
+        <tr><td><strong>Or (XAU)</strong></td><td><span class="badge badge-green">↑ Refuge</span></td><td><span class="badge badge-mixed">→ Variable</span></td><td style="font-size:.75rem;color:var(--muted);">Refuge sauf besoin de liquidités</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">💼 Carry Trade — Le moteur silencieux</div>
+    <div class="chain">
+      <div class="chain-node n-red">Emprunter JPY<br><small>Taux ~0%</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-green">Investir en AUD<br><small>Taux ~4-5%</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-gold">Profit = différentiel<br><small>~4-5% annuel</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(239,68,68,0.05);border-radius:8px;font-size:.78rem;color:rgba(255,255,255,0.7);">
+      ⚠️ <strong style="color:#f87171;">Risque carry :</strong> En crise, tous les traders dénouent → JPY remonte très vite, AUD s'effondre. USD/JPY peut perdre 500-1000 pips en heures. Exemple : août 2024 (dénouement brutal du carry JPY).
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DEVISES ═══ -->
+<div class="edu-section" id="tab-devises">
+  <div class="section-title">💱 Corrélations entre paires de devises</div>
+  <div class="section-sub">Certaines paires se suivent, d'autres se compensent — à connaître absolument</div>
+
+  <div class="highlight"><strong>Pourquoi c'est crucial :</strong> Si vous avez 2 positions corrélées positivement, vous avez en réalité <strong>le double du risque</strong>. Deux positions opposées corrélées = hedge involontaire.</div>
+
+  <div class="corr-grid">
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(34,197,94,0.1);">📈</div>
+        <div><div class="corr-pair">EUR/USD ↔ GBP/USD</div><div class="corr-type positive">Corrélation Positive</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-green" style="width:85%;"></div></div><div class="corr-val" style="color:var(--green);">+0.85</div></div>
+      <div class="corr-desc">Toutes deux dépendantes du dollar. Si USD monte, les deux baissent ensemble. <strong>Ne jamais acheter les deux simultanément sans raison fondamentale distincte.</strong></div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(34,197,94,0.1);">📈</div>
+        <div><div class="corr-pair">EUR/USD ↔ AUD/USD</div><div class="corr-type positive">Corrélation Positive</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-green" style="width:78%;"></div></div><div class="corr-val" style="color:var(--green);">+0.78</div></div>
+      <div class="corr-desc">Deux paires XXX/USD. Corrélation renforcée en tendance forte USD. Quand risk-on, EUR et AUD montent tous les deux.</div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(239,68,68,0.1);">📉</div>
+        <div><div class="corr-pair">EUR/USD ↔ USD/CHF</div><div class="corr-type negative">Corrélation Négative</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-red" style="width:90%;"></div></div><div class="corr-val" style="color:var(--red);">-0.90</div></div>
+      <div class="corr-desc">Quasi-miroir. EUR/USD ↑ = USD/CHF ↓. <strong>Acheter EUR/USD = vendre USD/CHF. Ces positions se neutralisent complètement.</strong></div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(239,68,68,0.1);">📉</div>
+        <div><div class="corr-pair">EUR/USD ↔ USD/JPY</div><div class="corr-type negative">Corrélation Négative</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-red" style="width:70%;"></div></div><div class="corr-val" style="color:var(--red);">-0.70</div></div>
+      <div class="corr-desc">Corrélation négative modérée. Mais le JPY a ses propres facteurs (BoJ, carry trade) qui peuvent diverger et rompre la corrélation.</div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(249,115,22,0.1);">🛢️</div>
+        <div><div class="corr-pair">USD/CAD ↔ Pétrole WTI</div><div class="corr-type negative">Corrélation Négative</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-red" style="width:75%;"></div></div><div class="corr-val" style="color:var(--red);">-0.75</div></div>
+      <div class="corr-desc">Pétrole ↑ → CAD ↑ → USD/CAD ↓. <strong>Toujours surveiller le WTI avant de trader USD/CAD.</strong></div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(255,215,0,0.1);">🥇</div>
+        <div><div class="corr-pair">XAU/USD ↔ DXY</div><div class="corr-type negative">Corrélation Négative</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-red" style="width:80%;"></div></div><div class="corr-val" style="color:var(--red);">-0.80</div></div>
+      <div class="corr-desc">L'or est libellé en dollars. DXY ↑ → Or ↓. DXY ↓ → Or ↑. Corrélation structurelle très fiable sur le long terme.</div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(34,197,94,0.1);">📈</div>
+        <div><div class="corr-pair">AUD/USD ↔ S&amp;P 500</div><div class="corr-type positive">Corrélation Positive</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-green" style="width:72%;"></div></div><div class="corr-val" style="color:var(--green);">+0.72</div></div>
+      <div class="corr-desc">L'AUD est la devise risk-on par excellence. S&amp;P 500 ↑ → AUD ↑. <strong>AUD/USD = proxy du sentiment global.</strong></div>
+    </div>
+    <div class="corr-card">
+      <div class="corr-header">
+        <div class="corr-icon" style="background:rgba(168,85,247,0.1);">⚡</div>
+        <div><div class="corr-pair">USD/JPY ↔ Rendements US 10Y</div><div class="corr-type positive">Corrélation Positive</div></div>
+      </div>
+      <div class="corr-bar-wrap"><div class="corr-bar-bg"><div class="corr-bar-fill fill-green" style="width:88%;"></div></div><div class="corr-val" style="color:var(--green);">+0.88</div></div>
+      <div class="corr-desc">Très forte corrélation. Rendements 10Y US ↑ → USD/JPY ↑. C'est LE leading indicator de USD/JPY. <strong>Regarder les Treasuries avant de trader USD/JPY.</strong></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">Matrice simplifiée — direction commune face au USD</div>
+    <div style="overflow-x:auto;">
+      <table class="sum-table">
+        <thead><tr><th>Si USD ↑</th><th>EUR/USD</th><th>GBP/USD</th><th>AUD/USD</th><th>USD/JPY</th><th>USD/CHF</th><th>USD/CAD</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--green);font-weight:700;">USD Fort</td><td><span class="badge badge-red">↓</span></td><td><span class="badge badge-red">↓</span></td><td><span class="badge badge-red">↓</span></td><td><span class="badge badge-green">↑</span></td><td><span class="badge badge-green">↑</span></td><td><span class="badge badge-green">↑</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:.8rem;font-size:.75rem;color:var(--muted);text-align:center;">EUR/USD + GBP/USD + AUD/USD = corrélées entre elles (groupe 1) &nbsp;|&nbsp; USD/JPY + USD/CHF + USD/CAD = corrélées entre elles (groupe 2) &nbsp;|&nbsp; Les 2 groupes sont inversement corrélés</div>
+  </div>
+</div>
+
+<!-- ═══ CRYPTO ═══ -->
+<div class="edu-section" id="tab-crypto">
+  <div class="section-title">₿ Crypto & Relations Cause-Effet</div>
+  <div class="section-sub">Comment macro, liquidité et risk influencent Bitcoin, Ethereum et les altcoins</div>
+
+  <div class="highlight"><strong>Principe clé :</strong> La crypto est l'actif <strong>le plus risk-on</strong> qui existe. Elle amplifie tous les mouvements du marché global. Taux, liquidité, DXY et sentiment déterminent les cycles bull/bear.</div>
+
+  <div class="flow-container">
+    <div class="flow-title">🏦 Politique monétaire → Bitcoin</div>
+    <div class="chain">
+      <div class="chain-node n-red">FED hausse taux<br><small>Argent plus cher</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Liquidité globale ⬇<br><small>Moins de capitaux</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">BTC ⬇<br><small>Actif risqué fui</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-green">FED baisse taux<br><small>QE / pivot</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Liquidité globale ⬆<br><small>Capitaux cherchent rendement</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">BTC ⬆<br><small>Actif risqué demandé</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-green">QE + taux 0%<br><small>2020-2021</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">BTC ×10<br><small>3k → 69k</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">QT + taux 5%<br><small>2022</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">BTC -75%<br><small>69k → 17k</small></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">💵 DXY (Dollar Index) → Bitcoin</div>
+    <div class="chain">
+      <div class="chain-node n-blue">DXY ⬆<br><small>Dollar fort</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">BTC ⬇<br><small>Corrélation négative</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">DXY ⬇<br><small>Dollar faible</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">BTC ⬆<br><small>Reflation, risk-on</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,255,255,0.03);border-radius:8px;font-size:.75rem;color:var(--muted);text-align:center;">
+      📌 BTC est libellé en USD. Un dollar fort = BTC plus cher pour les non-américains = demande réduite. Un dollar faible = inflation anticipée = refuge alternatif BTC demandé.
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">📈 S&amp;P 500 &amp; VIX → Crypto</div>
+    <div class="chain">
+      <div class="chain-node n-green">S&amp;P 500 ⬆<br><small>Risk-On</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">BTC ⬆ ETH ⬆<br><small>Corrélation ~0.70</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">VIX ⬆<br><small>Peur / crise</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">BTC ⬇⬇<br><small>Amplifie la baisse (beta élevé)</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(239,68,68,0.05);border-radius:8px;font-size:.78rem;color:rgba(255,255,255,0.7);">
+      ⚠️ <strong style="color:#f87171;">Attention :</strong> Corrélation avec S&P500 n'est pas constante. En 2020-2021 (QE massif) BTC a décorrélé et surperformé. En 2022 (krach tech + QT) BTC a été plus baissier que les actions. La crypto AMPLIFIE le mouvement actions.
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h3 style="color:#f7931a;">₿ Facteurs Haussiers BTC</h3>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Pivot FED</strong> → baisse de taux anticipée ou effective</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>DXY faible</strong> → dollar affaibli → actifs alternatifs</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Halving BTC</strong> → réduction de l'offre (~tous les 4 ans)</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>ETF Bitcoin approuvés</strong> → afflux institutionnels</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Liquidité M2 globale ↑</strong> → corrélation très forte avec M2</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Risk-On généralisé</strong> → S&P 500 en hausse, VIX bas</div></div>
+    </div>
+    <div class="info-block">
+      <h3 style="color:#f87171;">📉 Facteurs Baissiers BTC</h3>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>FED hawkish</strong> → taux hauts = coût d'opportunité du BTC augmente</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>DXY fort</strong> → dollar refuge, pas de besoin d'alternatif</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Régulation hostile</strong> → interdictions, restrictions exchanges</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Krach majeur</strong> → liquider crypto pour couvrir pertes actions</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>QT + resserrement</strong> → moins de liquidités = moins de spéculation</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Effondrement stablecoin / exchange</strong> (ex: FTX 2022)</div></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">🔗 BTC → Altcoins (ETH, SOL, etc.)</div>
+    <div class="chain">
+      <div class="chain-node n-gold">BTC ⬆<br><small>Phase 1 : bull crypto</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">BTC Dominance ⬆<br><small>Argent → BTC d'abord</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-gold">BTC fort<br><small>Phase 2 : stabilisation</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">ETH / Altcoins ⬆⬆<br><small>Rotation vers alts ("altseason")</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">BTC ⬇<br><small>Bear market</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">Altcoins ⬇⬇⬇<br><small>Beta 2x-5x plus fort</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,215,0,0.04);border-radius:8px;font-size:.75rem;color:var(--muted);">
+      📌 <strong style="color:var(--gold);">Cycle typique :</strong> BTC monte en premier → stabilise → ETH suit → puis les petites caps. En baisse, les alts chutent en premier et plus fort. BTC est le baromètre de tout le marché crypto.
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">⚡ Liquidité M2 Globale → BTC (corrélation forte)</div>
+    <div class="chain">
+      <div class="chain-node n-blue">Banques centrales<br><small>BCE + FED + BoJ + PBoC</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">M2 Global ⬆<br><small>Masse monétaire</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">BTC ⬆<br><small>~12 semaines de décalage</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(59,130,246,0.05);border-radius:8px;font-size:.75rem;color:var(--muted);">
+      💡 La corrélation entre M2 global et BTC est l'une des plus fortes identifiées (~0.90 sur le long terme). Surveiller la croissance de M2 des grandes banques centrales donne un signal d'avance de 8-16 semaines sur BTC.
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ACTIONS ═══ -->
+<div class="edu-section" id="tab-actions">
+  <div class="section-title">📊 Marchés Actions — Macro & Cause-Effet</div>
+  <div class="section-sub">Comment les taux, l'inflation et les cycles économiques pilotent les marchés boursiers</div>
+
+  <div class="highlight"><strong>Principe clé :</strong> La valeur d'une action = ses bénéfices futurs actualisés. Les taux d'intérêt sont le taux d'actualisation. Taux ↑ = valeur actuelle des bénéfices futurs ↓ = actions ↓. C'est la relation fondamentale.</div>
+
+  <div class="flow-container">
+    <div class="flow-title">🏦 Taux d'intérêt → Valorisation boursière</div>
+    <div class="chain">
+      <div class="chain-node n-red">FED hausse taux<br><small>Taux sans risque ↑</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Discount rate ↑<br><small>Actualisation plus forte</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">P/E compression<br><small>Actions chères → vendues</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">S&amp;P 500 ⬇</div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-green">FED baisse taux<br><small>Taux sans risque ↓</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-white">Obligations moins<br><small>attractives</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">Rotation vers actions<br><small>TINA effect</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">S&amp;P 500 ⬆</div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,255,255,0.03);border-radius:8px;font-size:.75rem;color:var(--muted);text-align:center;">
+      📌 <strong style="color:#fff;">TINA :</strong> "There Is No Alternative" — quand les taux sont bas, les investisseurs n'ont pas d'autre choix que d'acheter des actions pour avoir du rendement.
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">📈 Cycles économiques → Secteurs boursiers</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:.5rem;">
+      <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:10px;padding:1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--green);margin-bottom:.5rem;">🌱 EXPANSION (PIB ↑)</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,0.75);line-height:1.6;">
+          ✅ Technologie (croissance)<br>
+          ✅ Consommation discrétionnaire<br>
+          ✅ Industrie / Matériaux<br>
+          ✅ Finance (prêts ↑)<br>
+          ❌ Utilities (défensif, sous-performe)
+        </div>
+      </div>
+      <div style="background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.25);border-radius:10px;padding:1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:#fb923c;margin-bottom:.5rem;">🔥 SURCHAUFFE (Inflation ↑)</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,0.75);line-height:1.6;">
+          ✅ Énergie (pétrole ↑)<br>
+          ✅ Matières premières<br>
+          ✅ Immobilier (inflation hedge)<br>
+          ❌ Tech (taux ↑ = P/E compressé)<br>
+          ❌ Obligations (taux ↑ = prix ↓)
+        </div>
+      </div>
+      <div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);border-radius:10px;padding:1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:var(--red);margin-bottom:.5rem;">🌧️ RÉCESSION (PIB ↓)</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,0.75);line-height:1.6;">
+          ✅ Utilities (électricité, eau)<br>
+          ✅ Santé / Pharma<br>
+          ✅ Consommation de base<br>
+          ❌ Banques (mauvaises créances)<br>
+          ❌ Industrie / Auto
+        </div>
+      </div>
+      <div style="background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.25);border-radius:10px;padding:1rem;">
+        <div style="font-size:.75rem;font-weight:800;color:#22d3ee;margin-bottom:.5rem;">🌤️ REPRISE (post-récession)</div>
+        <div style="font-size:.78rem;color:rgba(255,255,255,0.75);line-height:1.6;">
+          ✅ Finance (reprise crédit)<br>
+          ✅ Consommation discrétionnaire<br>
+          ✅ Immobilier<br>
+          ✅ Technologie<br>
+          ❌ Utilities (risk-on = défensif fui)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">Inflation → Impact sur les marchés actions</div>
+    <div class="chain">
+      <div class="chain-node n-red">Inflation ⬆<br><small>Surprise à la hausse</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-red">FED hawkish<br><small>Taux ↑</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">Tech / Growth ⬇⬇<br><small>P/E élevé compressé</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">Inflation ⬆</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">Énergie / Matieres 1ères ⬆<br><small>Profitent de l'inflation</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-green">Inflation ⬇<br><small>Désinflation</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">FED dovish anticipé<br><small>Taux ↓</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">Tech / Croissance ⬆<br><small>P/E expansion</small></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h3 style="color:var(--green);">📈 Signaux Haussiers pour les actions</h3>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Baisses de taux</strong> → actualisation plus faible → valorisation ↑</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>PIB en croissance</strong> → bénéfices des entreprises ↑</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Chômage bas</strong> → consommation ↑ → revenus entreprises ↑</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Inflation modérée</strong> (2%) → ni trop froide ni trop chaude</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Bénéfices > attentes</strong> (earnings season positive)</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>USD faible</strong> → multinationales US plus compétitives</div></div>
+    </div>
+    <div class="info-block">
+      <h3 style="color:var(--red);">📉 Signaux Baissiers pour les actions</h3>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Hausse de taux surprise</strong> → compression des valorisations</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Récession</strong> → bénéfices s'effondrent → actions chutent</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Courbe des taux inversée</strong> → signal récession (10Y < 2Y)</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Inflation élevée persistante</strong> → FED contrainte de rester restrictive</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>USD fort</strong> → revenus étrangers des multinationales diminuent</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Géopolitique</strong> → chocs d'offre (énergie, chaînes d'appro.)</div></div>
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">🔄 Courbe des taux → Signal récession → Actions</div>
+    <div class="chain">
+      <div class="chain-node n-white">Taux 2Y US<br><small>court terme</small></div>
+      <span class="chain-arrow" style="font-size:.9rem;color:var(--muted);">&gt;</span>
+      <div class="chain-node n-white">Taux 10Y US<br><small>long terme</small></div>
+      <span class="chain-arrow">→</span>
+      <div class="chain-node n-red">Inversion courbe<br><small>Signal de récession</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">S&amp;P 500 ⬇<br><small>dans les 6-18 mois</small></div>
+    </div>
+    <div style="margin-top:1rem;padding:.9rem;background:rgba(255,215,0,0.04);border-radius:8px;font-size:.75rem;color:var(--muted);">
+      📌 <strong style="color:var(--gold);">Historique :</strong> L'inversion du spread 10Y-2Y US a précédé chaque récession depuis 50 ans, avec un délai de 6 à 24 mois. Ce n'est pas infaillible, mais c'est l'un des signaux macro les plus fiables.
+    </div>
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-title">💱 USD &amp; Actions US — Relation</div>
+    <div class="chain">
+      <div class="chain-node n-blue">USD ⬆ (DXY fort)</div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">Multinationales US<br><small>Bénéfices étrangers en $$ = moins</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">S&amp;P 500 ⬇<br><small>(modéré)</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-red">USD ⬇ (DXY faible)</div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">Exportations US<br><small>Plus compétitives</small></div>
+      <span class="chain-arrow green">→</span>
+      <div class="chain-node n-green">S&amp;P 500 ⬆<br><small>(surtout grandes caps)</small></div>
+    </div>
+    <div class="chain" style="margin-top:.7rem;">
+      <div class="chain-node n-blue">USD ⬆<br><small>Risk-Off, crise</small></div>
+      <span class="chain-arrow red">→</span>
+      <div class="chain-node n-red">Marchés émergents ⬇⬇<br><small>Dettes en USD + fuite capitaux</small></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ SYNTHÈSE ═══ -->
+<div class="edu-section" id="tab-synthese">
+  <div class="section-title">⚡ Synthèse — Checkliste de l'analyste</div>
+  <div class="section-sub">Les questions à se poser avant chaque trade</div>
+
+  <div class="highlight"><strong>Méthode top-down :</strong> Commencer par le macro (banques centrales) → vérifier le sentiment (risk-on/off) → regarder les matières premières liées → confirmer les corrélations devises → entrer en position avec la technique.</div>
+
+  <div class="big-flow">
+    <div class="flow-title">🗺️ Carte mentale de l'analyste Forex</div>
+    <div class="flow-center"><div class="flow-center-text">📊 Analyse d'une paire de devises</div></div>
+    <div class="flow-arrow-down gold">↓</div>
+    <div class="flow-divider">Étape 1 — Banques centrales</div>
+    <div class="flow-row">
+      <div class="flow-box n-blue">Banque A<br><small>Hawkish ou dovish ?</small></div>
+      <div style="align-self:center;color:var(--muted);font-weight:700;font-size:1.2rem;">⚡</div>
+      <div class="flow-box n-blue">Banque B<br><small>Hawkish ou dovish ?</small></div>
+      <div style="align-self:center;font-size:1.2rem;color:var(--muted);">→</div>
+      <div class="flow-box n-gold">Divergence ?<br><small>Qui a l'avantage ?</small></div>
+    </div>
+    <div class="flow-arrow-down">↓</div>
+    <div class="flow-divider">Étape 2 — Sentiment global</div>
+    <div class="flow-row">
+      <div class="flow-box n-green">Risk-On ?<br><small>VIX bas, actions ↑</small></div>
+      <div style="align-self:center;color:var(--muted);">ou</div>
+      <div class="flow-box n-red">Risk-Off ?<br><small>VIX haut, actions ↓</small></div>
+      <div style="align-self:center;font-size:1.2rem;color:var(--muted);">→</div>
+      <div class="flow-box n-white">Impact sur<br>ma paire ?</div>
+    </div>
+    <div class="flow-arrow-down">↓</div>
+    <div class="flow-divider">Étape 3 — Matières premières</div>
+    <div class="flow-row">
+      <div class="flow-box n-orange">Pétrole<br><small>CAD/NOK impliqués ?</small></div>
+      <div class="flow-box n-gold">Or<br><small>AUD/USD impliqué ?</small></div>
+      <div class="flow-box n-purple">Rendements 10Y<br><small>USD/JPY impliqué ?</small></div>
+    </div>
+    <div class="flow-arrow-down">↓</div>
+    <div class="flow-divider">Étape 4 — Confirmation corrélations</div>
+    <div class="flow-row">
+      <div class="flow-box n-white">Paires corrélées<br>donnent le même signal ?<br><small>Confluence ✓</small></div>
+      <div class="flow-box n-red">Paires opposées<br>confirment l'inverse ?<br><small>Validation ✓</small></div>
+    </div>
+    <div class="flow-arrow-down gold">↓</div>
+    <div class="flow-center"><div class="flow-center-text" style="background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.4);color:var(--green);">✅ Biais directionnel confirmé → Chercher entrée technique</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="info-block">
+      <h3 style="color:var(--gold);">⚡ Réflexes clés</h3>
+      <div class="info-row"><div class="info-dot dot-blue"></div><div class="info-text"><strong>FED hawkish</strong> → Long USD/JPY, Short EUR/USD, Short AUD/USD</div></div>
+      <div class="info-row"><div class="info-dot dot-blue"></div><div class="info-text"><strong>Pétrole ↑</strong> → Short USD/CAD (ou Long CAD/JPY)</div></div>
+      <div class="info-row"><div class="info-dot dot-green"></div><div class="info-text"><strong>Risk-On</strong> → Long AUD/JPY, Long NZD/JPY, Short USD</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text"><strong>Risk-Off/Crise</strong> → Long JPY (Short USD/JPY), Long CHF, Long Or</div></div>
+      <div class="info-row"><div class="info-dot dot-gold"></div><div class="info-text"><strong>Or ↑</strong> → Short USD, Long AUD</div></div>
+      <div class="info-row"><div class="info-dot dot-purple"></div><div class="info-text"><strong>Rendements US 10Y ↑</strong> → Long USD/JPY (signal fort)</div></div>
+    </div>
+    <div class="info-block">
+      <h3 style="color:#f87171;">⚠️ Pièges à éviter</h3>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">EUR/USD + GBP/USD long simultanément = doubler le risque USD</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">Long EUR/USD + Short USD/CHF = positions qui se neutralisent</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">Trader CAD sans regarder le pétrole = ignorer le driver principal</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">Ignorer le VIX / S&amp;P sur les paires risk (AUD, NZD)</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">Les corrélations changent en crise — jamais figées</div></div>
+      <div class="info-row"><div class="info-dot dot-red"></div><div class="info-text">Carry trade JPY = excellent jusqu'au dénouement brutal (août 2024)</div></div>
+    </div>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(18,18,18,0.95));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:2rem;text-align:center;margin-top:2rem;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#FFD700,transparent);"></div>
+    <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#FFD700;margin-bottom:.5rem;">🎯 Tu veux appliquer ça sur des trades réels ?</div>
+    <div style="font-size:1.2rem;font-weight:800;margin-bottom:.5rem;">Analyse ta stratégie en 1:1</div>
+    <div style="font-size:.88rem;color:rgba(255,255,255,0.6);margin-bottom:1.5rem;">Je t'explique comment lire ces corrélations sur tes paires préférées et construire un biais solide.</div>
+    <a href="coaching.html" style="display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 2rem;background:linear-gradient(135deg,#FFD700,#FFC107);color:#000;font-weight:800;font-size:.9rem;border-radius:8px;text-decoration:none;">Voir les formules coaching →</a>
+  </div>
+</div>
+
+
+<footer>
+  <div class="footer-logo">FOREX <span>AVERAGE</span></div>
+  <div class="footer-tagline">Forex · Crypto · Matières Premières</div>
+  <nav class="footer-links">
+    <a href="index.html">Accueil</a>
+    <a href="analyses.html">Analyses</a>
+    <a href="calculateurs-trading.html">Calculateurs</a>
+    <a href="graphique.html">Graphiques Live</a>
+    <a href="partenaires.html">Partenaires</a>
+    <a href="education.html">Éducation</a>
+    <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer">Telegram Gratuit</a>
+    <a href="https://t.me/+8Q2zPHrvFghlMzI8" target="_blank" rel="noopener noreferrer">💎 Premium</a>
+  </nav>
+  <div class="footer-copy">&copy; 2026 Forex Average. Tous droits réservés.</div>
+</footer>
+
+<script src="fa-access.js?v=13"></script>
+
+<script>
+function showTab(name, btn) {
+  document.querySelectorAll('.edu-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+</script>
+
+
+</body>
+</html>
