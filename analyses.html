@@ -1431,6 +1431,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css?v=13">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
@@ -1462,6 +1463,7 @@
       <li><a href="marches.html" class="active">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
       <li><a href="partenaires.html">Partenaires</a></li>
+      <li><a href="education.html">Éducation</a></li>
       <li class="nav-item-drop">
         <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1473,7 +1475,7 @@
           </a>
           <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
-            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="feed.html" class="drop-link">
@@ -1521,7 +1523,7 @@
 <div class="ticker-widget">
     <div class="tradingview-widget-container" style="height:46px;">
         <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        <script type="text/plain" data-tv-src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js">
         {"symbols":[
             {"proName":"BINANCE:BTCUSDT","title":"BTC"},
             {"proName":"BINANCE:ETHUSDT","title":"ETH"},
@@ -1561,13 +1563,63 @@
     <div class="container">
 
         <div class="results-bar">
-            <span class="results-count"><strong id="articleCount">9</strong> analyses disponibles</span>
+            <span class="results-count"><strong id="articleCount">11</strong> analyses disponibles</span>
             <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size:0.82rem; padding:0.55rem 1.2rem;">📱 Alertes Telegram</a>
         </div>
 
         <div class="articles-grid" id="articlesGrid">
 
-            <!-- EUR/USD -->
+            
+            <!-- ★ ANALYSE EXCLUSIVE — BITCOIN 100 ANS -->
+            <a href="bitcoin-analyse.html" class="article-card" data-category="crypto" style="grid-column:1/-1;border-color:rgba(247,147,26,0.35);background:linear-gradient(135deg,rgba(247,147,26,0.06) 0%,rgba(18,18,18,0.95) 60%);position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#f7931a,#FFD700,#f7931a,transparent);"></div>
+              <div style="display:flex;align-items:stretch;gap:0;flex-wrap:wrap;">
+                <div class="article-img" style="background:linear-gradient(135deg,rgba(247,147,26,0.2),rgba(255,215,0,0.08));width:260px;flex-shrink:0;font-size:3.5rem;border-bottom:none;border-right:1px solid rgba(247,147,26,0.2);">₿</div>
+                <div class="article-body" style="flex:1;min-width:280px;">
+                  <div class="article-meta">
+                    <span class="tag" style="background:linear-gradient(135deg,rgba(247,147,26,0.2),rgba(255,215,0,0.1));color:#f7931a;border-color:rgba(247,147,26,0.4);">✦ VIP EXCLUSIF</span>
+                    <span class="tag tag-crypto">CRYPTO</span>
+                    <span class="tag tag-strat">ÉDUCATION</span>
+                    <span class="article-date">13 Juillet 2025</span>
+                  </div>
+                  <h2 class="article-title" style="font-size:1.2rem;">Bitcoin — 100 Ans de Marchés : Framework Décisionnel Complet</h2>
+                  <p class="article-excerpt">Les 5 grandes ères de Bitcoin replacées dans leur contexte macro historique. 10 principes intemporels validés sur 100 ans appliqués à BTC. 7 filtres de décision avec lecture juillet 2025. Verdict : signaux bull/bear, zones de prix clés, protocole d'action step-by-step.</p>
+                  <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem;">
+                    <span style="font-size:.72rem;font-weight:700;padding:.22rem .7rem;border-radius:4px;background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.25);">🏛 5 Ères historiques</span>
+                    <span style="font-size:.72rem;font-weight:700;padding:.22rem .7rem;border-radius:4px;background:rgba(255,215,0,0.08);color:#FFD700;border:1px solid rgba(255,215,0,0.2);">⚡ 10 Principes validés</span>
+                    <span style="font-size:.72rem;font-weight:700;padding:.22rem .7rem;border-radius:4px;background:rgba(59,130,246,0.1);color:#93c5fd;border:1px solid rgba(59,130,246,0.25);">🎯 7 Filtres décision</span>
+                    <span style="font-size:.72rem;font-weight:700;padding:.22rem .7rem;border-radius:4px;background:rgba(247,147,26,0.1);color:#f7931a;border:1px solid rgba(247,147,26,0.25);">🏆 Verdict juillet 2025</span>
+                  </div>
+                  <span class="read-more" style="color:#f7931a;">Accéder à l'analyse complète <span>→</span></span>
+                </div>
+              </div>
+              <span class="vip-badge">✦ VIP</span>
+            </a>
+            <!-- /ANALYSE EXCLUSIVE -->
+
+
+            <!-- BTC JUILLET 2025 — ARTICLE GRATUIT -->
+            <a href="bitcoin-juillet-2025.html" class="article-card" data-category="crypto">
+                <div class="article-img" style="background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(255,215,0,0.06));">₿</div>
+                <div class="article-body">
+                    <div class="article-meta">
+                        <span class="tag tag-bull">NEUTRE-POSITIF</span>
+                        <span class="tag tag-crypto">CRYPTO</span>
+                        <span class="article-date">13 Juillet 2025</span>
+                    </div>
+                    <h2 class="article-title">Bitcoin — Cycle Post-Halving : Ce que 100 ans de marchés enseignent</h2>
+                    <p class="article-excerpt">5 signaux bullish sur 7 filtres. Cycle post-halving phase 2 (mois 15/18). ETF IBIT $60B+, funding rates neutres, régime macro favorable. Setup complet avec zones de prix clés.</p>
+                    <div class="article-levels">
+                        <span class="level-pill lp-entry">↗ DCA $88K–$95K</span>
+                        <span class="level-pill lp-sl">✕ $74 500</span>
+                        <span class="level-pill lp-tp">✓ $110K / $145K</span>
+                    </div>
+                    <span class="read-more">Lire l'analyse <span>→</span></span>
+                </div>
+            </a>
+            <!-- /BTC JUILLET 2025 -->
+
+<!-- EUR/USD -->
             <a href="eurusd-setup-mars-2026.html" class="article-card" data-category="forex">
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,193,7,0.08));">EUR/USD</div>
                 <div class="article-body">
@@ -1894,7 +1946,7 @@ filterBtns.forEach(btn => {
             <p>Avec le plan VIP vous accédez à</p>
             <ul>
                 <li>Toutes les analyses premium avec niveaux précis</li>
-                <li>Signaux Telegram en temps réel</li>
+                <li>Analyses et scénarios de marché en temps réel</li>
                 <li>Graphiques AI annotés automatiquement</li>
                 <li>Canal Telegram privé membres VIP</li>
                 <li>Webinaire hebdomadaire live</li>
@@ -2005,7 +2057,7 @@ document.addEventListener('keydown', function(e) {
 </script>
 
 
-<script src="/chatbot.js"></script>
+<script src="/chatbot.js?v=13"></script>
 
 
 
@@ -2072,6 +2124,42 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
-<script src="fa-access.js"></script>
+<script src="fa-access.js?v=13"></script>
+<script>
+/* TV_LAZY_V2 — TradingView : charge à l'écran, décharge hors écran sur mobile (anti-crash) */
+(function(){
+  'use strict';
+  function init(){
+    var widgets = document.querySelectorAll('.tradingview-widget-container');
+    if(!widgets.length) return;
+    var mobile = window.matchMedia('(max-width:900px)').matches;
+    widgets.forEach(function(w){ if(w._tvTpl==null) w._tvTpl = w.innerHTML; });
+    function load(w){
+      if(w.getAttribute('data-tv-loaded')==='1') return;
+      var tmpl = w.querySelector('script[data-tv-src]');
+      if(!tmpl) return;
+      w.setAttribute('data-tv-loaded','1');
+      var s=document.createElement('script');
+      s.type='text/javascript'; s.async=true;
+      s.src=tmpl.getAttribute('data-tv-src'); s.textContent=tmpl.textContent;
+      tmpl.parentNode.replaceChild(s,tmpl);
+    }
+    function unload(w){
+      if(w.getAttribute('data-tv-loaded')!=='1') return;
+      w.removeAttribute('data-tv-loaded');
+      if(w._tvTpl!=null) w.innerHTML = w._tvTpl;
+    }
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting) load(e.target);
+        else if(mobile) unload(e.target);
+      });
+    }, { rootMargin: mobile ? '120px' : '400px' });
+    widgets.forEach(function(w){ io.observe(w); });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+</script>
 </body>
 </html>
