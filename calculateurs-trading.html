@@ -572,6 +572,43 @@
 
   <!-- ═══ MODE INVESTISSEUR ═══ -->
   <div id="panel-invest">
+
+    <!-- POSITION SIZING BOX -->
+    <div style="background:rgba(255,215,0,0.05);border:1.5px solid rgba(255,215,0,0.2);border-radius:14px;padding:1rem 1.25rem;margin-bottom:1.25rem;">
+      <div style="font-size:.78rem;font-weight:700;color:#FFD700;margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem;">🎯 Position Sizing — Combien investir ?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;align-items:end;">
+        <div class="inp-box">
+          <label>Capital total ($)</label>
+          <input type="number" id="ps-capital" value="10000" step="1000" oninput="calcPositionSize()">
+        </div>
+        <div class="inp-box">
+          <label>% Risque souhaité</label>
+          <input type="number" id="ps-risk-pct" value="2" step="0.5" min="0.1" max="100" oninput="calcPositionSize()">
+        </div>
+        <div class="inp-box">
+          <label>Stop-Loss (prix)</label>
+          <input type="number" id="ps-sl" value="86.074" step="0.001" oninput="calcPositionSize()">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem;margin-top:.75rem;">
+        <div style="padding:.75rem 1rem;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:10px;">
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,0.4);margin-bottom:.25rem;">Perte max autorisée</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#FFD700;" id="ps-max-loss">$200.00</div>
+        </div>
+        <div style="padding:.75rem 1rem;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);border-radius:10px;">
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,0.4);margin-bottom:.25rem;">Position recommandée</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#22c55e;" id="ps-position-size">$2,248</div>
+        </div>
+        <div style="padding:.75rem 1rem;background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.2);border-radius:10px;">
+          <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;color:rgba(255,255,255,0.4);margin-bottom:.25rem;">% du capital investi</div>
+          <div style="font-size:1.2rem;font-weight:800;color:#38bdf8;" id="ps-pct-invested">22.5%</div>
+        </div>
+      </div>
+      <div style="margin-top:.6rem;font-size:.72rem;color:rgba(255,255,255,0.35);line-height:1.5;" id="ps-explain">
+        Sur $10,000 de capital, risquer 2% = perdre max $200. Avec un SL à 86.074, tu peux investir $2,248 sur cette position.
+      </div>
+    </div>
+
     <div class="inputs-grid">
       <div class="inp-box">
         <label>Capital ($)</label>
@@ -790,6 +827,32 @@ function setAsset(el, type) {
   calcInvest(); calcTrader();
 }
 
+// ─── POSITION SIZING ───
+function calcPositionSize() {
+  const cap      = +document.getElementById('ps-capital').value    || 10000;
+  const riskPct  = +document.getElementById('ps-risk-pct').value   || 2;
+  const sl       = +document.getElementById('ps-sl').value         || 86.074;
+  const entry    = +document.getElementById('i-entry').value       || 94.485;
+
+  const maxLoss    = cap * (riskPct / 100);
+  const slDist     = Math.abs(entry - sl);
+  const slDistPct  = slDist / entry;
+  const posSize    = slDistPct > 0 ? maxLoss / slDistPct : 0;
+  const pctInvested = posSize / cap * 100;
+
+  document.getElementById('ps-max-loss').textContent    = '$' + maxLoss.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('ps-position-size').textContent = '$' + Math.round(posSize).toLocaleString('fr-FR');
+  document.getElementById('ps-pct-invested').textContent  = pctInvested.toFixed(1) + '%';
+  document.getElementById('ps-explain').textContent =
+    `Sur $${cap.toLocaleString()} de capital, risquer ${riskPct}% = perdre max $${maxLoss.toFixed(2)}. `+
+    `Avec un SL à ${sl} (distance ${slDist.toFixed(3)} pts, soit ${(slDistPct*100).toFixed(2)}%), `+
+    `tu peux investir $${Math.round(posSize).toLocaleString()} sur cette position.`;
+
+  // Sync SL vers le champ bas du simulateur
+  document.getElementById('i-low').value = sl;
+  calcInvest();
+}
+
 // ─── INVEST CALC ───
 function calcInvest() {
   const cap    = +document.getElementById('i-capital').value || 1000;
@@ -978,6 +1041,7 @@ function calcTrader() {
 })();
 
 // ─── INIT ───
+calcPositionSize();
 calcInvest();
 calcTrader();
 </script>
