@@ -8,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Forex Average | Analyses Forex, Crypto & Matières Premières</title>
-    <meta name="description" content="Plateforme d'analyse des marchés Forex, Crypto et Commodités : outils d'aide à la décision, données de marché, contenu éducatif et communauté privée.">
+    <title>Forex Average | Investissement sans levier — Analysez les marchés sans risque de ruine</title>
+    <meta name="description" content="Forex Average — La plateforme pour investisseurs long terme. Analysez les marchés financiers sans levier, comprenez les cycles économiques, construisez votre capital sereinement.">
     <meta name="keywords" content="forex average, analyse de marché forex, analyse bitcoin, analyse ethereum, or xauusd, pétrole, analyse technique, outils trading, communauté trading">
     <meta name="author" content="Forex Average">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -1121,6 +1121,66 @@
         
         /* ── DS: nav active ── */
         .nav-menu a.active { color: var(--gold) !important; }
+        
+        /* ─── MINI DEFS HERO ─── */
+        .hf-defs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0;}
+        .hf-def-card{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-left:3px solid rgba(255,215,0,.45);border-radius:0 10px 10px 0;padding:.75rem .9rem;transition:background .2s;}.hf-def-card:hover{background:rgba(255,215,0,.07);}
+        .hf-def-label{display:block;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;}
+        .hf-def-text{display:block;font-size:.78rem;color:var(--text-muted);line-height:1.5;}
+
+        /* ─── MANIFESTE QUOTE ─── */
+        .hero-manifeste{border-left:2px solid rgba(255,215,0,.3);padding:.5rem 0 .5rem .9rem;font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.6;margin:.6rem 0 1.4rem;font-style:italic;letter-spacing:.01em;}
+        .hero-manifeste strong{color:rgba(255,215,0,.7);font-style:normal;}
+
+        /* ─── LEVIER STRIP ─── */
+        .levier-strip{position:relative;z-index:1;background:rgba(239,68,68,.06);border-top:1px solid rgba(239,68,68,.22);border-bottom:1px solid rgba(239,68,68,.22);padding:1rem 2rem;display:flex;gap:1.4rem;justify-content:center;align-items:center;flex-wrap:wrap;}
+        .ls-item{font-size:.79rem;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:.35rem;}
+        .ls-item strong{color:#f87171;}
+        .ls-sep{color:rgba(239,68,68,.3);font-size:.9rem;}
+        .ls-cta{font-size:.79rem;font-weight:700;color:#f87171;border:1px solid rgba(239,68,68,.3);padding:.32rem .85rem;border-radius:5px;text-decoration:none;transition:background .2s;white-space:nowrap;}
+        .ls-cta:hover{background:rgba(239,68,68,.1);}
+
+        /* ─── DANGER CARDS ─── */
+        .danger-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .danger-card{background:rgba(239,68,68,.035);border:1px solid rgba(239,68,68,.16);border-radius:16px;padding:1.8rem 1.5rem;position:relative;overflow:hidden;}
+        .danger-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(239,68,68,.55),transparent);}
+        .dc-stat{font-size:3rem;font-weight:900;color:#ef4444;line-height:1;margin-bottom:.65rem;letter-spacing:-.02em;}
+        .dc-title{font-size:.93rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+        .dc-desc{font-size:.81rem;color:var(--text-muted);line-height:1.55;}
+        .dc-source{font-size:.68rem;color:var(--text-faint);margin-top:.8rem;font-style:italic;}
+
+        /* ─── TIMELINE ─── */
+        .lv-timeline{margin-top:2.8rem;display:flex;flex-direction:column;}
+        .tl-row{display:grid;grid-template-columns:80px 24px 1fr;gap:0 1rem;align-items:start;}
+        .tl-yr{text-align:right;padding-top:.25rem;}
+        .tl-yr span:first-child{display:block;font-size:1.05rem;font-weight:900;color:#ef4444;}
+        .tl-yr span:last-child{display:block;font-size:.62rem;color:var(--text-faint);margin-top:2px;letter-spacing:.3px;}
+        .tl-spine{display:flex;flex-direction:column;align-items:center;}
+        .tl-dot{width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.5);margin-top:.35rem;flex-shrink:0;}
+        .tl-bar{width:2px;flex:1;background:linear-gradient(rgba(239,68,68,.35),rgba(239,68,68,.05));min-height:72px;}
+        .tl-body{padding-bottom:2rem;}
+        .tl-etitle{font-size:.93rem;font-weight:700;color:var(--text);padding-top:.2rem;}
+        .tl-edesc{font-size:.8rem;color:var(--text-muted);margin-top:.3rem;line-height:1.55;}
+        .tl-etag{display:inline-block;font-size:.63rem;font-weight:700;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.18);padding:.12rem .45rem;border-radius:4px;margin-top:.5rem;text-transform:uppercase;letter-spacing:.5px;}
+
+        /* ─── PILIERS ─── */
+        .piliers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .pilier-card{background:linear-gradient(135deg,rgba(255,215,0,.04),rgba(255,215,0,.01));border:1px solid rgba(255,215,0,.13);border-radius:16px;padding:2rem 1.5rem;}
+        .pi-icon{font-size:2rem;margin-bottom:.9rem;}
+        .pi-title{font-size:1.02rem;font-weight:800;color:var(--text);margin-bottom:.55rem;letter-spacing:-.01em;}
+        .pi-desc{font-size:.83rem;color:var(--text-muted);line-height:1.6;}
+        .pi-tag{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.69rem;font-weight:700;color:var(--gold);letter-spacing:.4px;}
+
+        @media(max-width:700px){
+          .hf-defs{grid-template-columns:1fr;}
+          .levier-strip{flex-direction:column;gap:.7rem;}
+          .tl-row{grid-template-columns:68px 20px 1fr;}
+        }
+
+        
+        /* ──── WATERMARK 0× ─── */
+        .hf-watermark{position:absolute;top:50%;right:-2%;transform:translateY(-50%);font-size:clamp(160px,20vw,300px);font-weight:900;color:rgba(255,215,0,0.025);line-height:1;pointer-events:none;z-index:0;letter-spacing:-0.04em;user-select:none;}
+
         </style>
 <style>
 
@@ -1169,7 +1229,63 @@
 }
 /* ══ END NAV v3 ══ */
 
-</style>
+
+        /* ─── MINI DEFS HERO ─── */
+        .hf-defs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0;}
+        .hf-def-card{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-left:3px solid rgba(255,215,0,.45);border-radius:0 10px 10px 0;padding:.75rem .9rem;transition:background .2s;}.hf-def-card:hover{background:rgba(255,215,0,.07);}
+        .hf-def-label{display:block;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;}
+        .hf-def-text{display:block;font-size:.78rem;color:var(--text-muted);line-height:1.5;}
+
+        /* ─── MANIFESTE QUOTE ─── */
+        .hero-manifeste{border-left:2px solid rgba(255,215,0,.3);padding:.5rem 0 .5rem .9rem;font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.6;margin:.6rem 0 1.4rem;font-style:italic;letter-spacing:.01em;}
+        .hero-manifeste strong{color:rgba(255,215,0,.7);font-style:normal;}
+
+        /* ─── LEVIER STRIP ─── */
+        .levier-strip{position:relative;z-index:1;background:rgba(239,68,68,.06);border-top:1px solid rgba(239,68,68,.22);border-bottom:1px solid rgba(239,68,68,.22);padding:1rem 2rem;display:flex;gap:1.4rem;justify-content:center;align-items:center;flex-wrap:wrap;}
+        .ls-item{font-size:.79rem;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:.35rem;}
+        .ls-item strong{color:#f87171;}
+        .ls-sep{color:rgba(239,68,68,.3);font-size:.9rem;}
+        .ls-cta{font-size:.79rem;font-weight:700;color:#f87171;border:1px solid rgba(239,68,68,.3);padding:.32rem .85rem;border-radius:5px;text-decoration:none;transition:background .2s;white-space:nowrap;}
+        .ls-cta:hover{background:rgba(239,68,68,.1);}
+
+        /* ─── DANGER CARDS ─── */
+        .danger-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .danger-card{background:rgba(239,68,68,.035);border:1px solid rgba(239,68,68,.16);border-radius:16px;padding:1.8rem 1.5rem;position:relative;overflow:hidden;}
+        .danger-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(239,68,68,.55),transparent);}
+        .dc-stat{font-size:3rem;font-weight:900;color:#ef4444;line-height:1;margin-bottom:.65rem;letter-spacing:-.02em;}
+        .dc-title{font-size:.93rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+        .dc-desc{font-size:.81rem;color:var(--text-muted);line-height:1.55;}
+        .dc-source{font-size:.68rem;color:var(--text-faint);margin-top:.8rem;font-style:italic;}
+
+        /* ─── TIMELINE ─── */
+        .lv-timeline{margin-top:2.8rem;display:flex;flex-direction:column;}
+        .tl-row{display:grid;grid-template-columns:80px 24px 1fr;gap:0 1rem;align-items:start;}
+        .tl-yr{text-align:right;padding-top:.25rem;}
+        .tl-yr span:first-child{display:block;font-size:1.05rem;font-weight:900;color:#ef4444;}
+        .tl-yr span:last-child{display:block;font-size:.62rem;color:var(--text-faint);margin-top:2px;letter-spacing:.3px;}
+        .tl-spine{display:flex;flex-direction:column;align-items:center;}
+        .tl-dot{width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.5);margin-top:.35rem;flex-shrink:0;}
+        .tl-bar{width:2px;flex:1;background:linear-gradient(rgba(239,68,68,.35),rgba(239,68,68,.05));min-height:72px;}
+        .tl-body{padding-bottom:2rem;}
+        .tl-etitle{font-size:.93rem;font-weight:700;color:var(--text);padding-top:.2rem;}
+        .tl-edesc{font-size:.8rem;color:var(--text-muted);margin-top:.3rem;line-height:1.55;}
+        .tl-etag{display:inline-block;font-size:.63rem;font-weight:700;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.18);padding:.12rem .45rem;border-radius:4px;margin-top:.5rem;text-transform:uppercase;letter-spacing:.5px;}
+
+        /* ─── PILIERS ─── */
+        .piliers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .pilier-card{background:linear-gradient(135deg,rgba(255,215,0,.04),rgba(255,215,0,.01));border:1px solid rgba(255,215,0,.13);border-radius:16px;padding:2rem 1.5rem;}
+        .pi-icon{font-size:2rem;margin-bottom:.9rem;}
+        .pi-title{font-size:1.02rem;font-weight:800;color:var(--text);margin-bottom:.55rem;letter-spacing:-.01em;}
+        .pi-desc{font-size:.83rem;color:var(--text-muted);line-height:1.6;}
+        .pi-tag{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.69rem;font-weight:700;color:var(--gold);letter-spacing:.4px;}
+
+        @media(max-width:700px){
+          .hf-defs{grid-template-columns:1fr;}
+          .levier-strip{flex-direction:column;gap:.7rem;}
+          .tl-row{grid-template-columns:68px 20px 1fr;}
+        }
+
+        </style>
   <!-- OG Tags -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://forexaverage.com/">
@@ -1179,21 +1295,22 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-  <link rel="stylesheet" href="fa-nav.css">
+  <link rel="stylesheet" href="fa-nav.css?v=13">
 <style id="hero-fa-styles">
 .hero-fa{position:relative;min-height:calc(100vh - 64px);display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:2rem;max-width:1400px;margin:0 auto;padding:2rem 2rem 3rem;overflow:hidden;text-align:left;}
-.hero-fa::before{content:'';position:absolute;top:-20%;right:-8%;width:58%;height:80%;background:radial-gradient(circle,var(--gold-glow,rgba(255,215,0,0.18)),transparent 62%);filter:blur(30px);pointer-events:none;z-index:0;}
-.hf-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,215,0,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,215,0,0.04) 1px,transparent 1px);background-size:44px 44px;-webkit-mask-image:radial-gradient(circle at 62% 42%,#000,transparent 72%);mask-image:radial-gradient(circle at 62% 42%,#000,transparent 72%);z-index:0;animation:hfGridDrift 20s linear infinite;}
-@keyframes hfGridDrift{to{background-position:44px 44px;}}
+.hero-fa::before{content:'';position:absolute;top:-25%;right:-5%;width:60%;height:90%;background:radial-gradient(circle,rgba(255,215,0,0.18) 0%,transparent 58%);filter:blur(55px);pointer-events:none;z-index:0;}.hero-fa-glow2{position:absolute;bottom:-15%;left:8%;width:35%;height:50%;background:radial-gradient(circle,rgba(255,160,0,0.06) 0%,transparent 65%);filter:blur(40px);pointer-events:none;z-index:0;}.hero-fa::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,215,0,0.12) 40%,rgba(255,215,0,0.06) 60%,transparent);z-index:3;}
+.hf-grid{display:none;}
+.hf-mountain{position:absolute;bottom:0;left:0;right:0;height:100%;z-index:0;pointer-events:none;overflow:hidden;}
+.hf-mountain svg{width:100%;height:100%;}
 .hf-copy{position:relative;z-index:2;max-width:560px;}
 .hf-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.16);color:var(--gold);font-size:0.74rem;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:999px;margin-bottom:1.3rem;}
 .hf-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:hfPing 1.8s infinite;}
 @keyframes hfPing{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}70%{box-shadow:0 0 0 8px rgba(34,197,94,0);}100%{box-shadow:0 0 0 0 rgba(34,197,94,0);}}
-.hero-fa h1{font-size:clamp(2.3rem,5vw,3.8rem);line-height:1.05;font-weight:900;letter-spacing:-0.02em;margin-bottom:1rem;color:var(--text);}
+.hero-fa h1{font-size:clamp(2.4rem,5.2vw,4.1rem);line-height:1.04;font-weight:900;letter-spacing:-0.025em;margin-bottom:.9rem;color:var(--text);}
 .hero-fa h1 .grad{background:linear-gradient(135deg,#FFD700,#FFC107 55%,#FFD700);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.hf-sub{font-size:1.05rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.8rem;}
+.hf-sub{font-size:1rem;color:var(--text-muted);line-height:1.55;margin-bottom:1.4rem;}
 .hero-fa .hero-buttons{display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:flex-start;}
-.hf-trust{margin-top:1.5rem;display:flex;gap:1.4rem;flex-wrap:wrap;color:var(--text-faint);font-size:0.8rem;}
+.hf-trust{margin-top:1.4rem;display:flex;gap:1.6rem;flex-wrap:wrap;color:var(--text-faint);font-size:0.78rem;padding-top:1rem;border-top:1px solid rgba(255,215,0,0.07);}
 .hf-trust b{color:var(--gold);}
 .hf-engine{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:0.5rem 0;}
 .hf-regime{max-width:340px;width:100%;display:flex;align-items:center;justify-content:center;gap:0.55rem;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.3);border-radius:999px;padding:0.5rem 1rem;font-size:0.78rem;font-weight:900;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:0.35rem;transition:background .45s,border-color .45s;}
@@ -1220,7 +1337,63 @@
 .hf-marker{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--gold);transform:translate(-50%,-50%);left:78%;transition:left .9s cubic-bezier(.5,0,.2,1),border-color .4s;box-shadow:0 0 12px rgba(255,215,0,0.7);}
 .hf-scale{display:flex;justify-content:space-between;font-size:0.63rem;color:var(--text-faint);margin-top:0.45rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
 @media(max-width:900px){.hero-fa{grid-template-columns:1fr;min-height:auto;padding-top:2.2rem;gap:2.3rem;}.hf-engine{order:2;margin:0 auto;}.hf-copy{order:1;text-align:center;}.hf-badge{margin-left:auto;margin-right:auto;}.hero-fa .hero-buttons{justify-content:center;}.hf-trust{justify-content:center;}}
-</style>
+
+        /* ─── MINI DEFS HERO ─── */
+        .hf-defs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1rem 0;}
+        .hf-def-card{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-left:3px solid rgba(255,215,0,.45);border-radius:0 10px 10px 0;padding:.75rem .9rem;transition:background .2s;}.hf-def-card:hover{background:rgba(255,215,0,.07);}
+        .hf-def-label{display:block;font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;}
+        .hf-def-text{display:block;font-size:.78rem;color:var(--text-muted);line-height:1.5;}
+
+        /* ─── MANIFESTE QUOTE ─── */
+        .hero-manifeste{border-left:2px solid rgba(255,215,0,.3);padding:.5rem 0 .5rem .9rem;font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.6;margin:.6rem 0 1.4rem;font-style:italic;letter-spacing:.01em;}
+        .hero-manifeste strong{color:rgba(255,215,0,.7);font-style:normal;}
+
+        /* ─── LEVIER STRIP ─── */
+        .levier-strip{position:relative;z-index:1;background:rgba(239,68,68,.06);border-top:1px solid rgba(239,68,68,.22);border-bottom:1px solid rgba(239,68,68,.22);padding:1rem 2rem;display:flex;gap:1.4rem;justify-content:center;align-items:center;flex-wrap:wrap;}
+        .ls-item{font-size:.79rem;color:rgba(255,255,255,.65);display:flex;align-items:center;gap:.35rem;}
+        .ls-item strong{color:#f87171;}
+        .ls-sep{color:rgba(239,68,68,.3);font-size:.9rem;}
+        .ls-cta{font-size:.79rem;font-weight:700;color:#f87171;border:1px solid rgba(239,68,68,.3);padding:.32rem .85rem;border-radius:5px;text-decoration:none;transition:background .2s;white-space:nowrap;}
+        .ls-cta:hover{background:rgba(239,68,68,.1);}
+
+        /* ─── DANGER CARDS ─── */
+        .danger-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .danger-card{background:rgba(239,68,68,.035);border:1px solid rgba(239,68,68,.16);border-radius:16px;padding:1.8rem 1.5rem;position:relative;overflow:hidden;}
+        .danger-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(239,68,68,.55),transparent);}
+        .dc-stat{font-size:3rem;font-weight:900;color:#ef4444;line-height:1;margin-bottom:.65rem;letter-spacing:-.02em;}
+        .dc-title{font-size:.93rem;font-weight:700;color:var(--text);margin-bottom:.4rem;}
+        .dc-desc{font-size:.81rem;color:var(--text-muted);line-height:1.55;}
+        .dc-source{font-size:.68rem;color:var(--text-faint);margin-top:.8rem;font-style:italic;}
+
+        /* ─── TIMELINE ─── */
+        .lv-timeline{margin-top:2.8rem;display:flex;flex-direction:column;}
+        .tl-row{display:grid;grid-template-columns:80px 24px 1fr;gap:0 1rem;align-items:start;}
+        .tl-yr{text-align:right;padding-top:.25rem;}
+        .tl-yr span:first-child{display:block;font-size:1.05rem;font-weight:900;color:#ef4444;}
+        .tl-yr span:last-child{display:block;font-size:.62rem;color:var(--text-faint);margin-top:2px;letter-spacing:.3px;}
+        .tl-spine{display:flex;flex-direction:column;align-items:center;}
+        .tl-dot{width:10px;height:10px;border-radius:50%;background:#ef4444;box-shadow:0 0 10px rgba(239,68,68,.5);margin-top:.35rem;flex-shrink:0;}
+        .tl-bar{width:2px;flex:1;background:linear-gradient(rgba(239,68,68,.35),rgba(239,68,68,.05));min-height:72px;}
+        .tl-body{padding-bottom:2rem;}
+        .tl-etitle{font-size:.93rem;font-weight:700;color:var(--text);padding-top:.2rem;}
+        .tl-edesc{font-size:.8rem;color:var(--text-muted);margin-top:.3rem;line-height:1.55;}
+        .tl-etag{display:inline-block;font-size:.63rem;font-weight:700;background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.18);padding:.12rem .45rem;border-radius:4px;margin-top:.5rem;text-transform:uppercase;letter-spacing:.5px;}
+
+        /* ─── PILIERS ─── */
+        .piliers-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.1rem;margin-top:2.5rem;}
+        .pilier-card{background:linear-gradient(135deg,rgba(255,215,0,.04),rgba(255,215,0,.01));border:1px solid rgba(255,215,0,.13);border-radius:16px;padding:2rem 1.5rem;}
+        .pi-icon{font-size:2rem;margin-bottom:.9rem;}
+        .pi-title{font-size:1.02rem;font-weight:800;color:var(--text);margin-bottom:.55rem;letter-spacing:-.01em;}
+        .pi-desc{font-size:.83rem;color:var(--text-muted);line-height:1.6;}
+        .pi-tag{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.69rem;font-weight:700;color:var(--gold);letter-spacing:.4px;}
+
+        @media(max-width:700px){
+          .hf-defs{grid-template-columns:1fr;}
+          .levier-strip{flex-direction:column;gap:.7rem;}
+          .tl-row{grid-template-columns:68px 20px 1fr;}
+        }
+
+        </style>
 </head>
 <body>
 
@@ -1228,7 +1401,7 @@
   <div class="nav-container">
     <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
       <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span>
-      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+      <span class="logo-sub">INVESTISSEMENT SANS LEVIER</span>
     </a>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -1238,6 +1411,7 @@
       <li><a href="marches.html">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
       <li><a href="partenaires.html">Partenaires</a></li>
+      <li><a href="education.html">Éducation</a></li>
       <li class="nav-item-drop">
         <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -1323,26 +1497,65 @@
 <main>
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero-fa section" id="home" itemscope itemtype="https://schema.org/WebPageElement">
-  <div class="hf-grid"></div>
+  <div class="hero-fa-glow2" aria-hidden="true"></div>
+  <div class="hf-mountain" aria-hidden="true">
+    <svg viewBox="0 0 1200 360" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="mtFill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="rgba(255,215,0,0.06)"/>
+          <stop offset="100%" stop-color="rgba(255,215,0,0)"/>
+        </linearGradient>
+      </defs>
+      <!-- Zone remplie -->
+      <path d="M0,360 L0,340 L100,318 L220,298 L310,308 L400,265 L490,220 L570,232 L650,185 L750,155 L830,168 L920,110 L1040,72 L1140,42 L1200,22 L1200,360 Z"
+            fill="url(#mtFill)"/>
+      <!-- Ligne principale -->
+      <path d="M0,340 L100,318 L220,298 L310,308 L400,265 L490,220 L570,232 L650,185 L750,155 L830,168 L920,110 L1040,72 L1140,42 L1200,22"
+            stroke="rgba(255,215,0,0.12)" stroke-width="1.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <!-- Points jalons -->
+      <circle cx="490" cy="220" r="3" fill="rgba(255,215,0,0.3)"/>
+      <circle cx="750" cy="155" r="3" fill="rgba(255,215,0,0.4)"/>
+      <circle cx="920" cy="110" r="3.5" fill="rgba(255,215,0,0.5)"/>
+      <circle cx="1200" cy="22" r="4.5" fill="rgba(255,215,0,0.75)"/>
+      <!-- Label sommet -->
+      <text x="1168" y="19" font-size="10" fill="rgba(255,215,0,0.7)" font-family="-apple-system,sans-serif" font-weight="700" text-anchor="end">+247%</text>
+      <!-- Années -->
+      <text x="12"   y="354" font-size="9" fill="rgba(255,255,255,0.12)" font-family="sans-serif">2018</text>
+      <text x="478"  y="354" font-size="9" fill="rgba(255,255,255,0.12)" font-family="sans-serif">2020</text>
+      <text x="738"  y="354" font-size="9" fill="rgba(255,255,255,0.12)" font-family="sans-serif">2022</text>
+      <text x="1160" y="354" font-size="9" fill="rgba(255,255,255,0.12)" font-family="sans-serif" text-anchor="end">2026</text>
+    </svg>
+  </div>
+  </div>
   <div class="hf-copy">
-    <span class="hf-badge"><span class="hf-dot"></span> Analyse fondamentale en direct</span>
-    <h1 itemprop="headline">Le marché,<br><span class="grad">décodé pour toi.</span></h1>
-    <p class="hf-sub" itemprop="description">Des banques centrales jusqu'à ton biais de trading : Forex Average transforme la macro en un signal clair — <b style="color:var(--text);">haussier, baissier ou neutre</b> — sur le Forex, les cryptos et les matières premières.</p>
+    <span class="hf-badge"><span class="hf-dot"></span> Investissement · Zéro levier · Zéro ruine</span>
+    <h1 itemprop="headline">Les marchés financiers<br><span class="grad">sans risque de ruine.</span></h1>
+    <p class="hf-sub" itemprop="description">Taux directeurs · Cycles macro · Flux de capitaux — <strong style="color:var(--text);">sans levier, sans liquidation, sans ruine.</strong></p>
+
+    <div class="hf-defs">
+      <div class="hf-def-card">
+        <span class="hf-def-label">Le Risque</span>
+        <span class="hf-def-text">Cycles macro · Flux de capitaux · Bonne exposition — toujours du bon côté du marché.</span>
+      </div>
+      <div class="hf-def-card">
+        <span class="hf-def-label">Analyse Fondamentale</span>
+        <span class="hf-def-text">Taux directeurs · Inflation · Cycles de dette — anticiper les grands mouvements avant qu'ils arrivent.</span>
+      </div>
+    </div>
+
+    <div class="hero-manifeste">Rejoignez-nous — analysez <strong>sans émotion</strong>, sans levier, sans ruine.</div>
+
     <div class="hero-buttons">
       <a href="register.html" class="btn-primary" aria-label="Créer un compte gratuit">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" y1="8" x2="19" y2="14"></line><line x1="22" y1="11" x2="16" y2="11"></line></svg>
         Créer mon compte gratuit
       </a>
-      <a href="pricing.html" class="btn-secondary" aria-label="Voir les plans VIP">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        Passer VIP
-      </a>
-      <a href="graphique.html" class="btn-secondary" aria-label="Graphiques Live avec IA">
+      <a href="marches.html" class="btn-secondary" aria-label="Voir les analyses">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-        Graphiques Live
+        Voir les analyses
       </a>
     </div>
-    <div class="hf-trust"><span><b>28</b> instruments analysés</span><span><b>5</b> piliers par marché</span><span><b>100%</b> gratuit pour commencer</span></div>
+    <div class="hf-trust"><span><b>28</b> marchés suivis</span><span><b>0×</b> effet de levier</span><span><b>100%</b> analyse fondamentale</span></div>
   </div>
   <div class="hf-engine" aria-hidden="true">
     <div class="hf-regime" id="hfRegime"><span class="rlabel">Régime marché</span> <span id="hfRegimeVal">RISK-ON</span></div>
@@ -1362,43 +1575,150 @@
   </div>
 </section>
 
-<!-- ═══════════════════ TRACK RECORD STRIP ═══════════════════ -->
-<div class="track-strip" id="track-record">
-    <span class="track-strip-label">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right:0.4rem;">
-            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-            <polyline points="13 2 13 9 20 9"></polyline>
-        </svg>
-        Transparence & Historique
-    </span>
-    <a href="https://app.binance.com/uni-qr/cpro/Square-Creator-513575965?l=fr&r=KIFCKU1W&uc=app_square_share_link&us=copylink" target="_blank" rel="noopener noreferrer" class="track-binance" aria-label="Profil Binance – Historique Spot & Futures">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline;">
-            <circle cx="12" cy="12" r="10"></circle>
-        </svg>
-        Binance – Spot & Futures
-    </a>
-    <a href="https://www.gate.com/fr/profile/Forexaverage" target="_blank" rel="noopener noreferrer" class="track-gate" aria-label="Performances Gate.io – Actifs émergents et Crypto Low-caps">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline;">
-            <circle cx="12" cy="12" r="10"></circle>
-        </svg>
-        Gate.io – Crypto & Low-caps
-    </a>
-    <a href="https://www.myfxbook.com/portfolio/tracking-record/11855178" target="_blank" rel="noopener noreferrer" class="track-myfxbook" aria-label="Historique Forex Myfxbook">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline;">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        Myfxbook – Forex
-    </a>
+<!-- ═══════════════════ LEVIER WARNING STRIP ═══════════════════ -->
+<div class="levier-strip">
+  <div class="ls-item">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+    <strong>74%</strong>&nbsp;des comptes CFD finissent à zéro (ESMA)
+  </div>
+  <span class="ls-sep">·</span>
+  <div class="ls-item">LTCM 1998 : <strong>$125 milliards</strong> liquidés en 4 semaines</div>
+  <span class="ls-sep">·</span>
+  <div class="ls-item">2008 : levier bancaire <strong>30:1</strong> → crise mondiale</div>
+  <span class="ls-sep">·</span>
+  <a href="education.html" class="ls-cta">Notre approche →</a>
 </div>
+
+<!-- ═══════════════════ LE LEVIER — MACHINE À RUINE ═══════════════════ -->
+<section class="section section-padded" style="background:var(--dark2);border-top:1px solid rgba(239,68,68,.1);">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-eyebrow" style="color:#f87171;">Données réelles · Chiffres officiels</span>
+      <h2 class="section-title">Le levier : la machine à ruine</h2>
+      <p class="section-sub" style="margin:0 auto;">L'effet de levier est présenté comme un outil de performance. Les chiffres montrent que c'est une arme de destruction du capital.</p>
+    </div>
+    <div class="danger-cards">
+      <div class="danger-card">
+        <div class="dc-stat">74%</div>
+        <div class="dc-title">des comptes CFD perdent leur capital</div>
+        <div class="dc-desc">Chiffre officiel de l'ESMA. Obligatoirement affiché par tous les brokers régulés en Europe. Trois traders sur quatre perdent leur mise.</div>
+        <div class="dc-source">Source : ESMA, Autorité européenne des marchés financiers</div>
+      </div>
+      <div class="danger-card">
+        <div class="dc-stat">−100%</div>
+        <div class="dc-title">levier ×10 sur un mouvement de 10%</div>
+        <div class="dc-desc">Un mouvement adverse de 10% avec un levier ×10 efface 100% du capital. Pas de récupération. Liquidation instantanée et définitive.</div>
+        <div class="dc-source">Mathématique irréfutable · valable sur tout marché</div>
+      </div>
+      <div class="danger-card">
+        <div class="dc-stat">$1T+</div>
+        <div class="dc-title">liquidés en crypto en 2022</div>
+        <div class="dc-desc">FTX, Terra Luna, Three Arrows Capital. Plus d'un trillion de dollars liquidés. Le levier au cœur de chaque effondrement — et de chaque ruine individuelle.</div>
+        <div class="dc-source">Source : Coinglass, 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TIMELINE — LE LEVIER À CHAQUE ÈRE ═══════════════════ -->
+<section class="section section-padded" style="background:var(--dark);border-top:1px solid rgba(239,68,68,.08);">
+  <div class="container" style="max-width:820px;">
+    <div style="text-align:center;">
+      <span class="section-eyebrow" style="color:#f87171;">100 ans d'histoire économique</span>
+      <h2 class="section-title">Le levier à chaque grande ère</h2>
+      <p class="section-sub" style="margin:0 auto;">Dans chaque crise majeure depuis un siècle, le levier transforme une correction normale en catastrophe personnelle irréversible.</p>
+    </div>
+    <div class="lv-timeline">
+      <div class="tl-row">
+        <div class="tl-yr"><span>1929</span><span>Euphorie</span></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-bar"></div></div>
+        <div class="tl-body">
+          <div class="tl-etitle">Black Tuesday — Krach de Wall Street</div>
+          <div class="tl-edesc">Levier 10:1 généralisé sur les actions. Appels de marge en cascade. Le marché perd 89% en 3 ans. Des millions de familles intégralement ruinées.</div>
+          <span class="tl-etag">Levier 10:1</span>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr"><span>1998</span><span>Asie / LTCM</span></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-bar"></div></div>
+        <div class="tl-body">
+          <div class="tl-etitle">Faillite de LTCM — Le hedge fund des Prix Nobel</div>
+          <div class="tl-edesc">Géré par deux prix Nobel d'économie. Levier de 25:1. $125 milliards liquidés en 4 semaines. La Fed a dû intervenir d'urgence pour éviter une contagion systémique mondiale.</div>
+          <span class="tl-etag">Levier 25:1</span>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr"><span>2008</span><span>Subprimes</span></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-bar"></div></div>
+        <div class="tl-body">
+          <div class="tl-etitle">Crise Financière Mondiale — L'effondrement bancaire</div>
+          <div class="tl-edesc">Les grandes banques à levier 30:1 sur des actifs toxiques. Lehman Brothers. Bear Stearns. $10 trillions de richesse mondiale évaporés. La cause : le levier, partout, sur tout.</div>
+          <span class="tl-etag">Levier 30:1</span>
+        </div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-yr"><span>2022</span><span>Crypto</span></div>
+        <div class="tl-spine"><div class="tl-dot"></div><div class="tl-bar" style="min-height:0;background:linear-gradient(rgba(239,68,68,.3),transparent);"></div></div>
+        <div class="tl-body">
+          <div class="tl-etitle">Effondrement Crypto — L'ère du levier numérique</div>
+          <div class="tl-edesc">FTX, Terra Luna, Three Arrows Capital. Plus d'un trillion liquidé. Des particuliers avec du levier ×100 sur des positions crypto — ruinés en quelques heures d'une nuit.</div>
+          <span class="tl-etag">Levier jusqu'à ×100</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:1.5rem;padding:1.1rem 1.5rem;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.14);border-radius:12px;font-size:.88rem;color:var(--text-muted);line-height:1.65;">
+      À chaque ère, le pattern est identique : <strong style="color:var(--text);">le levier amplifie les gains en phase d'euphorie, puis détruit le capital quand la réalité reprend ses droits.</strong>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ NOTRE MÉTHODE — 3 PILIERS ═══════════════════ -->
+<section class="section section-padded" style="background:var(--dark2);border-top:1px solid var(--border);">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-eyebrow">La méthode Forex Average</span>
+      <h2 class="section-title">Investir intelligemment, sans levier</h2>
+      <p class="section-sub" style="margin:0 auto;">Trois piliers pour construire un capital sereinement — en comprenant le "pourquoi" avant le "quand".</p>
+    </div>
+    <div class="piliers-grid">
+      <div class="pilier-card">
+        <div class="pi-icon">🏛️</div>
+        <div class="pi-title">Analyse Fondamentale</div>
+        <div class="pi-desc">Banques centrales, taux directeurs, inflation, cycles de dette. Comprendre les forces macro qui déplacent les marchés sur le long terme — pas les bougies du day trading.</div>
+        <span class="pi-tag">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+          Fondamentaux en direct
+        </span>
+      </div>
+      <div class="pilier-card">
+        <div class="pi-icon">📐</div>
+        <div class="pi-title">Cycles Économiques</div>
+        <div class="pi-desc">100 ans d'histoire économique cartographiés. Identifier dans quelle ère on se trouve — stagflation, expansion, crise de dette — pour investir dans le bon sens du cycle.</div>
+        <span class="pi-tag">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Carte mentale 100 ans
+        </span>
+      </div>
+      <div class="pilier-card">
+        <div class="pi-icon">🛡️</div>
+        <div class="pi-title">Capital Protégé</div>
+        <div class="pi-desc">Position sizing strict. Maximum 2% du capital par position. Zéro effet de levier. La survie du capital est la règle absolue n°1 — sans exception, jamais.</div>
+        <span class="pi-tag">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Zéro liquidation possible
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════ OFFRE VIP ═══════════════════ -->
 <section class="section section-padded" id="vip" style="background:var(--dark2); border-top:1px solid var(--border);">
     <div class="container">
         <div style="text-align:center; margin-bottom:2.5rem;">
             <span class="section-eyebrow">Offre Unique</span>
-            <h2 class="section-title">Accès VIP Forex Average</h2>
-            <p class="section-sub" style="margin:0 auto;">Des outils et analyses pour mieux structurer votre prise de décision — analyses de marché, graphiques annotés par IA et communauté privée.</p>
+            <h2 class="section-title">Accès VIP — L'investisseur éclairé</h2>
+            <p class="section-sub" style="margin:0 auto;">Des analyses fondamentales et outils pour investir avec conviction — cycles économiques, signaux macro en temps réel et communauté d'investisseurs long terme.</p>
         </div>
 
         <div style="max-width:520px; margin:0 auto; background:linear-gradient(135deg,rgba(255,215,0,0.06),rgba(255,193,7,0.03)); border:1px solid rgba(255,215,0,0.35); border-radius:20px; padding:2.5rem; position:relative; overflow:hidden;">
@@ -1413,13 +1733,13 @@
 
             <ul style="list-style:none;display:flex;flex-direction:column;gap:0.9rem;margin-bottom:2rem;">
                 <li style="display:flex;align-items:center;gap:0.8rem;font-size:0.92rem;color:rgba(255,255,255,0.85);">
-                    <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Analyses et scénarios de marché en temps réel
+                    <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Analyses fondamentales et cycles économiques
                 </li>
                 <li style="display:flex;align-items:center;gap:0.8rem;font-size:0.92rem;color:rgba(255,255,255,0.85);">
                     <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Graphiques annotés par IA
                 </li>
                 <li style="display:flex;align-items:center;gap:0.8rem;font-size:0.92rem;color:rgba(255,255,255,0.85);">
-                    <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Analyses premium complètes (Forex, Crypto, Or)
+                    <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Analyses long terme premium (Actions, Or, Devises, Crypto)
                 </li>
                 <li style="display:flex;align-items:center;gap:0.8rem;font-size:0.92rem;color:rgba(255,255,255,0.85);">
                     <span style="color:var(--gold);font-size:1rem;flex-shrink:0;">✦</span> Canal Telegram privé membres VIP
@@ -1488,7 +1808,7 @@
                     <div style="display:flex; align-items:center; justify-content:center; background:rgba(255,215,0,0.03); border-left:1px solid rgba(255,215,0,0.1);"><span style="color:var(--green); font-size:1.1rem; font-weight:700;">✓</span></div>
                 </div>
                 <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; border-bottom:1px solid rgba(255,255,255,0.04);">
-                    <div style="padding:0.85rem 1rem; font-size:0.875rem; color:var(--text); font-weight:500;">Calculateurs (position, levier, R/R)</div>
+                    <div style="padding:0.85rem 1rem; font-size:0.875rem; color:var(--text); font-weight:500;">Simulateur investisseur (position sizing, croissance long terme)</div>
                     <div style="display:flex; align-items:center; justify-content:center; border-left:1px solid rgba(255,255,255,0.04);"><span style="color:var(--green); font-size:1.1rem; font-weight:700;">✓</span></div>
                     <div style="display:flex; align-items:center; justify-content:center; border-left:1px solid rgba(255,255,255,0.04);"><span style="color:var(--green); font-size:1.1rem; font-weight:700;">✓</span></div>
                     <div style="display:flex; align-items:center; justify-content:center; background:rgba(255,215,0,0.03); border-left:1px solid rgba(255,215,0,0.1);"><span style="color:var(--green); font-size:1.1rem; font-weight:700;">✓</span></div>
@@ -1536,7 +1856,7 @@
                     <div></div><div></div><div style="background:rgba(255,215,0,0.03); border-left:1px solid rgba(255,215,0,0.1);"></div>
                 </div>
                 <div style="display:grid; grid-template-columns:1.8fr 1fr 1fr 1fr; border-bottom:1px solid rgba(255,255,255,0.04);">
-                    <div style="padding:0.85rem 1rem; font-size:0.875rem; color:var(--text); font-weight:500;">Analyses et scénarios de marché en temps réel</div>
+                    <div style="padding:0.85rem 1rem; font-size:0.875rem; color:var(--text); font-weight:500;">Analyses fondamentales et cycles économiques</div>
                     <div style="display:flex; align-items:center; justify-content:center; border-left:1px solid rgba(255,255,255,0.04);"><span style="color:rgba(255,255,255,0.15); font-size:1rem;">—</span></div>
                     <div style="display:flex; align-items:center; justify-content:center; border-left:1px solid rgba(255,255,255,0.04);"><span style="color:rgba(255,255,255,0.15); font-size:1rem;">—</span></div>
                     <div style="display:flex; align-items:center; justify-content:center; background:rgba(255,215,0,0.03); border-left:1px solid rgba(255,215,0,0.1);"><span style="color:var(--green); font-size:1.1rem; font-weight:700;">✓</span></div>
@@ -2077,7 +2397,7 @@
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer role="contentinfo">
     <div class="footer-logo">FOREX AVERAGE</div>
-    <div class="footer-tagline">FOREX · CRYPTO · MATIÈRES PREMIÈRES</div>
+    <div class="footer-tagline">INVESTISSEMENT · ANALYSE · SANS LEVIER</div>
 
     <div class="footer-links">
         <a href="analyses.html">
@@ -2136,7 +2456,7 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right:0.5rem; vertical-align:middle;">
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 15h-2v-2h2v2m0-4h-2V7h2v6z"></path>
         </svg>
-        Le contenu de ce site est fourni à titre informatif et éducatif uniquement. Il ne constitue pas un conseil en investissement. Le trading Forex, Crypto et Matières Premières comporte des risques significatifs de perte en capital. Les performances passées ne garantissent pas les résultats futurs.
+        Le contenu de ce site est fourni à titre informatif et éducatif uniquement. Il ne constitue pas un conseil en investissement. Investir sur les marchés financiers comporte des risques de perte en capital. Les performances passées ne garantissent pas les résultats futurs.
     </div>
 
     <div class="footer-legal">
@@ -2231,11 +2551,11 @@ window.addEventListener('load', async () => {
 });
 
 </script>
-<script src="chatbot.js"></script>
+<script src="chatbot.js?v=13"></script>
 <script src="newsletter.js"></script>
 
 
-  <script src="fa-access.js"></script>
+  <script src="fa-access.js?v=13"></script>
 
 
 
