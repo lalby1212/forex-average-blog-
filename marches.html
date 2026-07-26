@@ -443,18 +443,7 @@
 </head>
 <body>
 <!-- ── Auth Guard ── -->
-<script>
-(function(){
-  try{
-    var u=localStorage.getItem('fa_user');
-    var t=localStorage.getItem('fa_token');
-    if(!u||!t){
-      var page=location.pathname.split('/').pop()||'';
-      window.location.replace('login.html'+(page?'?redirect='+encodeURIComponent(page):''));
-    }
-  }catch(e){}
-})();
-</script>
+
 <!-- ── End Auth Guard ── -->
 
 <nav id="mainNav">
@@ -627,7 +616,7 @@
     </div>
     <div class="section-wrap">
         <div class="results-bar">
-            <span class="results-count"><strong id="articleCount">11</strong> analyses disponibles</span>
+            <span class="results-count"><strong id="articleCount">12</strong> analyses disponibles</span>
             <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" style="font-size:0.82rem;color:var(--gold);text-decoration:none;font-weight:600;">📱 Alertes Telegram</a>
         </div>
         <div class="articles-grid" id="articlesGrid">
@@ -671,7 +660,24 @@
                 </div>
             </a>
 
-            <a href="analyses/eurusd-setup-mars-2026.html" class="article-card" data-category="forex">
+            
+            <!-- ★ ARTICLE GRATUIT — NATGAS JUILLET 2026 -->
+            <a href="analyses/natgas-juillet-2026.html" class="article-card" data-category="commodities" style="border-color:rgba(56,189,248,0.25);">
+              <div class="article-card-header">
+                <span class="level-pill" style="background:rgba(56,189,248,0.12);color:#38bdf8;border:1px solid rgba(56,189,248,0.25);">⛽ Commodités</span>
+                <span style="font-size:.72rem;color:rgba(255,255,255,0.35);">13 juil. 2026</span>
+              </div>
+              <div class="article-card-title">Gaz Naturel — Rebond Technique en Zone de Survente</div>
+              <div class="article-card-desc">RSI 29.27 en survente extrême · Setup limite long à 2,856 · Surplus EIA +185 Bcf · R:R 2.3:1 · Analyse technique H4 + contexte fondamental EIA</div>
+              <div class="article-card-footer">
+                <span class="article-tag">H4</span>
+                <span class="article-tag">RSI Survente</span>
+                <span class="article-tag">EIA</span>
+                <span style="margin-left:auto;font-size:.72rem;color:#22c55e;font-weight:700;">✓ Accès gratuit</span>
+              </div>
+            </a>
+
+            <a href="eurusd-setup-mars-2026.html" class="article-card" data-category="forex">
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,193,7,0.08));">EUR/USD</div>
                 <div class="article-body">
                     <div class="article-meta"><span class="tag tag-bull">ACHAT</span><span class="tag tag-forex">FOREX</span><span class="article-date">14 Mars 2026</span></div>
@@ -682,7 +688,7 @@
                 </div>
             </a>
 
-            <a href="analyses/bitcoin-mars-2026.html" class="article-card" data-category="crypto">
+            <a href="bitcoin-mars-2026.html" class="article-card" data-category="crypto">
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(245,158,11,0.08));">BTC/USDT</div>
                 <div class="article-body">
                     <div class="article-meta"><span class="tag tag-bull">ACHAT</span><span class="tag tag-crypto">CRYPTO</span><span class="article-date">13 Mars 2026</span></div>
@@ -693,7 +699,7 @@
                 </div>
             </a>
 
-            <a href="analyses/gold-mars-2026.html" class="article-card" data-category="matieres-premieres">
+            <a href="gold-mars-2026.html" class="article-card" data-category="matieres-premieres">
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(245,158,11,0.18),rgba(255,215,0,0.1));">XAU/USD</div>
                 <div class="article-body">
                     <div class="article-meta"><span class="tag tag-bull">ACHAT</span><span class="tag tag-gold">OR</span><span class="article-date">12 Mars 2026</span></div>
@@ -704,7 +710,7 @@
                 </div>
             </a>
 
-            <a href="analyses/gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="false">
+            <a href="gbpjpy-mars-2026.html" class="article-card" data-category="forex" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(239,68,68,0.12),rgba(220,38,38,0.06));">GBP/JPY</div>
                 <div class="article-body">
@@ -716,7 +722,7 @@
                 </div>
             </a>
 
-            <a href="analyses/brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="false">
+            <a href="brent-mars-2026.html" class="article-card" data-category="matieres-premieres" data-vip="false">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(249,115,22,0.16),rgba(234,88,12,0.08));">BRENT</div>
                 <div class="article-body">
@@ -728,7 +734,7 @@
                 </div>
             </a>
 
-            <a href="analyses/sp500-mars-2026.html" class="article-card" data-category="indices" data-vip="true">
+            <a href="sp500-mars-2026.html" class="article-card" data-category="indices" data-vip="true">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(59,130,246,0.16),rgba(37,99,235,0.08));">S&amp;P 500</div>
                 <div class="article-body">
@@ -740,7 +746,7 @@
                 </div>
             </a>
 
-            <a href="analyses/ethereum-mars-2026.html" class="article-card" data-category="crypto" data-vip="true">
+            <a href="ethereum-mars-2026.html" class="article-card" data-category="crypto" data-vip="true">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(99,126,234,0.16),rgba(78,111,216,0.08));">ETH/USDT</div>
                 <div class="article-body">
@@ -752,7 +758,7 @@
                 </div>
             </a>
 
-            <a href="article/forex/eurgbp.html" class="article-card" data-category="forex" data-vip="true">
+            <a href="analyses.html" class="article-card" data-category="forex" data-vip="true">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,193,7,0.08));">EUR/GBP</div>
                 <div class="article-body">
@@ -763,7 +769,7 @@
                 </div>
             </a>
 
-            <a href="article/stratégie/ma-strategie-long-only.html" class="article-card" data-category="strategie" data-vip="true">
+            <a href="analyses.html" class="article-card" data-category="strategie" data-vip="true">
                 <span class="vip-badge">🔒 VIP</span>
                 <div class="article-img" style="background:linear-gradient(135deg,rgba(14,165,233,0.15),rgba(59,130,246,0.08));">STRATÉGIE</div>
                 <div class="article-body">

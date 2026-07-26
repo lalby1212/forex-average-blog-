@@ -267,18 +267,6 @@
         }
         .btn-stripe:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,215,0,0.3); }
 
-        .btn-crypto {
-            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-            padding: 0.75rem 1.2rem; border-radius: 10px;
-            font-size: 0.85rem; font-weight: 600;
-            text-decoration: none; cursor: pointer;
-            border: 1px solid var(--border);
-            background: rgba(255,255,255,0.03);
-            color: var(--text-muted);
-            font-family: inherit; transition: all 0.2s;
-        }
-        .btn-crypto:hover { border-color: rgba(255,215,0,0.4); color: #fff; background: rgba(255,215,0,0.05); }
-
         .pay-secure {
             text-align: center; font-size: 0.72rem; color: var(--text-faint);
             margin-top: 0.4rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem;
@@ -585,6 +573,7 @@
   .whop-modal-hint{padding:0.5rem 1.2rem 1rem;text-align:center;font-size:0.74rem;color:rgba(255,255,255,0.45);}
   #whopMount{min-height:120px;}
 </style>
+  <link rel="stylesheet" href="fa-nav.css?v=13">
 </head>
 <body>
 
@@ -602,6 +591,7 @@
       <li><a href="marches.html">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
       <li><a href="partenaires.html">Partenaires</a></li>
+      <li><a href="education.html">Éducation</a></li>
       <li class="nav-item-drop">
         <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -732,49 +722,12 @@
             <div class="plan-saving">💰 Économie de 20% vs mensuel</div>
             <div class="plan-divider"></div>
             <ul class="plan-features">
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tout du plan mensuel</li>
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Analyses de marché en temps réel</li>
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Graphiques Live + IA (GPT-4o)</li>
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Accès canal Telegram privé</li>
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Paiement par carte ou crypto (Whop)</li>
-                <li><svg class="feat-icon feat-gold" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 3 mois d'accès continu</li>
-            </ul>
-            <div class="pay-buttons">
-                <button type="button" class="btn-stripe" onclick="openWhop('plan_fRWEFJAAhokZP')">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                    Payer — carte ou crypto
-                </button>
-                <div class="pay-secure">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Paiement sécurisé via Whop · SSL
-                </div>
-            </div>
-        </div>
-
-        <!-- PLAN ANNUEL -->
-        <div class="plan-card" id="plan-yearly">
-            <div class="plan-name">Annuel</div>
-            <div class="plan-price">
-                <span class="plan-price-currency">€</span>
-                <span class="plan-price-main">199</span>
-                <span style="font-size:1.5rem;font-weight:900;color:#fff;">.99</span>
-                <span class="plan-price-period">/an</span>
-            </div>
-            <div class="plan-billed">Soit 16.66€/mois · Meilleur tarif</div>
-            <div class="plan-saving">💰 Économie de 33% vs mensuel</div>
-            <div class="plan-divider"></div>
-            <ul class="plan-features">
-                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Tout du plan trimestriel</li>
-                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> 12 mois d'accès complet</li>
-                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Priorité sur les nouveaux outils</li>
-                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Support prioritaire direct</li>
-                <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Paiement par carte ou crypto (Whop)</li>
                 <li><svg class="feat-icon feat-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Meilleur rapport qualité/prix</li>
             </ul>
             <div class="pay-buttons">
                 <button type="button" class="btn-stripe" onclick="openWhop('plan_FQ6nFwuAzvl1x')">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
-                    Payer — carte ou crypto
+                    Payer par carte
                 </button>
                 <div class="pay-secure">
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -888,10 +841,6 @@
                 <p>Nos analyses couvrent le Forex (paires majeures et mineures G10), les Crypto-actifs (BTC, ETH, SOL et altcoins sélectionnés), l'Or (XAU/USD), le Pétrole (WTI & Brent) et les Indices majeurs (S&P 500, Nasdaq, DAX).</p>
             </details>
             <details>
-                <summary>Puis-je payer en crypto ?</summary>
-                <p>Oui. Le paiement en crypto (Bitcoin, Ethereum, USDC…) est proposé sur les plans à paiement unique — trimestriel et annuel — directement dans le checkout Whop. Le plan mensuel (abonnement à renouvellement automatique) se règle par carte. Dans tous les cas, l'accès VIP s'active automatiquement.</p>
-            </details>
-            <details>
                 <summary>Y a-t-il une période d'essai gratuite ?</summary>
                 <p>Nous n'offrons pas d'essai gratuit pour le moment. Cependant, vous pouvez accéder gratuitement à nos outils (calculateurs, graphiques, journal de trading, actualités) en créant un compte gratuit pour tester la qualité de notre plateforme avant de vous abonner.</p>
             </details>
@@ -956,7 +905,7 @@ function setPeriod(period) {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 </script>
-<script src="chatbot.js"></script>
+<script src="chatbot.js?v=13"></script>
 
 
 <script>
@@ -1022,7 +971,7 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
-<script src="fa-access.js"></script>
+<script src="fa-access.js?v=13"></script>
 <!-- ── Checkout Whop intégré ── -->
 <div id="whopModal" class="whop-modal" onclick="if(event.target===this)closeWhop()">
   <div class="whop-modal-box">

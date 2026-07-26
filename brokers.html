@@ -592,21 +592,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css?v=13">
 </head>
 <body>
 <!-- ── Auth Guard ── -->
-<script>
-(function(){
-  try{
-    var u=localStorage.getItem('fa_user');
-    var t=localStorage.getItem('fa_token');
-    if(!u||!t){
-      var page=location.pathname.split('/').pop()||'';
-      window.location.replace('login.html'+(page?'?redirect='+encodeURIComponent(page):''));
-    }
-  }catch(e){}
-})();
-</script>
+
 <!-- ── End Auth Guard ── -->
 
 <nav id="mainNav">
@@ -623,6 +613,7 @@
       <li><a href="marches.html">Marchés</a></li>
       <li><a href="outils.html">Outils</a></li>
       <li><a href="partenaires.html" class="active">Partenaires</a></li>
+      <li><a href="education.html">Éducation</a></li>
       <li class="nav-item-drop">
         <a href="#" role="button">Communauté
           <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -634,7 +625,7 @@
           </a>
           <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
             <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
-            <span><span class="drop-label">Telegram</span><span class="drop-desc">Alertes &amp; signaux live</span></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
           </a>
           <div class="drop-sep"></div>
           <a href="feed.html" class="drop-link">
@@ -947,7 +938,7 @@ function toggleDetails(broker) {
 }
 </script>
 
-<script src="/chatbot.js"></script>
+<script src="/chatbot.js?v=13"></script>
 
 
 <script>
@@ -1013,6 +1004,6 @@ if (!window._FA_NAV_INIT) {
   })();
 }
 </script>
-<script src="fa-access.js"></script>
+<script src="fa-access.js?v=13"></script>
 </body>
 </html>
