@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analyse Bitcoin 100 Ans — Framework Décisionnel | Forex Average</title>
+<link rel="canonical" href="https://forexaverage.com/bitcoin-analyse.html">
+<meta name="description" content="Analyse complète de Bitcoin sur 100 ans de marchés financiers. 5 ères, 10 principes intemporels, 7 filtres décisionnels. Réservé aux membres VIP Forex Average.">
+<meta name="theme-color" content="#FFD700">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="fa-nav.css?v=13">
+<style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --gold:#FFD700; --dark:#000; --card:rgba(14,14,14,0.95);
+            --border:rgba(255,215,0,0.15); --text:#fff;
+            --muted:rgba(255,255,255,0.55); --green:#22c55e; --red:#ef4444;
+        }
+        html { scroll-behavior:smooth; }
+        body {
+            font-family:-apple-system,'SF Pro Text',BlinkMacSystemFont,'Segoe UI',sans-serif;
+            background:var(--dark); color:var(--text); overflow-x:hidden; line-height:1.6;
+        }
+        body::before {
+            content:''; position:fixed; inset:0;
+            background:
+                radial-gradient(ellipse 70% 50% at 15% 20%, rgba(255,215,0,0.05) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 85% 80%, rgba(255,193,7,0.03) 0%, transparent 60%);
+            pointer-events:none; z-index:0;
+        }
+        body::after {
+            content:''; position:fixed; inset:0;
+            background-image:linear-gradient(rgba(255,215,0,0.012) 1px, transparent 1px),
+                             linear-gradient(90deg, rgba(255,215,0,0.012) 1px, transparent 1px);
+            background-size:60px 60px; pointer-events:none; z-index:0;
+        }
+
+        /* NAV */
+        #mainNav { position:sticky; top:0; z-index:1000; background:rgba(7,7,7,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,215,0,0.14); height:62px; }
+        .nav-container { max-width:1380px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; height:100%; }
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; }
+        .nav-links-wrap { display:flex; align-items:center; list-style:none; height:100%; margin:0 0 0 2rem; padding:0; flex:1; }
+        .nav-item > a { display:flex; align-items:center; height:62px; padding:0 0.9rem; color:rgba(255,255,255,0.72); font-size:0.875rem; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s; border-bottom:2px solid transparent; }
+        .nav-item > a:hover, .nav-item > a.nav-active { color:#FFD700; }
+        .nav-item > a.nav-active { border-bottom-color:#FFD700; }
+        .nav-item-drop { position:relative; height:100%; display:flex; align-items:center; }
+        .nav-item-drop > a { display:flex; align-items:center; height:62px; padding:0 0.9rem; color:rgba(255,255,255,0.72); font-size:0.875rem; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s; cursor:pointer; border-bottom:2px solid transparent; gap:0.2rem; }
+        .nav-item-drop > a:hover, .nav-item-drop:hover > a { color:#FFD700; }
+        .nav-chevron { width:13px; height:13px; margin-left:2px; transition:transform .22s ease; flex-shrink:0; }
+        .nav-item-drop:hover .nav-chevron { transform:rotate(180deg); }
+        .drop-panel { display:none; position:absolute; top:calc(100% + 2px); left:0; min-width:270px; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.16); border-radius:14px; padding:0.5rem; box-shadow:0 24px 64px rgba(0,0,0,0.75); z-index:200; animation:dropIn .18s ease; }
+        @keyframes dropIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+        .nav-item-drop:hover .drop-panel { display:block; }
+        .drop-link { display:flex; align-items:center; gap:0.75rem; padding:0.65rem 0.85rem; border-radius:9px; color:rgba(255,255,255,0.75); text-decoration:none; transition:background .15s,color .15s; }
+        .drop-link:hover { background:rgba(255,215,0,0.07); color:#FFD700; }
+        .drop-icon { width:34px; height:34px; border-radius:8px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.95rem; }
+        .drop-label { display:block; font-size:0.875rem; font-weight:600; color:inherit; }
+        .drop-desc { display:block; font-size:0.72rem; color:rgba(255,255,255,0.42); margin-top:1px; }
+        .drop-sep { height:1px; background:rgba(255,255,255,0.06); margin:0.35rem 0.85rem; }
+        .nav-spacer { flex:1; }
+        .nav-auth-guest, .nav-auth-user { display:none; align-items:center; }
+        .nav-login-btn { display:inline-flex; align-items:center; padding:0.42rem 1rem; border:1.5px solid rgba(255,255,255,0.2); border-radius:8px; color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.85rem; font-weight:600; transition:all .2s; white-space:nowrap; }
+        .nav-login-btn:hover { border-color:rgba(255,215,0,0.5); color:#FFD700; }
+        .nav-cta { display:inline-flex; align-items:center; padding:0.42rem 1.1rem; background:linear-gradient(135deg,#FFD700,#FFA000); border-radius:8px; color:#000; text-decoration:none; font-size:0.85rem; font-weight:800; margin-left:0.6rem; transition:all .2s; white-space:nowrap; box-shadow:0 2px 12px rgba(255,215,0,0.25); }
+        .nav-profile-wrap { position:relative; margin-left:0.75rem; }
+        .nav-profile-btn { display:flex; align-items:center; gap:0.45rem; padding:0.38rem 0.75rem 0.38rem 0.5rem; border:1.5px solid rgba(255,215,0,0.2); border-radius:10px; cursor:pointer; transition:border-color .2s; font-size:0.85rem; font-weight:600; color:rgba(255,255,255,0.85); }
+        .nav-profile-wrap.open .nav-profile-btn { border-color:#FFD700; }
+        .nav-profile-wrap.open .nav-chevron { transform:rotate(180deg); }
+        .fa-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-weight:800; font-size:0.8rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .nav-profile-drop { display:none; position:absolute; top:calc(100% + 8px); right:0; min-width:230px; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.16); border-radius:14px; padding:0.5rem; box-shadow:0 24px 64px rgba(0,0,0,0.75); z-index:200; }
+        .nav-profile-wrap.open .nav-profile-drop { display:block; }
+        .profile-header { display:flex; align-items:center; gap:0.6rem; padding:0.65rem 0.85rem 0.75rem; }
+        .profile-name { font-size:0.88rem; font-weight:700; color:#fff; }
+        .fa-plan-badge { font-size:0.65rem; font-weight:800; padding:0.18rem 0.55rem; border-radius:100px; text-transform:uppercase; }
+        .badge-free { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.6); }
+        .badge-vip  { background:rgba(255,215,0,0.2); color:#FFD700; }
+        .nav-burger { display:none; flex-direction:column; justify-content:center; align-items:center; width:40px; height:40px; border:none; background:transparent; cursor:pointer; gap:5px; margin-left:auto; padding:4px; flex-shrink:0; }
+        .nav-burger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.8); border-radius:2px; transition:all .28s ease; transform-origin:center; }
+        .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+        .nav-burger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+        .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
+        @media (max-width:900px) {
+            .nav-burger { display:flex; }
+            .nav-links-wrap { display:none; position:fixed; top:62px; left:0; right:0; bottom:0; background:rgba(5,5,5,0.99); flex-direction:column; align-items:stretch; justify-content:flex-start; padding:1rem 1rem 2rem; overflow-y:auto; z-index:999; height:auto; margin:0; gap:0.15rem; border-top:1px solid rgba(255,215,0,0.12); }
+            .nav-links-wrap.open { display:flex; }
+            body.nav-open { overflow:hidden; }
+            .nav-item, .nav-item-drop { height:auto; display:block; }
+            .nav-item > a, .nav-item-drop > a { height:auto; padding:0.85rem 1rem; border-radius:10px; border-bottom:none; font-size:0.95rem; font-weight:600; color:rgba(255,255,255,0.8); width:100%; }
+            .nav-item-drop:hover .drop-panel { display:none; }
+            .nav-item-drop.mob-open > a { color:#FFD700; }
+            .nav-item-drop.mob-open > a .nav-chevron { transform:rotate(180deg); }
+            .nav-item-drop.mob-open .drop-panel { display:block; position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:10px; margin:0.25rem 0 0.5rem 0.75rem; padding:0.35rem; animation:none; }
+            .nav-spacer { display:none; }
+            .nav-auth-guest, .nav-auth-user { flex-direction:column; align-items:stretch; margin-top:0.5rem; padding-top:0.75rem; border-top:1px solid rgba(255,255,255,0.07); gap:0.5rem; }
+            .nav-login-btn, .nav-cta { justify-content:center; margin-left:0; padding:0.75rem; font-size:0.95rem; }
+            .nav-profile-wrap { margin-left:0; }
+            .nav-profile-btn { width:100%; padding:0.75rem 1rem; border-radius:10px; }
+            .nav-profile-drop { position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:10px; margin-top:0.4rem; }
+        }
+
+        /* HERO */
+        .page-hero { position:relative; z-index:1; padding:2.5rem 2rem 2rem; max-width:1380px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+        .hero-left h1 { font-size:clamp(1.6rem,3vw,2.2rem); font-weight:900; letter-spacing:-0.5px; }
+        .hero-left p { margin-top:0.35rem; color:var(--muted); font-size:0.9rem; }
+        .live-badge { display:inline-flex; align-items:center; gap:0.45rem; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.18); border-radius:100px; padding:0.3rem 0.85rem; font-size:0.75rem; font-weight:600; color:var(--gold); }
+        .live-dot { width:6px; height:6px; border-radius:50%; background:#22c55e; flex-shrink:0; animation:pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+        /* TABS BAR */
+        .main-tabs-wrap { position:relative; z-index:1; max-width:1380px; margin:0 auto; padding:0 2rem 1.5rem; }
+        .main-tabs { display:flex; gap:0.35rem; flex-wrap:wrap; background:rgba(14,14,14,0.85); border:1px solid rgba(255,215,0,0.12); border-radius:14px; padding:0.4rem; }
+        .mtab { display:flex; align-items:center; gap:0.5rem; padding:0.6rem 1.1rem; border-radius:10px; border:none; background:transparent; color:rgba(255,255,255,0.55); font-size:0.88rem; font-weight:600; cursor:pointer; transition:all .2s; white-space:nowrap; flex:1; justify-content:center; font-family:inherit; }
+        .mtab:hover { color:#fff; background:rgba(255,255,255,0.05); }
+        .mtab.active { background:rgba(255,215,0,0.1); color:var(--gold); border:1px solid rgba(255,215,0,0.22); }
+
+        /* TAB PANELS */
+        .tab-panel { display:none; }
+        .tab-panel.active { display:block; }
+
+        /* SECTION WRAP */
+        .section-wrap { position:relative; z-index:1; max-width:1380px; margin:0 auto; padding:0 2rem 4rem; }
+
+        /* ACTUALITES */
+        .cat-bar { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.2rem; }
+        .cat-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.45rem 0.9rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--muted); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all .18s; white-space:nowrap; font-family:inherit; }
+        .cat-btn:hover { border-color:rgba(255,215,0,0.3); color:#fff; }
+        .cat-btn.active { background:rgba(255,215,0,0.1); border-color:rgba(255,215,0,0.35); color:var(--gold); }
+        .cat-count { font-size:0.72rem; background:rgba(255,255,255,0.08); padding:0.1rem 0.45rem; border-radius:100px; }
+        .top-bar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.2rem; }
+        .sources-label { font-size:0.78rem; color:var(--muted); }
+        .last-update { color:rgba(255,255,255,0.3); font-size:0.75rem; margin-left:0.5rem; }
+        .refresh-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.38rem 0.75rem; border-radius:7px; border:1px solid rgba(255,255,255,0.12); background:transparent; color:var(--muted); font-size:0.8rem; font-weight:600; cursor:pointer; transition:all .18s; font-family:inherit; }
+        .refresh-btn:hover { border-color:rgba(255,215,0,0.3); color:var(--gold); }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .refresh-btn.spinning svg { animation:spin 0.6s linear; }
+        .news-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:1rem; }
+        .news-card { display:flex; flex-direction:column; gap:0.55rem; padding:1.1rem 1.2rem; border-radius:12px; background:rgba(16,16,16,0.92); border:1px solid rgba(255,255,255,0.07); text-decoration:none; color:inherit; transition:all .2s; }
+        .news-card:hover { border-color:rgba(255,215,0,0.25); transform:translateY(-2px); }
+        .card-top { display:flex; justify-content:space-between; align-items:center; gap:0.5rem; }
+        .source-badge { font-size:0.7rem; font-weight:700; padding:0.18rem 0.55rem; background:rgba(255,215,0,0.1); color:var(--gold); border-radius:5px; text-transform:uppercase; }
+        .card-date { font-size:0.72rem; color:rgba(255,255,255,0.3); }
+        .card-title { font-size:0.91rem; font-weight:700; line-height:1.4; color:#fff; }
+        .card-summary { font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.5; }
+        .card-footer { display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:0.4rem; }
+        .read-more { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.78rem; font-weight:600; color:var(--gold); }
+        .card-full-date { font-size:0.72rem; color:rgba(255,255,255,0.2); }
+        .skeleton-card { display:flex; flex-direction:column; gap:0.6rem; padding:1.1rem 1.2rem; border-radius:12px; background:rgba(16,16,16,0.7); border:1px solid rgba(255,255,255,0.05); }
+        .skel { background:rgba(255,255,255,0.07); border-radius:4px; animation:shimmer 1.4s infinite; }
+        @keyframes shimmer { 0%,100%{opacity:.5} 50%{opacity:1} }
+        .state-box { grid-column:1/-1; text-align:center; padding:3.5rem 2rem; }
+        .state-icon { font-size:2.5rem; display:block; margin-bottom:1rem; }
+        .state-box h3 { font-size:1.15rem; margin-bottom:0.5rem; }
+        .state-box p { color:var(--muted); font-size:0.85rem; max-width:360px; margin:0 auto 1.2rem; }
+        .retry-btn { display:inline-flex; align-items:center; gap:0.4rem; padding:0.6rem 1.2rem; border-radius:8px; border:1px solid rgba(255,215,0,0.3); background:rgba(255,215,0,0.07); color:var(--gold); font-size:0.85rem; font-weight:600; cursor:pointer; font-family:inherit; }
+        /* News gate */
+        .news-gate-wrap { position:relative; }
+        .news-gate-fade { position:absolute; left:0; right:0; bottom:0; height:280px; background:linear-gradient(to bottom,transparent,rgba(4,4,4,0.96)); z-index:5; pointer-events:none; }
+        .news-gate-card { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); z-index:6; background:rgba(12,12,12,0.97); border:1px solid rgba(255,215,0,0.22); border-radius:18px; padding:1.6rem 2rem; max-width:400px; width:90%; text-align:center; box-shadow:0 30px 80px rgba(0,0,0,0.75); backdrop-filter:blur(24px); }
+        .news-hidden-blur { filter:blur(6px); pointer-events:none; user-select:none; opacity:0.4; }
+
+        /* ANALYSES */
+        .ticker-widget { height:46px; overflow:hidden; border-bottom:none; }
+        .analyses-filter-bar { background:rgba(5,5,5,0.97); backdrop-filter:blur(20px); border-bottom:1px solid rgba(255,215,0,0.1); padding:0.5rem 2rem; position:sticky; top:62px; z-index:90; }
+        .ticker-widget { margin-bottom:0; }
+        .analyses-filter-inner { max-width:1380px; margin:0 auto; display:flex; gap:0.5rem; flex-wrap:wrap; }
+        .af-btn { padding:0.45rem 1rem; border-radius:8px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--muted); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all .18s; white-space:nowrap; font-family:inherit; }
+        .af-btn:hover { border-color:rgba(255,215,0,0.3); color:#fff; }
+        .af-btn.active { background:var(--gold); color:#000; border-color:var(--gold); }
+        .results-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.8rem; }
+        .results-count { font-size:0.82rem; color:var(--muted); }
+        .results-count strong { color:var(--gold); }
+        .articles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.5rem; }
+        .article-card { background:rgba(18,18,18,0.92); border:1px solid rgba(255,215,0,0.18); border-radius:14px; overflow:hidden; cursor:pointer; transition:all .25s; text-decoration:none; color:inherit; display:block; position:relative; }
+        .article-card:hover { border-color:rgba(255,215,0,0.38); transform:translateY(-5px); box-shadow:0 16px 40px rgba(0,0,0,0.45); }
+        .article-img { height:160px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:2rem; border-bottom:1px solid rgba(255,215,0,0.18); }
+        .article-body { padding:1.3rem; }
+        .article-meta { display:flex; gap:0.6rem; margin-bottom:0.9rem; flex-wrap:wrap; align-items:center; }
+        .tag { padding:0.2rem 0.7rem; border-radius:4px; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+        .tag-bull { background:rgba(34,197,94,0.15); color:var(--green); border:1px solid rgba(34,197,94,0.3); }
+        .tag-bear { background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); }
+        .tag-forex { background:rgba(255,215,0,0.12); color:var(--gold); border:1px solid rgba(255,215,0,0.3); }
+        .tag-crypto { background:rgba(139,92,246,0.15); color:#a78bfa; border:1px solid rgba(139,92,246,0.3); }
+        .tag-gold { background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); }
+        .tag-oil { background:rgba(249,115,22,0.15); color:#fb923c; border:1px solid rgba(249,115,22,0.3); }
+        .tag-strat { background:rgba(14,165,233,0.15); color:#38bdf8; border:1px solid rgba(14,165,233,0.3); }
+        .tag-indices { background:rgba(59,130,246,0.15); color:#93c5fd; border:1px solid rgba(59,130,246,0.3); }
+        .article-date { font-size:0.78rem; color:rgba(255,255,255,0.38); }
+        .article-title { font-size:1.02rem; font-weight:700; margin-bottom:0.7rem; line-height:1.35; }
+        .article-excerpt { font-size:0.85rem; color:rgba(255,255,255,0.6); line-height:1.6; margin-bottom:1rem; }
+        .article-levels { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem; }
+        .level-pill { font-size:0.72rem; font-weight:700; padding:0.22rem 0.6rem; border-radius:4px; }
+        .lp-entry { background:rgba(255,215,0,0.1); color:var(--gold); }
+        .lp-sl { background:rgba(239,68,68,0.12); color:#fca5a5; }
+        .lp-tp { background:rgba(34,197,94,0.12); color:#86efac; }
+        .vip-badge { position:absolute; top:10px; right:10px; z-index:3; background:linear-gradient(135deg,#FFD700,#FFC107); color:#000; font-size:0.62rem; font-weight:800; padding:0.22rem 0.55rem; border-radius:20px; letter-spacing:0.8px; text-transform:uppercase; box-shadow:0 2px 8px rgba(255,215,0,0.4); }
+        .article-card.locked .article-excerpt { -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 30%,transparent 100%); mask-image:linear-gradient(to bottom,rgba(0,0,0,1) 30%,transparent 100%); }
+        .article-card.locked .article-levels { filter:blur(4px); pointer-events:none; }
+        .lock-overlay { position:absolute; bottom:0; left:0; right:0; background:linear-gradient(to top,rgba(12,12,12,0.96) 0%,rgba(12,12,12,0.7) 60%,transparent 100%); border-radius:0 0 14px 14px; padding:2rem 1.5rem 1.5rem; display:flex; flex-direction:column; align-items:center; gap:0.6rem; text-align:center; }
+        .lock-icon { width:36px; height:36px; border-radius:50%; background:rgba(255,215,0,0.12); border:1px solid rgba(255,215,0,0.3); display:flex; align-items:center; justify-content:center; font-size:1rem; }
+        .lock-label { font-size:0.82rem; font-weight:700; color:var(--gold); }
+        .lock-sub { font-size:0.72rem; color:rgba(255,255,255,0.38); }
+        .lock-cta { font-size:0.78rem; font-weight:700; color:#000; background:linear-gradient(135deg,#FFD700,#FFC107); padding:0.35rem 0.9rem; border-radius:20px; }
+        /* Paywall modal */
+        #paywall-modal { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; align-items:center; justify-content:center; padding:1.5rem; }
+        #paywall-modal.open { display:flex; }
+        .paywall-card { background:rgba(14,14,14,0.98); border:1px solid rgba(255,215,0,0.28); border-radius:22px; padding:2.5rem; max-width:460px; width:100%; position:relative; box-shadow:0 32px 80px rgba(0,0,0,0.7); animation:modalIn .25s ease; }
+        @keyframes modalIn { from{opacity:0;transform:scale(0.94) translateY(10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+        .paywall-close { position:absolute; top:1rem; right:1rem; background:rgba(255,255,255,0.06); border:none; cursor:pointer; width:32px; height:32px; border-radius:50%; color:var(--muted); font-size:1rem; display:flex; align-items:center; justify-content:center; }
+        .paywall-icon { width:56px; height:56px; border-radius:16px; background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.25); display:flex; align-items:center; justify-content:center; margin:0 auto 1.2rem; font-size:1.6rem; }
+        .paywall-title { font-size:1.4rem; font-weight:800; text-align:center; margin-bottom:0.4rem; }
+        .paywall-hint { text-align:center; font-size:0.82rem; color:rgba(255,255,255,0.38); margin-bottom:1.5rem; padding:0.5rem 1rem; background:rgba(255,215,0,0.05); border-radius:8px; border:1px solid rgba(255,215,0,0.1); }
+        .paywall-features { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:1.1rem 1.3rem; margin-bottom:1.5rem; }
+        .paywall-features p { font-size:0.75rem; font-weight:700; color:var(--gold); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:0.7rem; }
+        .paywall-features ul { list-style:none; display:flex; flex-direction:column; gap:0.45rem; }
+        .paywall-features li { font-size:0.83rem; color:var(--muted); display:flex; align-items:center; gap:0.55rem; }
+        .paywall-features li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+        .paywall-price { text-align:center; margin-bottom:1.5rem; }
+        .paywall-price .price-amount { font-size:2rem; font-weight:900; color:var(--gold); }
+        .paywall-price .price-period { font-size:0.82rem; color:rgba(255,255,255,0.38); }
+        .btn-paywall-cta { width:100%; padding:0.9rem; background:linear-gradient(135deg,#FFD700,#FFC107); color:#000; font-weight:800; font-size:0.95rem; border:none; border-radius:10px; cursor:pointer; font-family:inherit; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:0.5rem; transition:all .2s; margin-bottom:0.7rem; }
+        .btn-paywall-secondary { width:100%; padding:0.75rem; background:transparent; color:var(--muted); font-size:0.85rem; font-weight:600; border:1px solid rgba(255,255,255,0.1); border-radius:10px; cursor:pointer; font-family:inherit; text-decoration:none; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+        .paywall-guarantee { text-align:center; font-size:0.72rem; color:rgba(255,255,255,0.28); margin-top:1rem; }
+
+        /* SCREENER */
+        .screener-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(520px,1fr)); gap:1.5rem; }
+        .screener-section { background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .screener-section h2 { font-size:1.05rem; font-weight:700; margin-bottom:0.35rem; }
+        .screener-section p { font-size:0.8rem; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
+        .screener-widget { border-radius:10px; overflow:hidden; }
+
+        /* CALENDRIER */
+        .sessions-section { background:linear-gradient(135deg,rgba(255,215,0,0.06) 0%,rgba(22,163,74,0.04) 100%); border:1px solid rgba(255,215,0,0.18); border-radius:14px; padding:2rem; margin-bottom:2rem; }
+        .sessions-section h2 { font-size:1.1rem; font-weight:700; color:var(--gold); margin-bottom:1.5rem; display:flex; align-items:center; gap:0.6rem; }
+        .sessions-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1.2rem; }
+        .session-card { background:rgba(14,14,14,0.85); border:1px solid rgba(255,215,0,0.15); border-radius:12px; padding:1.5rem; text-align:center; transition:all .25s; }
+        .session-card:hover { border-color:var(--gold); transform:translateY(-3px); }
+        .session-card h3 { font-size:1rem; font-weight:700; color:var(--gold); margin-bottom:1rem; }
+        .session-opening { font-size:0.85rem; color:var(--muted); margin-bottom:0.75rem; padding-bottom:0.75rem; border-bottom:1px solid rgba(255,215,0,0.1); }
+        .session-opening strong { color:#fff; display:block; }
+        .session-opening span { font-size:0.78rem; color:rgba(255,255,255,0.38); }
+        .session-status { padding:0.55rem 1rem; border-radius:7px; font-weight:700; font-size:0.88rem; margin-bottom:0.75rem; text-transform:uppercase; border:1.5px solid; display:inline-block; }
+        .session-open   { background:rgba(34,197,94,0.12); color:#22c55e; border-color:#22c55e; }
+        .session-closed { background:rgba(239,68,68,0.12); color:#ef4444; border-color:#ef4444; }
+        .session-current-time { font-size:1.25rem; font-weight:700; color:var(--gold); font-family:'Monaco','Courier New',monospace; }
+        .session-next { font-size:0.78rem; color:var(--muted); margin-top:0.75rem; padding-top:0.75rem; border-top:1px solid rgba(255,215,0,0.1); }
+        /* G10 */
+        .g10-section { margin-bottom:2rem; background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .g10-section h2 { font-size:1.05rem; font-weight:700; color:var(--gold); margin-bottom:0.35rem; display:flex; align-items:center; gap:0.5rem; }
+        .g10-subtitle { font-size:0.8rem; color:var(--muted); margin-bottom:1.2rem; }
+        .g10-subtitle span { color:var(--gold); font-weight:600; }
+        .g10-table-wrap { overflow-x:auto; border-radius:10px; border:1px solid rgba(255,215,0,0.12); }
+        .g10-table { width:100%; border-collapse:collapse; font-size:0.85rem; min-width:680px; }
+        .g10-table thead tr { background:rgba(255,215,0,0.06); border-bottom:1px solid rgba(255,215,0,0.18); }
+        .g10-table th { padding:0.75rem 1rem; text-align:left; font-size:0.7rem; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; color:#fff; white-space:nowrap; }
+        .g10-table th:not(:first-child) { text-align:right; }
+        .g10-table tbody tr { border-bottom:1px solid rgba(255,255,255,0.04); transition:background .15s; }
+        .g10-table tbody tr:last-child { border-bottom:none; }
+        .g10-table tbody tr:hover { background:rgba(255,215,0,0.03); }
+        .g10-table td { padding:0.8rem 1rem; color:var(--muted); white-space:nowrap; }
+        .g10-table td:not(:first-child) { text-align:right; }
+        .td-country { display:flex; align-items:center; gap:0.65rem; }
+        .td-flag { font-size:1.2rem; line-height:1; }
+        .td-names { display:flex; flex-direction:column; }
+        .td-country-name { font-weight:700; color:#fff; font-size:0.88rem; }
+        .td-currency { font-size:0.7rem; color:rgba(255,215,0,0.65); font-weight:600; letter-spacing:0.5px; }
+        .td-bank { font-size:0.76rem; color:rgba(255,255,255,0.45); }
+        .td-rate { color:var(--muted); }
+        .g10-note { font-size:0.72rem; color:rgba(255,255,255,0.25); margin-top:0.75rem; text-align:right; }
+        /* Eco Cal */
+        .eco-cal-section { background:rgba(14,14,14,0.95); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:1.5rem; }
+        .eco-cal-section h2 { font-size:1.05rem; font-weight:700; margin-bottom:0.35rem; }
+        .eco-cal-section p { font-size:0.8rem; color:var(--muted); margin-bottom:1rem; }
+        .eco-cal-widget { border-radius:10px; overflow:hidden; }
+
+        /* FOOTER */
+        footer { position:relative; z-index:1; background:rgba(5,5,5,0.98); border-top:1px solid var(--border); padding:3rem 2rem; text-align:center; }
+        .footer-logo { font-weight:900; font-size:1.1rem; color:var(--gold); letter-spacing:1.5px; margin-bottom:0.35rem; }
+        .footer-tagline { font-size:0.72rem; color:rgba(255,255,255,0.3); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1.5rem; }
+        .footer-links { display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; margin-bottom:2rem; }
+        .footer-links a { color:rgba(255,255,255,0.35); text-decoration:none; font-size:0.82rem; transition:color .2s; }
+        .footer-links a:hover { color:var(--gold); }
+        .footer-copy { color:rgba(255,255,255,0.18); font-size:0.72rem; }
+
+        /* RESPONSIVE */
+        @media (max-width:768px) {
+            .page-hero { padding:1.5rem 1rem 1rem; }
+            .main-tabs-wrap { padding:0 1rem 1rem; }
+            .section-wrap { padding:0 1rem 3rem; }
+            .analyses-filter-bar { padding:0.7rem 1rem; }
+            .mtab { padding:0.5rem 0.6rem; font-size:0.78rem; gap:0.3rem; }
+            .screener-grid, .articles-grid { grid-template-columns:1fr; }
+        }
+    
+        /* ── DS: logo override ── */
+        .logo { display:flex !important; flex-direction:column !important; text-decoration:none !important; line-height:1 !important; gap:3px !important; flex-shrink:0 !important; background:none !important; -webkit-background-clip:unset !important; background-clip:unset !important; -webkit-text-fill-color:initial !important; }
+        .logo-main { font-weight:900 !important; font-size:1.35rem !important; letter-spacing:-0.01em !important; text-transform:uppercase !important; line-height:1 !important; display:block !important; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        /* ── DS: nav telegram ── */
+        .nav-telegram { display:inline-flex !important; align-items:center; gap:0.4rem; background:#FFD700 !important; color:#000 !important; -webkit-text-fill-color:#000 !important; font-size:0.85rem; font-weight:700; padding:0.45rem 1.1rem; border-radius:50px; text-decoration:none; transition:background 0.2s,transform 0.15s; white-space:nowrap; flex-shrink:0; }
+        .nav-telegram:hover { background:#fff !important; transform:translateY(-1px); }
+
+        
+        /* ── DS: nav layout ── */
+        .nav-container { justify-content:space-between !important; }
+        .nav-menu, .nav-links, .nav-links-wrap { margin-left:auto !important; flex:unset !important; }
+        
+                /* ── LOGO ── */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; background:none !important; -webkit-text-fill-color:unset !important; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; display:block; }
+        .logo-forex { color:#ffffff !important; -webkit-text-fill-color:#ffffff !important; }
+        .logo-average { color:#FFD700 !important; -webkit-text-fill-color:#FFD700 !important; }
+        .logo-sub { display:block !important; font-size:0.45rem; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; color:rgba(255,255,255,0.3) !important; -webkit-text-fill-color:rgba(255,255,255,0.3) !important; }
+        .logo:hover { opacity:0.85; }
+
+        /* ══ NAV DESIGN SYSTEM ══ */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(7,7,7,0.97);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,215,0,0.15);
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        /* Logo */
+        .logo { display:flex; flex-direction:column; gap:3px; text-decoration:none; flex-shrink:0; line-height:1; }
+        .logo-main { font-weight:900; font-size:1.3rem; letter-spacing:-0.01em; text-transform:uppercase; }
+        .logo-forex { color:#ffffff; }
+        .logo-average { color:#FFD700; }
+
+        /* Nav links */
+        .nav-links { display:flex; list-style:none; align-items:center; gap:0.15rem; margin:0; padding:0; }
+        .nav-links a { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.875rem; font-weight:500; padding:0.4rem 0.7rem; border-radius:6px; transition:color .2s, background .2s; white-space:nowrap; }
+        .nav-links a:hover { color:#fff; background:rgba(255,255,255,0.06); }
+        .nav-links a.active { color:#FFD700; }
+        .nav-spacer { flex:1; }
+
+        /* Hamburger */
+        .hamburger { display:none; flex-direction:column; gap:5px; background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.2); border-radius:6px; padding:8px; cursor:pointer; }
+        .hamburger span { display:block; width:20px; height:2px; background:#FFD700; border-radius:2px; transition:all .3s; }
+
+        /* Dropdown Communauté */
+        .nav-item-drop { position:relative; }
+        .nav-item-drop > a { display:flex; align-items:center; gap:0.3rem; }
+        .nav-chevron { width:12px; height:12px; transition:transform .2s; flex-shrink:0; }
+        .nav-item-drop:hover .nav-chevron { transform:rotate(180deg); }
+        .drop-panel { display:none; position:absolute; top:calc(100% + 8px); right:0; background:rgba(10,10,10,0.98); border:1px solid rgba(255,215,0,0.15); border-radius:12px; padding:0.5rem; min-width:220px; backdrop-filter:blur(20px); box-shadow:0 8px 32px rgba(0,0,0,0.6); z-index:200; }
+        .nav-item-drop:hover .drop-panel { display:block; }
+        .drop-link { display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0.75rem; border-radius:8px; text-decoration:none; transition:background .15s; }
+        .drop-link:hover { background:rgba(255,215,0,0.07); }
+        .drop-icon { width:30px; height:30px; display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
+        .drop-label { display:block; font-size:0.875rem; font-weight:600; color:#fff; }
+        .drop-desc { display:block; font-size:0.73rem; color:rgba(255,255,255,0.38); margin-top:1px; }
+        .drop-sep { height:1px; background:rgba(255,215,0,0.1); margin:0.3rem 0; }
+
+        /* Auth */
+        .nav-login-btn { text-decoration:none; color:rgba(255,255,255,0.65); font-size:0.85rem; font-weight:500; padding:0.4rem 0.8rem; border-radius:6px; border:1px solid rgba(255,215,0,0.2); transition:all .2s; margin-right:0.4rem; }
+        .nav-login-btn:hover { color:#fff; border-color:rgba(255,215,0,0.5); }
+        .nav-cta { display:inline-flex; align-items:center; background:#FFD700; color:#000; font-size:0.83rem; font-weight:800; padding:0.42rem 1rem; border-radius:50px; text-decoration:none; transition:background .2s; white-space:nowrap; }
+        .nav-cta:hover { background:#fff; }
+        .fa-avatar { width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#FFD700,#FFA000); color:#000; font-weight:800; font-size:0.75rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hamburger { display:flex; }
+            .nav-links { display:none; position:absolute; top:64px; left:0; right:0; background:rgba(7,7,7,0.99); border-bottom:1px solid rgba(255,215,0,0.12); flex-direction:column; padding:1rem; align-items:stretch; }
+            .nav-links.open { display:flex; }
+            .nav-links a { font-size:1rem; padding:0.65rem 0.5rem; }
+            .drop-panel { position:static; box-shadow:none; border:none; background:rgba(255,255,255,0.03); border-radius:8px; }
+            .nav-item-drop:hover .drop-panel { display:none; }
+            .nav-item-drop.open .drop-panel { display:block; }
+        }
+        /* ══ FIN NAV DESIGN SYSTEM ══ */
+        </style>
+<style>/* BTC specific */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;min-height:100%;background:#030303;color:#fff;font-family:-apple-system,'SF Pro Display',BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}
+
+/* ── HEADER ── */
+.header{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1.2rem;background:rgba(5,5,5,0.98);border-bottom:1px solid rgba(255,215,0,0.14);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:.5rem}
+.brand{display:flex;align-items:center;gap:.7rem}
+.brand-icon{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f7931a,#ffd700);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.brand-text{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,0.3)}
+.brand-text span{color:#FFD700}
+.tabs{display:flex;gap:.3rem;flex-wrap:wrap}
+.tab{padding:.32rem .8rem;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:rgba(255,255,255,0.4);font-size:.73rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;white-space:nowrap}
+.tab.active{background:linear-gradient(135deg,rgba(247,147,26,0.15),rgba(255,215,0,0.1));border-color:rgba(247,147,26,0.5);color:#f7931a}
+.tab:hover:not(.active){color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)}
+
+/* ── LAYOUT ── */
+.content{max-width:1100px;margin:0 auto;padding:1.5rem 1.2rem 3rem}
+.section{display:none}.section.active{display:block}
+
+/* ── TYPOGRAPHY ── */
+.section-title{font-size:1.25rem;font-weight:800;margin-bottom:.3rem}
+.section-sub{font-size:.82rem;color:rgba(255,255,255,0.45);margin-bottom:1.5rem;line-height:1.6}
+
+/* ── CARDS ── */
+.card{background:rgba(15,15,15,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.1rem 1.2rem;margin-bottom:1rem}
+.card-gold{border-color:rgba(247,147,26,0.2);background:rgba(247,147,26,0.04)}
+.card-green{border-color:rgba(34,197,94,0.2);background:rgba(34,197,94,0.04)}
+.card-red{border-color:rgba(239,68,68,0.2);background:rgba(239,68,68,0.04)}
+.card-blue{border-color:rgba(59,130,246,0.2);background:rgba(59,130,246,0.04)}
+
+/* ── GRID ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:700px){.grid-2,.grid-3{grid-template-columns:1fr}}
+
+/* ── PRICE CHART ── */
+.chart-wrap{width:100%;height:200px;position:relative;margin-bottom:1.5rem}
+canvas{width:100%;height:100%}
+
+/* ── ERA CARDS ── */
+.era-card{border-radius:12px;padding:1rem 1.1rem;border:1px solid;margin-bottom:.8rem;cursor:pointer;transition:all .2s}
+.era-card:hover{transform:translateX(4px)}
+.era-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem}
+.era-badge{font-size:1.4rem;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.era-meta{flex:1}
+.era-period{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:.1rem}
+.era-name{font-size:.9rem;font-weight:800}
+.era-perf{font-size:.75rem;font-weight:700;margin-bottom:.4rem}
+.era-body{font-size:.76rem;color:rgba(255,255,255,0.55);line-height:1.65}
+.era-macro{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.6rem}
+.macro-tag{font-size:.62rem;font-weight:700;padding:.2rem .5rem;border-radius:6px;background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.55)}
+.macro-tag.pos{background:rgba(34,197,94,0.12);color:#4ade80}
+.macro-tag.neg{background:rgba(239,68,68,0.12);color:#f87171}
+.macro-tag.neu{background:rgba(255,215,0,0.1);color:#fbbf24}
+
+/* ── PRINCIPLES ── */
+.principe-row{display:flex;align-items:flex-start;gap:1rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.principe-row:last-child{border-bottom:none}
+.principe-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+.principe-body{flex:1}
+.principe-title{font-size:.82rem;font-weight:700;margin-bottom:.2rem}
+.principe-btc{font-size:.75rem;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:.35rem}
+.principe-verdict{font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:.35rem}
+.score-bar-wrap{width:120px;height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle}
+.score-bar{height:100%;border-radius:3px;transition:width .6s}
+
+/* ── FILTERS / DECISION ── */
+.filter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:1rem}
+.filter-card{border-radius:12px;padding:.9rem 1rem;border:1px solid rgba(255,255,255,0.08);background:rgba(12,12,12,0.9)}
+.filter-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}
+.filter-num{font-size:.68rem;font-weight:800;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.filter-title{font-size:.78rem;font-weight:700}
+.filter-reading{font-size:.73rem;color:rgba(255,255,255,0.55);line-height:1.6;margin-bottom:.5rem}
+.filter-signal{font-size:.7rem;font-weight:700;display:flex;align-items:center;gap:.4rem}
+.signal-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.filter-data{font-size:.7rem;color:rgba(255,255,255,0.35);margin-top:.3rem;font-style:italic}
+
+/* ── VERDICT ── */
+.verdict-hero{text-align:center;padding:2rem 1rem;background:linear-gradient(135deg,rgba(247,147,26,0.06),rgba(255,215,0,0.04));border:1px solid rgba(247,147,26,0.2);border-radius:16px;margin-bottom:1.5rem}
+.verdict-score{font-size:4rem;font-weight:900;line-height:1;margin-bottom:.4rem}
+.verdict-label{font-size:1rem;font-weight:700;color:#FFD700;margin-bottom:.6rem;letter-spacing:.05em}
+.verdict-body{font-size:.82rem;color:rgba(255,255,255,0.55);max-width:480px;margin:0 auto;line-height:1.7}
+
+.meter-row{display:flex;align-items:center;gap:.8rem;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.meter-row:last-child{border-bottom:none}
+.meter-label{width:150px;font-size:.74rem;color:rgba(255,255,255,0.6);flex-shrink:0}
+.meter-bar-bg{flex:1;height:8px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.meter-bar{height:100%;border-radius:4px}
+.meter-val{width:60px;text-align:right;font-size:.72rem;font-weight:700;flex-shrink:0}
+
+.signal-list{list-style:none;padding:0}
+.signal-list li{display:flex;align-items:flex-start;gap:.6rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:.76rem;color:rgba(255,255,255,0.65);line-height:1.55}
+.signal-list li:last-child{border-bottom:none}
+.s-bull::before{content:'▲';color:#4ade80;font-size:.6rem;margin-top:.15rem;flex-shrink:0}
+.s-bear::before{content:'▼';color:#f87171;font-size:.6rem;margin-top:.15rem;flex-shrink:0}
+.s-neu::before{content:'◆';color:#fbbf24;font-size:.6rem;margin-top:.15rem;flex-shrink:0}
+
+/* ── KPI STRIP ── */
+.kpi-strip{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.kpi{flex:1;min-width:130px;background:rgba(15,15,15,0.9);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:.75rem 1rem}
+.kpi-label{font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:.25rem}
+.kpi-val{font-size:1.15rem;font-weight:900}
+.kpi-delta{font-size:.68rem;margin-top:.1rem}
+
+/* ── LESSON BOX ── */
+.lesson{background:rgba(247,147,26,0.06);border-left:2.5px solid #f7931a;padding:.65rem .9rem;border-radius:0 8px 8px 0;font-size:.76rem;color:rgba(255,255,255,0.72);line-height:1.65;margin-top:.7rem}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:rgba(255,255,255,0.05);margin:1.5rem 0}
+.section-head{font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.section-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.05)}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:1.8rem}
+.timeline::before{content:'';position:absolute;left:.4rem;top:.4rem;bottom:.4rem;width:2px;background:linear-gradient(180deg,#f7931a44,#FFD70022)}
+.tl-item{position:relative;margin-bottom:1.2rem}
+.tl-dot{position:absolute;left:-1.45rem;top:.25rem;width:12px;height:12px;border-radius:50%;border:2px solid #f7931a;background:#030303}
+.tl-date{font-size:.62rem;font-weight:700;color:#f7931a;letter-spacing:.08em;margin-bottom:.2rem}
+.tl-text{font-size:.76rem;color:rgba(255,255,255,0.62);line-height:1.6}
+.tl-text b{color:#fff}
+</style>
+<style>
+/* Extra overrides */
+.header { display:none !important; }
+.content { max-width:1100px; margin:0 auto; padding:1.5rem 1.2rem 3rem; }
+</style>
+<script src="fa-access.js?v=13"></script>
+</head>
+<body>
+<!-- VIP Gate -->
+<script>
+(function(){
+  try{
+    var plan = localStorage.getItem('fa_plan');
+    if(plan !== 'vip'){ window.location.replace('pricing.html?from=bitcoin-analyse'); }
+  }catch(e){}
+})();
+</script>
+
+<nav id="mainNav">
+  <div class="nav-container">
+    <a href="index.html" class="logo" aria-label="Forex Average — Accueil">
+      <span class="logo-main"><span class="logo-forex">FOREX</span> <span class="logo-average">AVERAGE</span></span>
+      <span class="logo-sub">FOREX · CRYPTO · COMMODITIES</span>
+    </a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="marches.html">Marchés</a></li>
+      <li><a href="outils.html">Outils</a></li>
+      <li><a href="partenaires.html">Partenaires</a></li>
+      <li><a href="education.html">Éducation</a></li>
+      <li class="nav-item-drop">
+        <a href="#" role="button">Communauté
+          <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="drop-panel">
+          <a href="https://youtube.com/@forexaverage" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg></span>
+            <span><span class="drop-label">YouTube</span><span class="drop-desc">Analyses vidéo gratuites</span></span>
+          </a>
+          <a href="https://t.me/forexaverageanalyse" target="_blank" rel="noopener noreferrer" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></span>
+            <span><span class="drop-label">Telegram</span><span class="drop-desc">Analyses &amp; scénarios de marché</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="feed.html" class="drop-link">
+            <span class="drop-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <span><span class="drop-label">Fil de Trading</span><span class="drop-desc">Analyses &amp; idées communauté</span></span>
+          </a>
+        </div>
+      </li>
+      <div class="nav-spacer"></div>
+      <li class="nav-auth-guest" style="display:none;list-style:none;">
+        <a href="login.html" class="nav-login-btn">Connexion</a>
+        <a href="pricing.html" class="nav-cta">✦ VIP</a>
+      </li>
+      <li class="nav-auth-user nav-item-drop" style="display:none;list-style:none;">
+        <div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0.85rem 0.35rem 0.5rem;border:1.5px solid rgba(255,215,0,0.22);border-radius:8px;cursor:pointer;background:rgba(255,215,0,0.05);transition:all .2s;">
+          <div class="fa-avatar">?</div>
+          <span class="fa-username" style="font-size:0.83rem;font-weight:600;color:#fff;white-space:nowrap;"></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="drop-panel" style="right:0;min-width:200px;">
+          <a href="dashboard.html" class="drop-link">
+            <span class="drop-icon">📊</span>
+            <span><span class="drop-label">Dashboard</span><span class="drop-desc">Vue d'ensemble</span></span>
+          </a>
+          <a href="journal.html" class="drop-link">
+            <span class="drop-icon">📓</span>
+            <span><span class="drop-label">Mon journal</span><span class="drop-desc">Journal de trading</span></span>
+          </a>
+          <a href="profile.html" class="drop-link">
+            <span class="drop-icon">👤</span>
+            <span><span class="drop-label">Mon profil</span><span class="drop-desc">Paramètres du compte</span></span>
+          </a>
+          <div class="drop-sep"></div>
+          <a href="#" class="drop-link fa-logout-btn" style="color:#ef4444;">
+            <span class="drop-icon">🚪</span>
+            <span><span class="drop-label">Déconnexion</span></span>
+          </a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div style="position:relative;z-index:1;max-width:1100px;margin:2rem auto 0;padding:0 1.2rem 0.5rem;">
+  <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(247,147,26,0.1);border:1px solid rgba(247,147,26,0.3);border-radius:20px;padding:.3rem .9rem;font-size:.72rem;font-weight:700;color:#f7931a;margin-bottom:1rem;">
+    ✦ VIP · Analyse Exclusive
+  </div>
+  <div style="font-size:clamp(1.4rem,3vw,2rem);font-weight:900;letter-spacing:-.5px;margin-bottom:.3rem;">
+    ₿ Bitcoin — Analyse 100 Ans de Marchés
+  </div>
+  <div style="font-size:.88rem;color:rgba(255,255,255,0.45);margin-bottom:1.5rem;">
+    5 ères historiques · 10 principes intemporels · 7 filtres de décision · Verdict juillet 2025
+  </div>
+</div>
+
+<div class="content">
+<div class="section active" id="s-eres">
+  <div class="section-title">Les 5 Grandes Ères du Bitcoin</div>
+  <div class="section-sub">Bitcoin a traversé 5 cycles distincts depuis 2009 — chacun ancré dans un régime macro spécifique. La compréhension de ces cycles révèle des schémas reproductibles et des techniques intemporelles.</div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="kpi-label">Prix actuel</div>
+      <div class="kpi-val" style="color:#f7931a">~$95K</div>
+      <div class="kpi-delta" style="color:#4ade80">Post-ATH $108K (jan. 2025)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Cycle actuel</div>
+      <div class="kpi-val" style="color:#FFD700">Post-Halving</div>
+      <div class="kpi-delta" style="color:rgba(255,255,255,0.4)">Halving Avril 2024</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Depuis le bas 2022</div>
+      <div class="kpi-val" style="color:#4ade80">+513%</div>
+      <div class="kpi-delta" style="color:rgba(255,255,255,0.4)">$15 500 → $95 000</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Market Cap</div>
+      <div class="kpi-val" style="color:#c084fc">~$1.9T</div>
+      <div class="kpi-delta" style="color:rgba(255,255,255,0.4)">#7 mondial (actifs)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">ETF AUM (IBIT)</div>
+      <div class="kpi-val" style="color:#3b82f6">$60B+</div>
+      <div class="kpi-delta" style="color:#4ade80">Record Jan 2025</div>
+    </div>
+  </div>
+
+  <!-- PRICE CHART -->
+  <div class="card">
+    <div class="section-head">📈 Cycles des prix — 2010 à 2025</div>
+    <div class="chart-wrap">
+      <canvas id="priceChart"></canvas>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:.68rem;color:rgba(255,255,255,0.35)">
+      <span style="color:#6366f1">▬ Ère 1 : Naissance</span>
+      <span style="color:#22c55e">▬ Ère 2 : Spéculation</span>
+      <span style="color:#f59e0b">▬ Ère 3 : Institutionnalisation</span>
+      <span style="color:#a855f7">▬ Ère 4 : ZIRP extrême</span>
+      <span style="color:#f7931a">▬ Ère 5 : Maturité</span>
+    </div>
+  </div>
+
+  <!-- ERA 1 -->
+  <div class="era-card" style="border-color:rgba(99,102,241,0.3);background:rgba(99,102,241,0.04)">
+    <div class="era-header">
+      <div class="era-badge" style="background:rgba(99,102,241,0.15);color:#818cf8">⚡</div>
+      <div class="era-meta">
+        <div class="era-period">Ère 1 · 2009 – 2013</div>
+        <div class="era-name" style="color:#818cf8">Naissance dans la Crise</div>
+      </div>
+      <div style="text-align:right">
+        <div class="era-perf" style="color:#4ade80">$0 → $1 240</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,0.3)">+∞ %</div>
+      </div>
+    </div>
+    <div class="era-body">Bitcoin est créé le 3 janvier 2009 — <b>bloc genèse</b> inscrit "Chancellor on brink of second bailout for banks". Satoshi encode la raison d'être : une monnaie hors du contrôle des banques centrales qui ont causé la crise 2008. Régime macro : récession profonde, QE1 $600B, Fed Funds à 0%. Bitcoin circule d'abord entre cypherpunks, puis Silk Road (2011) donne le premier vrai cas d'usage. Premier pic : $31 (juin 2011), puis -93% à $2. Mount Gox émerge comme exchange dominant (80% du volume).</div>
+    <div class="era-macro">
+      <span class="macro-tag pos">Post-crise 2008</span>
+      <span class="macro-tag neu">ZIRP 0%</span>
+      <span class="macro-tag pos">QE1 $600B</span>
+      <span class="macro-tag neg">Corrélation macro : quasi nulle</span>
+      <span class="macro-tag neu">Marché de niche</span>
+    </div>
+    <div class="lesson">Leçon : Bitcoin naît précisément de la faillite du système bancaire traditionnel. Son existence est une critique structurelle du système monétaire post-2008. La valeur initiale vient de l'idéologie, pas du marché.</div>
+  </div>
+
+  <!-- ERA 2 -->
+  <div class="era-card" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.04)">
+    <div class="era-header">
+      <div class="era-badge" style="background:rgba(34,197,94,0.15);color:#4ade80">🎰</div>
+      <div class="era-meta">
+        <div class="era-period">Ère 2 · 2013 – 2017</div>
+        <div class="era-name" style="color:#4ade80">Premier Grand Cycle Spéculatif</div>
+      </div>
+      <div style="text-align:right">
+        <div class="era-perf" style="color:#4ade80">$150 → $19 800</div>
+        <div style="font-size:.65rem;color:#4ade80">+13 100%</div>
+      </div>
+    </div>
+    <div class="era-body">BTC touche $1 240 fin 2013 → <b>crash Mt. Gox</b> (850 000 BTC hackés, fév. 2014) → -86% à $150. Pendant 3 ans, Bitcoin se consolide et construit sa base technologique. Ethereum lancé (2015). Halving juillet 2016 : réduction de 25 → 12.5 BTC/bloc. <b>ICO mania 2017</b> : Bitcoin redevient mainstream, Nasdaq reprend après 2015, ZIRP continue. CME lance les futures BTC décembre 2017 : pic à $19 800, puis retournement brutal. Tous les "experts" prédisent $100K... au pic.</div>
+    <div class="era-macro">
+      <span class="macro-tag neu">ZIRP continu (0-0.25%)</span>
+      <span class="macro-tag pos">Reprise post-2009</span>
+      <span class="macro-tag neg">Mt. Gox hack -86%</span>
+      <span class="macro-tag neu">Corrélation Nasdaq : faible (0.2)</span>
+      <span class="macro-tag pos">Halving 2016 catalyseur</span>
+    </div>
+    <div class="lesson">Leçon : Le pattern se révèle pour la première fois. Halving → 12-18 mois → bull run → euphorie → crash. Les CME futures créent l'outil du short institutionnel qui contribue au retournement. Quand le consensus est 100% bull → sortir.</div>
+  </div>
+
+  <!-- ERA 3 -->
+  <div class="era-card" style="border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04)">
+    <div class="era-header">
+      <div class="era-badge" style="background:rgba(245,158,11,0.15);color:#fbbf24">🏦</div>
+      <div class="era-meta">
+        <div class="era-period">Ère 3 · 2017 – 2020</div>
+        <div class="era-name" style="color:#fbbf24">Bear Market & Maturation</div>
+      </div>
+      <div style="text-align:right">
+        <div class="era-perf" style="color:#f87171">$19 800 → $3 200 → $10 000</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,0.3)">-84% puis +212%</div>
+      </div>
+    </div>
+    <div class="era-body">Crypto Winter 2018-2019 : -84% en 12 mois. La Fed monte les taux (0% → 2.5% en 2018-19) → les actifs risqués corrigent. <b>L'infrastructure se construit</b> pendant le bear market : Bakkt, Fidelity Digital, Coinbase IPO prépare, Lightning Network, DeFi proto-version. Libra de Facebook (2019) = premier signal d'intérêt corporatif massif. Halving mai 2020 : 12.5 → 6.25 BTC/bloc. Puis COVID mars 2020 : -50% en 48 heures (crash de liquidité pur — toutes corrélations → 1).</div>
+    <div class="era-macro">
+      <span class="macro-tag neg">Fed hawkish 2018 (0%→2.5%)</span>
+      <span class="macro-tag pos">Infra crypto se construit</span>
+      <span class="macro-tag neg">Corrélation macro augmente</span>
+      <span class="macro-tag pos">Halving mai 2020</span>
+      <span class="macro-tag neg">COVID crash -50% (mars 2020)</span>
+    </div>
+    <div class="lesson">Leçon : Bitcoin commence à se comporter comme un actif à risque lors du crash COVID (-50% en 2 jours). Corrélation avec Nasdaq monte à 0.6+. Mais il rebondit aussi le plus vite (+500% en 18 mois). Les bears markets sont des opportunités d'accumulation si la thèse de long terme reste valide.</div>
+  </div>
+
+  <!-- ERA 4 -->
+  <div class="era-card" style="border-color:rgba(168,85,247,0.3);background:rgba(168,85,247,0.04)">
+    <div class="era-header">
+      <div class="era-badge" style="background:rgba(168,85,247,0.15);color:#c084fc">🚀</div>
+      <div class="era-meta">
+        <div class="era-period">Ère 4 · 2020 – 2022</div>
+        <div class="era-name" style="color:#c084fc">ZIRP Extrême & Institutionnalisation</div>
+      </div>
+      <div style="text-align:right">
+        <div class="era-perf" style="color:#4ade80">$7 000 → $69 000</div>
+        <div style="font-size:.65rem;color:#4ade80">+886%</div>
+      </div>
+    </div>
+    <div class="era-body">La combinaison parfaite : <b>ZIRP 0%</b> + QE $4T COVID + halving mai 2020 = bull run ×10. <b>MicroStrategy</b> achète $2B en août 2020 (Michael Saylor "Bitcoin standard"). <b>Tesla</b> $1.5B en janvier 2021. Square, PayPal, puis Visa acceptent BTC. Coinbase IPO en avril 2021 à $85B. BTC culmine à $69 000 en novembre 2021 — simultanément avec le pic du Nasdaq. Puis <b>Terra/LUNA effondrement</b> (mai 2022, -$40B en 72h), Celsius, 3 Arrows Capital, Voyager = cascade de liquidations. FTX collapse novembre 2022 (Lehman du crypto) : BTC → $15 500.</div>
+    <div class="era-macro">
+      <span class="macro-tag pos">ZIRP 0% + QE $4T</span>
+      <span class="macro-tag pos">Institutionnels entrent</span>
+      <span class="macro-tag neg">Corrélation Nasdaq : 0.75</span>
+      <span class="macro-tag neg">LUNA/FTX -$80B détruit</span>
+      <span class="macro-tag neg">Fed pivot hawkish</span>
+    </div>
+    <div class="lesson">Leçon : BTC est devenu trop corrélé avec le Nasdaq en ZIRP. Toutes les liquidations institutionnelles créent une corrélation ≈1. La leçon clé : l'excès de levier (FTX, 3AC, LUNA) reproduit exactement le schéma de 1929 et 2008. Le levier = destruction garantie, même sur un actif fondamentalement solide.</div>
+  </div>
+
+  <!-- ERA 5 -->
+  <div class="era-card" style="border-color:rgba(247,147,26,0.4);background:rgba(247,147,26,0.06)">
+    <div class="era-header">
+      <div class="era-badge" style="background:rgba(247,147,26,0.2);color:#f7931a">🏆</div>
+      <div class="era-meta">
+        <div class="era-period">Ère 5 · 2022 – présent</div>
+        <div class="era-name" style="color:#f7931a">Maturité, ETFs & Strategic Reserve</div>
+      </div>
+      <div style="text-align:right">
+        <div class="era-perf" style="color:#4ade80">$15 500 → $108 000</div>
+        <div style="font-size:.65rem;color:#4ade80">+596% en 27 mois</div>
+      </div>
+    </div>
+    <div class="era-body"><b>3 catalyseurs structurels</b> changent la nature du marché. ① <b>ETF spot BTC</b> approuvé SEC janvier 2024 : BlackRock IBIT atteint $60B+ d'AUM en 12 mois — plus rapide que tout ETF de l'histoire. ② <b>Halving avril 2024</b> : 6.25 → 3.125 BTC/bloc = pression vendeuse divisée par 2. ③ <b>Trump élu novembre 2024</b> : administration pro-crypto, discussions sur la "Strategic Bitcoin Reserve". BTC ATH $108 000 (janvier 2025). Macro : taux Fed 4.5% mais "higher for longer" vs BTC qui monte — découplage partiel inédit. Fed en pause. CPI ~2.5-3%.</div>
+    <div class="era-macro">
+      <span class="macro-tag pos">ETF spot BlackRock $60B+</span>
+      <span class="macro-tag pos">Halving avril 2024</span>
+      <span class="macro-tag pos">Strategic Reserve discussions</span>
+      <span class="macro-tag neu">Taux 4.5% (Fed pause)</span>
+      <span class="macro-tag pos">Régulation positive (MiCA UE)</span>
+    </div>
+    <div class="lesson">Leçon : Pour la première fois, BTC monte malgré des taux élevés. Les ETF changent structurellement le marché (acheteurs institutionnels réguliers). Le découplage partiel avec le Nasdaq signale une maturité d'actif. Mais les fondamentaux historiques (cycles halving) restent dominants.</div>
+  </div>
+
+  <!-- TIMELINE ÉVÉNEMENTS CLÉS -->
+  <div class="card" style="margin-top:1.5rem">
+    <div class="section-head">📅 Événements déterminants</div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">03 JANV. 2009</div><div class="tl-text"><b>Bloc Genèse</b> — Satoshi mine le premier bloc. Message intégré : critique directe des renflouements bancaires.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">FÉV. 2014</div><div class="tl-text"><b>Mt. Gox hack</b> — 850 000 BTC volés. Crash -86%. Révèle la fragilité des exchanges centralisés. Leçon : "Not your keys, not your coins".</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">DÉC. 2017</div><div class="tl-text"><b>CME Futures lancés</b> — Institutionnels peuvent shorter BTC pour la première fois. Pic $19 800 = même jour que le lancement. Coïncidence ou causalité ?</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">MARS 2020</div><div class="tl-text"><b>COVID crash -50%</b> en 48h. Puis Fed QE → BTC ×10 en 18 mois. Prouve la corrélation risk-on ET la capacité de rebond unique.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">NOV. 2022</div><div class="tl-text"><b>FTX collapse</b> — SBF, fraude $8B. BTC $15 500. "Lehman du crypto". Élimine l'excès de levier et les acteurs malhonnêtes. Base saine pour le prochain cycle.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">JAN. 2024</div><div class="tl-text"><b>ETF spot BTC approuvé (SEC)</b> — BlackRock IBIT devient l'ETF à la croissance la plus rapide de l'histoire. Changement structurel permanent du marché.</div></div>
+      <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">AVRIL 2024</div><div class="tl-text"><b>4ème Halving</b> — 6.25 → 3.125 BTC/bloc. Émission divisée par 2. Les ETF absorbent ~9× la production journalière au pic.</div></div>
+      <div class="tl-item"><div class="tl-dot" style="border-color:#f7931a;background:#f7931a18"></div><div class="tl-date" style="color:#FFD700">JAN. 2025</div><div class="tl-text"><b>ATH $108 000</b> — Trump administration pro-crypto. Discussions Strategic Bitcoin Reserve. Maturité institutionnelle confirmée.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 2 : 10 PRINCIPES APPLIQUÉS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s-principes">
+  <div class="section-title">Les 10 Principes Intemporels appliqués à Bitcoin</div>
+  <div class="section-sub">Chaque principe de la carte mentale est ici testé contre l'histoire de Bitcoin — avec un score de validation et la technique applicable aujourd'hui.</div>
+
+  <div class="card">
+
+    <!-- P1 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(255,215,0,0.15);color:#FFD700">①</div>
+      <div class="principe-body">
+        <div class="principe-title">Cycle de la dette = Cycle maître</div>
+        <div class="principe-btc">BTC suit le cycle de liquidité mondiale (M2 global). Quand les banques centrales injectent des liquidités → BTC monte. Quand elles les retirent → BTC corrige. Corrélation M2 global / BTC : <b>+0.82 sur 8 ans</b>. La Fed a créé $4T en 2020-21 → BTC ×10. La Fed a retiré $1T en 2022 → BTC -77%.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ SUR BITCOIN</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:88%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
+          <span style="color:#4ade80;margin-left:.3rem">88%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Suivre M2 global (US+UE+Chine+JP) → expansion = bullish BTC, contraction = bearish</div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(59,130,246,0.15);color:#60a5fa">②</div>
+      <div class="principe-body">
+        <div class="principe-title">Taux d'intérêt = Gravité de tous les actifs</div>
+        <div class="principe-btc">BTC a une <b>duration infinie</b> (pas de cash flows) = l'actif le plus sensible aux taux de l'univers financier. Taux 0% (2020-21) : BTC ×10. Taux 5.5% (2022-23) : BTC -77%. Mais 2024-25 invalide partiellement : BTC ×7 malgré taux 4.5%. Les ETF créent une demande structurelle qui partiellement s'affranchit des taux.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#fbbf24"></span>
+          <span style="color:#fbbf24">PARTIELLEMENT VALIDÉ</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:72%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div>
+          <span style="color:#fbbf24;margin-left:.3rem">72%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Les baisses de taux Fed = ultra-bullish BTC. Les ETF réduisent (mais n'éliminent pas) la sensibilité aux taux.</div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(168,85,247,0.15);color:#c084fc">③</div>
+      <div class="principe-body">
+        <div class="principe-title">Identifier le régime macro</div>
+        <div class="principe-btc">BTC se comporte différemment selon le régime. <b>ZIRP/QE</b> : BTC = actif spéculatif risqué (+∞%). <b>Hausse de taux agressive</b> : BTC = actif risqué à vendre (-77%). <b>Incertitude géopolitique</b> : BTC commence à se comporter comme "digital gold" (+% lors des crises régionales). <b>Stagflation</b> : comportement encore inconnu sur longue période — potentiellement positif si inflation devient dominante.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:80%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div>
+          <span style="color:#4ade80;margin-left:.3rem">80%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Régime risk-on (ZIRP) → BTC max. Régime hawkish agressif → réduire. Stagflation → hypothèse bullish BTC (à tester).</div>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(239,68,68,0.15);color:#f87171">④</div>
+      <div class="principe-body">
+        <div class="principe-title">Liquidité prime absolument en crise</div>
+        <div class="principe-btc">Mars 2020 : BTC -50% en 48h au pic de la panique COVID — <b>pire performance de toute classe d'actif</b> sur 48h. Novembre 2022 (FTX) : BTC -25% en 1 semaine. La liquidité sur BTC peut s'évaporer instantanément en stress extrême. Bonne nouvelle : le rebond post-crise est aussi le plus violent de toutes les classes d'actifs.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">PLEINEMENT VALIDÉ — double tranchant</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:92%;background:linear-gradient(90deg,#f87171,#ef4444)"></div></div>
+          <span style="color:#f87171;margin-left:.3rem">92%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : En crise systémique, BTC crashe le plus fort ET rebondit le plus fort. Garder des liquidités pour acheter ces paniques.</div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(249,115,22,0.15);color:#fb923c">⑤</div>
+      <div class="principe-body">
+        <div class="principe-title">Le levier est l'unique cause des ruines totales</div>
+        <div class="principe-btc"><b>Cas d'école parfait</b>. 3 Arrows Capital (levier ×10 sur LUNA et BTC) → faillite $10B. FTX (levier sur FTT token illiquide utilisé comme collatéral) → fraude $8B. LUNA/UST (algorithme leveragé à l'infini) → -$40B en 72h. Tous les cas de ruine totale dans l'histoire du crypto = levier excessif. Bitcoin lui-même (sans levier) a toujours survécu.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ À 100% — cas d'école</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:100%;background:linear-gradient(90deg,#f87171,#ef4444)"></div></div>
+          <span style="color:#f87171;margin-left:.3rem">100%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Surveiller les <b>funding rates</b> (>0.05%/8h = levier excessif) comme signal de pic à court terme. Ne jamais utiliser de levier sur BTC.</div>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(34,197,94,0.15);color:#4ade80">⑥</div>
+      <div class="principe-body">
+        <div class="principe-title">La valorisation prédit les rendements à 10 ans</div>
+        <div class="principe-btc">Le <b>NVT Ratio</b> (Network Value to Transactions) est l'équivalent du CAPE pour Bitcoin. NVT = Market Cap / Volume on-chain en $. NVT <25 = sous-évalué (accumulation). NVT 25-50 = juste valeur. NVT >75 = surévalué. En 2020 (NVT 15) → BTC ×10 en 18 mois. En 2021 (NVT 100+) → crash -77%. Le <b>MVRV Ratio</b> (Market Value / Realized Value) est le P/B de BTC.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#fbbf24"></span>
+          <span style="color:#fbbf24">VALIDÉ (métriques on-chain adaptées)</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:78%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div>
+          <span style="color:#fbbf24;margin-left:.3rem">78%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : NVT Signal sur Glassnode. MVRV <1 = extrêmement cheap. MVRV >3 = attention. Actuellement (juil. 2025) : MVRV ~2.4 = zone neutre.</div>
+      </div>
+    </div>
+
+    <!-- P7 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(14,165,233,0.15);color:#38bdf8">⑦</div>
+      <div class="principe-body">
+        <div class="principe-title">Les tendances durent plus longtemps qu'on ne croit</div>
+        <div class="principe-btc">Les cycles Bitcoin sont reproductibles avec une précision remarquable : <b>Bear market dure 12-15 mois</b> après le pic. <b>Bull market dure 12-18 mois</b> après le halving. Chaque cycle, le bottom est plus haut que le précédent. 2015 bottom : $150. 2018 bottom : $3 200. 2022 bottom : $15 500. Les trends haussiers et baissiers ont chacun duré plus longtemps que la majorité des participants ne l'anticipaient.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ PARFAITEMENT</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:85%;background:linear-gradient(90deg,#38bdf8,#0ea5e9)"></div></div>
+          <span style="color:#38bdf8;margin-left:.3rem">85%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Rester dans la tendance haussière post-halving. Trailing stop à -30% du plus haut glissant. Cycle post-halving historiquement dure jusqu'à 12-18 mois après le halving (avril 2024 → fin 2025).</div>
+      </div>
+    </div>
+
+    <!-- P8 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(251,146,60,0.15);color:#fb923c">⑧</div>
+      <div class="principe-body">
+        <div class="principe-title">Les gouvernements changent les règles</div>
+        <div class="principe-btc">Bitcoin a survécu à <b>12+ interdictions gouvernementales</b> de Chine (dont 3 bans totaux), à la confiscation de 69 000 BTC par le DOJ (Silk Road), à des tentatives de régulation de 40+ pays. <b>Mais aussi des catalyseurs positifs</b> : Salvador légalise BTC (2021), ETF SEC approuvé (2024), MiCA UE (2025), discussions Strategic Reserve. Le risque réglementaire est bidirectionnel — de plus en plus positif.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#fbbf24"></span>
+          <span style="color:#fbbf24">VALIDÉ — tendance réglementaire positive en 2025</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:75%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div>
+          <span style="color:#fbbf24;margin-left:.3rem">75%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Surveiller la rhétorique des banques centrales (CBDC vs BTC), les bans potentiels de gros pays (India, UE), et les développements positifs (réserve stratégique US).</div>
+      </div>
+    </div>
+
+    <!-- P9 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(192,132,252,0.15);color:#c084fc">⑨</div>
+      <div class="principe-body">
+        <div class="principe-title">Les narratives précèdent et suivent les prix</div>
+        <div class="principe-btc">BTC a connu 5+ cycles de narratives dominantes : <b>"Monnaie internet" (2013) → "Digital gold" (2017) → "Store of value / Fuite de l'inflation" (2020-21) → "Instrument spéculatif" (2022 bear market) → "Actif institutionnel / ETF" (2024-25)</b>. Chaque narrative amplifie le cycle haussier jusqu'au ridicule, puis s'effondre avec les prix. La narrative "ETF + Strategic Reserve" est actuellement dominante.</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ À CHAQUE CYCLE</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:90%;background:linear-gradient(90deg,#c084fc,#a855f7)"></div></div>
+          <span style="color:#c084fc;margin-left:.3rem">90%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Quand tous les titres de presse couvrent BTC positivement + narrative "institutionnelle" = signe d'euphorie avancée. Quand presse dit "BTC est mort" pour la 100ème fois = accumulation.</div>
+      </div>
+    </div>
+
+    <!-- P10 -->
+    <div class="principe-row">
+      <div class="principe-num" style="background:rgba(134,239,172,0.15);color:#86efac">⑩</div>
+      <div class="principe-body">
+        <div class="principe-title">Le consensus ne paie pas</div>
+        <div class="principe-btc">Les plus grands gains sur BTC ont été réalisés par les contrariants. <b>2018</b> : consensus "BTC va à $0" → acheteurs à $3 200 = ×30 en 4 ans. <b>Novembre 2022</b> : post-FTX, consensus "crypto est mort" → acheteurs à $15 500 = ×7 en 27 mois. <b>2020</b> : MicroStrategy acheté à $11 000 quand le consensus était "spéculatif/dangereux" → $100 000+. Les plus grandes pertes = consensus bullish total (2021 peak).</div>
+        <div class="principe-verdict">
+          <span class="signal-dot" style="background:#4ade80"></span>
+          <span style="color:#4ade80">VALIDÉ À CHAQUE CYCLE</span>
+          <span style="margin-left:.5rem;color:rgba(255,255,255,0.35)">Score :</span>
+          <div class="score-bar-wrap"><div class="score-bar" style="width:87%;background:linear-gradient(90deg,#86efac,#4ade80)"></div></div>
+          <span style="color:#86efac;margin-left:.3rem">87%</span>
+        </div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,0.4);margin-top:.3rem">📌 Action : Surveiller le Crypto Fear & Greed Index. Extreme Fear (<20) = opportunité d'achat historique. Extreme Greed (>80) = réduire l'exposition.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="lesson" style="margin-top:.5rem">
+    <b>Synthèse :</b> 9 des 10 principes intemporels sont pleinement ou partiellement validés sur Bitcoin. Le principe des taux (#2) est le seul partiellement remis en question par les ETF qui créent une demande structurelle indépendante des taux. Bitcoin n'échappe pas aux lois de la gravité financière — il les suit et les amplifie ×3-5 par rapport au marché actions.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 3 : 7 FILTRES DE DÉCISION -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s-decision">
+  <div class="section-title">Les 7 Filtres de Décision — Lecture Juillet 2025</div>
+  <div class="section-sub">Application immédiate du cadre de décision à Bitcoin aujourd'hui. Chaque filtre donne un signal : 🟢 Positif · 🟡 Neutre · 🔴 Négatif.</div>
+
+  <div class="filter-grid">
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(255,215,0,0.15);color:#FFD700">①</div>
+        <div class="filter-title">Cycle de la dette</div>
+      </div>
+      <div class="filter-reading">M2 global US en légère expansion (+3.5%/an). Déficit US $1.8T/an mais marché obligataire stable. Fed en pause, pas de QE mais pas de QT agressif non plus. Chine stimule (+¥3T). Cycle de dette : milieu d'expansion, pas en contraction.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#4ade80"></span><span style="color:#4ade80">🟢 POSITIF pour BTC</span></div>
+      <div class="filter-data">M2 USA : +3.5%/an (vs -4% en 2022 = bear market BTC)</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(34,197,94,0.15);color:#4ade80">②</div>
+        <div class="filter-title">Régime macro</div>
+      </div>
+      <div class="filter-reading">Croissance US ~2.2% (solide sans être euphorique). CPI ~2.5-3% (en ligne avec objectif Fed). Taux stables (Fed en pause à 4.25-4.5%). Plein emploi. Régime : expansion modérée avec inflation sous contrôle = risk-on favorable.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#4ade80"></span><span style="color:#4ade80">🟢 POSITIF — risk-on favorable à BTC</span></div>
+      <div class="filter-data">GDP US +2.2% / CPI 2.8% / Fed Funds 4.25-4.5%</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(168,85,247,0.15);color:#c084fc">③</div>
+        <div class="filter-title">Valorisation (NVT + MVRV)</div>
+      </div>
+      <div class="filter-reading">NVT Signal ~65 (zone d'attention, pas d'euphorie extrême). MVRV Ratio ~2.4 (modéré — entre 1 = bas et 3.5 = pics historiques). Pas aussi cheap qu'en 2022 (MVRV 0.8) ni aussi cher qu'en 2021 (MVRV 3.8). Zone intermédiaire.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#fbbf24"></span><span style="color:#fbbf24">🟡 NEUTRE — ni cheap ni extrême</span></div>
+      <div class="filter-data">NVT ~65 / MVRV ~2.4 / SOPR légèrement >1</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(239,68,68,0.15);color:#f87171">④</div>
+        <div class="filter-title">Taille de position (Kelly)</div>
+      </div>
+      <div class="filter-reading">BTC : volatilité annualisée ~60-70%. Kelly pur = ~8-12% selon Sharpe ratio historique. En pratique ½ Kelly recommandé = 4-6% du portfolio total pour un profil standard. Investisseur agressif : max 15-20%. La volatilité élevée impose une taille limitée même en conviction forte.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#fbbf24"></span><span style="color:#fbbf24">🟡 5-15% selon profil de risque</span></div>
+      <div class="filter-data">Vol. annualisée BTC : ~65% / Sharpe 3 ans : ~0.8</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(249,115,22,0.15);color:#fb923c">⑤</div>
+        <div class="filter-title">Levier dans le marché</div>
+      </div>
+      <div class="filter-reading">Funding rates sur les perpetuals : ~0.01-0.02%/8h (neutre à légèrement positif). Pas de surchauffe de levier visible. Open interest BTC futures : élevé mais pas en territoire d'euphorie extrême comme fin 2021 (0.05%+/8h). Signal : pas de liquidation massive imminente.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#4ade80"></span><span style="color:#4ade80">🟢 POSITIF — pas de levier excessif</span></div>
+      <div class="filter-data">Funding rates : ~0.01-0.02%/8h (neutre). Alerte : >0.05%/8h</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(14,165,233,0.15);color:#38bdf8">⑥</div>
+        <div class="filter-title">Diversification de régime</div>
+      </div>
+      <div class="filter-reading">Corrélation BTC/Or : +0.35 (montante — BTC commence à hériter des propriétés "store of value" de l'or). Corrélation BTC/Nasdaq : +0.55 (toujours élevée mais en baisse vs 0.75 en 2021). BTC apporte une diversification réelle vs 60/40 traditionnel — contribution au rendement sans augmenter la corrélation globale.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#4ade80"></span><span style="color:#4ade80">🟢 POSITIF — diversification améliorée</span></div>
+      <div class="filter-data">Corr. Or : +0.35 / Corr. Nasdaq : +0.55 / Corr. 60/40 : +0.40</div>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-header">
+        <div class="filter-num" style="background:rgba(192,132,252,0.15);color:#c084fc">⑦</div>
+        <div class="filter-title">Risque réglementaire</div>
+      </div>
+      <div class="filter-reading">Environnement réglementaire le plus favorable de l'histoire : ETF spot US approuvé, MiCA UE en vigueur, discussions Strategic Reserve aux US, Hong Kong ETF approuvés, Japon assoupli. Risque résiduel : ban Chine permanent, régulation "CBDC vs BTC", taxation plus-values potentielle.</div>
+      <div class="filter-signal"><span class="signal-dot" style="background:#4ade80"></span><span style="color:#4ade80">🟢 NET POSITIF — meilleur contexte historique</span></div>
+      <div class="filter-data">ETF IBIT $60B+ / MiCA UE 2025 / Trump pro-crypto</div>
+    </div>
+
+  </div>
+
+  <!-- TECHNIQUES UNIVERSELLES BTC -->
+  <div class="divider"></div>
+  <div class="section-head">⚙️ Techniques testées et validées sur Bitcoin</div>
+
+  <div class="grid-2">
+    <div class="card card-gold">
+      <div style="font-size:.78rem;font-weight:800;margin-bottom:.35rem;color:#FFD700">DCA — Dollar Cost Averaging</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:.4rem">Acheter une somme fixe chaque semaine/mois indépendamment du prix. Élimine le risque de timing. Sur tout historique BTC (depuis 2017), un DCA hebdomadaire a <b>toujours été profitable sur 4 ans</b>.</div>
+      <div style="font-size:.68rem;color:#4ade80">✅ Validé sur 15 ans · Sharpe ~1.2 sur 5 ans</div>
+    </div>
+    <div class="card card-green">
+      <div style="font-size:.78rem;font-weight:800;margin-bottom:.35rem;color:#4ade80">Accumulation au Halving</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:.4rem">Accumuler dans les 6-12 mois précédant le halving. Les 3 halvings précédents ont TOUS été suivis d'un ATH dans les 12-18 mois. Halving avril 2024 → ATH $108K janv. 2025. Pattern à <b>100% de fiabilité sur 3 cycles</b>.</div>
+      <div style="font-size:.68rem;color:#4ade80">✅ Validé 2012, 2016, 2020, 2024 · 4/4 cycles</div>
+    </div>
+    <div class="card card-blue">
+      <div style="font-size:.78rem;font-weight:800;margin-bottom:.35rem;color:#60a5fa">MVRV / NVT Timing</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:.4rem">Accumuler quand MVRV <1 (BTC sous sa valeur réalisée) et réduire quand MVRV >3. Cette métrique on-chain a parfaitement capturé les 3 derniers cycles. Simple, mécanique, non-émotionnel.</div>
+      <div style="font-size:.68rem;color:#4ade80">✅ Validé 2015, 2018, 2022 · Timing précis à ±1 mois</div>
+    </div>
+    <div class="card card-gold">
+      <div style="font-size:.78rem;font-weight:800;margin-bottom:.35rem;color:#FFD700">Fear & Greed Contrarian</div>
+      <div style="font-size:.73rem;color:rgba(255,255,255,0.6);line-height:1.65;margin-bottom:.4rem">Acheter en Extreme Fear (<20) et réduire en Extreme Greed (>80). Corrélation historique avec les tops/bottoms : forte. Post-FTX 2022 : index à 6/100 → bottom $15 500. Jan 2021 ATH : index à 95/100 → top $69 000.</div>
+      <div style="font-size:.68rem;color:#4ade80">✅ Validé sur tous les cycles · Signal lead 2-8 semaines</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- TAB 4 : VERDICT 2025 -->
+<!-- ══════════════════════════════════════════ -->
+<div class="section" id="s-verdict">
+
+  <div class="verdict-hero">
+    <div class="verdict-score">🟡</div>
+    <div class="verdict-label">NEUTRE — POSITIF · Milieu de Cycle Post-Halving</div>
+    <div class="verdict-body">5 filtres sur 7 sont positifs. La valorisation est neutre (ni extrême ni cheap). Le cycle post-halving 2024 est historiquement la phase la plus haussière — mais les niveaux de prix ($95K-$108K) appellent à la prudence sur la taille de position.</div>
+  </div>
+
+  <!-- SCORECARD -->
+  <div class="card">
+    <div class="section-head">📊 Scorecard des 7 filtres</div>
+    <div class="meter-row"><div class="meter-label">① Cycle de la dette</div><div class="meter-bar-bg"><div class="meter-bar" style="width:75%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div><div class="meter-val" style="color:#4ade80">🟢 +</div></div>
+    <div class="meter-row"><div class="meter-label">② Régime macro</div><div class="meter-bar-bg"><div class="meter-bar" style="width:72%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div><div class="meter-val" style="color:#4ade80">🟢 +</div></div>
+    <div class="meter-row"><div class="meter-label">③ Valorisation NVT/MVRV</div><div class="meter-bar-bg"><div class="meter-bar" style="width:50%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="meter-val" style="color:#fbbf24">🟡 =</div></div>
+    <div class="meter-row"><div class="meter-label">④ Taille position</div><div class="meter-bar-bg"><div class="meter-bar" style="width:50%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="meter-val" style="color:#fbbf24">🟡 =</div></div>
+    <div class="meter-row"><div class="meter-label">⑤ Levier du marché</div><div class="meter-bar-bg"><div class="meter-bar" style="width:78%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div><div class="meter-val" style="color:#4ade80">🟢 +</div></div>
+    <div class="meter-row"><div class="meter-label">⑥ Diversification</div><div class="meter-bar-bg"><div class="meter-bar" style="width:70%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div><div class="meter-val" style="color:#4ade80">🟢 +</div></div>
+    <div class="meter-row"><div class="meter-label">⑦ Risque réglementaire</div><div class="meter-bar-bg"><div class="meter-bar" style="width:80%;background:linear-gradient(90deg,#4ade80,#22c55e)"></div></div><div class="meter-val" style="color:#4ade80">🟢 +</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:1rem">
+
+    <!-- BULL SIGNALS -->
+    <div class="card card-green">
+      <div class="section-head" style="color:#4ade80">▲ Signaux HAUSSIERS</div>
+      <ul class="signal-list">
+        <li class="s-bull">Cycle post-halving historiquement haussier jusqu'à 12-18 mois après (avril 2024 → fin 2025)</li>
+        <li class="s-bull">ETF BlackRock IBIT absorbe ~9× la production journalière de BTC</li>
+        <li class="s-bull">Administration Trump pro-crypto — discussions Strategic Reserve</li>
+        <li class="s-bull">M2 global en légère expansion — liqudités favorables</li>
+        <li class="s-bull">Funding rates neutres — pas de levier excessif visible</li>
+        <li class="s-bull">Corrélation avec l'or en hausse → BTC mature en "réserve de valeur"</li>
+        <li class="s-bull">MVRV ~2.4 : cycle non terminé (tops historiques à MVRV 3.5-4)</li>
+        <li class="s-bull">Les "old coins" (>5 ans) ne bougent pas — HODLers non vendeurs</li>
+      </ul>
+    </div>
+
+    <!-- BEAR SIGNALS -->
+    <div class="card card-red">
+      <div class="section-head" style="color:#f87171">▼ Signaux BAISSIERS / Risques</div>
+      <ul class="signal-list">
+        <li class="s-bear">Prix à $95K = -12% de l'ATH $108K — consolidation sans nouveau momentum</li>
+        <li class="s-bear">Taux Fed encore à 4.5% — pas de baisse agressive prévue à court terme</li>
+        <li class="s-bear">NVT ~65 : pas cheap, zone d'attention</li>
+        <li class="s-bear">Corrélation Nasdaq +0.55 — risque de contagion si marché actions corrige</li>
+        <li class="s-bear">Chine ban permanent — 20% du hashrate perdu définitivement</li>
+        <li class="s-bear">Risque CBDC : si grandes banques centrales lancent des CBDCs agressives</li>
+        <li class="s-neu">Strategic Reserve = narrative non encore confirmée (discussions seulement)</li>
+        <li class="s-neu">Seasonality : juillet-août historiquement faibles pour BTC</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ZONES DE PRIX -->
+  <div class="card" style="margin-top:1rem">
+    <div class="section-head">🎯 Zones de prix décisives</div>
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+      <div style="display:flex;align-items:center;gap:1rem;padding:.6rem;border-radius:10px;background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.15)">
+        <div style="font-size:1.1rem;font-weight:900;color:#4ade80;width:110px;flex-shrink:0">$110K+</div>
+        <div><div style="font-size:.78rem;font-weight:700;color:#4ade80;margin-bottom:.15rem">Breakout confirmé — Nouveau bull accéléré</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Extension probable vers $150K-$180K. Historiquement : chaque ATH breakout = +50-100% supplémentaire. Signal d'achat agressif.</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;padding:.6rem;border-radius:10px;background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.15)">
+        <div style="font-size:1.1rem;font-weight:900;color:#FFD700;width:110px;flex-shrink:0">$80K–$110K</div>
+        <div><div style="font-size:.78rem;font-weight:700;color:#FFD700;margin-bottom:.15rem">Zone de consolidation actuelle — Neutre</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Range de trading post-ATH. Accumulation DCA possible. Attendre confirmation du breakout ou du breakdown avant d'augmenter la position.</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;padding:.6rem;border-radius:10px;background:rgba(251,191,36,0.06);border:1px solid rgba(251,191,36,0.15)">
+        <div style="font-size:1.1rem;font-weight:900;color:#fbbf24;width:110px;flex-shrink:0">$60K–$80K</div>
+        <div><div style="font-size:.78rem;font-weight:700;color:#fbbf24;margin-bottom:.15rem">Zone d'accumulation forte — Opportunité</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Retour vers le niveau pré-ETF approval. Correction saine de 30-45% en milieu de bull market. MVRV descendrait vers 1.8 = zone d'achat historique.</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;padding:.6rem;border-radius:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15)">
+        <div style="font-size:1.1rem;font-weight:900;color:#f87171;width:110px;flex-shrink:0">&lt; $60K</div>
+        <div><div style="font-size:.78rem;font-weight:700;color:#f87171;margin-bottom:.15rem">Invalidation du cycle — Réévaluer</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Signalerait une invalidation du cycle post-halving (sans précédent historique) ou un choc macro majeur (récession US, ban réglementaire). Réévaluer la thèse.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROTOCOLE DÉCISIONNEL -->
+  <div class="card" style="margin-top:1rem">
+    <div class="section-head">📋 Protocole décisionnel — Juillet 2025</div>
+    <div style="display:flex;flex-direction:column;gap:.55rem">
+      <div class="step-row" style="display:flex;gap:.7rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(255,215,0,0.15);color:#FFD700;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0">1</div>
+        <div><div style="font-size:.78rem;font-weight:700;margin-bottom:.1rem">Définir votre allocation BTC cible</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Profil conservateur : 2-5% · Profil modéré : 5-10% · Profil agressif : 10-20%. Ne jamais dépasser 20% même en conviction maximum. La volatilité de BTC impose cette limite.</div></div>
+      </div>
+      <div class="step-row" style="display:flex;gap:.7rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(34,197,94,0.15);color:#4ade80;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0">2</div>
+        <div><div style="font-size:.78rem;font-weight:700;margin-bottom:.1rem">DCA si pas encore en position</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Ne pas entrer en une fois à $95K. Étaler sur 6-12 semaines. Chaque achat hebdomadaire lisse le prix d'entrée et réduit le risque de timing.</div></div>
+      </div>
+      <div class="step-row" style="display:flex;gap:.7rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(59,130,246,0.15);color:#60a5fa;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0">3</div>
+        <div><div style="font-size:.78rem;font-weight:700;margin-bottom:.1rem">Surveiller les métriques on-chain mensuellement</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">MVRV (Glassnode) · NVT Signal · Funding rates · Fear & Greed Index. Si MVRV >3.5 ou Funding >0.05%/8h → réduire de 30-50%.</div></div>
+      </div>
+      <div class="step-row" style="display:flex;gap:.7rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(249,115,22,0.15);color:#fb923c;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0">4</div>
+        <div><div style="font-size:.78rem;font-weight:700;margin-bottom:.1rem">Trailing stop à -30% du plus haut</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">ATH = $108K → trailing stop à $75K (~-30%). Si BTC casse $75K, signal de fin de cycle potentiel. Réévaluer et réduire de 50%.</div></div>
+      </div>
+      <div class="step-row" style="display:flex;gap:.7rem;padding:.5rem 0">
+        <div style="width:24px;height:24px;border-radius:50%;background:rgba(239,68,68,0.15);color:#f87171;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0">5</div>
+        <div><div style="font-size:.78rem;font-weight:700;margin-bottom:.1rem">Règle absolue : zéro levier</div><div style="font-size:.72rem;color:rgba(255,255,255,0.5)">Pas de margin. Pas de perpetuals. Pas de prêts garantis par BTC. BTC spot uniquement. La volatilité de -50% en 48h (prouvée en mars 2020) rend tout levier potentiellement fatal.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lesson" style="margin-top:1rem">
+    <b>Verdict final :</b> Bitcoin en juillet 2025 présente le profil le plus favorable de son histoire en termes de maturité institutionnelle et de cadre réglementaire. Le cycle post-halving est structurellement haussier. Cependant, les niveaux de prix élevés ($95K) et la valorisation neutre (MVRV 2.4) imposent une approche disciplinée : DCA progressif, taille limitée (5-15% max), surveillance mensuelle des métriques on-chain, et trailing stop systématique. La question n'est pas "Est-ce que BTC monte encore ?" — les probabilités historiques disent oui. La question est "Combien risquer et à quelle taille ?" — et la réponse est : moins que votre intuition ne le suggère.
+  </div>
+
+</div><!-- /content -->
+
+</div>
+
+<script>
+// ── TAB SWITCHING ──
+function go(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('s-' + id).classList.add('active');
+}
+
+// ── PRICE CHART ──
+(function() {
+  const canvas = document.getElementById('priceChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Set actual pixel dimensions
+  const W = canvas.offsetWidth || 800;
+  const H = canvas.offsetHeight || 200;
+  canvas.width = W * window.devicePixelRatio;
+  canvas.height = H * window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  // Price data (normalized, approximate — log scale)
+  const points = [
+    // Era 1: 2010-2013 (violet)
+    {t:0,   v:0.003, era:0},{t:0.5, v:0.5,  era:0},{t:1,   v:31,   era:0},
+    {t:1.5, v:2,     era:0},{t:2,   v:13,   era:0},{t:2.5, v:1240, era:0},
+    // Era 2: 2013-2017 (green)
+    {t:3,   v:150,  era:1},{t:4,   v:500,  era:1},{t:5,   v:430,  era:1},
+    {t:5.5, v:960,  era:1},{t:6,   v:19800,era:1},
+    // Era 3: 2017-2020 (amber)
+    {t:6.5, v:7000, era:2},{t:7,   v:3200, era:2},{t:7.5, v:13000,era:2},
+    {t:8,   v:7000, era:2},{t:8.5, v:3800, era:2},
+    // Era 4: 2020-2022 (purple)
+    {t:9,   v:29000,era:3},{t:9.5, v:65000,era:3},{t:10,  v:69000,era:3},
+    {t:10.5,v:40000,era:3},{t:11,  v:15500,era:3},
+    // Era 5: 2022-2025 (orange)
+    {t:11.5,v:30000,era:4},{t:12,  v:44000,era:4},{t:12.5,v:73000,era:4},
+    {t:13,  v:104000,era:4},{t:13.5,v:95000,era:4}
+  ];
+
+  const colors = ['#818cf8','#4ade80','#fbbf24','#c084fc','#f7931a'];
+
+  // Log scale
+  const logMin = Math.log(0.001);
+  const logMax = Math.log(120000);
+  const tMin = 0, tMax = 13.5;
+
+  function toX(t) { return (t - tMin) / (tMax - tMin) * (W - 40) + 20; }
+  function toY(v) { return H - 20 - (Math.log(v) - logMin) / (logMax - logMin) * (H - 40); }
+
+  // Draw grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  [0.003,1,100,1000,10000,100000].forEach(v => {
+    const y = toY(v);
+    ctx.beginPath(); ctx.moveTo(20, y); ctx.lineTo(W-20, y); ctx.stroke();
+  });
+
+  // Draw era areas
+  const eraRanges = [{s:0,e:2.5},{s:3,e:6},{s:6.5,e:8.5},{s:9,e:11},{s:11.5,e:13.5}];
+  eraRanges.forEach((r, i) => {
+    ctx.fillStyle = colors[i] + '12';
+    ctx.fillRect(toX(r.s), 10, toX(r.e) - toX(r.s), H - 30);
+  });
+
+  // Draw price line (segments by era)
+  for (let i = 0; i < points.length - 1; i++) {
+    const p1 = points[i], p2 = points[i+1];
+    const era = p1.era;
+    ctx.strokeStyle = colors[era];
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = colors[era];
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.moveTo(toX(p1.t), toY(p1.v));
+    ctx.lineTo(toX(p2.t), toY(p2.v));
+    ctx.stroke();
+  }
+  ctx.shadowBlur = 0;
+
+  // Labels on Y axis
+  ctx.fillStyle = 'rgba(255,255,255,0.2)';
+  ctx.font = '9px -apple-system';
+  [['$1',1],['$1K',1000],['$10K',10000],['$100K',100000]].forEach(([label,v]) => {
+    ctx.fillText(label, 22, toY(v) + 3);
+  });
+
+  // Era labels
+  const eraLabels = ['Naissance','Spéculation','Maturation','ZIRP','Maturité'];
+  eraRanges.forEach((r, i) => {
+    ctx.fillStyle = colors[i] + 'aa';
+    ctx.font = 'bold 8px -apple-system';
+    ctx.textAlign = 'center';
+    ctx.fillText(eraLabels[i], toX((r.s + r.e) / 2), H - 5);
+  });
+
+  // ATH marker
+  ctx.fillStyle = '#f7931a';
+  ctx.font = 'bold 9px -apple-system';
+  ctx.textAlign = 'right';
+  ctx.fillText('ATH $108K', toX(13) - 5, toY(104000) - 6);
+  ctx.beginPath();
+  ctx.arc(toX(13), toY(104000), 4, 0, Math.PI*2);
+  ctx.fillStyle = '#f7931a';
+  ctx.fill();
+})();
+</script>
+
+
+
+<script>
+// ── TAB SWITCHING ──
+function go(id, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('s-' + id).classList.add('active');
+}
+
+// ── PRICE CHART ──
+(function() {
+  const canvas = document.getElementById('priceChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // Set actual pixel dimensions
+  const W = canvas.offsetWidth || 800;
+  const H = canvas.offsetHeight || 200;
+  canvas.width = W * window.devicePixelRatio;
+  canvas.height = H * window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  // Price data (normalized, approximate — log scale)
+  const points = [
+    // Era 1: 2010-2013 (violet)
+    {t:0,   v:0.003, era:0},{t:0.5, v:0.5,  era:0},{t:1,   v:31,   era:0},
+    {t:1.5, v:2,     era:0},{t:2,   v:13,   era:0},{t:2.5, v:1240, era:0},
+    // Era 2: 2013-2017 (green)
+    {t:3,   v:150,  era:1},{t:4,   v:500,  era:1},{t:5,   v:430,  era:1},
+    {t:5.5, v:960,  era:1},{t:6,   v:19800,era:1},
+    // Era 3: 2017-2020 (amber)
+    {t:6.5, v:7000, era:2},{t:7,   v:3200, era:2},{t:7.5, v:13000,era:2},
+    {t:8,   v:7000, era:2},{t:8.5, v:3800, era:2},
+    // Era 4: 2020-2022 (purple)
+    {t:9,   v:29000,era:3},{t:9.5, v:65000,era:3},{t:10,  v:69000,era:3},
+    {t:10.5,v:40000,era:3},{t:11,  v:15500,era:3},
+    // Era 5: 2022-2025 (orange)
+    {t:11.5,v:30000,era:4},{t:12,  v:44000,era:4},{t:12.5,v:73000,era:4},
+    {t:13,  v:104000,era:4},{t:13.5,v:95000,era:4}
+  ];
+
+  const colors = ['#818cf8','#4ade80','#fbbf24','#c084fc','#f7931a'];
+
+  // Log scale
+  const logMin = Math.log(0.001);
+  const logMax = Math.log(120000);
+  const tMin = 0, tMax = 13.5;
+
+  function toX(t) { return (t - tMin) / (tMax - tMin) * (W - 40) + 20; }
+  function toY(v) { return H - 20 - (Math.log(v) - logMin) / (logMax - logMin) * (H - 40); }
+
+  // Draw grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+  ctx.lineWidth = 1;
+  [0.003,1,100,1000,10000,100000].forEach(v => {
+    const y = toY(v);
+    ctx.beginPath(); ctx.moveTo(20, y); ctx.lineTo(W-20, y); ctx.stroke();
+  });
+
+  // Draw era areas
+  const eraRanges = [{s:0,e:2.5},{s:3,e:6},{s:6.5,e:8.5},{s:9,e:11},{s:11.5,e:13.5}];
+  eraRanges.forEach((r, i) => {
+    ctx.fillStyle = colors[i] + '12';
+    ctx.fillRect(toX(r.s), 10, toX(r.e) - toX(r.s), H - 30);
+  });
+
+  // Draw price line (segments by era)
+  for (let i = 0; i < points.length - 1; i++) {
+    const p1 = points[i], p2 = points[i+1];
+    const era = p1.era;
+    ctx.strokeStyle = colors[era];
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = colors[era];
+    ctx.shadowBlur = 6;
+    ctx.beginPath();
+    ctx.moveTo(toX(p1.t), toY(p1.v));
+    ctx.lineTo(toX(p2.t), toY(p2.v));
+    ctx.stroke();
+  }
+  ctx.shadowBlur = 0;
+
+  // Labels on Y axis
+  ctx.fillStyle = 'rgba(255,255,255,0.2)';
+  ctx.font = '9px -apple-system';
+  [['$1',1],['$1K',1000],['$10K',10000],['$100K',100000]].forEach(([label,v]) => {
+    ctx.fillText(label, 22, toY(v) + 3);
+  });
+
+  // Era labels
+  const eraLabels = ['Naissance','Spéculation','Maturation','ZIRP','Maturité'];
+  eraRanges.forEach((r, i) => {
+    ctx.fillStyle = colors[i] + 'aa';
+    ctx.font = 'bold 8px -apple-system';
+    ctx.textAlign = 'center';
+    ctx.fillText(eraLabels[i], toX((r.s + r.e) / 2), H - 5);
+  });
+
+  // ATH marker
+  ctx.fillStyle = '#f7931a';
+  ctx.font = 'bold 9px -apple-system';
+  ctx.textAlign = 'right';
+  ctx.fillText('ATH $108K', toX(13) - 5, toY(104000) - 6);
+  ctx.beginPath();
+  ctx.arc(toX(13), toY(104000), 4, 0, Math.PI*2);
+  ctx.fillStyle = '#f7931a';
+  ctx.fill();
+})();
+</script>
+
+<script>
+(function(){
+  var h=document.getElementById('hamburgerBtn'),n=document.getElementById('navLinks');
+  if(h&&n){h.addEventListener('click',function(){var o=n.classList.toggle('open');h.setAttribute('aria-expanded',o);});}
+})();
+</script>
+</body>
+</html>
